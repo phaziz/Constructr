@@ -1,0 +1,102 @@
+AddHandler php53-cgi .php
+
+AddType 'text/html; charset=UTF-8' html
+
+# compress text, html, javascript, css, xml:
+AddOutputFilterByType DEFLATE text/plain
+AddOutputFilterByType DEFLATE text/html
+AddOutputFilterByType DEFLATE text/xml
+AddOutputFilterByType DEFLATE text/css
+AddOutputFilterByType DEFLATE application/xml
+AddOutputFilterByType DEFLATE application/xhtml+xml
+AddOutputFilterByType DEFLATE application/rss+xml
+AddOutputFilterByType DEFLATE application/javascript
+AddOutputFilterByType DEFLATE application/x-javascript
+
+<IfModule mod_expires.c>
+ExpiresActive On
+<FilesMatch "\.(ico|jpg|jpeg|png|gif|js|css)$">
+ExpiresDefault "access plus 1 year"
+</FilesMatch>
+</IfModule>
+
+<IfModule mod_rewrite.c>
+RewriteCond %{HTTPS} !=on
+RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+RewriteRule ^ http://%1%{REQUEST_URI} [R=301,L]
+</IfModule>
+
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^ index.php [QSA,L]
+
+# 5G BLACKLIST/FIREWALL
+# @ http://perishablepress.com/5g-blacklist-2012/
+
+# 5G:[QUERY STRINGS]
+<ifModule mod_rewrite.c>
+ RewriteEngine On
+ RewriteBase /
+ RewriteCond %{QUERY_STRING} (environ|localhost|mosconfig|scanner) [NC,OR]
+ RewriteCond %{QUERY_STRING} (menu|mod|path|tag)\=\.?/? [NC,OR]
+ RewriteCond %{QUERY_STRING} boot\.ini  [NC,OR]
+ RewriteCond %{QUERY_STRING} echo.*kae  [NC,OR]
+ RewriteCond %{QUERY_STRING} etc/passwd [NC,OR]
+ RewriteCond %{QUERY_STRING} \=\\%27$   [NC,OR]
+ RewriteCond %{QUERY_STRING} \=\\\'$    [NC,OR]
+ RewriteCond %{QUERY_STRING} \.\./      [NC,OR]
+ RewriteCond %{QUERY_STRING} \?         [NC,OR]
+ RewriteCond %{QUERY_STRING} \:         [NC,OR]
+ RewriteCond %{QUERY_STRING} \[         [NC,OR]
+ RewriteCond %{QUERY_STRING} \]         [NC]
+ RewriteRule .* - [F]
+</ifModule>
+
+# 5G:[USER AGENTS]
+<ifModule mod_setenvif.c>
+ SetEnvIfNoCase User-Agent ^$ keep_out
+ SetEnvIfNoCase User-Agent (casper|cmsworldmap|diavol|dotbot)   keep_out
+ SetEnvIfNoCase User-Agent (flicky|ia_archiver|jakarta|kmccrew) keep_out
+ SetEnvIfNoCase User-Agent (libwww|planetwork|pycurl|skygrid)   keep_out
+ SetEnvIfNoCase User-Agent (purebot|comodo|feedfinder|turnit)   keep_out
+ SetEnvIfNoCase User-Agent (zmeu|nutch|vikspider|binlar|sucker) keep_out
+ <limit GET POST PUT>
+  Order Allow,Deny
+  Allow from all
+  Deny from env=keep_out
+ </limit>
+</ifModule>
+
+# 5G:[REQUEST STRINGS]
+<ifModule mod_alias.c>
+ RedirectMatch 403 (https?|ftp|php)\://
+ RedirectMatch 403 /(cgi|https?|ima|ucp)/
+ RedirectMatch 403 /(Permanent|Better)$
+ RedirectMatch 403 (\=\\\'|\=\\%27|/\\\'/?|\)\.css\()$
+ RedirectMatch 403 (\,|//|\)\+|/\,/|\{0\}|\(/\(|\.\.\.|\+\+\+|\||\\\"\\\")
+ RedirectMatch 403 \.(cgi|asp|aspx|cfg|dll|exe|jsp|mdb|sql|ini|rar)$
+ RedirectMatch 403 /(contac|fpw|install|pingserver|register)\.php$
+ RedirectMatch 403 (base64|crossdomain|localhost|wwwroot|e107\_)
+ RedirectMatch 403 (eval\(|\_vti\_|\(null\)|echo.*kae|config\.xml)
+ RedirectMatch 403 \.well\-known/host\-meta
+ RedirectMatch 403 /function\.array\-rand
+ RedirectMatch 403 \)\;\$\(this\)\.html\(
+ RedirectMatch 403 proc/self/environ
+ RedirectMatch 403 msnbot\.htm\)\.\_
+ RedirectMatch 403 /ref\.outcontrol
+ RedirectMatch 403 com\_cropimage
+ RedirectMatch 403 indonesia\.htm
+ RedirectMatch 403 \{\$itemURL\}
+ RedirectMatch 403 function\(\)
+ RedirectMatch 403 labels\.rdf
+ RedirectMatch 403 /playing.php
+ RedirectMatch 403 muieblackcat
+</ifModule>
+
+# 5G:[BAD IPS]
+<limit GET POST PUT>
+ Order Allow,Deny
+ Allow from all
+ # uncomment/edit/repeat next line to block IPs
+ # Deny from 123.456.789
+</limit>

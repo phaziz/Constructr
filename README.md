@@ -1,7 +1,7 @@
 Constructr
 ==========
 
-ConstructrCMS based on Slim-PHP5-Framework, Twitter Bootstrap,PDO , jQuery and Passion!
+ConstructrCMS based on Slim-PHP5-Framework, Twitter Bootstrap, PDO, jQuery and Passion!
 
 That's it for now:
 	- C.R.U.D. + Sorting Pages (Nested Set's).

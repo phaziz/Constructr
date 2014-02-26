@@ -16,7 +16,7 @@
     session_start();
 
     define('_BASE_URL','http://' . $_SERVER['HTTP_HOST'] . '');
-    define('_VERSION','20140220');
+    define('_VERSION','20140226');
     define('_SALT','$2y$07$R.gJb2U2N.FmZ4hPp1y2CN$');
     define('_LOGGING',true);
     define('_TITLE','CONSTRUCTR');
@@ -74,7 +74,7 @@
                 'path'          => '/',
                 'domain'        => null,
                 'secure'        => false,
-                'httponly'      => false,                
+                'httponly'      => false,
             )
         )
     );

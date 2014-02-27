@@ -14,5 +14,35 @@
         </head>
         <body>
 
+            <div class="container">
+                
+                <?php
+                
+                    if($PAGES)
+                    {
+                        echo '<nav><ul>';
+    
+                        foreach($PAGES as $PAGE)
+                        {
+                            echo '<li><a href="' . _BASE_URL . '/' . $PAGE['pages_url'] . '/" title="' . $PAGE['pages_name'] . '">' . $PAGE['pages_name'] . '</a></li>';
+                        }
+    
+                        echo '</ul></nav>';
+                    }
+    
+                    echo '<br><br>';
+    
+                    if($CONTENT)
+                    {
+                        foreach($CONTENT as $CONTENT)
+                        {
+                            echo $CONTENT['content_content'];
+                        }
+                    }
+                
+                ?>
+
+            </div>
+
         </body>
     </html>

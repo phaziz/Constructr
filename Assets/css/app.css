@@ -51,3 +51,10 @@ text-align:right;
 ul.list-group{
 margin: 0 0 0 0;
 }
+.debugging{
+margin-top: 100px;
+color: #fff;
+background: #000;
+border: 10px solid #ff0035;
+padding: 50px 50px 50px 50px;
+}

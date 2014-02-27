@@ -1,28 +1,44 @@
 <?php
 
-    function retExifData($imagePath){
-        if ((isset($imagePath)) and (file_exists($imagePath))) {
+    function retExifData($imagePath)
+    {
+        if ((isset($imagePath)) and (file_exists($imagePath))) 
+        {
           $exif_ifd0 = read_exif_data($imagePath ,'IFD0' ,0);       
           $exif_exif = read_exif_data($imagePath ,'EXIF' ,0);
           $notFound = "Unavailable";
-          if (@array_key_exists('Make', $exif_ifd0)) {
+          if (@array_key_exists('Make', $exif_ifd0)) 
+          {
             $camMake = $exif_ifd0['Make'];
-          } else { $camMake = $notFound; }
-          if (@array_key_exists('Model', $exif_ifd0)) {
+          } 
+          else 
+          { $camMake = $notFound; }
+          
+          if (@array_key_exists('Model', $exif_ifd0)) 
+          {
             $camModel = $exif_ifd0['Model'];
-          } else { $camModel = $notFound; }
+          }
+          else
+          {
+              $camModel = $notFound; 
+          }
+          
           if (@array_key_exists('ExposureTime', $exif_ifd0)) {
             $camExposure = $exif_ifd0['ExposureTime'];
           } else { $camExposure = $notFound; }
+          
           if (@array_key_exists('ApertureFNumber', $exif_ifd0['COMPUTED'])) {
             $camAperture = $exif_ifd0['COMPUTED']['ApertureFNumber'];
           } else { $camAperture = $notFound; }
+          
           if (@array_key_exists('DateTime', $exif_ifd0)) {
             $camDate = $exif_ifd0['DateTime'];
           } else { $camDate = $notFound; }
+          
           if (@array_key_exists('ISOSpeedRatings',$exif_exif)) {
             $camIso = $exif_exif['ISOSpeedRatings'];
           } else { $camIso = $notFound; }
+          
           $return = array();
           $return['camera'] = $camMake;
           $return['model'] = $camModel;
@@ -67,8 +83,11 @@
             }
             $app -> redirect(_BASE_URL . '/admin/login/');
             die();
-        } else {
-            try {
+        }
+        else
+        {
+            try
+            {
                 $QUERY = $DBCON -> prepare('SELECT * FROM backenduser WHERE beu_username = :USERNAME AND beu_active = :ACTIVE LIMIT 1;');
                 $QUERY -> execute( 
                     array(
@@ -83,7 +102,9 @@
                     $app -> redirect(_BASE_URL . '/admin/login/');
                     die();
                 }
-            } catch (PDOException $e) {
+            }
+            catch (PDOException $e)
+            {
                 $app -> getLog() -> error($_SESSION['backend-user-username'] . ': HelperAdminCheckError 2: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                 $app -> redirect(_BASE_URL . '/admin/login/');
                 die();

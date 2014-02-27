@@ -11,32 +11,44 @@
             $USERNAME = $_SESSION['backend-user-username'];
             $CONTENT_COUNTER = 0;
             $CONTENT = '';
+
             if(_LOGGING == true)
             {
                 $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
             }
-            try {
+
+            try 
+            {
                 $PAGE_NAME = $DBCON -> prepare('SELECT pages_name FROM pages WHERE pages_id = :PAGE_ID LIMIT 1;');
+
                 $PAGE_NAME -> execute(
                     array(
                         ':PAGE_ID' => $PAGE_ID
                     )
                 );
+
                 $PAGE_NAME = $PAGE_NAME -> fetch();
                 $CONTENT = $DBCON -> prepare('SELECT * FROM content WHERE content_page_id = :PAGE_ID ORDER BY content_order ASC;');
+
                 $CONTENT -> execute(
                     array(
                         ':PAGE_ID' => $PAGE_ID
                     )
                 );
+
                 $CONTENT_COUNTER = $CONTENT -> rowCount();
-            } catch (PDOException $e) {
+            }
+            catch (PDOException $e)
+            {
                 $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
                 die();
             }
+
             $MEM = 0;
             $MEM = number_format(((memory_get_usage()/1014)/1024),2,',','.') . ' MB';
-            $app -> render('content.php',array(
+            
+            $app -> render('content.php',
+                array(
                     'MEM' => $MEM,
                     'USERNAME' => $USERNAME,
                     'PAGE_ID' => $PAGE_ID,
@@ -59,25 +71,35 @@
         {
             $START = microtime(true);
             $USERNAME = $_SESSION['backend-user-username'];
+
             if(_LOGGING == true)
             {
                 $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
             }
-            try {
+
+            try
+            {
                 $PAGE_NAME = $DBCON -> prepare('SELECT pages_name FROM pages WHERE pages_id = :PAGE_ID LIMIT 1;');
+
                 $PAGE_NAME -> execute(
                     array(
                         ':PAGE_ID' => $PAGE_ID
                     )
                 );
+
                 $PAGE_NAME = $PAGE_NAME -> fetch();
-            } catch (PDOException $e) {
+            }
+            catch (PDOException $e)
+            {
                 $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
                 die();
             }
+
             $MEM = 0;
             $MEM = number_format(((memory_get_usage()/1014)/1024),2,',','.') . ' MB';
-            $app -> render('content_new.php',array(
+
+            $app -> render('content_new.php',
+                array(
                     'MEM' => $MEM,
                     'USERNAME' => $USERNAME,
                     'PAGE_NAME' => $PAGE_NAME,
@@ -90,6 +112,7 @@
                     'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.'
                 )
             );
+
             die();
         }
     );
@@ -97,6 +120,7 @@
     $app -> post('/admin/content/:PAGE_ID/new/', $ADMIN_CHECK, function ($PAGE_ID) use ($app,$DBCON)
         {
             $USERNAME = $_SESSION['backend-user-username'];
+
             if(_LOGGING == true)
             {
                 $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
@@ -107,8 +131,10 @@
             $CONTENT_ORDER = $app -> request() -> post('content_order');
             $CONTENT_ACTIVE = 1;
 
-            if($CONTENT != '' && $CONTENT_ORDER != ''){
-                try {
+            if($CONTENT != '' && $CONTENT_ORDER != '')
+            {
+                try
+                {
                     $QUERY = 'INSERT INTO content SET content_datetime = :CONTENT_DATETIME,content_order = :CONTENT_ORDER,content_page_id = :PAGE_ID,content_content = :CONTENT,content_active = :CONTENT_ACTIVE;';
                     $STMT = $DBCON -> prepare($QUERY);
                     $STMT -> bindParam(':CONTENT',$CONTENT,PDO::PARAM_STR);
@@ -119,12 +145,16 @@
                     $STMT -> execute();
                     $app -> redirect(_BASE_URL . '/admin/content/' . $PAGE_ID . '/?res=create-content-true');
                     die();
-                } catch (PDOException $e){
+                }
+                catch (PDOException $e)
+                {
                     $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
                     $app -> redirect(_BASE_URL . '/admin/content/' . $PAGE_ID . '/?res=create-content-false');
                     die();
                 }
-            } else {
+            }
+            else
+            {
                 $app -> redirect(_BASE_URL . '/admin/content/' . $PAGE_ID . '/?res=create-content-false');
                 die();
             }
@@ -136,35 +166,47 @@
         {
             $START = microtime(true);
             $USERNAME = $_SESSION['backend-user-username'];
+            
             if(_LOGGING == true)
             {
                 $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
             }
-            try {
+            
+            try
+            {
                 $CONTENT = $DBCON -> prepare('SELECT * FROM content WHERE content_page_id = :PAGE_ID AND content_id = :CONTENT_ID LIMIT 1;');
+
                 $CONTENT -> execute(
-                                    array(
-                                        ':PAGE_ID' => $PAGE_ID,
-                                        ':CONTENT_ID' => $CONTENT_ID,
-                                    )
-                                );
+                    array(
+                        ':PAGE_ID' => $PAGE_ID,
+                        ':CONTENT_ID' => $CONTENT_ID,
+                    )
+                );
+
                 $CONTENT = $CONTENT -> fetch();
                 $PAGE_NAME = $DBCON -> prepare('SELECT pages_name FROM pages WHERE pages_id = :PAGE_ID LIMIT 1;');
+
                 $PAGE_NAME -> execute(
                     array(
                         ':PAGE_ID' => $PAGE_ID
                     )
                 );
+
                 $PAGE_NAME = $PAGE_NAME -> fetch();
-            } catch (PDOException $e) {
+            }
+            catch (PDOException $e)
+            {
                 $app -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
                 $app -> redirect(_BASE_URL . '/admin/content/' . $PAGE_ID . '/?res=edit-content-false');
                 echo 'nep';
                 die();
             }
+
             $MEM = 0;
             $MEM = number_format(((memory_get_usage()/1014)/1024),2,',','.') . ' MB';
-            $app -> render('content_edit.php',array(
+
+            $app -> render('content_edit.php',
+                array(
                     'MEM' => $MEM,
                     'USERNAME' => $USERNAME,
                     'CONTENT' => $CONTENT,
@@ -184,6 +226,7 @@
     $app -> post('/admin/content/:PAGE_ID/:CONTENT_ID/edit/', $ADMIN_CHECK, function ($PAGE_ID,$CONTENT_ID) use ($app,$DBCON)
         {
             $USERNAME = $_SESSION['backend-user-username'];
+
             if(_LOGGING == true)
             {
                 $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
@@ -192,11 +235,12 @@
             $CONTENT_DATETIME = date('Y-m-d H:i:s');
             $CONTENT = $app -> request() -> post('content');
 
-            if($CONTENT != '' && $CONTENT_ID != ''){
-                try {
-                    $UPDATE_PAGES = $DBCON -> prepare('
-                        UPDATE content SET content_content = :CONTENT, content_datetime = :CONTENT_DATETIME WHERE content_id = :CONTENT_ID AND content_page_id = :PAGE_ID LIMIT 1;
-                    ');
+            if($CONTENT != '' && $CONTENT_ID != '')
+            {
+                try
+                {
+                    $UPDATE_PAGES = $DBCON -> prepare('UPDATE content SET content_content = :CONTENT, content_datetime = :CONTENT_DATETIME WHERE content_id = :CONTENT_ID AND content_page_id = :PAGE_ID LIMIT 1;');
+
                     $UPDATE_PAGES -> execute(
                         array(
                             ':CONTENT' => $CONTENT,
@@ -205,17 +249,23 @@
                             ':CONTENT_ID' => $CONTENT_ID
                         )
                     );
+
                     $app -> redirect(_BASE_URL . '/admin/content/' . $PAGE_ID . '/?res=edit-content-true');
                     die();
-                } catch (PDOException $e){
+                }
+                catch (PDOException $e)
+                {
                     $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
                     $app -> redirect(_BASE_URL . '/admin/content/' . $PAGE_ID . '/?res=edit-content-false');
                     die();
                 }
-            } else {
+            }
+            else
+            {
                 $app -> redirect(_BASE_URL . '/admin/content/' . $PAGE_ID . '/?res=edit-content-false');
                 die();
             }
+            
             die();
         }
     );
@@ -224,13 +274,18 @@
         {
             $START = microtime(true);
             $USERNAME = $_SESSION['backend-user-username'];
+
             if(_LOGGING == true)
             {
                 $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
             }
-            if($PAGE_ID != '' && $CONTENT_ID != '' && $ACT_ORDER != ''){
+
+            if($PAGE_ID != '' && $CONTENT_ID != '' && $ACT_ORDER != '')
+            {
                 $NEW_ORDER = ($ACT_ORDER - 1);
-                try {
+
+                try 
+                {
                     $UPDATE_CONTENT = $DBCON -> prepare('
                         UPDATE content 
                         SET 
@@ -254,6 +309,7 @@
                         AND content_page_id = :PAGE_ID 
                         LIMIT 1;
                     ');
+
                     $UPDATE_CONTENT -> execute(
                         array(
                             ':TEMP_ORDER' => 0,
@@ -263,18 +319,24 @@
                             ':CONTENT_ID' => $CONTENT_ID
                         )
                     );
-                } catch (PDOException $e){
+                }
+                catch (PDOException $e)
+                {
                     $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
                     $app -> redirect(_BASE_URL . '/admin/content/' . $PAGE_ID . '/?res=activate-content-false');
                     die();
                 }
+
                 if(_LOGGING == true)
                 {
                     $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
                 }
+
                 $app -> redirect(_BASE_URL . '/admin/content/' . $PAGE_ID . '/?res=reorder-content-true');
                 die();
-            } else {
+            }
+            else
+            {
                 $app -> redirect(_BASE_URL . '/admin/content/' . $PAGE_ID . '/?res=reorder-content-false');
                 die();
             }
@@ -285,13 +347,18 @@
         {
             $START = microtime(true);
             $USERNAME = $_SESSION['backend-user-username'];
+
             if(_LOGGING == true)
             {
                 $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
             }
-            if($PAGE_ID != '' && $CONTENT_ID != '' && $ACT_ORDER != ''){
+
+            if($PAGE_ID != '' && $CONTENT_ID != '' && $ACT_ORDER != '')
+            {
                 $NEW_ORDER = ($ACT_ORDER + 1);
-                try {
+
+                try
+                {
                     $UPDATE_CONTENT = $DBCON -> prepare('
                         UPDATE content 
                         SET 
@@ -315,6 +382,7 @@
                         AND content_page_id = :PAGE_ID 
                         LIMIT 1;
                     ');
+
                     $UPDATE_CONTENT -> execute(
                         array(
                             ':TEMP_ORDER' => 0,
@@ -324,18 +392,24 @@
                             ':CONTENT_ID' => $CONTENT_ID
                         )
                     );
-                } catch (PDOException $e){
+                }
+                catch (PDOException $e)
+                {
                     $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
                     $app -> redirect(_BASE_URL . '/admin/content/' . $PAGE_ID . '/?res=activate-content-false');
                     die();
                 }
+                
                 if(_LOGGING == true)
                 {
                     $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
                 }
+
                 $app -> redirect(_BASE_URL . '/admin/content/' . $PAGE_ID . '/?res=reorder-content-true');
                 die();
-            } else {
+            }
+            else
+            {
                 $app -> redirect(_BASE_URL . '/admin/content/' . $PAGE_ID . '/?res=reorder-content-false');
                 die();
             }
@@ -345,32 +419,43 @@
     $app -> get('/admin/content/:PAGE_ID/:CONTENT_ID/activate/', $ADMIN_CHECK, function ($PAGE_ID,$CONTENT_ID) use ($app,$DBCON)
         {
             $USERNAME = $_SESSION['backend-user-username'];
+
             if(_LOGGING == true)
             {
                 $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
             }
-            if($PAGE_ID != '' && $CONTENT_ID != ''){
-                try {
+
+            if($PAGE_ID != '' && $CONTENT_ID != '')
+            {
+                try
+                {
                     $UPDATE_CONTENT = $DBCON -> prepare('UPDATE content SET content_active = :CONTENT_ACTIVE WHERE content_page_id = :PAGE_ID AND content_id = :CONTENT_ID LIMIT 1;');
+
                     $UPDATE_CONTENT -> execute(
-                                        array(
-                                            ':CONTENT_ACTIVE' => 1,
-                                            ':PAGE_ID' => $PAGE_ID,
-                                            ':CONTENT_ID' => $CONTENT_ID,
-                                        )
-                                    );
-                } catch (PDOException $e){
+                        array(
+                            ':CONTENT_ACTIVE' => 1,
+                            ':PAGE_ID' => $PAGE_ID,
+                            ':CONTENT_ID' => $CONTENT_ID,
+                        )
+                    );
+                }
+                catch (PDOException $e)
+                {
                     $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
                     $app -> redirect(_BASE_URL . '/admin/content/' . $PAGE_ID . '/?res=activate-content-false');
                     die();
                 }
+
                 if(_LOGGING == true)
                 {
                     $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
                 }
+
                 $app -> redirect(_BASE_URL . '/admin/content/' . $PAGE_ID . '/?res=activate-content-true');
                 die();
-            } else {
+            }
+            else
+            {
                 $app -> redirect(_BASE_URL . '/admin/content/' . $PAGE_ID . '/?res=activate-content-false');
                 die();
             }
@@ -380,32 +465,43 @@
     $app -> get('/admin/content/:PAGE_ID/:CONTENT_ID/deactivate/', $ADMIN_CHECK, function ($PAGE_ID,$CONTENT_ID) use ($app,$DBCON)
         {
             $USERNAME = $_SESSION['backend-user-username'];
+
             if(_LOGGING == true)
             {
                 $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
             }
-            if($PAGE_ID != '' && $CONTENT_ID != ''){
-                try {
+
+            if($PAGE_ID != '' && $CONTENT_ID != '')
+            {
+                try
+                {
                     $UPDATE_CONTENT = $DBCON -> prepare('UPDATE content SET content_active = :CONTENT_ACTIVE WHERE content_page_id = :PAGE_ID AND content_id = :CONTENT_ID LIMIT 1;');
+
                     $UPDATE_CONTENT -> execute(
-                                        array(
-                                            ':CONTENT_ACTIVE' => 0,
-                                            ':PAGE_ID' => $PAGE_ID,
-                                            ':CONTENT_ID' => $CONTENT_ID,
-                                        )
-                                    );
-                } catch (PDOException $e){
+                        array(
+                            ':CONTENT_ACTIVE' => 0,
+                            ':PAGE_ID' => $PAGE_ID,
+                            ':CONTENT_ID' => $CONTENT_ID,
+                        )
+                    );
+                }
+                catch (PDOException $e)
+                {
                     $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
                     $app -> redirect(_BASE_URL . '/admin/content/' . $PAGE_ID . '/?res=deactivate-content-false');
                     die();
                 }
+
                 if(_LOGGING == true)
                 {
                     $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
                 }
+
                 $app -> redirect(_BASE_URL . '/admin/content/' . $PAGE_ID . '/?res=deactivate-content-true');
                 die();
-            } else {
+            }
+            else
+            {
                 $app -> redirect(_BASE_URL . '/admin/content/' . $PAGE_ID . '/?res=deactivate-content-false');
                 die();
             }
@@ -415,26 +511,35 @@
     $app -> get('/admin/content/:PAGE_ID/:CONTENT_ID/delete/', $ADMIN_CHECK, function ($PAGE_ID,$CONTENT_ID) use ($app,$DBCON)
         {
             $USERNAME = $_SESSION['backend-user-username'];
+
             if(_LOGGING == true)
             {
                 $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
             }
-            if($PAGE_ID != '' && $CONTENT_ID != ''){
-                try {
+
+            if($PAGE_ID != '' && $CONTENT_ID != '')
+            {
+                try
+                {
                     $DELETER = $DBCON -> prepare('
                         DELETE FROM content
                         WHERE content_id = :CONTENT_ID
                         LIMIT 1;
                     ');
+
                     $DELETER -> execute(array(':CONTENT_ID' => $CONTENT_ID));
                     $app -> redirect(_BASE_URL . '/admin/content/' . $PAGE_ID . '/?res=del-content-true');
                     die();
-                } catch (PDOException $e){
+                }
+                catch (PDOException $e)
+                {
                     $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
                     $app -> redirect(_BASE_URL . '/admin/content/' . $PAGE_ID . '/?res=del-content-false');
                     die();
                 }
-            } else {
+            }
+            else
+            {
                 $app -> redirect(_BASE_URL . '/admin/content/' . $PAGE_ID . '/?res=del-content-false');
                 die();
             }

@@ -9,8 +9,11 @@
             {
                 $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
             }
+
             $GUID = create_guid();
-            $app -> render('login.php', array(
+
+            $app -> render('login.php', 
+                array(
                     '_METHOD' => 'post',
                     'GUID' => $GUID,
                     '_ENCTYPE' => 'application/x-www-form-urlencoded',
@@ -27,8 +30,11 @@
             {
                 $app -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
             }
+
             $GUID = create_guid();
-            $app -> render('admin_login_error.php', array(
+
+            $app -> render('admin_login_error.php', 
+                array(
                     '_METHOD' => 'post',
                     'GUID' => $GUID,
                     '_ENCTYPE' => 'application/x-www-form-urlencoded',
@@ -46,18 +52,21 @@
             $_ADMIN_PASSWORD = crypt($_ADMIN_PASSWORD,_SALT);
             $_ADMIN_GUID = $app -> request() -> post('_admin_guid');
 
-            if($_ADMIN_GUID != $GUID){
+            if($_ADMIN_GUID != $GUID)
+            {
                 if(_LOGGING == true)
                 {
                     $app -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . 'Login (GUID) error - ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                 }
+
                 $app -> redirect(_BASE_URL . '/admin/login-error/');
                 die();
             }
 
             if($_ADMIN_USERNAME != '' && $_ADMIN_PASSWORD != '')
             {
-                try {
+                try 
+                {
                     $QUERY = $DBCON -> prepare('SELECT * FROM backenduser WHERE beu_username = :USERNAME AND beu_password = :PASSWORD AND beu_active = :ACTIVE AND beu_art = :ART LIMIT 1;');
                     $QUERY -> execute( 
                         array(
@@ -67,6 +76,7 @@
                             'ART' => 0,
                             ) 
                     );
+
                     $COUNTR = $QUERY -> rowCount();
                     $USER = $QUERY -> fetch();
 
@@ -77,13 +87,16 @@
                         $USER_ID = $USER['beu_id'];
                         $LAST_LOGIN = date('Y-m-d H:i:s');
 
-                        try {
+                        try 
+                        {
                             $QUERY = 'UPDATE backenduser SET beu_last_login = :LAST_LOGIN WHERE beu_id = :USER_ID LIMIT 1;';
                             $STMT = $DBCON -> prepare($QUERY);
                             $STMT -> bindParam(':LAST_LOGIN',$LAST_LOGIN,PDO::PARAM_STR);
                             $STMT -> bindParam(':USER_ID',$USER_ID,PDO::PARAM_INT);
                             $STMT -> execute();
-                        } catch (PDOException $e) {
+                        }
+                        catch (PDOException $e)
+                        {
                             $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
                             $app -> redirect(_BASE_URL . '/admin/login-error/');
                             die();
@@ -93,26 +106,35 @@
                         {
                             $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . 'Successful login ' . $_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                         }
+
                         $app -> redirect(_BASE_URL . '/admin/');
                         die();
-                    } else {
+                    }
+                    else
+                    {
                         if(_LOGGING == true)
                         {
                             $app -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . 'Login error - ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                         }
+
                         $app -> redirect(_BASE_URL . '/admin/login-error/');
                         die();
                     }
-                } catch (PDOException $e) {
+                }
+                catch (PDOException $e)
+                {
                     $app -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
                     $app -> redirect(_BASE_URL . '/admin/login-error/');
                     die();
                 }
-            } else {
+            }
+            else
+            {
                 if(_LOGGING == true)
                 {
                     $app -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . 'Login error - ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                 }
+
                 $app -> redirect(_BASE_URL . '/admin/login-error/');
                 die();
             }

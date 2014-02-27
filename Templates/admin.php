@@ -77,18 +77,22 @@
                         <div class="jumbotron">
                             <h2>Zu Ihrer Information:</h2>
                             <?php
-                                if($PAGES_COUNTR && $BACKEND_USER_COUNTR)
+                                if($PAGES_COUNTR || $BACKEND_USER_COUNTR || $UPLOADS_COUNTR)
                                 {
                                     ?>
                                         <br>
                                         <ul class="list-group">
                                               <li class="list-group-item">
                                                     <span class="badge"><?php echo $PAGES_COUNTR; ?></span>
-                                                    <a href="<?php echo _BASE_URL; ?>/admin/pages/" title="Seiten anzeigen">Anzahl Seiten</a>:
+                                                    <a href="<?php echo _BASE_URL; ?>/admin/pages/" title="Seiten anzeigen">Seiten</a>:
+                                              </li>
+                                              <li class="list-group-item">
+                                                    <span class="badge"><?php echo $UPLOADS_COUNTR; ?></span>
+                                                    <a href="<?php echo _BASE_URL; ?>/admin/media/" title="Uploads anzeigen">Uploads</a>:
                                               </li>
                                               <li class="list-group-item">
                                                     <span class="badge"><?php echo $BACKEND_USER_COUNTR; ?></span>
-                                                    <a href="<?php echo _BASE_URL; ?>/admin/user/" title="Benutzer anzeigen">Anzahl Benutzer</a>:
+                                                    <a href="<?php echo _BASE_URL; ?>/admin/user/" title="Benutzer anzeigen">Benutzer</a>:
                                               </li>
                                               <li class="list-group-item">
                                                     <a href="<?php echo _BASE_URL; ?>/Logfiles/<?php echo date('Ymd'); ?>.log" title="Logfile anzeigen" onclick="window.open(this.href);return false;">Aktuelles Logfile anzeigen</a>

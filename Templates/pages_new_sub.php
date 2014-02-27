@@ -154,7 +154,7 @@
                                 $("#submitter").attr("disabled", "disabled");
                                 var U = $('#page_name').val();
                                 var P = $('#page_url').val();
-                                if(U == '' || P == ''){
+                                if(U == '' || P == '' || P = 'admin'){
                                     if(U == '')
                                     {
                                         vex.dialog.alert(

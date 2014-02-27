@@ -115,8 +115,12 @@
             <script src="<?php echo _BASE_URL ?>/Assets/vex/js/vex.combined.min.js"></script>
             <script src="<?php echo _BASE_URL;?>/Assets/jasny-bootstrap-3.1.0-dist/js/jasny-bootstrap.min.js"></script>
             <script>
-                $(function () {
-                    'use strict';
+                $(function ()
+                    {
+                        'use strict';
+                        $('body').on('mouseover', '.dropdown-toggle', function(e){
+                            $(e.currentTarget).trigger('click')
+                        })
                         $( "#new_media_form" ).bind( "submit", function()
                             {
                                 $("#submitter").attr("disabled", "disabled");
@@ -138,8 +142,8 @@
                                 }
                             }
                         ); // EOF BIND NEW PAGE FORM
-
-                });
+                    }
+                );
             </script>
         </body>
     </html>

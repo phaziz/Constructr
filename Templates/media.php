@@ -111,6 +111,7 @@
                             <table class="datatable table table-bordered table-condensed table-striped table-hover">
                                 <thead>
                                     <tr>
+                                        <th class="center"><small>Vorschau</small></th>
                                         <th><small>Datei</small></th>
                                         <th><small>Alias</small></th>
                                         <th class="center"><small>Datum</small></th>
@@ -119,11 +120,13 @@
                                 </thead>
                                 <tbody>
                                     <?php
-                                        if($MEDIA){
+                                        if($MEDIA)
+                                        {
                                             foreach ($MEDIA as $MEDIA)
                                             {
                                                 $FILE_TYPE = strrchr($MEDIA['media_file'],'.');
                                                 echo '<tr>';
+                                                echo '<td class="center"><img src="' . _BASE_URL . '/' . $MEDIA['media_file'] . '" alt="' . $MEDIA['media_originalname'] . '" height="10%" width=""></td>';
                                                 echo '<td><small><strong>' . $MEDIA['media_originalname'] . '</small></td>';
                                                 echo '<td><small>' . $MEDIA['media_file'] . '</small></td>';
                                                 if($MEDIA['media_datetime'] != '0000-00-00 00:00:00'){
@@ -134,12 +137,10 @@
                                                 echo '<td class="center">';
                                                 echo '<a onclick="window.open(this.href);return false;" data-toggle="tooltip" data-placement="top" title="Einfache Vorschau" class="preview tt" href="' . _BASE_URL . '/' . $MEDIA['media_file'] . '"><button type="button" class="btn btn-warning btn-xs" title="Einfache Vorschau"><span class="glyphicon glyphicon-eye-close"></span></button></a>';
                                                 echo '&#160;';
-
                                                 if(in_array($FILE_TYPE,$IMAGES)){
                                                     echo '<a data-toggle="tooltip" data-placement="top" title="Detail-Vorschau" class="preview tt" href="' . _BASE_URL . '/admin/media/details/' . $MEDIA['media_id'] . '/"><button type="button" class="btn btn-info btn-xs" title="Detail-Vorschau"><span class="glyphicon glyphicon-eye-open"></span></button></a>';
                                                     echo '&#160;';
                                                 }
-
                                                 echo '<a data-toggle="tooltip" data-placement="top" title="Upload l&ouml;schen" class="deleter tt" href="' . _BASE_URL . '/admin/media/delete/' . $MEDIA['media_id'] . '/" title="Upload l&ouml;schen"><button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span></button></a>';
                                                 echo '</td>';
                                                 echo '</tr>';
@@ -181,8 +182,9 @@
                         $('.datatable').dataTable({
                             "aaSorting": [],
                             "aoColumns": [
-                                { "sWidth": "35%", "bSortable":true},
-                                { "sWidth": "35%", "bSortable":true},
+                                { "sWidth": "10%", "bSortable":false},
+                                { "sWidth": "30%", "bSortable":true},
+                                { "sWidth": "30%", "bSortable":true},
                                 { "sWidth": "15%", "bSortable":true},
                                 { "sWidth": "15%", "bSortable":false}
                             ],

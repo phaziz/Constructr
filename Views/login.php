@@ -67,7 +67,7 @@
             {
                 try 
                 {
-                    $QUERY = $DBCON -> prepare('SELECT * FROM backenduser WHERE beu_username = :USERNAME AND beu_password = :PASSWORD AND beu_active = :ACTIVE AND beu_art = :ART LIMIT 1;');
+                    $QUERY = $DBCON -> prepare('SELECT * FROM constructr_backenduser WHERE beu_username = :USERNAME AND beu_password = :PASSWORD AND beu_active = :ACTIVE AND beu_art = :ART LIMIT 1;');
                     $QUERY -> execute( 
                         array(
                             'USERNAME' => $_ADMIN_USERNAME,
@@ -89,7 +89,7 @@
 
                         try 
                         {
-                            $QUERY = 'UPDATE backenduser SET beu_last_login = :LAST_LOGIN WHERE beu_id = :USER_ID LIMIT 1;';
+                            $QUERY = 'UPDATE constructr_backenduser SET beu_last_login = :LAST_LOGIN WHERE beu_id = :USER_ID LIMIT 1;';
                             $STMT = $DBCON -> prepare($QUERY);
                             $STMT -> bindParam(':LAST_LOGIN',$LAST_LOGIN,PDO::PARAM_STR);
                             $STMT -> bindParam(':USER_ID',$USER_ID,PDO::PARAM_INT);

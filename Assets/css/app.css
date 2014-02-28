@@ -12,9 +12,12 @@ width: 100%;
 border-radius: 0px !important; 
 -moz-border-radius: 0px !important;
 -webkit-border-radius: 0px !important;
+font-size: 1.00em;
+border: none;
 }
 .navbar-brand{
-font-size: 1.0em;
+font-size: 1.00em;
+color: rgb(255,255,255) !important;
 }
 .jumbotron{
 background: rgb(253,253,253);
@@ -57,4 +60,11 @@ color: #fff;
 background: #000;
 border: 10px solid #ff0035;
 padding: 50px 50px 50px 50px;
+}
+.bootstrap-wysihtml5-insert-image-modal{
+border: 55px solid #fff;
+opacity: 0.8;
+-moz-opacity: 0.8;  
+-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";  
+filter:alpha(opacity=80);
 }

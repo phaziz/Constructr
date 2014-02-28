@@ -18,11 +18,11 @@
             }
 
             try {
-               $BACKENDUSER = $DBCON -> query('SELECT beu_id FROM backenduser;');
+               $BACKENDUSER = $DBCON -> query('SELECT beu_id FROM constructr_backenduser;');
                $BACKEND_USER_COUNTR = $BACKENDUSER -> rowCount();               
-               $PAGES = $DBCON -> query('SELECT pages_id FROM pages;');
+               $PAGES = $DBCON -> query('SELECT pages_id FROM constructr_pages;');
                $PAGES_COUNTR = $PAGES -> rowCount();
-               $UPLOADS = $DBCON -> query('SELECT media_id FROM media;');
+               $UPLOADS = $DBCON -> query('SELECT media_id FROM constructr_media;');
                $UPLOADS_COUNTR = $UPLOADS -> rowCount();
             }
             catch (PDOException $e) 

@@ -19,7 +19,7 @@
 
             try 
             {
-                $PAGE_NAME = $DBCON -> prepare('SELECT pages_name FROM pages WHERE pages_id = :PAGE_ID LIMIT 1;');
+                $PAGE_NAME = $DBCON -> prepare('SELECT pages_name FROM constructr_pages WHERE pages_id = :PAGE_ID LIMIT 1;');
 
                 $PAGE_NAME -> execute(
                     array(
@@ -28,7 +28,7 @@
                 );
 
                 $PAGE_NAME = $PAGE_NAME -> fetch();
-                $CONTENT = $DBCON -> prepare('SELECT * FROM content WHERE content_page_id = :PAGE_ID ORDER BY content_order ASC;');
+                $CONTENT = $DBCON -> prepare('SELECT * FROM constructr_content WHERE content_page_id = :PAGE_ID ORDER BY content_order ASC;');
 
                 $CONTENT -> execute(
                     array(
@@ -79,7 +79,7 @@
 
             try
             {
-                $PAGE_NAME = $DBCON -> prepare('SELECT pages_name FROM pages WHERE pages_id = :PAGE_ID LIMIT 1;');
+                $PAGE_NAME = $DBCON -> prepare('SELECT pages_name FROM constructr_pages WHERE pages_id = :PAGE_ID LIMIT 1;');
 
                 $PAGE_NAME -> execute(
                     array(
@@ -135,7 +135,7 @@
             {
                 try
                 {
-                    $QUERY = 'INSERT INTO content SET content_datetime = :CONTENT_DATETIME,content_order = :CONTENT_ORDER,content_page_id = :PAGE_ID,content_content = :CONTENT,content_active = :CONTENT_ACTIVE;';
+                    $QUERY = 'INSERT INTO constructr_content SET content_datetime = :CONTENT_DATETIME,content_order = :CONTENT_ORDER,content_page_id = :PAGE_ID,content_content = :CONTENT,content_active = :CONTENT_ACTIVE;';
                     $STMT = $DBCON -> prepare($QUERY);
                     $STMT -> bindParam(':CONTENT',$CONTENT,PDO::PARAM_STR);
                     $STMT -> bindParam(':CONTENT_DATETIME',$CONTENT_DATETIME,PDO::PARAM_STR);
@@ -174,7 +174,7 @@
             
             try
             {
-                $CONTENT = $DBCON -> prepare('SELECT * FROM content WHERE content_page_id = :PAGE_ID AND content_id = :CONTENT_ID LIMIT 1;');
+                $CONTENT = $DBCON -> prepare('SELECT * FROM constructr_content WHERE content_page_id = :PAGE_ID AND content_id = :CONTENT_ID LIMIT 1;');
 
                 $CONTENT -> execute(
                     array(
@@ -184,7 +184,7 @@
                 );
 
                 $CONTENT = $CONTENT -> fetch();
-                $PAGE_NAME = $DBCON -> prepare('SELECT pages_name FROM pages WHERE pages_id = :PAGE_ID LIMIT 1;');
+                $PAGE_NAME = $DBCON -> prepare('SELECT pages_name FROM constructr_pages WHERE pages_id = :PAGE_ID LIMIT 1;');
 
                 $PAGE_NAME -> execute(
                     array(
@@ -239,7 +239,7 @@
             {
                 try
                 {
-                    $UPDATE_PAGES = $DBCON -> prepare('UPDATE content SET content_content = :CONTENT, content_datetime = :CONTENT_DATETIME WHERE content_id = :CONTENT_ID AND content_page_id = :PAGE_ID LIMIT 1;');
+                    $UPDATE_PAGES = $DBCON -> prepare('UPDATE constructr_content SET content_content = :CONTENT, content_datetime = :CONTENT_DATETIME WHERE content_id = :CONTENT_ID AND content_page_id = :PAGE_ID LIMIT 1;');
 
                     $UPDATE_PAGES -> execute(
                         array(
@@ -287,14 +287,14 @@
                 try 
                 {
                     $UPDATE_CONTENT = $DBCON -> prepare('
-                        UPDATE content 
+                        UPDATE constructr_content 
                         SET 
                         content_order = :TEMP_ORDER 
                         WHERE content_order = :NEW_ORDER 
                         AND content_page_id = :PAGE_ID 
                         LIMIT 1;
 
-                        UPDATE content 
+                        UPDATE constructr_content 
                         SET 
                         content_order = :NEW_ORDER 
                         WHERE content_order = :ACT_ORDER 
@@ -302,7 +302,7 @@
                         AND content_page_id = :PAGE_ID 
                         LIMIT 1;
 
-                        UPDATE content 
+                        UPDATE constructr_content 
                         SET 
                         content_order = :ACT_ORDER 
                         WHERE content_order = :TEMP_ORDER 
@@ -360,14 +360,14 @@
                 try
                 {
                     $UPDATE_CONTENT = $DBCON -> prepare('
-                        UPDATE content 
+                        UPDATE constructr_content 
                         SET 
                         content_order = :TEMP_ORDER 
                         WHERE content_order = :NEW_ORDER 
                         AND content_page_id = :PAGE_ID 
                         LIMIT 1;
 
-                        UPDATE content 
+                        UPDATE constructr_content 
                         SET 
                         content_order = :NEW_ORDER 
                         WHERE content_order = :ACT_ORDER 
@@ -375,7 +375,7 @@
                         AND content_page_id = :PAGE_ID 
                         LIMIT 1;
 
-                        UPDATE content 
+                        UPDATE constructr_content 
                         SET 
                         content_order = :ACT_ORDER 
                         WHERE content_order = :TEMP_ORDER 
@@ -429,7 +429,7 @@
             {
                 try
                 {
-                    $UPDATE_CONTENT = $DBCON -> prepare('UPDATE content SET content_active = :CONTENT_ACTIVE WHERE content_page_id = :PAGE_ID AND content_id = :CONTENT_ID LIMIT 1;');
+                    $UPDATE_CONTENT = $DBCON -> prepare('UPDATE constructr_content SET content_active = :CONTENT_ACTIVE WHERE content_page_id = :PAGE_ID AND content_id = :CONTENT_ID LIMIT 1;');
 
                     $UPDATE_CONTENT -> execute(
                         array(
@@ -475,7 +475,7 @@
             {
                 try
                 {
-                    $UPDATE_CONTENT = $DBCON -> prepare('UPDATE content SET content_active = :CONTENT_ACTIVE WHERE content_page_id = :PAGE_ID AND content_id = :CONTENT_ID LIMIT 1;');
+                    $UPDATE_CONTENT = $DBCON -> prepare('UPDATE constructr_content SET content_active = :CONTENT_ACTIVE WHERE content_page_id = :PAGE_ID AND content_id = :CONTENT_ID LIMIT 1;');
 
                     $UPDATE_CONTENT -> execute(
                         array(
@@ -522,7 +522,7 @@
                 try
                 {
                     $DELETER = $DBCON -> prepare('
-                        DELETE FROM content
+                        DELETE FROM constructr_content
                         WHERE content_id = :CONTENT_ID
                         LIMIT 1;
                     ');

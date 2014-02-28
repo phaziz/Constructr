@@ -24,7 +24,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="<?php echo _BASE_URL ?>/admin/">Constructr</a>
+                    <a class="navbar-brand" href="<?php echo _BASE_URL ?>/admin/">ConstructrCMS</a>
                 </div>
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">                        
@@ -140,7 +140,14 @@
                                             {
                                                 echo '<tr>';
                                                 echo '<td><small>';
-                                                echo '<a href="' . _BASE_URL . '/admin/content/' . $PAGE_ID . '/' . $CONTENT['content_id'] . '/edit/" title="Inhalte bearbeiten">' . strip_tags($CONTENT['content_content']) . '</a></small></td>';
+                                                
+                                                if(strip_tags($CONTENT['content_content']) == ''){
+                                                    $CONTENT_LINKER = 'Bild';
+                                                } else {
+                                                    $CONTENT_LINKER = strip_tags($CONTENT['content_content']);
+                                                }
+
+                                                echo '<a href="' . _BASE_URL . '/admin/content/' . $PAGE_ID . '/' . $CONTENT['content_id'] . '/edit/" title="Inhalte bearbeiten">' . $CONTENT_LINKER . '</a></small></td>';
                                                 if($CONTENT['content_datetime'] != '0000-00-00 00:00:00'){
                                                     echo '<td class="center"><small>' . date("d.m.Y, H:i", strtotime(substr($CONTENT['content_datetime'], 0, 18))) . ' Uhr</small></td>';                                                
                                                 } else {

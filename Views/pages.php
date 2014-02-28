@@ -24,8 +24,8 @@
                              count(*)-1+(n.pages_lft>1) AS pages_level,
                              ((min(p.pages_rgt)-n.pages_rgt-(n.pages_lft>1))/2) > 0 AS pages_lower,
                              (((n.pages_lft-max(p.pages_lft)>1))) AS pages_upper
-                        FROM pages n,
-                             pages p
+                        FROM constructr_pages n,
+                             constructr_pages p
                        WHERE n.pages_lft BETWEEN p.pages_lft AND p.pages_rgt
                          AND (p.pages_id != n.pages_id OR n.pages_lft = 1)
                     GROUP BY n.pages_id
@@ -122,7 +122,7 @@
             try 
             {
                 $URL = $DBCON -> prepare('
-                    SELECT * FROM pages WHERE pages_url = :PAGE_URL;
+                    SELECT * FROM constructr_pages WHERE pages_url = :PAGE_URL;
                 ');
                 $URL -> execute(array(':PAGE_URL' => $PAGE_URL));
                 $URL_COUNTR = $URL -> rowCount();
@@ -142,7 +142,7 @@
 
             try 
             {
-                $PAGES = $DBCON -> query('SELECT pages_id FROM pages;');
+                $PAGES = $DBCON -> query('SELECT pages_id FROM constructr_pages;');
                 $PAGES_COUNTR = $PAGES -> rowCount();
             }
             catch (PDOException $e)
@@ -161,7 +161,7 @@
             {
                 try
                 {
-                    $PAGES = $DBCON -> query('SELECT * FROM pages ORDER BY pages_lft ASC LIMIT 1;');
+                    $PAGES = $DBCON -> query('SELECT * FROM constructr_pages ORDER BY pages_lft ASC LIMIT 1;');
                     $PAGES = $PAGES -> fetch();
                     $PAGE_LFT = $PAGES['pages_rgt'];
                     $PAGE_RGT = ($PAGES['pages_rgt'] + 1);
@@ -179,7 +179,7 @@
                 try
                 {
                     $UPDATE_PAGES = $DBCON -> prepare('
-                        UPDATE pages
+                        UPDATE constructr_pages
                         SET
                         pages_rgt = pages_rgt + 2 
                         WHERE pages_rgt >= :PAGE_LFT;
@@ -199,7 +199,7 @@
 
                 try
                 {
-                    $QUERY = 'INSERT INTO pages SET pages_datetime = :PAGE_DATETIME,pages_name = :PAGE_NAME,pages_url = :PAGE_URL,pages_title = :PAGE_TITLE,pages_description = :PAGE_DESCRIPTION,pages_keywords = :PAGE_KEYWORDS,pages_lft = :PAGE_LFT,pages_rgt = :PAGE_RGT,pages_active = :PAGE_ACTIVE;';
+                    $QUERY = 'INSERT INTO constructr_pages SET pages_datetime = :PAGE_DATETIME,pages_name = :PAGE_NAME,pages_url = :PAGE_URL,pages_title = :PAGE_TITLE,pages_description = :PAGE_DESCRIPTION,pages_keywords = :PAGE_KEYWORDS,pages_lft = :PAGE_LFT,pages_rgt = :PAGE_RGT,pages_active = :PAGE_ACTIVE;';
                     $STMT = $DBCON -> prepare($QUERY);
                     $STMT -> bindParam(':PAGE_NAME',$PAGE_NAME,PDO::PARAM_STR);
                     $STMT -> bindParam(':PAGE_URL',$PAGE_URL,PDO::PARAM_STR);
@@ -303,7 +303,7 @@
             try
             {
                 $URL = $DBCON -> prepare('
-                    SELECT * FROM pages WHERE pages_url = :PAGE_URL;
+                    SELECT * FROM constructr_pages WHERE pages_url = :PAGE_URL;
                 ');
                 $URL -> execute(array(':PAGE_URL' => $PAGE_URL));
                 $URL_COUNTR = $URL -> rowCount();
@@ -326,14 +326,14 @@
                 try
                 {
                     $UPDATE_PAGES_LFT = $DBCON -> prepare('
-                        UPDATE pages
+                        UPDATE constructr_pages
                         SET
                         pages_lft = pages_lft+2
                         WHERE pages_lft >= :PAGE_LFT
                     ');
                     $UPDATE_PAGES_LFT -> execute(array(':PAGE_LFT' => $PAGE_LFT));
                     $UPDATE_PAGES_LFT = $DBCON -> prepare('
-                        UPDATE pages
+                        UPDATE constructr_pages
                         SET
                         pages_rgt = pages_rgt+2
                         WHERE pages_rgt >= :PAGE_LFT
@@ -350,7 +350,7 @@
 
                 try
                 {
-                    $QUERY = 'INSERT INTO pages SET pages_datetime = :PAGE_DATETIME,pages_name = :PAGE_NAME,pages_url = :PAGE_URL,pages_title = :PAGE_TITLE,pages_description = :PAGE_DESCRIPTION,pages_keywords = :PAGE_KEYWORDS,pages_lft = :PAGE_LFT,pages_rgt = :PAGE_RGT,pages_active = :PAGE_ACTIVE;';
+                    $QUERY = 'INSERT INTO constructr_pages SET pages_datetime = :PAGE_DATETIME,pages_name = :PAGE_NAME,pages_url = :PAGE_URL,pages_title = :PAGE_TITLE,pages_description = :PAGE_DESCRIPTION,pages_keywords = :PAGE_KEYWORDS,pages_lft = :PAGE_LFT,pages_rgt = :PAGE_RGT,pages_active = :PAGE_ACTIVE;';
                     $STMT = $DBCON -> prepare($QUERY);
                     $STMT -> bindParam(':PAGE_NAME',$PAGE_NAME,PDO::PARAM_STR);
                     $STMT -> bindParam(':PAGE_URL',$PAGE_URL,PDO::PARAM_STR);
@@ -405,7 +405,7 @@
 
             try
             {
-                $PAGE = $DBCON -> prepare('SELECT * FROM pages WHERE pages_id = :PAGE_ID LIMIT 1;');
+                $PAGE = $DBCON -> prepare('SELECT * FROM constructr_pages WHERE pages_id = :PAGE_ID LIMIT 1;');
                 $PAGE -> execute(
                     array(
                         ':PAGE_ID' => $PAGE_ID
@@ -463,7 +463,7 @@
                 try
                 {
                     $UPDATE_PAGES = $DBCON -> prepare('
-                        UPDATE pages
+                        UPDATE constructr_pages
                         SET
                         pages_name = :PAGE_NAME,
                         pages_url = :PAGE_URL, 
@@ -530,7 +530,7 @@
             {
                 try
                 {
-                    $UPDATE_PAGES = $DBCON -> prepare('UPDATE pages SET pages_active = :PAGE_ACTIVE WHERE pages_id = :PAGE_ID LIMIT 1;');
+                    $UPDATE_PAGES = $DBCON -> prepare('UPDATE constructr_pages SET pages_active = :PAGE_ACTIVE WHERE pages_id = :PAGE_ID LIMIT 1;');
                     $UPDATE_PAGES -> execute(
                         array(
                             ':PAGE_ACTIVE' => 1,
@@ -574,7 +574,7 @@
             {
                 try
                 {
-                    $UPDATE_PAGES = $DBCON -> prepare('UPDATE pages SET pages_active = :PAGE_ACTIVE WHERE pages_id = :PAGE_ID LIMIT 1;');
+                    $UPDATE_PAGES = $DBCON -> prepare('UPDATE constructr_pages SET pages_active = :PAGE_ACTIVE WHERE pages_id = :PAGE_ID LIMIT 1;');
                     $UPDATE_PAGES -> execute(
                         array(
                             ':PAGE_ACTIVE' => 0,
@@ -619,7 +619,7 @@
                 try
                 {
                     $CONTENT = $DBCON -> prepare('
-                        SELECT * FROM content WHERE content_page_id = :PAGE_ID LIMIT 1;
+                        SELECT * FROM constructr_content WHERE content_page_id = :PAGE_ID LIMIT 1;
                     ');
                     $CONTENT -> execute(array(':PAGE_ID' => $PAGE_ID));
                     $CONTENT_COUNTR = $CONTENT -> rowCount();
@@ -640,7 +640,7 @@
                 try
                 {
                     $DELETER = $DBCON -> prepare('
-                        DELETE FROM pages
+                        DELETE FROM constructr_pages
                         WHERE pages_id = :PAGE_ID
                         LIMIT 1;
                     ');
@@ -656,7 +656,7 @@
                 try
                 {
                     $UPDATEER = $DBCON -> prepare('
-                        UPDATE pages
+                        UPDATE constructr_pages
                         SET
                         pages_lft = pages_lft-1, pages_rgt = pages_rgt-1
                         WHERE pages_lft BETWEEN :PAGE_LFT AND :PAGE_RGT;
@@ -673,7 +673,7 @@
                 try
                 {
                     $UPDATEER = $DBCON -> prepare('
-                        UPDATE pages
+                        UPDATE constructr_pages
                         SET
                         pages_lft = pages_lft-2 WHERE pages_lft > :PAGE_RGT;
                     ');
@@ -689,7 +689,7 @@
                 try
                 {
                     $UPDATEER = $DBCON -> prepare('
-                        UPDATE pages
+                        UPDATE constructr_pages
                         SET
                         pages_rgt = pages_rgt-2 WHERE pages_rgt > :PAGE_RGT;
                     ');
@@ -735,7 +735,7 @@
                 try
                 {
                     $CONTENT = $DBCON -> prepare('
-                        SELECT * FROM content WHERE content_page_id = :PAGE_ID LIMIT 1;
+                        SELECT * FROM constructr_content WHERE content_page_id = :PAGE_ID LIMIT 1;
                     ');
                     $CONTENT -> execute(array(':PAGE_ID' => $PAGE_ID));
                     $CONTENT_COUNTR = $CONTENT -> rowCount();
@@ -756,7 +756,7 @@
                 try
                 {
                     $DELETER = $DBCON -> prepare('
-                        DELETE FROM pages
+                        DELETE FROM constructr_pages
                         WHERE pages_lft BETWEEN :PAGE_LFT AND :PAGE_RGT;
                     ');
                     $DELETER -> execute(array(':PAGE_LFT' => $PAGE_LFT,':PAGE_RGT' => $PAGE_RGT));
@@ -771,7 +771,7 @@
                 try
                 {
                     $UPDATEER = $DBCON -> prepare('
-                        UPDATE pages
+                        UPDATE constructr_pages
                         SET pages_lft = pages_lft - ROUND((:PAGE_RGT-:PAGE_LFT+1))
                         WHERE pages_lft > :PAGE_RGT;
                     ');
@@ -787,7 +787,7 @@
                 try
                 {
                     $UPDATEER = $DBCON -> prepare('
-                        UPDATE pages
+                        UPDATE constructr_pages
                         SET pages_rgt = pages_rgt - ROUND((:PAGE_RGT-:PAGE_LFT+1))
                         WHERE pages_rgt > :PAGE_RGT;
                     ');
@@ -834,7 +834,7 @@
                 {
                     $SELEKTOR = $DBCON -> prepare('
                         SELECT * 
-                        FROM pages
+                        FROM constructr_pages
                         WHERE pages_id = :PAGE_ID
                         LIMIT 1;
                     ');
@@ -865,7 +865,7 @@
                     {
                         $SELECT_TARGET_PAGE = $DBCON -> prepare('
                             SELECT * 
-                            FROM pages
+                            FROM constructr_pages
                             WHERE pages_rgt = :TARGET_PAGE
                             LIMIT 1;
                         ');
@@ -890,7 +890,7 @@
                     {
                         $SELECT_TARGET_PAGE = $DBCON -> prepare('
                             SELECT * 
-                            FROM pages
+                            FROM constructr_pages
                             WHERE pages_lft = :TARGET_PAGE
                             LIMIT 1;
                         ');
@@ -915,7 +915,7 @@
                     try
                     {
                         $UPDATE_PAGES = $DBCON -> prepare('
-                            UPDATE pages
+                            UPDATE constructr_pages
                             SET
                                 pages_lft = :TARGET_PAGE_LFT,
                                 pages_rgt = :TARGET_PAGE_RGT
@@ -923,7 +923,7 @@
                                 pages_id = :PAGE_ID
                             LIMIT 1;
 
-                            UPDATE pages
+                            UPDATE constructr_pages
                             SET
                                 pages_lft = :PAGE_LFT,
                                 pages_rgt = :PAGE_RGT
@@ -965,13 +965,13 @@
                         try
                         {
                             $UPDATE_PAGES = $DBCON -> prepare('
-                                UPDATE pages
+                                UPDATE constructr_pages
                                 SET
                                 pages_temp_marker = :TEMP_MARKER
                                 WHERE 
                                 pages_lft BETWEEN :TARGET_PAGE_LFT AND :TARGET_PAGE_RGT;
         
-                                UPDATE pages
+                                UPDATE constructr_pages
                                 SET
                                 pages_lft = (pages_lft - (:TARGET_CHILDREN_COUNTER * 2)),
                                 pages_rgt = (pages_rgt - (:TARGET_CHILDREN_COUNTER * 2))
@@ -980,7 +980,7 @@
                                 AND
                                 pages_temp_marker = :EMPTY_VALUE;
         
-                                UPDATE pages
+                                UPDATE constructr_pages
                                 SET
                                 pages_lft = (pages_lft + (:CHILDREN_COUNTER * 2)),
                                 pages_rgt = (pages_rgt + (:CHILDREN_COUNTER * 2))
@@ -989,7 +989,7 @@
                                 AND
                                 pages_temp_marker = :TEMP_MARKER;
         
-                                UPDATE pages
+                                UPDATE constructr_pages
                                 SET
                                 pages_temp_marker = :EMPTY_VALUE
                                 WHERE
@@ -1026,13 +1026,13 @@
                         try
                         {
                             $UPDATE_PAGES = $DBCON -> prepare('
-                                UPDATE pages
+                                UPDATE constructr_pages
                                 SET
                                 pages_temp_marker = :TEMP_MARKER
                                 WHERE 
                                 pages_lft BETWEEN :TARGET_PAGE_LFT AND :TARGET_PAGE_RGT;
         
-                                UPDATE pages
+                                UPDATE constructr_pages
                                 SET
                                 pages_lft = (pages_lft + (:TARGET_CHILDREN_COUNTER * 2)),
                                 pages_rgt = (pages_rgt + (:TARGET_CHILDREN_COUNTER * 2))
@@ -1041,7 +1041,7 @@
                                 AND
                                 pages_temp_marker = :EMPTY_VALUE;
         
-                                UPDATE pages
+                                UPDATE constructr_pages
                                 SET
                                 pages_lft = (pages_lft - (:CHILDREN_COUNTER * 2)),
                                 pages_rgt = (pages_rgt - (:CHILDREN_COUNTER * 2))
@@ -1049,8 +1049,8 @@
                                 pages_lft BETWEEN :TARGET_PAGE_LFT AND :TARGET_PAGE_RGT
                                 AND
                                 pages_temp_marker = :TEMP_MARKER;
-        
-                                UPDATE pages
+
+                                UPDATE constructr_pages
                                 SET
                                 pages_temp_marker = :EMPTY_VALUE
                                 WHERE

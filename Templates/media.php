@@ -24,7 +24,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="<?php echo _BASE_URL ?>/admin/">Constructr</a>
+                    <a class="navbar-brand" href="<?php echo _BASE_URL ?>/admin/">ConstructrCMS</a>
                 </div>
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">                        
@@ -128,7 +128,7 @@
                                                 echo '<tr>';
                                                 echo '<td class="center"><img src="' . _BASE_URL . '/' . $MEDIA['media_file'] . '" alt="' . $MEDIA['media_originalname'] . '" height="10%" width=""></td>';
                                                 echo '<td><small><strong>' . $MEDIA['media_originalname'] . '</small></td>';
-                                                echo '<td><small>' . $MEDIA['media_file'] . '</small></td>';
+                                                echo '<td><small>' . _BASE_URL . '/' . $MEDIA['media_file'] . '</small></td>';
                                                 if($MEDIA['media_datetime'] != '0000-00-00 00:00:00'){
                                                     echo '<td class="center"><small>' . date("d.m.Y, H:i", strtotime(substr($MEDIA['media_datetime'], 0, 18))) . ' Uhr</small></td>';                                                
                                                 } else {

@@ -88,7 +88,7 @@
         {
             try
             {
-                $QUERY = $DBCON -> prepare('SELECT * FROM backenduser WHERE beu_username = :USERNAME AND beu_active = :ACTIVE LIMIT 1;');
+                $QUERY = $DBCON -> prepare('SELECT * FROM constructr_backenduser WHERE beu_username = :USERNAME AND beu_active = :ACTIVE LIMIT 1;');
                 $QUERY -> execute( 
                     array(
                         'USERNAME' => $_SESSION['backend-user-username'],

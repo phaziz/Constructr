@@ -16,7 +16,7 @@
     session_start();
 
     define('_BASE_URL','http://' . $_SERVER['HTTP_HOST'] . '');
-    define('_VERSION','20140227');
+    define('_VERSION','20140228');
     define('_SALT','$2y$07$R.gJb2U2N.FmZ4hPp1y2CN$');
     define('_LOGGING',true);
     define('_DEBUGGING',true);
@@ -33,7 +33,7 @@
 
     \Slim\Slim::registerAutoloader();
 
-    $HOSTNAME = "";
+    $HOSTNAME = "localhost";
     $DATABASE = "";
     $USERNAME = "";
     $PASSWORD = "";
@@ -103,6 +103,7 @@
                 $FULL_ROUTE;
                 $PAGES;
                 $CONTENT;
+                $PAGE_DATA;
 
                 foreach($ROUTE as $ROUTE)
                 {
@@ -116,7 +117,7 @@
 
                 try
                 {
-                   $PAGES = $DBCON -> query('SELECT * FROM pages ORDER BY pages_lft ASC;');
+                   $PAGES = $DBCON -> query('SELECT * FROM constructr_pages ORDER BY pages_lft ASC;');
                    $PAGES = $PAGES -> fetchAll();
                 }
                 catch (PDOException $e)
@@ -134,7 +135,7 @@
                             try
                             {
                                 $HOMEPAGE = $DBCON -> prepare('
-                                    SELECT pages_id FROM pages WHERE pages_lft = :NESTED_SETS_INIT LIMIT 1;
+                                    SELECT * FROM constructr_pages WHERE pages_lft = :NESTED_SETS_INIT LIMIT 1;
                                 ');
     
                                 $INIT = 1;
@@ -145,6 +146,7 @@
                                     )
                                 );
                                 $HOMEPAGE = $HOMEPAGE -> fetch();
+                                $PAGE_DATA = $HOMEPAGE;
                             }
                             catch (PDOException $e)
                             {
@@ -157,7 +159,7 @@
                             try
                             {
                                 $CONTENT = $DBCON -> prepare('
-                                    SELECT * FROM content WHERE content_page_id = :PAGE_ID;
+                                    SELECT * FROM constructr_content WHERE content_page_id = :PAGE_ID ORDER BY content_order ASC;
                                 ');
 
                                 $CONTENT -> execute(
@@ -178,8 +180,20 @@
                             {
                                 try
                                 {
+                                    $ACT_PAGE = $DBCON -> prepare('
+                                        SELECT * FROM constructr_pages WHERE pages_id = :PAGE_ID LIMIT 1;
+                                    ');
+
+                                    $ACT_PAGE -> execute(
+                                        array(
+                                            ':PAGE_ID' => $PAGE['pages_id'] 
+                                        )
+                                    );
+
+                                    $PAGE_DATA = $ACT_PAGE -> fetch();
+
                                     $CONTENT = $DBCON -> prepare('
-                                        SELECT * FROM content WHERE content_page_id = :PAGE_ID;
+                                        SELECT * FROM constructr_content WHERE content_page_id = :PAGE_ID ORDER BY content_order ASC;
                                     ');
     
                                     $CONTENT -> execute(
@@ -195,12 +209,13 @@
                                 }
                             }    
                         }                        
-                    }    
+                    }
                 }
 
                 $app -> render('index.php',
                     array(
                         'PAGES' => $PAGES,
+                        'PAGE_DATA' => $PAGE_DATA,
                         'CONTENT' => $CONTENT,
                     )
                 );

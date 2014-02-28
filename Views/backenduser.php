@@ -16,7 +16,7 @@
 
             try
             {
-               $BACKENDUSER = $DBCON -> query('SELECT * FROM backenduser ORDER BY beu_id');
+               $BACKENDUSER = $DBCON -> query('SELECT * FROM constructr_backenduser ORDER BY beu_id');
                $COUNTR = $BACKENDUSER -> rowCount();
             }
             catch (PDOException $e) 
@@ -128,7 +128,7 @@
             {
                 try
                 {
-                    $BACKENDUSER = $DBCON -> prepare('SELECT * FROM backenduser WHERE beu_username = :USERNAME LIMIT 1;');
+                    $BACKENDUSER = $DBCON -> prepare('SELECT * FROM constructr_backenduser WHERE beu_username = :USERNAME LIMIT 1;');
 
                     $BACKENDUSER -> execute(
                         array(
@@ -190,7 +190,7 @@
             {
                 try
                 {
-                    $BACKENDUSER = $DBCON -> prepare('SELECT * FROM backenduser WHERE beu_username = :USERNAME LIMIT 1;');
+                    $BACKENDUSER = $DBCON -> prepare('SELECT * FROM constructr_backenduser WHERE beu_username = :USERNAME LIMIT 1;');
 
                     $BACKENDUSER -> execute(
                         array(
@@ -269,7 +269,7 @@
             {
                 try
                 {
-                    $QUERY = $DBCON -> prepare('INSERT INTO backenduser SET beu_username = :USERNAME,beu_password = :PASSWORD,beu_email = :EMAIL,beu_art = :ART,beu_last_login  = :LAST_LOGIN,beu_active = :ACTIVE;');
+                    $QUERY = $DBCON -> prepare('INSERT INTO constructr_backenduser SET beu_username = :USERNAME,beu_password = :PASSWORD,beu_email = :EMAIL,beu_art = :ART,beu_last_login  = :LAST_LOGIN,beu_active = :ACTIVE;');
 
                     $QUERY -> execute( 
                         array(
@@ -322,7 +322,7 @@
 
             try
             {
-                $BACKENDUSER = $DBCON -> prepare('SELECT * FROM backenduser WHERE beu_id = :USER_ID LIMIT 1;');
+                $BACKENDUSER = $DBCON -> prepare('SELECT * FROM constructr_backenduser WHERE beu_id = :USER_ID LIMIT 1;');
 
                 $BACKENDUSER -> execute(
                     array(
@@ -405,7 +405,7 @@
             {
                 try
                 {
-                    $QUERY = 'UPDATE backenduser SET beu_username = :USERNAME,beu_password = :PASSWORD,beu_email = :EMAIL,beu_art = :ART,beu_active = :ACTIVE WHERE beu_id = :USER_ID LIMIT 1;';
+                    $QUERY = 'UPDATE constructr_backenduser SET beu_username = :USERNAME,beu_password = :PASSWORD,beu_email = :EMAIL,beu_art = :ART,beu_active = :ACTIVE WHERE beu_id = :USER_ID LIMIT 1;';
                     $STMT = $DBCON -> prepare($QUERY);
                     $STMT -> bindParam(':USERNAME',$USERNAME,PDO::PARAM_STR);
                     $STMT -> bindParam(':PASSWORD',$PASSWORD,PDO::PARAM_STR);
@@ -447,7 +447,7 @@
             {
                 try
                 {
-                    $QUERY = $DBCON -> prepare('UPDATE backenduser SET beu_active = :INACTIVE WHERE beu_id = :USER_ID LIMIT 1;');
+                    $QUERY = $DBCON -> prepare('UPDATE constructr_backenduser SET beu_active = :INACTIVE WHERE beu_id = :USER_ID LIMIT 1;');
                     $QUERY -> execute( 
                         array(
                             'INACTIVE' => 0,
@@ -489,7 +489,7 @@
             {
                 try
                 {
-                    $QUERY = $DBCON -> prepare('UPDATE backenduser SET beu_active = :INACTIVE WHERE beu_id = :USER_ID LIMIT 1;');
+                    $QUERY = $DBCON -> prepare('UPDATE constructr_backenduser SET beu_active = :INACTIVE WHERE beu_id = :USER_ID LIMIT 1;');
 
                     $QUERY -> execute( 
                         array(

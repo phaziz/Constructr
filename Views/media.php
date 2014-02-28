@@ -18,7 +18,7 @@
 
             try
             {
-               $MEDIA = $DBCON -> query('SELECT * FROM media ORDER BY media_datetime DESC;');
+               $MEDIA = $DBCON -> query('SELECT * FROM constructr_media ORDER BY media_datetime DESC;');
                $MEDIA_COUNTER = $MEDIA -> rowCount();
             }
             catch (PDOException $e)
@@ -100,7 +100,7 @@
             {
                 try
                 {
-                    $QUERY = 'INSERT INTO media SET media_datetime = :DATETIME,media_file = :MEDIA_FILE,media_originalname = :ORIGINALNAME;';
+                    $QUERY = 'INSERT INTO constructr_media SET media_datetime = :DATETIME,media_file = :MEDIA_FILE,media_originalname = :ORIGINALNAME;';
                     $STMT = $DBCON -> prepare($QUERY);
                     $STMT -> bindParam(':DATETIME',$DATETIME,PDO::PARAM_STR);
                     $STMT -> bindParam(':MEDIA_FILE',$NEW_UPLOAD,PDO::PARAM_STR);
@@ -147,7 +147,7 @@
                 try
                 {
                     $DELETER = $DBCON -> prepare('
-                        DELETE FROM media
+                        DELETE FROM constructr_media
                         WHERE media_id = :MEDIA_ID
                         LIMIT 1;
                     ');
@@ -192,7 +192,7 @@
             {
                 try
                 {
-                    $DETAILS = $DBCON -> prepare('SELECT * FROM media WHERE media_id = :MEDIA_ID LIMIT 1;');
+                    $DETAILS = $DBCON -> prepare('SELECT * FROM constructr_media WHERE media_id = :MEDIA_ID LIMIT 1;');
                     $DETAILS -> execute(
                         array(
                             ':MEDIA_ID' => $MEDIA_ID

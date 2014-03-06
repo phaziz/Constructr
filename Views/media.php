@@ -5,7 +5,7 @@
      * DER ANFANG ALLEN ÜBELS...
      * 
      * */
-    $app -> get('/admin/media(/)', $ADMIN_CHECK, function () use ($app,$DBCON)
+    $constructr -> get('/constructr/media(/)', $ADMIN_CHECK, function () use ($constructr,$DBCON)
         {
             $START = microtime(true);
             $USERNAME = $_SESSION['backend-user-username'];
@@ -13,7 +13,7 @@
 
             if(_LOGGING == true)
             {
-                $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
+                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
             }
 
             try
@@ -23,23 +23,24 @@
             }
             catch (PDOException $e)
             {
-                $app -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());   
-                $app -> redirect(_BASE_URL . '/admin/');             
+                $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());   
+                $constructr -> redirect(_BASE_URL . '/constructr/');             
                 die();
             }
 
             $IMAGES = array('.jpg','.jepg','.JPG','.JPEG','.gif','.GIF','.png','.PNG');
             $MEM = 0;
             $MEM = number_format(((memory_get_usage()/1014)/1024),2,',','.') . ' MB';
-            $app -> render('media.php',
-                array(
+            $constructr -> render('media.php',
+                array
+                (
                     'MEM' => $MEM,
                     'MEDIA' => $MEDIA,
                     'IMAGES' => $IMAGES,
                     'MEDIA_COUNTER' => $MEDIA_COUNTER,
                     'USERNAME' => $USERNAME,
                     'SUBTITLE' => 'Admin-Dashboard / Medienverwaltung',
-                    'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.',
+                    'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.'
                 )
             );
             die();
@@ -51,39 +52,40 @@
      * 
      * */
 
-    $app -> get('/admin/media/new(/)', $ADMIN_CHECK, function () use ($app,$DBCON)
-    {
-        $START = microtime(true);
-        $USERNAME = $_SESSION['backend-user-username'];
-
-        if(_LOGGING == true)
+    $constructr -> get('/constructr/media/new(/)', $ADMIN_CHECK, function () use ($constructr,$DBCON)
         {
-            $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
-        }
-
-        $MEM = 0;
-        $MEM = number_format(((memory_get_usage()/1014)/1024),2,',','.') . ' MB';
-
-        $app -> render('media_new.php',
-            array(
-                'MEM' => $MEM,
-                'USERNAME' => $USERNAME,
-                'FORM_ACTION' => _BASE_URL . '/admin/media/new/',
-                'FORM_METHOD' => 'post',
-                'FORM_ENCTYPE' => 'multipart/form-data',
-                'SUBTITLE' => 'Admin-Dashboard / Medienverwaltung - Neuer Upload',
-                'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.',
+            $START = microtime(true);
+            $USERNAME = $_SESSION['backend-user-username'];
+    
+            if(_LOGGING == true)
+            {
+                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
+            }
+    
+            $MEM = 0;
+            $MEM = number_format(((memory_get_usage()/1014)/1024),2,',','.') . ' MB';
+    
+            $constructr -> render('media_new.php',
+                array
+                (
+                    'MEM' => $MEM,
+                    'USERNAME' => $USERNAME,
+                    'FORM_ACTION' => _BASE_URL . '/constructr/media/new/',
+                    'FORM_METHOD' => 'post',
+                    'FORM_ENCTYPE' => 'multipart/form-data',
+                    'SUBTITLE' => 'Admin-Dashboard / Medienverwaltung - Neuer Upload',
+                    'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.'
                 )
             );
             die();
         }
     );
     
-    $app -> post('/admin/media/new/', $ADMIN_CHECK, function () use ($app,$DBCON)
+    $constructr -> post('/constructr/media/new/', $ADMIN_CHECK, function () use ($constructr,$DBCON)
         {
             if(_LOGGING == true)
             {
-                $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
+                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
             }
 
             $DATETIME = date('Y-m-d H:i:s');
@@ -109,37 +111,37 @@
                 }
                 catch (PDOException $e)
                 {
-                    $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                    $app -> redirect(_BASE_URL . '/admin/media/?res=create-media-false');
+                    $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
+                    $constructr -> redirect(_BASE_URL . '/constructr/media/?res=create-media-false');
                     die();
                 }
 
                 if(_LOGGING == true)
                 {
-                    $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
+                    $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
                 }
 
-                $app -> redirect(_BASE_URL . '/admin/media/?res=create-media-true');
+                $constructr -> redirect(_BASE_URL . '/constructr/media/?res=create-media-true');
                 die();
             }
             else
             {
                 if(_LOGGING == true)
                 {
-                    $app -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
+                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
                 }
 
-                $app -> redirect(_BASE_URL . '/admin/media/?res=create-media-false');
+                $constructr -> redirect(_BASE_URL . '/constructr/media/?res=create-media-false');
                 die();
             }
         }
     );
 
-    $app -> get('/admin/media/delete/:MEDIA_ID/', $ADMIN_CHECK, function ($MEDIA_ID) use ($app,$DBCON)
+    $constructr -> get('/constructr/media/delete/:MEDIA_ID/', $ADMIN_CHECK, function ($MEDIA_ID) use ($constructr,$DBCON)
         {
             if(_LOGGING == true)
             {
-                $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
             }
 
             if($MEDIA_ID != '')
@@ -151,41 +153,47 @@
                         WHERE media_id = :MEDIA_ID
                         LIMIT 1;
                     ');
-                    $DELETER -> execute(array(':MEDIA_ID' => $MEDIA_ID));
+                    
+                    $DELETER -> execute(
+                        array
+                        (
+                            ':MEDIA_ID' => $MEDIA_ID
+                        )
+                    );
                 }
                 catch (PDOException $e)
                 {
-                    $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                    $app -> redirect(_BASE_URL . '/admin/media/?res=del-media-false');
+                    $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
+                    $constructr -> redirect(_BASE_URL . '/constructr/media/?res=del-media-false');
                     die();
                 }
 
                 if(_LOGGING == true)
                 {
-                    $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                    $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                 }
 
-                $app -> redirect(_BASE_URL . '/admin/media/?res=del-media-true');
+                $constructr -> redirect(_BASE_URL . '/constructr/media/?res=del-media-true');
                 die();
             }
             else
             {
                 if(_LOGGING == true)
                 {
-                    $app -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                 }
 
-                $app -> redirect(_BASE_URL . '/admin/media/?res=del-media-false');
+                $constructr -> redirect(_BASE_URL . '/constructr/media/?res=del-media-false');
                 die();
             }
         }
     );
 
-    $app -> get('/admin/media/details/:MEDIA_ID/', $ADMIN_CHECK, function ($MEDIA_ID) use ($app,$DBCON)
+    $constructr -> get('/constructr/media/details/:MEDIA_ID/', $ADMIN_CHECK, function ($MEDIA_ID) use ($constructr,$DBCON)
         {
             if(_LOGGING == true)
             {
-                $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
             }
 
             if($MEDIA_ID != '')
@@ -193,27 +201,31 @@
                 try
                 {
                     $DETAILS = $DBCON -> prepare('SELECT * FROM constructr_media WHERE media_id = :MEDIA_ID LIMIT 1;');
+
                     $DETAILS -> execute(
-                        array(
+                        array
+                        (
                             ':MEDIA_ID' => $MEDIA_ID
                         )
                     );
+
                     $DETAILS = $DETAILS -> fetch();
                 }
                 catch (PDOException $e)
                 {
-                    $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                    $app -> redirect(_BASE_URL . '/admin/media/?res=del-media-false');
+                    $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
+                    $constructr -> redirect(_BASE_URL . '/constructr/media/?res=del-media-false');
                     die();
                 }
                 
-                $app -> render('media-details.php',
-                    array(
+                $constructr -> render('media-details.php',
+                    array
+                    (
                         'MEM' => $MEM,
                         'DETAILS' => $DETAILS,
                         'USERNAME' => $USERNAME,
                         'SUBTITLE' => 'Admin-Dashboard / Medienverwaltung - Detailansicht',
-                        'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.',
+                        'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.'
                     )
                 );
 
@@ -223,10 +235,10 @@
             {
                 if(_LOGGING == true)
                 {
-                    $app -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                 }
 
-                $app -> redirect(_BASE_URL . '/admin/media/?res=details-media-false');
+                $constructr -> redirect(_BASE_URL . '/constructr/media/?res=details-media-false');
                 die();
             }
         }

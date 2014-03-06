@@ -24,34 +24,35 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="<?php echo _BASE_URL ?>/admin/">ConstructrCMS</a>
+                    <a class="navbar-brand" href="<?php echo _BASE_URL ?>/constructr/">ConstructrCMS</a>
                 </div>
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">                        
                         <li class="dropdown active">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Seitenverwaltung <b class="caret"></b></a>
                             <ul class="dropdown-menu">
-                                <li><a href="<?php echo _BASE_URL ?>/admin/pages/"><span class="glyphicon glyphicon-th-large"></span> &Uuml;bersicht</a></li>
+                                <li><a href="<?php echo _BASE_URL ?>" onclick="window.open(this.href);return false;"><span class="glyphicon glyphicon-eye-open"></span> Internetseite anzeigen</a></li>
+                                <li><a href="<?php echo _BASE_URL ?>/constructr/pages/"><span class="glyphicon glyphicon-th-large"></span> &Uuml;bersicht</a></li>
                             </ul>
                         </li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Medienverwaltung <b class="caret"></b></a>
                             <ul class="dropdown-menu">
-                                <li><a href="<?php echo _BASE_URL ?>/admin/media/"><span class="glyphicon glyphicon-camera"></span> &Uuml;bersicht</a></li>
-                                <li><a href="<?php echo _BASE_URL ?>/admin/media/new/"><span class="glyphicon glyphicon-log-in"></span> Neuer Upload</a></li>
+                                <li><a href="<?php echo _BASE_URL ?>/constructr/media/"><span class="glyphicon glyphicon-camera"></span> &Uuml;bersicht</a></li>
+                                <li><a href="<?php echo _BASE_URL ?>/constructr/media/new/"><span class="glyphicon glyphicon-log-in"></span> Neuer Upload</a></li>
                             </ul>
                         </li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Benutzerverwaltung <b class="caret"></b></a>
                             <ul class="dropdown-menu">
-                                <li><a href="<?php echo _BASE_URL ?>/admin/user/"><span class="glyphicon glyphicon-user"></span> &Uuml;bersicht</a></li>
-                                <li><a href="<?php echo _BASE_URL ?>/admin/user/new/"><span class="glyphicon glyphicon-pencil"></span> Neuer Benutzer</a></li>
+                                <li><a href="<?php echo _BASE_URL ?>/constructr/user/"><span class="glyphicon glyphicon-user"></span> &Uuml;bersicht</a></li>
+                                <li><a href="<?php echo _BASE_URL ?>/constructr/user/new/"><span class="glyphicon glyphicon-pencil"></span> Neuer Benutzer</a></li>
                             </ul>
                         </li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo $USERNAME; ?> <b class="caret"></b></a>
                             <ul class="dropdown-menu">
-                                <li><a href="<?php echo _BASE_URL ?>/admin/logout/"><span class="glyphicon glyphicon-off"></span> abmelden</a></li>
+                                <li><a href="<?php echo _BASE_URL ?>/constructr/logout/"><span class="glyphicon glyphicon-off"></span> abmelden</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -61,7 +62,7 @@
                 <div class="row">
                     <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
                     <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-                        <p><small><a href="<?php echo _BASE_URL ?>/admin/">Dashboard</a> <span class="glyphicon glyphicon-chevron-right"></span> <a href="<?php echo _BASE_URL ?>/admin/pages/">Seitenverwaltung - &Uuml;bersicht</a> <span class="glyphicon glyphicon-chevron-right"></span> <a href="<?php echo _BASE_URL ?>/admin/content/<?php echo $PAGE_ID; ?>/">Inhalte - &Uuml;bersicht</a></small></p>
+                        <p><small><a href="<?php echo _BASE_URL ?>/constructr/">Dashboard</a> <span class="glyphicon glyphicon-chevron-right"></span> <a href="<?php echo _BASE_URL ?>/constructr/pages/">Seitenverwaltung - &Uuml;bersicht</a> <span class="glyphicon glyphicon-chevron-right"></span> <a href="<?php echo _BASE_URL ?>/constructr/content/<?php echo $PAGE_ID; ?>/">Inhalte - &Uuml;bersicht</a></small></p>
                     </div><!-- // EOF COL-... -->
                     <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
                 </div><!-- // EOF ROW -->
@@ -81,34 +82,52 @@
                                 <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
                                 <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
                                         <?php
-                                            if($_GET['res'] == 'create-content-true'){
+                                            if($_GET['res'] == 'create-content-true')
+                                            {
                                                 echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Erfolg!</strong> Inhalt wurde ohne Fehler erstellt.</div>';
-                                            } else if($_GET['res'] == 'create-content-false'){
+                                            }
+                                            else if($_GET['res'] == 'create-content-false')
+                                            {
                                                 echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Fehler!</strong> Es ist ein Fehler beim anlegen des Inhalts aufgetreten.</div>';
                                             }
-                                            if($_GET['res'] == 'activate-content-true'){
+                                            if($_GET['res'] == 'activate-content-true')
+                                            {
                                                 echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Erfolg!</strong> Inhalt ist nun im Frontend sichtbar.</div>';
-                                            } else if($_GET['res'] == 'activate-content-false'){
+                                            }
+                                            else if($_GET['res'] == 'activate-content-false')
+                                            {
                                                 echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Fehler!</strong> Es ist ein Fehler beim aktivieren des Inhalts aufgetreten.</div>';
                                             }
-                                            if($_GET['res'] == 'deactivate-content-true'){
+                                            if($_GET['res'] == 'deactivate-content-true')
+                                            {
                                                 echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Erfolg!</strong> Seite ist nun im Frontend unsichtbar.</div>';
-                                            } else if($_GET['res'] == 'deactivate-content-false'){
+                                            }
+                                            else if($_GET['res'] == 'deactivate-content-false')
+                                            {
                                                 echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Fehler!</strong> Es ist ein Fehler beim deaktivieren des Inhalts aufgetreten.</div>';
                                             }
-                                            if($_GET['res'] == 'edit-content-true'){
+                                            if($_GET['res'] == 'edit-content-true')
+                                            {
                                                 echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Erfolg!</strong> Inhalt wurde erfolgreich bearbeitet.</div>';
-                                            } else if($_GET['res'] == 'edit-content-false'){
+                                            }
+                                            else if($_GET['res'] == 'edit-content-false')
+                                            {
                                                 echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Fehler!</strong> Es ist ein Fehler beim bearbeiten des Inhalts aufgetreten.</div>';
                                             }
-                                            if($_GET['res'] == 'del-content-true'){
+                                            if($_GET['res'] == 'del-content-true')
+                                            {
                                                 echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Erfolg!</strong> Inhalt wurde erfolgreich entfernt.</div>';
-                                            } else if($_GET['res'] == 'del-content-false'){
+                                            }
+                                            else if($_GET['res'] == 'del-content-false')
+                                            {
                                                 echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Fehler!</strong> Es ist ein Fehler beim l&ouml;schen des Inhalts aufgetreten.</div>';
                                             }
-                                            if($_GET['res'] == 'reorder-content-false'){
+                                            if($_GET['res'] == 'reorder-content-false')
+                                            {
                                                 echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Fehler!</strong> Es ist ein Fehler bei der Sortierung aufgetreten. Bitte diese Seite neu laden!</div>';
-                                            } else if($_GET['res'] == 'reorder-content-true'){
+                                            }
+                                            else if($_GET['res'] == 'reorder-content-true')
+                                            {
                                                 echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Erfolg!</strong> Inhalt wurde erfolgreich verschoben.</div>';
                                             }
                                         ?>
@@ -122,7 +141,7 @@
                     <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
                     <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
                         <div class="jumbotron">
-                            <h2><?php echo $CONTENT_COUNTER; ?> Angelegte Inhalte von <strong><?php echo $PAGE_NAME['pages_name']; ?></strong> <a data-toggle="tooltip" data-placement="top" title="Neuen Inhalt erstellen" class="tt" href="<?php echo _BASE_URL . '/admin/content/' . $PAGE_ID . '/' . ($CONTENT_COUNTER + 1) . '/new/' ?>"><button type="button" class="btn btn-info btn-sm" title="Neuen Inhalt erstellen"><span class="glyphicon glyphicon-plus"></span></button></a></h2>
+                            <h2><?php echo $CONTENT_COUNTER; ?> Angelegte Inhalte von <strong><?php echo $PAGE_NAME['pages_name']; ?></strong> <a data-toggle="tooltip" data-placement="top" title="Neuen Inhalt erstellen" class="tt" href="<?php echo _BASE_URL . '/constructr/content/' . $PAGE_ID . '/' . ($CONTENT_COUNTER + 1) . '/new/' ?>"><button type="button" class="btn btn-info btn-sm" title="Neuen Inhalt erstellen"><span class="glyphicon glyphicon-plus"></span></button></a></h2>
                             <br><br>
                             <div class="table-responsive">
                             <table class="datatable table table-bordered table-condensed table-striped table-hover">
@@ -140,42 +159,53 @@
                                             {
                                                 echo '<tr>';
                                                 echo '<td><small>';
-                                                
-                                                if(strip_tags($CONTENT['content_content']) == ''){
+                                                if(strip_tags($CONTENT['content_content']) == '')
+                                                {
                                                     $CONTENT_LINKER = 'Bild';
-                                                } else {
+                                                }
+                                                else
+                                                {
                                                     $CONTENT_LINKER = strip_tags($CONTENT['content_content']);
                                                 }
-
-                                                echo '<a href="' . _BASE_URL . '/admin/content/' . $PAGE_ID . '/' . $CONTENT['content_id'] . '/edit/" title="Inhalte bearbeiten">' . $CONTENT_LINKER . '</a></small></td>';
-                                                if($CONTENT['content_datetime'] != '0000-00-00 00:00:00'){
+                                                echo '<a href="' . _BASE_URL . '/constructr/content/' . $PAGE_ID . '/' . $CONTENT['content_id'] . '/edit/" title="Inhalte bearbeiten">' . $CONTENT_LINKER . '</a></small></td>';
+                                                if($CONTENT['content_datetime'] != '0000-00-00 00:00:00')
+                                                {
                                                     echo '<td class="center"><small>' . date("d.m.Y, H:i", strtotime(substr($CONTENT['content_datetime'], 0, 18))) . ' Uhr</small></td>';                                                
-                                                } else {
+                                                }
+                                                else
+                                                {
                                                     echo '<td class="center"><small>./.</small></td>';
                                                 }
                                                 echo '<td class="right">';
-                                                if($CONTENT['content_order'] > 1){
-                                                    echo '<a data-toggle="tooltip" data-placement="top" title="Inhalt nach oben verschieben" class="reorder tt" href="' . _BASE_URL . '/admin/content/' . $PAGE_ID . '/' . $CONTENT['content_id'] . '/' . $CONTENT['content_order'] . '/up/"><button type="button" class="btn btn-primary btn-xs" title="Seite nach oben verschieben"><span class="glyphicon glyphicon-arrow-up"></span></button></a>';
+                                                if($CONTENT['content_order'] > 1)
+                                                {
+                                                    echo '<a data-toggle="tooltip" data-placement="top" title="Inhalt nach oben verschieben" class="reorder tt" href="' . _BASE_URL . '/constructr/content/' . $PAGE_ID . '/' . $CONTENT['content_id'] . '/' . $CONTENT['content_order'] . '/up/"><button type="button" class="btn btn-primary btn-xs" title="Seite nach oben verschieben"><span class="glyphicon glyphicon-arrow-up"></span></button></a>';
                                                     echo '&#160;';
                                                 }
-                                                if($CONTENT['content_order'] < $CONTENT_COUNTER){                                                    
-                                                    echo '<a data-toggle="tooltip" data-placement="top" title="Inhalt nach unten verschieben" class="reorder tt" href="' . _BASE_URL . '/admin/content/' . $PAGE_ID . '/' . $CONTENT['content_id'] . '/' . $CONTENT['content_order'] . '/down/"><button type="button" class="btn btn-primary btn-xs" title="Seite nach unten verschieben"><span class="glyphicon glyphicon-arrow-down"></span></button></a>';
+                                                if($CONTENT['content_order'] < $CONTENT_COUNTER)
+                                                {                                                    
+                                                    echo '<a data-toggle="tooltip" data-placement="top" title="Inhalt nach unten verschieben" class="reorder tt" href="' . _BASE_URL . '/constructr/content/' . $PAGE_ID . '/' . $CONTENT['content_id'] . '/' . $CONTENT['content_order'] . '/down/"><button type="button" class="btn btn-primary btn-xs" title="Seite nach unten verschieben"><span class="glyphicon glyphicon-arrow-down"></span></button></a>';
                                                     echo '&#160;';
                                                 }
-                                                if($CONTENT['content_active'] == 0){
-                                                    echo '<a data-toggle="tooltip" data-placement="top" title="Inhalt aktivieren" class="activator tt" href="' . _BASE_URL . '/admin/content/' . $PAGE_ID . '/' . $CONTENT['content_id'] . '/activate/"><button type="button" class="btn btn-danger btn-xs" title="deaktiviert und unsichtbar"><span class="glyphicon glyphicon-eye-close"></span></button></a>';
-                                                    echo '&#160;';
-                                                } else {
-                                                    echo '<a data-toggle="tooltip" data-placement="top" title="Inhalt deaktivieren" class="activator tt" href="' . _BASE_URL . '/admin/content/' . $PAGE_ID . '/' . $CONTENT['content_id'] . '/deactivate/"><button type="button" class="btn btn-success btn-xs" title="aktiviert und sichtbar"><span class="glyphicon glyphicon-eye-open"></span></button></a>';
+                                                if($CONTENT['content_active'] == 0)
+                                                {
+                                                    echo '<a data-toggle="tooltip" data-placement="top" title="Inhalt aktivieren" class="activator tt" href="' . _BASE_URL . '/constructr/content/' . $PAGE_ID . '/' . $CONTENT['content_id'] . '/activate/"><button type="button" class="btn btn-danger btn-xs" title="deaktiviert und unsichtbar"><span class="glyphicon glyphicon-eye-close"></span></button></a>';
                                                     echo '&#160;';
                                                 }
-                                                echo '<a data-toggle="tooltip" data-placement="top" title="Inhalt bearbeiten" class="editer tt" href="' . _BASE_URL . '/admin/content/' . $PAGE_ID . '/' . $CONTENT['content_id'] . '/edit/"><button type="button" class="btn btn-success btn-xs" title="Inhalt bearbeiten"><span class="glyphicon glyphicon-pencil"></span></button></a>';
+                                                else
+                                                {
+                                                    echo '<a data-toggle="tooltip" data-placement="top" title="Inhalt deaktivieren" class="activator tt" href="' . _BASE_URL . '/constructr/content/' . $PAGE_ID . '/' . $CONTENT['content_id'] . '/deactivate/"><button type="button" class="btn btn-success btn-xs" title="aktiviert und sichtbar"><span class="glyphicon glyphicon-eye-open"></span></button></a>';
+                                                    echo '&#160;';
+                                                }
+                                                echo '<a data-toggle="tooltip" data-placement="top" title="Inhalt bearbeiten" class="editer tt" href="' . _BASE_URL . '/constructr/content/' . $PAGE_ID . '/' . $CONTENT['content_id'] . '/edit/"><button type="button" class="btn btn-success btn-xs" title="Inhalt bearbeiten"><span class="glyphicon glyphicon-pencil"></span></button></a>';
                                                 echo '&#160;';
-                                                echo '<a data-toggle="tooltip" data-placement="top" title="Diesen Inhalt l&ouml;schen" class="deleter tt" href="' . _BASE_URL . '/admin/content/' . $PAGE_ID . '/' . $CONTENT['content_id'] . '/delete/" title="Inhalt l&ouml;schen"><button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span></button></a>';
+                                                echo '<a data-toggle="tooltip" data-placement="top" title="Diesen Inhalt l&ouml;schen" class="deleter tt" href="' . _BASE_URL . '/constructr/content/' . $PAGE_ID . '/' . $CONTENT['content_id'] . '/delete/" title="Inhalt l&ouml;schen"><button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span></button></a>';
                                                 echo '</td>';
                                                 echo '</tr>';
                                             }
-                                        } else {
+                                        }
+                                        else
+                                        {
                                             echo '<tr><td colspan="7">Keine Seiteninhalte gefunden!</td></tr>';
                                         };
                                     ?>
@@ -189,7 +219,7 @@
                 <div class="row">
                     <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
                     <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-                        <p><small><a href="<?php echo _BASE_URL ?>/admin/">Dashboard</a> <span class="glyphicon glyphicon-chevron-right"></span> <a href="<?php echo _BASE_URL ?>/admin/pages/">Seitenverwaltung - &Uuml;bersicht</a> <span class="glyphicon glyphicon-chevron-right"></span> <a href="<?php echo _BASE_URL ?>/admin/content/<?php echo $PAGE_ID; ?>/">Inhalte - &Uuml;bersicht</a></small></p>
+                        <p><small><a href="<?php echo _BASE_URL ?>/constructr/">Dashboard</a> <span class="glyphicon glyphicon-chevron-right"></span> <a href="<?php echo _BASE_URL ?>/constructr/pages/">Seitenverwaltung - &Uuml;bersicht</a> <span class="glyphicon glyphicon-chevron-right"></span> <a href="<?php echo _BASE_URL ?>/constructr/content/<?php echo $PAGE_ID; ?>/">Inhalte - &Uuml;bersicht</a></small></p>
                         <p><small>Version: <?php echo _VERSION; ?> / <?php echo $TIMER; ?> / <?php echo $MEM; ?> / <a href="http://phaziz.com/" onclick="window.open(this.href);return false;">phaziz.com</a></small></p>
                     </div><!-- // EOF COL-... -->
                     <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
@@ -205,42 +235,50 @@
                     {
                         'use strict';
                         $('.tt').tooltip();
-                        $('body').on('mouseover', '.dropdown-toggle', function(e){
-                            $(e.currentTarget).trigger('click')
-                        })
-                        function autoBlinder(){$('.response').fadeOut();}
-                        setInterval(autoBlinder,4500);
-                        // DATATABLES
-                        $('.datatable').dataTable({
-                            "aaSorting": [],
-                            "aoColumns": [
-                                { "sWidth": "70%", "bSortable":false},
-                                { "sWidth": "15%", "bSortable":false},
-                                { "sWidth": "15%", "bSortable":false}
-                            ],
-                            "sPaginationType":"bs_full",
-                            "iDisplayLength": -1,
-                            "oLanguage": {
-                                "sLengthMenu": '<small>Zeige <select class="form-control input-sm">'+
-                                '<option value="10">10</option>'+
-                                '<option value="20">20</option>'+
-                                '<option value="25">25</option>'+
-                                '<option value="50">50</option>'+
-                                '<option value="100">100</option>'+
-                                '<option value="-1">Alle</option>'+
-                                '</select> Ergebnisse je Seite</small>'
+                        $('body').on('mouseover', '.dropdown-toggle', function(e)
+                            {
+                                $(e.currentTarget).trigger('click');
                             }
-                        });
-                        $('.datatable').each(function(){
-                            var datatable = $(this);
-                            var search_input = datatable.closest('.dataTables_wrapper').find('div[id$=_filter] input');
-                            search_input.attr('placeholder', 'Suche');
-                            search_input.addClass('form-control input-sm');
-                            var length_sel = datatable.closest('.dataTables_wrapper').find('div[id$=_length] select');
-                            length_sel.addClass('form-control input-sm');
-                        });
-                       // DATATABELES
-                       $('.editer').click(function(e){
+                        )
+                        function autoBlinder()
+                        {
+                            $('.response').fadeOut();
+                        }
+                        setInterval(autoBlinder,4500);
+                        $('.datatable').dataTable(
+                            {
+                                "aaSorting": [],
+                                "aoColumns": [
+                                    { "sWidth": "70%", "bSortable":false},
+                                    { "sWidth": "15%", "bSortable":false},
+                                    { "sWidth": "15%", "bSortable":false}
+                                ],
+                                "sPaginationType":"bs_full",
+                                "iDisplayLength": -1,
+                                "oLanguage": {
+                                    "sLengthMenu": '<small>Zeige <select class="form-control input-sm">'+
+                                    '<option value="10">10</option>'+
+                                    '<option value="20">20</option>'+
+                                    '<option value="25">25</option>'+
+                                    '<option value="50">50</option>'+
+                                    '<option value="100">100</option>'+
+                                    '<option value="-1">Alle</option>'+
+                                    '</select> Ergebnisse je Seite</small>'
+                                }
+                            }
+                        );
+                        $('.datatable').each(function()
+                            {
+                                var datatable = $(this);
+                                var search_input = datatable.closest('.dataTables_wrapper').find('div[id$=_filter] input');
+                                search_input.attr('placeholder', 'Suche');
+                                search_input.addClass('form-control input-sm');
+                                var length_sel = datatable.closest('.dataTables_wrapper').find('div[id$=_length] select');
+                                length_sel.addClass('form-control input-sm');
+                            }
+                        );
+                        $('.editer').click(function(e)
+                        {
                             e.preventDefault();
                             var U = $(this).attr('href');
                             vex.dialog.buttons.YES.text = 'Ja';
@@ -251,16 +289,20 @@
                                     message: 'M&ouml;chten Sie den gew&auml;hlte Inhalt wirklich bearbeiten?',
                                     callback: function(value)
                                     {
-                                        if(value == true){
+                                        if(value == true)
+                                        {
                                             window.location = (U);
-                                        } else {
+                                        } 
+                                        else
+                                        {
                                             return false
                                         }
                                     }
                                 }
                             );
                        });
-                       $('.reorder').click(function(e){
+                       $('.reorder').click(function(e)
+                       {
                             e.preventDefault();
                             var U = $(this).attr('href');
                             vex.dialog.buttons.YES.text = 'Ja';
@@ -271,16 +313,20 @@
                                     message: 'Inhalt wirklich verschieben?',
                                     callback: function(value)
                                     {
-                                        if(value == true){
+                                        if(value == true)
+                                        {
                                             window.location = (U);
-                                        } else {
+                                        }
+                                        else
+                                        {
                                             return false
                                         }
                                     }
                                 }
                             );
                        });
-                       $('.deleter').click(function(e){
+                       $('.deleter').click(function(e)
+                       {
                             e.preventDefault();
                             var U = $(this).attr('href');
                             vex.dialog.buttons.YES.text = 'Ja';
@@ -291,16 +337,20 @@
                                     message: 'M&ouml;chten Sie wirklich diesen Inhalt l&ouml;schen?',
                                     callback: function(value)
                                     {
-                                        if(value == true){
+                                        if(value == true)
+                                        {
                                             window.location = (U);
-                                        } else {
+                                        }
+                                        else
+                                        {
                                             return false
                                         }
                                     }
                                 }
                             );
                        });
-                       $('.activator').click(function(e){
+                       $('.activator').click(function(e)
+                       {
                             e.preventDefault();
                             var U = $(this).attr('href');
                             vex.dialog.buttons.YES.text = 'Ja';
@@ -311,9 +361,12 @@
                                     message: 'Soll die Sichtbarkeit des Inhalts wirklich angepasst werden?',
                                     callback: function(value)
                                     {
-                                        if(value == true){
+                                        if(value == true)
+                                        {
                                             window.location = (U);
-                                        } else {
+                                        }
+                                        else
+                                        {
                                             return false
                                         }
                                     }

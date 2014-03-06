@@ -5,7 +5,7 @@
      * DER ANFANG ALLEN ÜBELS...
      * 
      * */
-    $app -> get('/admin/pages(/)', $ADMIN_CHECK, function () use ($app,$DBCON)
+    $constructr -> get('/constructr/pages(/)', $ADMIN_CHECK, function () use ($constructr,$DBCON)
         {
             $START = microtime(true);
             $USERNAME = $_SESSION['backend-user-username'];
@@ -13,7 +13,7 @@
 
             if(_LOGGING == true)
             {
-                $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
+                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
             }
 
             try
@@ -35,23 +35,24 @@
             }
             catch (PDOException $e)
             {
-                $app -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());   
-                $app -> redirect(_BASE_URL . '/admin/');             
+                $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());   
+                $constructr -> redirect(_BASE_URL . '/constructr/');             
                 die();
             }
 
             $MEM = 0;
             $MEM = number_format(((memory_get_usage()/1014)/1024),2,',','.') . ' MB';
 
-            $app -> render('pages.php',
-                array(
+            $constructr -> render('pages.php',
+                array
+                (
                     'MEM' => $MEM,
                     'USERNAME' => $USERNAME,
                     'PAGES' => $PAGES,
                     'NEW_PAGES' => $NEW_PAGES,
                     'PAGES_COUNTR' => $PAGES_COUNTR,
                     'SUBTITLE' => 'Admin-Dashboard / Seitenverwaltung',
-                    'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.',
+                    'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.'
                 )
             );
 
@@ -64,28 +65,29 @@
      * 
      * */
 
-    $app -> get('/admin/pages/new(/)', $ADMIN_CHECK, function () use ($app,$DBCON)
+    $constructr -> get('/constructr/pages/new(/)', $ADMIN_CHECK, function () use ($constructr,$DBCON)
         {
             $START = microtime(true);
             $USERNAME = $_SESSION['backend-user-username'];
 
             if(_LOGGING == true)
             {
-                $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
+                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
             }
 
             $MEM = 0;
             $MEM = number_format(((memory_get_usage()/1014)/1024),2,',','.') . ' MB';
 
-            $app -> render('pages_new.php',
-                array(
+            $constructr -> render('pages_new.php',
+                array
+                (
                     'MEM' => $MEM,
                     'USERNAME' => $USERNAME,
-                    'FORM_ACTION' => _BASE_URL . '/admin/pages/new/',
+                    'FORM_ACTION' => _BASE_URL . '/constructr/pages/new/',
                     'FORM_METHOD' => 'post',
                     'FORM_ENCTYPE' => 'application/x-www-form-urlencoded',
                     'SUBTITLE' => 'Admin-Dashboard / Seitenverwaltung - Neue Seite erstellen',
-                    'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.',
+                    'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.'
                 )
             );
 
@@ -93,20 +95,20 @@
         }
     );
 
-    $app -> post('/admin/pages/new/', $ADMIN_CHECK, function () use ($app,$DBCON)
+    $constructr -> post('/constructr/pages/new/', $ADMIN_CHECK, function () use ($constructr,$DBCON)
         {
             if(_LOGGING == true)
             {
-                $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
+                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
             }
 
             $PAGE_DATETIME = date('Y-m-d H:i:s');
-            $PAGE_NAME = $app -> request() -> post('page_name');
-            $PAGE_URL = $app -> request() -> post('page_url');            
-            $PAGE_TITLE = $app -> request() -> post('page_title');
-            $PAGE_DESCRIPTION = $app -> request() -> post('page_description');
-            $PAGE_KEYWORDS = $app -> request() -> post('page_keywords');
-            $PAGE_URL = ereg_replace("[^A-Za-z0-9_-]", "", $PAGE_URL);
+            $PAGE_NAME = $constructr -> request() -> post('page_name');
+            $PAGE_URL = $constructr -> request() -> post('page_url');            
+            $PAGE_TITLE = $constructr -> request() -> post('page_title');
+            $PAGE_DESCRIPTION = $constructr -> request() -> post('page_description');
+            $PAGE_KEYWORDS = $constructr -> request() -> post('page_keywords');
+            $PAGE_URL = preg_replace("[^A-Za-z0-9_-\/]", "", $PAGE_URL);
             $PAGE_URL = strtolower($PAGE_URL);
             $PAGE_LFT = 0;
             $PAGE_RGT = 0;
@@ -115,7 +117,7 @@
 
             if($PAGE_URL == 'admin')
             {
-                $app -> redirect(_BASE_URL . '/admin/pages/?res=create-page-false');
+                $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=create-page-false');
                 die();
             }
 
@@ -124,19 +126,26 @@
                 $URL = $DBCON -> prepare('
                     SELECT * FROM constructr_pages WHERE pages_url = :PAGE_URL;
                 ');
-                $URL -> execute(array(':PAGE_URL' => $PAGE_URL));
+
+                $URL -> execute(
+                    array
+                    (
+                        ':PAGE_URL' => $PAGE_URL
+                    )
+                );
+
                 $URL_COUNTR = $URL -> rowCount();
             }
             catch (PDOException $e)
             {
-                $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                $app -> redirect(_BASE_URL . '/admin/pages/?res=create-page-false');
+                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
+                $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=create-page-false');
                 die();
             }
 
             if($URL_COUNTR != 0)
             {
-                $app -> redirect(_BASE_URL . '/admin/pages/?res=url-exists');
+                $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=url-exists');
                 die();
             }
 
@@ -147,8 +156,8 @@
             }
             catch (PDOException $e)
             {
-                $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                $app -> redirect(_BASE_URL . '/admin/pages/?res=create-page-false');
+                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
+                $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=create-page-false');
                 die();
             }
 
@@ -168,8 +177,8 @@
                 }
                 catch (PDOException $e)
                 {
-                    $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                    $app -> redirect(_BASE_URL . '/admin/pages/?res=create-page-false');
+                    $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
+                    $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=create-page-false');
                     die();
                 }
             }
@@ -184,16 +193,18 @@
                         pages_rgt = pages_rgt + 2 
                         WHERE pages_rgt >= :PAGE_LFT;
                     ');
+
                     $UPDATE_PAGES -> execute(
-                        array(
+                        array
+                        (
                             ':PAGE_LFT' => $PAGE_LFT
                         )
                     );
                 }
                 catch (PDOException $e)
                 {
-                    $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                    $app -> redirect(_BASE_URL . '/admin/pages/?res=create-page-false');
+                    $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
+                    $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=create-page-false');
                     die();
                 }
 
@@ -214,57 +225,58 @@
                 }
                 catch (PDOException $e)
                 {
-                    $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                    $app -> redirect(_BASE_URL . '/admin/pages/?res=create-page-false');
+                    $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
+                    $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=create-page-false');
                     die();
                 }
 
                 if(_LOGGING == true)
                 {
-                    $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
+                    $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
                 }
 
-                $app -> redirect(_BASE_URL . '/admin/pages/?res=create-page-true');
+                $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=create-page-true');
                 die();
             }
             else
             {
                 if(_LOGGING == true)
                 {
-                    $app -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
+                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
                 }
 
-                $app -> redirect(_BASE_URL . '/admin/pages/?res=create-page-false');
+                $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=create-page-false');
 
                 die();
             }
         }
     );
 
-    $app -> get('/admin/pages/new/sub/:ID_MOTHER/:MOTHER_LFT(/)', $ADMIN_CHECK, function ($MOTHER_ID,$MOTHER_LFT) use ($app,$DBCON)
+    $constructr -> get('/constructr/pages/new/sub/:ID_MOTHER/:MOTHER_LFT(/)', $ADMIN_CHECK, function ($MOTHER_ID,$MOTHER_LFT) use ($constructr,$DBCON)
         {
             $START = microtime(true);
             $USERNAME = $_SESSION['backend-user-username'];
 
             if(_LOGGING == true)
             {
-                $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
+                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
             }
 
             $MEM = 0;
             $MEM = number_format(((memory_get_usage()/1014)/1024),2,',','.') . ' MB';
 
-            $app -> render('pages_new_sub.php',
-                array(
+            $constructr -> render('pages_new_sub.php',
+                array
+                (
                     'MEM' => $MEM,
                     'USERNAME' => $USERNAME,
                     'MOTHER_ID' => $MOTHER_ID,
                     'MOTHER_LFT' => $MOTHER_LFT,
-                    'FORM_ACTION' => _BASE_URL . '/admin/pages/new/sub/',
+                    'FORM_ACTION' => _BASE_URL . '/constructr/pages/new/sub/',
                     'FORM_METHOD' => 'post',
                     'FORM_ENCTYPE' => 'application/x-www-form-urlencoded',
                     'SUBTITLE' => 'Admin-Dashboard / Seitenverwaltung - Neue Unterseite erstellen',
-                    'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.',
+                    'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.'
                 )
             );
 
@@ -272,23 +284,23 @@
         }
     );
 
-    $app -> post('/admin/pages/new/sub/', $ADMIN_CHECK, function () use ($app,$DBCON)
+    $constructr -> post('/constructr/pages/new/sub/', $ADMIN_CHECK, function () use ($constructr,$DBCON)
         {
             if(_LOGGING == true)
             {
-                $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
+                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
             }
 
             $PAGE_TMP_MARKER = '';
             $PAGE_DATETIME = date('Y-m-d H:i:s');
-            $PAGE_MOTHER_ID = $app -> request() -> post('mother_id');
-            $PAGE_MOTHER_LFT = $app -> request() -> post('mother_lft');
-            $PAGE_NAME = $app -> request() -> post('page_name');
-            $PAGE_URL = $app -> request() -> post('page_url');
-            $PAGE_TITLE = $app -> request() -> post('page_title');
-            $PAGE_DESCRIPTION = $app -> request() -> post('page_description');
-            $PAGE_KEYWORDS = $app -> request() -> post('page_keywords');
-            $PAGE_URL = ereg_replace("[^A-Za-z0-9_-]", "", $PAGE_URL);
+            $PAGE_MOTHER_ID = $constructr -> request() -> post('mother_id');
+            $PAGE_MOTHER_LFT = $constructr -> request() -> post('mother_lft');
+            $PAGE_NAME = $constructr -> request() -> post('page_name');
+            $PAGE_URL = $constructr -> request() -> post('page_url');
+            $PAGE_TITLE = $constructr -> request() -> post('page_title');
+            $PAGE_DESCRIPTION = $constructr -> request() -> post('page_description');
+            $PAGE_KEYWORDS = $constructr -> request() -> post('page_keywords');
+            $PAGE_URL = preg_replace("[^A-Za-z0-9_-\/]", "", $PAGE_URL);
             $PAGE_URL = strtolower($PAGE_URL);
             $PAGE_LFT = ($PAGE_MOTHER_LFT + 1);
             $PAGE_RGT = ($PAGE_LFT + 1);
@@ -296,7 +308,7 @@
             $PAGES_COUNTR = 0;
 
             if($PAGE_URL == 'admin'){
-                $app -> redirect(_BASE_URL . '/admin/pages/?res=create-page-false');
+                $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=create-page-false');
                 die();
             }
 
@@ -305,19 +317,26 @@
                 $URL = $DBCON -> prepare('
                     SELECT * FROM constructr_pages WHERE pages_url = :PAGE_URL;
                 ');
-                $URL -> execute(array(':PAGE_URL' => $PAGE_URL));
+
+                $URL -> execute(
+                    array
+                    (
+                        ':PAGE_URL' => $PAGE_URL
+                    )
+                );
+
                 $URL_COUNTR = $URL -> rowCount();
             }
             catch (PDOException $e)
             {
-                $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                $app -> redirect(_BASE_URL . '/admin/pages/?res=create-page-false');
+                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
+                $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=create-page-false');
                 die();
             }
 
             if($URL_COUNTR != 0)
             {
-                $app -> redirect(_BASE_URL . '/admin/pages/?res=url-exists');
+                $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=url-exists');
                 die();
             }
 
@@ -331,19 +350,32 @@
                         pages_lft = pages_lft+2
                         WHERE pages_lft >= :PAGE_LFT
                     ');
-                    $UPDATE_PAGES_LFT -> execute(array(':PAGE_LFT' => $PAGE_LFT));
+
+                    $UPDATE_PAGES_LFT -> execute(
+                        array
+                        (
+                            ':PAGE_LFT' => $PAGE_LFT
+                        )
+                    );
+
                     $UPDATE_PAGES_LFT = $DBCON -> prepare('
                         UPDATE constructr_pages
                         SET
                         pages_rgt = pages_rgt+2
                         WHERE pages_rgt >= :PAGE_LFT
                     ');
-                    $UPDATE_PAGES_LFT -> execute(array(':PAGE_LFT' => $PAGE_LFT));
+
+                    $UPDATE_PAGES_LFT -> execute(
+                        array
+                        (
+                            ':PAGE_LFT' => $PAGE_LFT
+                        )
+                    );
                 }
                 catch (PDOException $e)
                 {
-                    $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                    $app -> redirect(_BASE_URL . '/admin/pages/?res=create-page-false');
+                    $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
+                    $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=create-page-false');
 
                     die();
                 }
@@ -365,17 +397,17 @@
                 }
                 catch (PDOException $e)
                 {
-                    $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                    $app -> redirect(_BASE_URL . '/admin/pages/?res=create-page-false');
+                    $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
+                    $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=create-page-false');
                     die();
                 }
 
                 if(_LOGGING == true)
                 {
-                    $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
+                    $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
                 }
 
-                $app -> redirect(_BASE_URL . '/admin/pages/?res=create-page-true');
+                $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=create-page-true');
 
                 die();
             }
@@ -383,40 +415,42 @@
             {
                 if(_LOGGING == true)
                 {
-                    $app -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
+                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
                 }
 
-                $app -> redirect(_BASE_URL . '/admin/pages/?res=create-page-false');
+                $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=create-page-false');
 
                 die();
             }
         }
     );
 
-    $app -> get('/admin/pages/edit/:PAGE_ID(/)', $ADMIN_CHECK, function ($PAGE_ID) use ($app,$DBCON)
+    $constructr -> get('/constructr/pages/edit/:PAGE_ID(/)', $ADMIN_CHECK, function ($PAGE_ID) use ($constructr,$DBCON)
         {
             $START = microtime(true);
             $USERNAME = $_SESSION['backend-user-username'];
 
             if(_LOGGING == true)
             {
-                $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
+                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
             }
 
             try
             {
                 $PAGE = $DBCON -> prepare('SELECT * FROM constructr_pages WHERE pages_id = :PAGE_ID LIMIT 1;');
+
                 $PAGE -> execute(
                     array(
                         ':PAGE_ID' => $PAGE_ID
                     )
                 );
+
                 $PAGE = $PAGE -> fetch();
             }
             catch (PDOException $e)
             {
-                $app -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                $app -> redirect(_BASE_URL . '/admin/pages/?res=edit-page-false');
+                $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
+                $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=edit-page-false');
                 echo 'nep';
                 die();
             }
@@ -424,16 +458,17 @@
             $MEM = 0;
             $MEM = number_format(((memory_get_usage()/1014)/1024),2,',','.') . ' MB';
 
-            $app -> render('pages_edit.php',
-                array(
+            $constructr -> render('pages_edit.php',
+                array
+                (
                     'MEM' => $MEM,
                     'USERNAME' => $USERNAME,
                     'PAGE' => $PAGE,
-                    'FORM_ACTION' => _BASE_URL . '/admin/pages/edit/',
+                    'FORM_ACTION' => _BASE_URL . '/constructr/pages/edit/',
                     'FORM_METHOD' => 'post',
                     'FORM_ENCTYPE' => 'application/x-www-form-urlencoded',
                     'SUBTITLE' => 'Admin-Dashboard / Seitenverwaltung - Seite bearbeiten',
-                    'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.',
+                    'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.'
                 )
             );
 
@@ -441,21 +476,21 @@
         }
     );
 
-    $app -> post('/admin/pages/edit/', $ADMIN_CHECK, function () use ($app,$DBCON)
+    $constructr -> post('/constructr/pages/edit/', $ADMIN_CHECK, function () use ($constructr,$DBCON)
         {
             if(_LOGGING == true)
             {
-                $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
+                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
             }
 
             $PAGE_DATETIME = date('Y-m-d H:i:s');
-            $PAGE_ID = $app -> request() -> post('page_id');
-            $PAGE_NAME = $app -> request() -> post('page_name');
-            $PAGE_URL = $app -> request() -> post('page_url');
-            $PAGE_TITLE = $app -> request() -> post('page_title');
-            $PAGE_DESCRIPTION = $app -> request() -> post('page_description');
-            $PAGE_KEYWORDS = $app -> request() -> post('page_keywords');
-            $PAGE_URL = ereg_replace("[^A-Za-z0-9_-]", "", $PAGE_URL);
+            $PAGE_ID = $constructr -> request() -> post('page_id');
+            $PAGE_NAME = $constructr -> request() -> post('page_name');
+            $PAGE_URL = $constructr -> request() -> post('page_url');
+            $PAGE_TITLE = $constructr -> request() -> post('page_title');
+            $PAGE_DESCRIPTION = $constructr -> request() -> post('page_description');
+            $PAGE_KEYWORDS = $constructr -> request() -> post('page_keywords');
+            $PAGE_URL = preg_replace("[^A-Za-z0-9_-\/]", "", $PAGE_URL);
             $PAGE_URL = strtolower($PAGE_URL);
 
             if($PAGE_NAME != '' && $PAGE_URL != '' && $PAGE_ID != '')
@@ -473,7 +508,8 @@
                         WHERE pages_id >= :PAGE_ID LIMIT 1;
                     ');
                     $UPDATE_PAGES -> execute(
-                        array(
+                        array
+                        (
                             ':PAGE_ID' => $PAGE_ID,
                             ':PAGE_NAME' => $PAGE_NAME,
                             ':PAGE_URL' => $PAGE_URL,
@@ -485,23 +521,23 @@
 
                     if(_LOGGING == true)
                     {
-                        $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
+                        $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
                     }
 
-                    $app -> redirect(_BASE_URL . '/admin/pages/?res=edit-page-true');
+                    $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=edit-page-true');
 
                     die();
                 }
                 catch (PDOException $e)
                 {
-                    $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
+                    $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
 
                     if(_LOGGING == true)
                     {
-                        $app -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
+                        $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
                     }
 
-                    $app -> redirect(_BASE_URL . '/admin/pages/?res=edit-page-false');
+                    $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=edit-page-false');
                     die();
                 }
             }
@@ -509,21 +545,21 @@
             {
                 if(_LOGGING == true)
                 {
-                    $app -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
+                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
                 }
 
-                $app -> redirect(_BASE_URL . '/admin/pages/?res=edit-page-false');
+                $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=edit-page-false');
 
                 die();
             }
         }
     );
 
-    $app -> get('/admin/pages/activate/:PAGE_ID(/)', $ADMIN_CHECK, function ($PAGE_ID) use ($app,$DBCON)
+    $constructr -> get('/constructr/pages/activate/:PAGE_ID(/)', $ADMIN_CHECK, function ($PAGE_ID) use ($constructr,$DBCON)
         {
             if(_LOGGING == true)
             {
-                $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
+                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
             }
 
             if($PAGE_ID != '')
@@ -531,43 +567,44 @@
                 try
                 {
                     $UPDATE_PAGES = $DBCON -> prepare('UPDATE constructr_pages SET pages_active = :PAGE_ACTIVE WHERE pages_id = :PAGE_ID LIMIT 1;');
+
                     $UPDATE_PAGES -> execute(
                         array(
                             ':PAGE_ACTIVE' => 1,
-                            ':PAGE_ID' => $PAGE_ID,
+                            ':PAGE_ID' => $PAGE_ID
                         )
                     );
                 }
                 catch (PDOException $e)
                 {
-                    $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                    $app -> redirect(_BASE_URL . '/admin/pages/?res=activate-page-false');
+                    $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
+                    $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=activate-page-false');
                     die();
                 }
                 
                 if(_LOGGING == true)
                 {
-                    $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
+                    $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
                 }
 
-                $app -> redirect(_BASE_URL . '/admin/pages/?res=activate-page-true');
+                $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=activate-page-true');
 
                 die();
             }
             else
             {
-                $app -> redirect(_BASE_URL . '/admin/pages/?res=activate-page-false');
+                $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=activate-page-false');
 
                 die();
             }
         }
     );
     
-    $app -> get('/admin/pages/deactivate/:PAGE_ID(/)', $ADMIN_CHECK, function ($PAGE_ID) use ($app,$DBCON)
+    $constructr -> get('/constructr/pages/deactivate/:PAGE_ID(/)', $ADMIN_CHECK, function ($PAGE_ID) use ($constructr,$DBCON)
         {
             if(_LOGGING == true)
             {
-                $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
+                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
             }
 
             if($PAGE_ID != '')
@@ -575,43 +612,44 @@
                 try
                 {
                     $UPDATE_PAGES = $DBCON -> prepare('UPDATE constructr_pages SET pages_active = :PAGE_ACTIVE WHERE pages_id = :PAGE_ID LIMIT 1;');
+
                     $UPDATE_PAGES -> execute(
                         array(
                             ':PAGE_ACTIVE' => 0,
-                            ':PAGE_ID' => $PAGE_ID,
+                            ':PAGE_ID' => $PAGE_ID
                         )
                     );
                 }
                 catch (PDOException $e)
                 {
-                    $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                    $app -> redirect(_BASE_URL . '/admin/pages/?res=activate-page-false');
+                    $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
+                    $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=activate-page-false');
 
                     die();
                 }
                 
                 if(_LOGGING == true)
                 {
-                    $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
+                    $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
                 }
 
-                $app -> redirect(_BASE_URL . '/admin/pages/?res=activate-page-true');
+                $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=activate-page-true');
 
                 die();
             }
             else
             {
-                $app -> redirect(_BASE_URL . '/admin/pages/?res=activate-page-false');
+                $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=activate-page-false');
                 die();
             }
         }
     );
 
-    $app -> get('/admin/pages/delete-single/:PAGE_ID/:PAGE_LFT/:PAGE_RGT/', $ADMIN_CHECK, function ($PAGE_ID,$PAGE_LFT,$PAGE_RGT) use ($app,$DBCON)
+    $constructr -> get('/constructr/pages/delete-single/:PAGE_ID/:PAGE_LFT/:PAGE_RGT/', $ADMIN_CHECK, function ($PAGE_ID,$PAGE_LFT,$PAGE_RGT) use ($constructr,$DBCON)
         {
             if(_LOGGING == true)
             {
-                $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
             }
 
             if($PAGE_ID != '' && $PAGE_LFT != '' && $PAGE_RGT != '')
@@ -621,19 +659,26 @@
                     $CONTENT = $DBCON -> prepare('
                         SELECT * FROM constructr_content WHERE content_page_id = :PAGE_ID LIMIT 1;
                     ');
-                    $CONTENT -> execute(array(':PAGE_ID' => $PAGE_ID));
+
+                    $CONTENT -> execute(
+                        array
+                        (
+                            ':PAGE_ID' => $PAGE_ID
+                        )
+                    );
+
                     $CONTENT_COUNTR = $CONTENT -> rowCount();
                 }
                 catch (PDOException $e)
                 {
-                    $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                    $app -> redirect(_BASE_URL . '/admin/pages/?res=del-single-false');
+                    $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
+                    $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=del-single-false');
                     die();
                 }
 
                 if($CONTENT_COUNTR != 0)
                 {
-                    $app -> redirect(_BASE_URL . '/admin/pages/?res=content-not-empty');
+                    $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=content-not-empty');
                     die();
                 }
 
@@ -644,12 +689,18 @@
                         WHERE pages_id = :PAGE_ID
                         LIMIT 1;
                     ');
-                    $DELETER -> execute(array(':PAGE_ID' => $PAGE_ID));
+
+                    $DELETER -> execute(
+                        array
+                        (
+                            ':PAGE_ID' => $PAGE_ID
+                        )
+                    );
                 }
                 catch (PDOException $e)
                 {
-                    $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                    $app -> redirect(_BASE_URL . '/admin/pages/?res=del-single-false');
+                    $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
+                    $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=del-single-false');
                     die();
                 }
 
@@ -661,12 +712,19 @@
                         pages_lft = pages_lft-1, pages_rgt = pages_rgt-1
                         WHERE pages_lft BETWEEN :PAGE_LFT AND :PAGE_RGT;
                     ');
-                    $UPDATEER -> execute(array(':PAGE_LFT' => $PAGE_LFT,':PAGE_RGT' => $PAGE_RGT));
+
+                    $UPDATEER -> execute(
+                        array
+                        (
+                            ':PAGE_LFT' => $PAGE_LFT,
+                            ':PAGE_RGT' => $PAGE_RGT
+                        )
+                    );
                 }
                 catch (PDOException $e)
                 {
-                    $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                    $app -> redirect(_BASE_URL . '/admin/pages/?res=del-single-false');
+                    $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
+                    $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=del-single-false');
                     die();
                 }
 
@@ -677,12 +735,18 @@
                         SET
                         pages_lft = pages_lft-2 WHERE pages_lft > :PAGE_RGT;
                     ');
-                    $UPDATEER -> execute(array(':PAGE_RGT' => $PAGE_RGT));
+
+                    $UPDATEER -> execute(
+                        array
+                        (
+                            ':PAGE_RGT' => $PAGE_RGT
+                        )
+                    );
                 }
                 catch (PDOException $e)
                 {
-                    $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                    $app -> redirect(_BASE_URL . '/admin/pages/?res=del-single-false');
+                    $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
+                    $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=del-single-false');
                     die();
                 }
 
@@ -693,41 +757,47 @@
                         SET
                         pages_rgt = pages_rgt-2 WHERE pages_rgt > :PAGE_RGT;
                     ');
-                    $UPDATEER -> execute(array(':PAGE_RGT' => $PAGE_RGT));
+
+                    $UPDATEER -> execute(
+                        array
+                        (
+                            ':PAGE_RGT' => $PAGE_RGT
+                        )
+                    );
                 }
                 catch (PDOException $e)
                 {
-                    $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                    $app -> redirect(_BASE_URL . '/admin/pages/?res=del-single-false');
+                    $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
+                    $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=del-single-false');
                     die();
                 }
 
                 if(_LOGGING == true)
                 {
-                    $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                    $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                 }
 
-                $app -> redirect(_BASE_URL . '/admin/pages/?res=del-single-true');
+                $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=del-single-true');
                 die();
             }
             else
             {
                 if(_LOGGING == true)
                 {
-                    $app -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                 }
 
-                $app -> redirect(_BASE_URL . '/admin/pages/?res=del-single-false');
+                $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=del-single-false');
                 die();
             }
         }
     );
     
-    $app -> get('/admin/pages/delete-recursive/:PAGE_ID/:PAGE_LFT/:PAGE_RGT/', $ADMIN_CHECK, function ($PAGE_ID,$PAGE_LFT,$PAGE_RGT) use ($app,$DBCON)
+    $constructr -> get('/constructr/pages/delete-recursive/:PAGE_ID/:PAGE_LFT/:PAGE_RGT/', $ADMIN_CHECK, function ($PAGE_ID,$PAGE_LFT,$PAGE_RGT) use ($constructr,$DBCON)
         {
             if(_LOGGING == true)
             {
-                $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
             }
 
             if($PAGE_ID != '' && $PAGE_LFT != '' && $PAGE_RGT != '')
@@ -737,19 +807,26 @@
                     $CONTENT = $DBCON -> prepare('
                         SELECT * FROM constructr_content WHERE content_page_id = :PAGE_ID LIMIT 1;
                     ');
-                    $CONTENT -> execute(array(':PAGE_ID' => $PAGE_ID));
+
+                    $CONTENT -> execute(
+                        array
+                        (
+                            ':PAGE_ID' => $PAGE_ID
+                        )
+                    );
+
                     $CONTENT_COUNTR = $CONTENT -> rowCount();
                 }
                 catch (PDOException $e)
                 {
-                    $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                    $app -> redirect(_BASE_URL . '/admin/pages/?res=del-recursive-false');
+                    $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
+                    $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=del-recursive-false');
                     die();
                 }
 
                 if($CONTENT_COUNTR != 0)
                 {
-                    $app -> redirect(_BASE_URL . '/admin/pages/?res=content-not-empty');
+                    $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=content-not-empty');
                     die();
                 }
 
@@ -759,12 +836,19 @@
                         DELETE FROM constructr_pages
                         WHERE pages_lft BETWEEN :PAGE_LFT AND :PAGE_RGT;
                     ');
-                    $DELETER -> execute(array(':PAGE_LFT' => $PAGE_LFT,':PAGE_RGT' => $PAGE_RGT));
+                    
+                    $DELETER -> execute(
+                        array
+                        (
+                            ':PAGE_LFT' => $PAGE_LFT,
+                            ':PAGE_RGT' => $PAGE_RGT
+                        )
+                    );
                 }
                 catch (PDOException $e)
                 {
-                    $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                    $app -> redirect(_BASE_URL . '/admin/pages/?res=del-recursive-false');
+                    $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
+                    $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=del-recursive-false');
                     die();
                 }
 
@@ -775,12 +859,19 @@
                         SET pages_lft = pages_lft - ROUND((:PAGE_RGT-:PAGE_LFT+1))
                         WHERE pages_lft > :PAGE_RGT;
                     ');
-                    $UPDATEER -> execute(array(':PAGE_LFT' => $PAGE_LFT,':PAGE_RGT' => $PAGE_RGT));
+
+                    $UPDATEER -> execute(
+                        array
+                        (
+                            ':PAGE_LFT' => $PAGE_LFT,
+                            ':PAGE_RGT' => $PAGE_RGT
+                        )
+                    );
                 }
                 catch (PDOException $e)
                 {
-                    $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                    $app -> redirect(_BASE_URL . '/admin/pages/?res=del-recursive-false');
+                    $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
+                    $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=del-recursive-false');
                     die();
                 }
 
@@ -791,41 +882,48 @@
                         SET pages_rgt = pages_rgt - ROUND((:PAGE_RGT-:PAGE_LFT+1))
                         WHERE pages_rgt > :PAGE_RGT;
                     ');
-                    $UPDATEER -> execute(array(':PAGE_LFT' => $PAGE_LFT,':PAGE_RGT' => $PAGE_RGT));
+
+                    $UPDATEER -> execute(
+                        array
+                        (
+                            ':PAGE_LFT' => $PAGE_LFT,
+                            ':PAGE_RGT' => $PAGE_RGT
+                        )
+                    );
                 }
                 catch (PDOException $e)
                 {
-                    $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                    $app -> redirect(_BASE_URL . '/admin/pages/?res=del-recursive-false');
+                    $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
+                    $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=del-recursive-false');
                     die();
                 }
 
                 if(_LOGGING == true)
                 {
-                    $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                    $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                 }
 
-                $app -> redirect(_BASE_URL . '/admin/pages/?res=del-recursive-true');
+                $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=del-recursive-true');
                 die();
             }
             else
             {
                 if(_LOGGING == true)
                 {
-                    $app -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                 }
 
-                $app -> redirect(_BASE_URL . '/admin/pages/?res=del-recursive-false');
+                $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=del-recursive-false');
                 die();
             }
         }
     );
 
-    $app -> get('/admin/pages/reorder/:METHOD/:PAGE_ID/', $ADMIN_CHECK, function ($METHOD,$PAGE_ID) use ($app,$DBCON)
+    $constructr -> get('/constructr/pages/reorder/:METHOD/:PAGE_ID/', $ADMIN_CHECK, function ($METHOD,$PAGE_ID) use ($constructr,$DBCON)
         {
             if(_LOGGING == true)
             {
-                $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
             }
 
             if($METHOD != '' && $PAGE_ID != '')
@@ -840,7 +938,8 @@
                     ');
 
                     $SELEKTOR -> execute(
-                        array(
+                        array
+                        (
                             ':PAGE_ID' => $PAGE_ID
                         )
                     );
@@ -849,8 +948,8 @@
                 }
                 catch (PDOException $e)
                 {
-                    $app -> getLog() -> debug('1) ' . $_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                    $app -> redirect(_BASE_URL . '/admin/pages/?res=reorder-error');
+                    $constructr -> getLog() -> debug('1) ' . $_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
+                    $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=reorder-error');
                     die();
                 }
 
@@ -870,7 +969,13 @@
                             LIMIT 1;
                         ');
 
-                        $SELECT_TARGET_PAGE -> execute(array(':TARGET_PAGE' => ($PAGE_LFT - 1)));
+                        $SELECT_TARGET_PAGE -> execute(
+                            array
+                            (
+                                ':TARGET_PAGE' => ($PAGE_LFT - 1)
+                            )
+                        );
+
                         $SELECT_TARGET_PAGE = $SELECT_TARGET_PAGE -> fetch();
                         $TARGET_PAGE_ID = $SELECT_TARGET_PAGE['pages_id'];
                         $TARGET_PAGE_LFT = $SELECT_TARGET_PAGE['pages_lft'];
@@ -879,8 +984,8 @@
                     }
                     catch (PDOException $e)
                     {
-                        $app -> getLog() -> debug('3) ' . $_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                        $app -> redirect(_BASE_URL . '/admin/pages/?res=reorder-error');
+                        $constructr -> getLog() -> debug('3) ' . $_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
+                        $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=reorder-error');
                         die();
                     }
                 }
@@ -895,7 +1000,13 @@
                             LIMIT 1;
                         ');
 
-                        $SELECT_TARGET_PAGE -> execute(array(':TARGET_PAGE' => ($PAGE_RGT + 1)));
+                        $SELECT_TARGET_PAGE -> execute(
+                            array
+                            (
+                                ':TARGET_PAGE' => ($PAGE_RGT + 1)
+                            )
+                        );
+
                         $SELECT_TARGET_PAGE = $SELECT_TARGET_PAGE -> fetch();
                         $TARGET_PAGE_ID = $SELECT_TARGET_PAGE['pages_id'];
                         $TARGET_PAGE_LFT = $SELECT_TARGET_PAGE['pages_lft'];
@@ -904,8 +1015,8 @@
                     }
                     catch (PDOException $e)
                     {
-                        $app -> getLog() -> debug('3) ' . $_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                        $app -> redirect(_BASE_URL . '/admin/pages/?res=reorder-error');
+                        $constructr -> getLog() -> debug('3) ' . $_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
+                        $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=reorder-error');
                         die();
                     }
                 }
@@ -917,23 +1028,23 @@
                         $UPDATE_PAGES = $DBCON -> prepare('
                             UPDATE constructr_pages
                             SET
-                                pages_lft = :TARGET_PAGE_LFT,
-                                pages_rgt = :TARGET_PAGE_RGT
+                            pages_lft = :TARGET_PAGE_LFT,
+                            pages_rgt = :TARGET_PAGE_RGT
                             WHERE 
-                                pages_id = :PAGE_ID
+                            pages_id = :PAGE_ID
                             LIMIT 1;
-
                             UPDATE constructr_pages
                             SET
-                                pages_lft = :PAGE_LFT,
-                                pages_rgt = :PAGE_RGT
+                            pages_lft = :PAGE_LFT,
+                            pages_rgt = :PAGE_RGT
                             WHERE 
-                                pages_id = :TARGET_PAGE_ID
+                            pages_id = :TARGET_PAGE_ID
                             LIMIT 1;
                         ');
 
                         $UPDATE_PAGES -> execute(
-                            array(
+                            array
+                            (
                                 ':PAGE_ID' => $PAGE_ID,
                                 ':PAGE_LFT' => $PAGE_LFT,
                                 ':PAGE_RGT' => $PAGE_RGT,
@@ -945,12 +1056,12 @@
                     }
                     catch (PDOException $e)
                     {
-                        $app -> getLog() -> debug('5) ' . $_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                        $app -> redirect(_BASE_URL . '/admin/pages/?res=reorder-error');
+                        $constructr -> getLog() -> debug('5) ' . $_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
+                        $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=reorder-error');
                         die();
                     }
 
-                    $app -> redirect(_BASE_URL . '/admin/pages/?res=reorder-success');
+                    $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=reorder-success');
                     die();
                 }
                 else
@@ -970,7 +1081,6 @@
                                 pages_temp_marker = :TEMP_MARKER
                                 WHERE 
                                 pages_lft BETWEEN :TARGET_PAGE_LFT AND :TARGET_PAGE_RGT;
-        
                                 UPDATE constructr_pages
                                 SET
                                 pages_lft = (pages_lft - (:TARGET_CHILDREN_COUNTER * 2)),
@@ -979,7 +1089,6 @@
                                 pages_lft BETWEEN :PAGE_LFT AND :PAGE_RGT
                                 AND
                                 pages_temp_marker = :EMPTY_VALUE;
-        
                                 UPDATE constructr_pages
                                 SET
                                 pages_lft = (pages_lft + (:CHILDREN_COUNTER * 2)),
@@ -988,7 +1097,6 @@
                                 pages_lft BETWEEN :TARGET_PAGE_LFT AND :TARGET_PAGE_RGT
                                 AND
                                 pages_temp_marker = :TEMP_MARKER;
-        
                                 UPDATE constructr_pages
                                 SET
                                 pages_temp_marker = :EMPTY_VALUE
@@ -997,7 +1105,8 @@
                             ');
 
                             $UPDATE_PAGES -> execute(
-                                array(
+                                array
+                                (
                                     ':PAGE_ID' => $PAGE_ID,
                                     ':PAGE_LFT' => $PAGE_LFT,
                                     ':PAGE_RGT' => $PAGE_RGT,
@@ -1013,12 +1122,12 @@
                         }
                         catch (PDOException $e)
                         {
-                            $app -> getLog() -> debug('5) ' . $_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                            $app -> redirect(_BASE_URL . '/admin/pages/?res=reorder-error');
+                            $constructr -> getLog() -> debug('5) ' . $_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
+                            $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=reorder-error');
                             die();
                         }
 
-                        $app -> redirect(_BASE_URL . '/admin/pages/?res=reorder-success');
+                        $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=reorder-success');
                         die();
                     }
                     else
@@ -1031,7 +1140,6 @@
                                 pages_temp_marker = :TEMP_MARKER
                                 WHERE 
                                 pages_lft BETWEEN :TARGET_PAGE_LFT AND :TARGET_PAGE_RGT;
-        
                                 UPDATE constructr_pages
                                 SET
                                 pages_lft = (pages_lft + (:TARGET_CHILDREN_COUNTER * 2)),
@@ -1040,7 +1148,6 @@
                                 pages_lft BETWEEN :PAGE_LFT AND :PAGE_RGT
                                 AND
                                 pages_temp_marker = :EMPTY_VALUE;
-        
                                 UPDATE constructr_pages
                                 SET
                                 pages_lft = (pages_lft - (:CHILDREN_COUNTER * 2)),
@@ -1049,7 +1156,6 @@
                                 pages_lft BETWEEN :TARGET_PAGE_LFT AND :TARGET_PAGE_RGT
                                 AND
                                 pages_temp_marker = :TEMP_MARKER;
-
                                 UPDATE constructr_pages
                                 SET
                                 pages_temp_marker = :EMPTY_VALUE
@@ -1058,7 +1164,8 @@
                             ');
 
                             $UPDATE_PAGES -> execute(
-                                array(
+                                array
+                                (
                                     ':PAGE_ID' => $PAGE_ID,
                                     ':PAGE_LFT' => $PAGE_LFT,
                                     ':PAGE_RGT' => $PAGE_RGT,
@@ -1074,12 +1181,12 @@
                         }
                         catch (PDOException $e)
                         {
-                            $app -> getLog() -> debug('5) ' . $_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                            $app -> redirect(_BASE_URL . '/admin/pages/?res=reorder-error');
+                            $constructr -> getLog() -> debug('5) ' . $_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
+                            $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=reorder-error');
                             die();
                         }
 
-                        $app -> redirect(_BASE_URL . '/admin/pages/?res=reorder-success');
+                        $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=reorder-success');
                         die();
                     }
                 }
@@ -1087,7 +1194,7 @@
             }
             else
             {
-                $app -> redirect(_BASE_URL . '/admin/pages/?res=reorder-error');
+                $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=reorder-error');
                 die();
             }
         }

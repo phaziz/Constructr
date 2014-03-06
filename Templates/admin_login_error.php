@@ -65,7 +65,8 @@
                             {
                                 className: 'vex-theme-flat-attack',
                                 message: 'Achtung: Das Login ist fehlgeschlagen.<br>Bitte &uuml;berpr&uuml;fen Sie Ihre Zugangsdaten!',
-                                afterClose: function() {
+                                afterClose: function() 
+                                {
                                     $('#_admin_username').focus();
                                 }
                             }

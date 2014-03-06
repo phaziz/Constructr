@@ -3,11 +3,11 @@
     /*
      * LOGOUT START
      * */
-    $app -> get('/admin/logout(/)', function () use ($app)
+    $constructr -> get('/constructr/logout(/)', function () use ($constructr)
         {
             if(_LOGGING == true)
             {
-                $app -> getLog() -> debug('Successful logout ' . $_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                $constructr -> getLog() -> debug('Successful logout ' . $_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
             }
 
             $_SESSION['backend-user-username'] = '';
@@ -21,7 +21,7 @@
             }
 
             session_destroy();
-            $app -> redirect(_BASE_URL . '/admin/login');
+            $constructr -> redirect(_BASE_URL . '/constructr/login');
             die();
         }
     );

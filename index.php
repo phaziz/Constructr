@@ -1,6 +1,7 @@
 <?php
 
-    /**************************************************************************
+    /*
+    ***************************************************************************
         DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
         Version 1, December 2012
         Copyright (C) 2012 Christian Becher | phaziz.com <christian@phaziz.com>
@@ -10,13 +11,16 @@
         DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
         TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
         0. YOU JUST DO WHAT THE FUCK YOU WANT TO MIT-LICENSE-STYLE!
-    ***************************************************************************/
+        
+        Visit http://phaziz.com
+    ***************************************************************************
+    */
 
     session_cache_limiter(false);
     session_start();
 
     define('_BASE_URL','http://' . $_SERVER['HTTP_HOST'] . '');
-    define('_VERSION','20140228');
+    define('_VERSION','20140306');
     define('_SALT','$2y$07$R.gJb2U2N.FmZ4hPp1y2CN$');
     define('_LOGGING',true);
     define('_DEBUGGING',true);
@@ -33,7 +37,7 @@
 
     \Slim\Slim::registerAutoloader();
 
-    $HOSTNAME = "localhost";
+    $HOSTNAME = "";
     $DATABASE = "";
     $USERNAME = "";
     $PASSWORD = "";
@@ -41,7 +45,8 @@
     try
     {
         $DBCON = new PDO('mysql:host=' . $HOSTNAME . ';dbname=' . $DATABASE,$USERNAME,$PASSWORD,
-            array(
+            array
+            (
                 PDO::ATTR_PERSISTENT => true
             )
         );
@@ -54,51 +59,55 @@
         die();
     }
 
-    $app = new \Slim\Slim(
-        array(
-            'mode'                  => 'development',
-            'debug'                 => true,
-            'http.version'          => '1.1',
-            'templates.path'        => './Templates',
-            'session.handler'       => null,
-            'log.writer'            => new \Slim\Extras\Log\DateTimeFileWriter(
-                array(
-                    'path'              => './Logfiles',
-                    'name_format'       => 'Ymd',
-                    'message_format'    => '%label% // %date%: %message%',
-                    'extension'         => 'log'
+    $constructr = new \Slim\Slim(
+        array
+        (
+            'mode' => 'development',
+            'debug' => true,
+            'http.version' => '1.1',
+            'templates.path' => './Templates',
+            'session.handler' => null,
+            'log.writer' => new \Slim\Extras\Log\DateTimeFileWriter(
+                array
+                (
+                    'path' => './Logfiles',
+                    'name_format' => 'Ymd',
+                    'message_format' => '%label% // %date%: %message%',
+                    'extension' => 'log'
                 )
             ),
-            'log.level'         => \Slim\Log::DEBUG,
-            'log.enabled'       => true
+            'log.level' => \Slim\Log::DEBUG,
+            'log.enabled' => true
         )
     );
 
-    $app -> add(
+    $constructr -> add(
         new \Slim\Middleware\SessionCookie(
-            array(
-                'secret'        => 'h5/823565$%4jc/)$3kfè4()487HD3d',
-                'cipher'        => MCRYPT_RIJNDAEL_256,
-                'cipher_mode'   => MCRYPT_MODE_CBC,
-                'name'          => 'app-sssession',
-                'expires'       => '8 hours',
-                'path'          => '/',
-                'domain'        => null,
-                'secure'        => false,
-                'httponly'      => false
+            array
+            (
+                'secret' => 'h5/823565$%4jc/)$3kfè4()487HD3d',
+                'cipher' => MCRYPT_RIJNDAEL_256,
+                'cipher_mode' => MCRYPT_MODE_CBC,
+                'name' => 'app-sssession',
+                'expires' => '8 hours',
+                'path' => '/',
+                'domain' => null,
+                'secure' => false,
+                'httponly' => false
             )
         )
     );
 
     require_once './Views/helper.php';
 
-    $REQUEST = $app -> request -> getPath();
-    $FINDR = strpos($REQUEST, 'admin');
+    $REQUEST = $constructr -> request -> getPath();
+    $FINDR = strpos($REQUEST, 'constructr');
 
     if ($FINDR === false)
     {
-        // FRONTEND
-        $app -> get('(:ROUTE+)', function ($ROUTE) use ($app,$DBCON)
+        $START = microtime(true);
+        
+        $constructr -> get('(:ROUTE+)', function ($ROUTE) use ($constructr,$DBCON)
             {
                 $FULL_ROUTE;
                 $PAGES;
@@ -117,12 +126,12 @@
 
                 try
                 {
-                   $PAGES = $DBCON -> query('SELECT * FROM constructr_pages ORDER BY pages_lft ASC;');
+                   $PAGES = $DBCON -> query('SELECT * FROM constructr_pages WHERE pages_active = 1 ORDER BY pages_lft ASC;');
                    $PAGES = $PAGES -> fetchAll();
                 }
                 catch (PDOException $e)
                 {
-                    $app -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
+                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
                     die();
                 }
 
@@ -135,7 +144,7 @@
                             try
                             {
                                 $HOMEPAGE = $DBCON -> prepare('
-                                    SELECT * FROM constructr_pages WHERE pages_lft = :NESTED_SETS_INIT LIMIT 1;
+                                    SELECT * FROM constructr_pages WHERE pages_lft = :NESTED_SETS_INIT AND pages_active = 1 LIMIT 1;
                                 ');
     
                                 $INIT = 1;
@@ -150,7 +159,7 @@
                             }
                             catch (PDOException $e)
                             {
-                                $app -> getLog() -> error('1 ' . $_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
+                                $constructr -> getLog() -> error('1 ' . $_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
                                 die();
                             }
 
@@ -159,7 +168,7 @@
                             try
                             {
                                 $CONTENT = $DBCON -> prepare('
-                                    SELECT * FROM constructr_content WHERE content_page_id = :PAGE_ID ORDER BY content_order ASC;
+                                    SELECT * FROM constructr_content WHERE content_page_id = :PAGE_ID AND content_active = 1 ORDER BY content_order ASC;
                                 ');
 
                                 $CONTENT -> execute(
@@ -170,7 +179,7 @@
                             }
                             catch (PDOException $e)
                             {
-                                $app -> getLog() -> error('2 ' . $_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
+                                $constructr -> getLog() -> error('2 ' . $_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
                                 die();
                             }
                         }
@@ -181,7 +190,7 @@
                                 try
                                 {
                                     $ACT_PAGE = $DBCON -> prepare('
-                                        SELECT * FROM constructr_pages WHERE pages_id = :PAGE_ID LIMIT 1;
+                                        SELECT * FROM constructr_pages WHERE pages_id = :PAGE_ID AND pages_active = 1 LIMIT 1;
                                     ');
 
                                     $ACT_PAGE -> execute(
@@ -193,7 +202,7 @@
                                     $PAGE_DATA = $ACT_PAGE -> fetch();
 
                                     $CONTENT = $DBCON -> prepare('
-                                        SELECT * FROM constructr_content WHERE content_page_id = :PAGE_ID ORDER BY content_order ASC;
+                                        SELECT * FROM constructr_content WHERE content_page_id = :PAGE_ID AND content_active = 1 ORDER BY content_order ASC;
                                     ');
     
                                     $CONTENT -> execute(
@@ -204,7 +213,7 @@
                                 }
                                 catch (PDOException $e)
                                 {
-                                    $app -> getLog() -> error('3 ' . $_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
+                                    $constructr -> getLog() -> error('3 ' . $_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
                                     die();
                                 }
                             }    
@@ -212,7 +221,7 @@
                     }
                 }
 
-                $app -> render('index.php',
+                $constructr -> render('index.php',
                     array(
                         'PAGES' => $PAGES,
                         'PAGE_DATA' => $PAGE_DATA,
@@ -220,7 +229,6 @@
                     )
                 );
 
-                // APPEND DEBUGGING OUTPUT
                 if(_DEBUGGING == true)
                 {
                     echo '<div class="debugging"><h2>Debugging</h2>';
@@ -228,21 +236,28 @@
                     echo '<pre>';
                     var_dump($FULL_ROUTE);
                     echo '</pre>';
+                    echo '<br><h4>Generation Time:</h4>';
+                    echo '<pre>';
+                    echo 'TIMER: ' . substr(microtime(true) - $START,0,6) . ' Millisec.';
+                    echo '</pre>';
+                    echo '<br><h4>Memory Usage:</h4>';
+                    echo '<pre>';
+                    $MEM = 0;
+                    $MEM = number_format(((memory_get_usage()/1014)/1024),2,',','.') . ' MB';
+                    echo $MEM;
+                    echo '</pre>';
                     echo '</div>';
                 }
-                // APPEND DEBUGGING OUTPUT
-                
+
                 die();
             }
         );
 
-        $app -> run();
+        $constructr -> run();
         $DBCON = null;
-        // FRONTEND
     }
     else
     {
-        // BACKEND
         require_once './Views/backenduser.php';
         require_once './Views/login.php';
         require_once './Views/logout.php';
@@ -251,7 +266,6 @@
         require_once './Views/content.php';
         require_once './Views/media.php';
 
-        $app -> run();
+        $constructr -> run();
         $DBCON = null;
-        // BACKEND
     }

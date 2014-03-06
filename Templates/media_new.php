@@ -25,34 +25,35 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="<?php echo _BASE_URL ?>/admin/">ConstructrCMS</a>
+                    <a class="navbar-brand" href="<?php echo _BASE_URL ?>/constructr/">ConstructrCMS</a>
                 </div>
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">                        
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Seitenverwaltung <b class="caret"></b></a>
                             <ul class="dropdown-menu">
-                                <li><a href="<?php echo _BASE_URL ?>/admin/pages/"><span class="glyphicon glyphicon-th-large"></span> &Uuml;bersicht</a></li>
+                                <li><a href="<?php echo _BASE_URL ?>" onclick="window.open(this.href);return false;"><span class="glyphicon glyphicon-eye-open"></span> Internetseite anzeigen</a></li>
+                                <li><a href="<?php echo _BASE_URL ?>/constructr/pages/"><span class="glyphicon glyphicon-th-large"></span> &Uuml;bersicht</a></li>
                             </ul>
                         </li>
                         <li class="dropdown active">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Medienverwaltung <b class="caret"></b></a>
                             <ul class="dropdown-menu">
-                                <li><a href="<?php echo _BASE_URL ?>/admin/media/"><span class="glyphicon glyphicon-camera"></span> &Uuml;bersicht</a></li>
-                                <li class="active"><a href="<?php echo _BASE_URL ?>/admin/media/new/"><span class="glyphicon glyphicon-log-in"></span> Neuer Upload</a></li>
+                                <li><a href="<?php echo _BASE_URL ?>/constructr/media/"><span class="glyphicon glyphicon-camera"></span> &Uuml;bersicht</a></li>
+                                <li class="active"><a href="<?php echo _BASE_URL ?>/constructr/media/new/"><span class="glyphicon glyphicon-log-in"></span> Neuer Upload</a></li>
                             </ul>
                         </li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Benutzerverwaltung <b class="caret"></b></a>
                             <ul class="dropdown-menu">
-                                <li><a href="<?php echo _BASE_URL ?>/admin/user/"><span class="glyphicon glyphicon-user"></span> &Uuml;bersicht</a></li>
-                                <li><a href="<?php echo _BASE_URL ?>/admin/user/new/"><span class="glyphicon glyphicon-pencil"></span> Neuer Benutzer</a></li>
+                                <li><a href="<?php echo _BASE_URL ?>/constructr/user/"><span class="glyphicon glyphicon-user"></span> &Uuml;bersicht</a></li>
+                                <li><a href="<?php echo _BASE_URL ?>/constructr/user/new/"><span class="glyphicon glyphicon-pencil"></span> Neuer Benutzer</a></li>
                             </ul>
                         </li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo $USERNAME; ?> <b class="caret"></b></a>
                             <ul class="dropdown-menu">
-                                <li><a href="<?php echo _BASE_URL ?>/admin/logout/"><span class="glyphicon glyphicon-off"></span> abmelden</a></li>
+                                <li><a href="<?php echo _BASE_URL ?>/constructr/logout/"><span class="glyphicon glyphicon-off"></span> abmelden</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -62,7 +63,7 @@
                 <div class="row">
                     <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
                     <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-                        <p><small><a href="<?php echo _BASE_URL ?>/admin/">Dashboard</a> <span class="glyphicon glyphicon-chevron-right"></span> <a href="<?php echo _BASE_URL ?>/admin/media/">Medienverwaltung - &Uuml;bersicht</a> <span class="glyphicon glyphicon-chevron-right"></span> <a href="<?php echo _BASE_URL ?>/admin/media/new/">Medienverwaltung - Neuer Upload</a> <span class="glyphicon glyphicon-chevron-right"></span></small></p>
+                        <p><small><a href="<?php echo _BASE_URL ?>/constructr/">Dashboard</a> <span class="glyphicon glyphicon-chevron-right"></span> <a href="<?php echo _BASE_URL ?>/constructr/media/">Medienverwaltung - &Uuml;bersicht</a> <span class="glyphicon glyphicon-chevron-right"></span> <a href="<?php echo _BASE_URL ?>/constructr/media/new/">Medienverwaltung - Neuer Upload</a> <span class="glyphicon glyphicon-chevron-right"></span></small></p>
                     </div><!-- // EOF COL-... -->
                     <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
                 </div><!-- // EOF ROW -->
@@ -93,7 +94,7 @@
                                 <div class="form-group">
                                     <div class="col-sm-12">
                                         <button type="submit" name="submitter" id="submitter" class="btn btn-info btn-sm">Upload speichern&#8250;&#8250;</button>
-                                        <a href="<?php echo _BASE_URL . '/admin/media/'; ?>"><button type="button" class="btn btn-danger btn-sm">Abbrechen</button></a>
+                                        <a href="<?php echo _BASE_URL . '/constructr/media/'; ?>"><button type="button" class="btn btn-danger btn-sm">Abbrechen</button></a>
                                     </div>
                                 </div>
                             </form>
@@ -104,7 +105,7 @@
                 <div class="row">
                     <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
                     <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-                        <p><small><a href="<?php echo _BASE_URL ?>/admin/">Dashboard</a> <span class="glyphicon glyphicon-chevron-right"></span> <a href="<?php echo _BASE_URL ?>/admin/media/">Medienverwaltung - &Uuml;bersicht</a> <span class="glyphicon glyphicon-chevron-right"></span> <a href="<?php echo _BASE_URL ?>/admin/media/new/">Medienverwaltung - Neuer Upload</a> <span class="glyphicon glyphicon-chevron-right"></span></small></p>
+                        <p><small><a href="<?php echo _BASE_URL ?>/constructr/">Dashboard</a> <span class="glyphicon glyphicon-chevron-right"></span> <a href="<?php echo _BASE_URL ?>/constructr/media/">Medienverwaltung - &Uuml;bersicht</a> <span class="glyphicon glyphicon-chevron-right"></span> <a href="<?php echo _BASE_URL ?>/constructr/media/new/">Medienverwaltung - Neuer Upload</a> <span class="glyphicon glyphicon-chevron-right"></span></small></p>
                         <p><small>Version: <?php echo _VERSION; ?> / <?php echo $TIMER; ?> / <?php echo $MEM; ?> / <a href="http://phaziz.com/" onclick="window.open(this.href);return false;">phaziz.com</a></small></p>
                     </div><!-- // EOF COL-... -->
                     <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
@@ -118,30 +119,36 @@
                 $(function ()
                     {
                         'use strict';
-                        $('body').on('mouseover', '.dropdown-toggle', function(e){
-                            $(e.currentTarget).trigger('click')
-                        })
+                        $('body').on('mouseover', '.dropdown-toggle', function(e)
+                            {
+                                $(e.currentTarget).trigger('click');
+                            }
+                        )
                         $( "#new_media_form" ).bind( "submit", function()
                             {
                                 $("#submitter").attr("disabled", "disabled");
                                 var F = $('#fileupload').val();
-                                if(F == ''){
+                                if(F == '')
+                                {
                                     vex.dialog.alert(
                                         {
                                             className: 'vex-theme-flat-attack',
                                             message: 'Achtung: Bitte eine Datei ausw&auml;hlen!',
-                                            afterClose: function() {
+                                            afterClose: function() 
+                                            {
                                                 $('#fileupload').focus();
                                                 $("#submitter").removeAttr("disabled");
                                             }
                                         }
                                     );
                                     return false;
-                                } else {
+                                }
+                                else
+                                {
                                     return true;
                                 }
                             }
-                        ); // EOF BIND NEW PAGE FORM
+                        );
                     }
                 );
             </script>

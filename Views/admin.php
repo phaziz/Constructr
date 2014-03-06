@@ -5,7 +5,7 @@
      * DER ANFANG ALLEN ÜBELS...
      * 
      * */
-    $app -> get('/admin(/)', $ADMIN_CHECK, function () use ($app,$DBCON)
+    $constructr -> get('/constructr(/)', $ADMIN_CHECK, function () use ($constructr,$DBCON)
         {
             $START = microtime(true);
             $USERNAME = $_SESSION['backend-user-username'];
@@ -14,10 +14,11 @@
 
             if(_LOGGING == true)
             {
-                $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
+                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
             }
 
-            try {
+            try
+            {
                $BACKENDUSER = $DBCON -> query('SELECT beu_id FROM constructr_backenduser;');
                $BACKEND_USER_COUNTR = $BACKENDUSER -> rowCount();               
                $PAGES = $DBCON -> query('SELECT pages_id FROM constructr_pages;');
@@ -27,23 +28,47 @@
             }
             catch (PDOException $e) 
             {
-                $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
+                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
                 die();
             }
 
             $MEM = 0;
             $MEM = number_format(((memory_get_usage()/1014)/1024),2,',','.') . ' MB';
-            $app -> render('admin.php',
-                array(
+            $constructr -> render('admin.php',
+                array
+                (
                     'MEM' => $MEM,
                     'USERNAME' => $USERNAME,
                     'BACKEND_USER_COUNTR' => $BACKEND_USER_COUNTR,
                     'PAGES_COUNTR' => $PAGES_COUNTR,
                     'UPLOADS_COUNTR' => $UPLOADS_COUNTR,
                     'SUBTITLE' => 'Admin-Dashboard',
-                    'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.',
+                    'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.'
                 )
             );
+        }
+    );
+    
+    
+    $constructr -> get('/constructr/optimization/', $ADMIN_CHECK, function () use ($constructr,$DBCON)
+        {
+            try
+            {
+                $OPTIMIZER = $DBCON -> query('
+                    OPTIMIZE TABLE 
+                    constructr_backenduser,
+                    constructr_content,
+                    constructr_media,
+                    constructr_pages
+                ');
+                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                $constructr -> redirect('../?optimized=true');
+            }
+            catch (PDOException $e) 
+            {
+                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
+                die();
+            }
         }
     );
     /*

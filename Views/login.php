@@ -3,63 +3,65 @@
     /*
      * LOGIN START
      * */
-    $app -> get('/admin/login(/)', function () use ($app)
+    $constructr -> get('/constructr/login(/)', function () use ($constructr)
         {
             if(_LOGGING == true)
             {
-                $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
+                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
             }
 
             $GUID = create_guid();
 
-            $app -> render('login.php', 
-                array(
+            $constructr -> render('login.php', 
+                array
+                (
                     '_METHOD' => 'post',
                     'GUID' => $GUID,
                     '_ENCTYPE' => 'application/x-www-form-urlencoded',
-                    '_ACTION' => _BASE_URL . '/admin/login/' . $GUID . '/',
-                    'SUBTITLE' => 'Login',
+                    '_ACTION' => _BASE_URL . '/constructr/login/' . $GUID . '/',
+                    'SUBTITLE' => 'Login'
                 )
             );
         }
     );
 
-    $app -> get('/admin/login-error(/)', function () use ($app)
+    $constructr -> get('/constructr/login-error(/)', function () use ($constructr)
         {
             if(_LOGGING == true)
             {
-                $app -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
+                $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
             }
 
             $GUID = create_guid();
 
-            $app -> render('admin_login_error.php', 
-                array(
+            $constructr -> render('admin_login_error.php', 
+                array
+                (
                     '_METHOD' => 'post',
                     'GUID' => $GUID,
                     '_ENCTYPE' => 'application/x-www-form-urlencoded',
-                    '_ACTION' => _BASE_URL . '/admin/login/' . $GUID . '/',
-                    'SUBTITLE' => 'Login',
+                    '_ACTION' => _BASE_URL . '/constructr/login/' . $GUID . '/',
+                    'SUBTITLE' => 'Login'
                 )
             );
         }
     );
 
-    $app -> post('/admin/login/:GUID/', function ($GUID) use ($app,$DBCON)
+    $constructr -> post('/constructr/login/:GUID/', function ($GUID) use ($constructr,$DBCON)
         {
-            $_ADMIN_USERNAME = $app -> request() -> post('_admin_username');
-            $_ADMIN_PASSWORD = $app -> request() -> post('_admin_password');
+            $_ADMIN_USERNAME = $constructr -> request() -> post('_admin_username');
+            $_ADMIN_PASSWORD = $constructr -> request() -> post('_admin_password');
             $_ADMIN_PASSWORD = crypt($_ADMIN_PASSWORD,_SALT);
-            $_ADMIN_GUID = $app -> request() -> post('_admin_guid');
+            $_ADMIN_GUID = $constructr -> request() -> post('_admin_guid');
 
             if($_ADMIN_GUID != $GUID)
             {
                 if(_LOGGING == true)
                 {
-                    $app -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . 'Login (GUID) error - ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . 'Login (GUID) error - ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                 }
 
-                $app -> redirect(_BASE_URL . '/admin/login-error/');
+                $constructr -> redirect(_BASE_URL . '/constructr/login-error/');
                 die();
             }
 
@@ -69,12 +71,13 @@
                 {
                     $QUERY = $DBCON -> prepare('SELECT * FROM constructr_backenduser WHERE beu_username = :USERNAME AND beu_password = :PASSWORD AND beu_active = :ACTIVE AND beu_art = :ART LIMIT 1;');
                     $QUERY -> execute( 
-                        array(
+                        array
+                        (
                             'USERNAME' => $_ADMIN_USERNAME,
                             'PASSWORD' => $_ADMIN_PASSWORD,
                             'ACTIVE' => 1,
-                            'ART' => 0,
-                            ) 
+                            'ART' => 0
+                        ) 
                     );
 
                     $COUNTR = $QUERY -> rowCount();
@@ -97,34 +100,34 @@
                         }
                         catch (PDOException $e)
                         {
-                            $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                            $app -> redirect(_BASE_URL . '/admin/login-error/');
+                            $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
+                            $constructr -> redirect(_BASE_URL . '/constructr/login-error/');
                             die();
                         }
 
                         if(_LOGGING == true)
                         {
-                            $app -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . 'Successful login ' . $_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                            $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . 'Successful login ' . $_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                         }
 
-                        $app -> redirect(_BASE_URL . '/admin/');
+                        $constructr -> redirect(_BASE_URL . '/constructr/');
                         die();
                     }
                     else
                     {
                         if(_LOGGING == true)
                         {
-                            $app -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . 'Login error - ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                            $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . 'Login error - ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                         }
 
-                        $app -> redirect(_BASE_URL . '/admin/login-error/');
+                        $constructr -> redirect(_BASE_URL . '/constructr/login-error/');
                         die();
                     }
                 }
                 catch (PDOException $e)
                 {
-                    $app -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                    $app -> redirect(_BASE_URL . '/admin/login-error/');
+                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
+                    $constructr -> redirect(_BASE_URL . '/constructr/login-error/');
                     die();
                 }
             }
@@ -132,10 +135,10 @@
             {
                 if(_LOGGING == true)
                 {
-                    $app -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . 'Login error - ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . 'Login error - ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                 }
 
-                $app -> redirect(_BASE_URL . '/admin/login-error/');
+                $constructr -> redirect(_BASE_URL . '/constructr/login-error/');
                 die();
             }
         }

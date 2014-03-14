@@ -151,15 +151,18 @@
                 $(function()
                     {
                         $('.tt').tooltip();
+
                         $('body').on('mouseover', '.dropdown-toggle', function(e)
                             {
                                 $(e.currentTarget).trigger('click');
                             }
                         );
+
                         function autoBlinder()
                         {
                             $('.response').fadeOut();
                         }
+
                         setInterval(autoBlinder,4500);
                     }
                 )

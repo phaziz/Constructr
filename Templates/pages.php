@@ -249,17 +249,22 @@
                 $(function()
                     {
                         'use strict';
+
                         $('.tt').tooltip();
+
                         $('body').on('mouseover', '.dropdown-toggle', function(e)
                             {
                                 $(e.currentTarget).trigger('click');
                             }
                         )
+
                         function autoBlinder()
                         {
                             $('.response').fadeOut();
                         }
+
                         setInterval(autoBlinder,4500);
+
                         $('.datatable').dataTable(
                             {
                                 "aaSorting": [],
@@ -283,6 +288,7 @@
                                 }
                             }
                         );
+
                         $('.datatable').each(function()
                             {
                                 var datatable = $(this);
@@ -293,7 +299,8 @@
                                 length_sel.addClass('form-control input-sm');
                             }
                         );
-                       $('.new_sub').click(function(e)
+
+                        $('.new_sub').click(function(e)
                             {
                                 e.preventDefault();
                                 var U = $(this).attr('href');
@@ -317,8 +324,9 @@
                                     }
                                 );
                            }
-                       );
-                       $('.reorder').click(function(e)
+                        );
+
+                        $('.reorder').click(function(e)
                             {
                                 e.preventDefault();
                                 var U = $(this).attr('href');
@@ -342,8 +350,9 @@
                                     }
                                 );
                            }
-                       );
-                       $('.deleter-single').click(function(e)
+                        );
+
+                        $('.deleter-single').click(function(e)
                             {
                                 e.preventDefault();
                                 var U = $(this).attr('href');
@@ -367,8 +376,9 @@
                                     }
                                 );
                            }
-                       );
-                       $('.deleter-recursive').click(function(e)
+                        );
+
+                        $('.deleter-recursive').click(function(e)
                             {
                                 e.preventDefault();
                                 var U = $(this).attr('href');
@@ -391,9 +401,10 @@
                                         }
                                     }
                                 );
-                           }
-                       );
-                       $('.activator').click(function(e)
+                            }
+                        );
+
+                        $('.activator').click(function(e)
                             {
                                 e.preventDefault();
                                 var U = $(this).attr('href');
@@ -416,8 +427,8 @@
                                         }
                                     }
                                 );
-                           }
-                       );
+                            }
+                        );
                     }
                 );
             </script>

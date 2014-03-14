@@ -1,11 +1,9 @@
 User-agent: *
 Disallow: /Assets
 Disallow: /Logfiles
-Disallow: /logs
 Disallow: /Slim
 Disallow: /Templates
 Disallow: /Uploads
-Disallow: /usage
 Disallow: /Views
 Disallow: /admin
 

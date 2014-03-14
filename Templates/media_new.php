@@ -119,15 +119,19 @@
                 $(function ()
                     {
                         'use strict';
+
                         $('body').on('mouseover', '.dropdown-toggle', function(e)
                             {
                                 $(e.currentTarget).trigger('click');
                             }
                         )
+
                         $( "#new_media_form" ).bind( "submit", function()
                             {
                                 $("#submitter").attr("disabled", "disabled");
+
                                 var F = $('#fileupload').val();
+
                                 if(F == '')
                                 {
                                     vex.dialog.alert(

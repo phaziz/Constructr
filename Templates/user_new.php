@@ -142,12 +142,15 @@
                 $(function()
                     {
                         'use strict';
+
                         $('body').on('mouseover', '.dropdown-toggle', function(e)
                             {
                                 $(e.currentTarget).trigger('click')
                             }
                         )
+
                         $('#username').focus();
+
                         $('#username').bind('blur', function()
                             {
                                 var U = $('#username').val();
@@ -179,8 +182,11 @@
                                 }
                             }
                         );
+
                         $('#rg-address').hide();
+
                         var options = {};
+
                         options.ui = {
                             container: ".pwd-container",
                             showStatus: true,
@@ -191,22 +197,28 @@
                                 verdict: ".pwstrength_viewport_verdict"
                             }
                         };
+
                         options.rules = {
                             activated: {
                                 wordTwoCharacterClasses: true,
                                 wordRepetitions: true
                             }
                         };
+
                         $(':password').pwstrength(options);
+
                         $( "#new_user_form" ).bind( "submit", function() 
                             {
                                 $("#submitter").attr("disabled", "disabled");
+
                                 var U = $('#username').val();
                                 var P = $('#password').val();
                                 var PRT = $('#password_retype').val();
                                 var E = $('#email').val();
                                 var A = $('#art').val();
                                 var L = $('#password').val().length;
+                                var NombreHombre = $('#password').val().replace(/[^0-9]/g,'').length;
+
                                 if(L < 8)
                                 {
                                     vex.dialog.alert(
@@ -222,7 +234,7 @@
                                     );
                                     return false;
                                 }
-                                var NombreHombre = $('#password').val().replace(/[^0-9]/g,'').length;
+
                                 if(NombreHombre < 2)
                                 {
                                     vex.dialog.alert(
@@ -254,7 +266,9 @@
                                     );
                                     return false;
                                 }
-                                if(U == '' || P == '' || PRT == '' || E == '' || A == '0'){
+
+                                if(U == '' || P == '' || PRT == '' || E == '' || A == '0')
+                                {
                                     if(U == '')
                                     {
                                         vex.dialog.alert(
@@ -270,6 +284,7 @@
                                         );
                                         return false;
                                     }
+
                                     if(P == '')
                                     {
                                         vex.dialog.alert(
@@ -285,6 +300,7 @@
                                         );
                                         return false;
                                     }
+
                                     if(PRT == '')
                                     {
                                         vex.dialog.alert(
@@ -300,6 +316,7 @@
                                         );
                                         return false;
                                     }
+
                                     if(E == '')
                                     {
                                         vex.dialog.alert(
@@ -315,6 +332,7 @@
                                         );
                                         return false;
                                     }
+
                                     if(A == '')
                                     {
                                         vex.dialog.alert(
@@ -330,7 +348,9 @@
                                         );
                                         return false;
                                     }
-                                } else {
+                                }
+                                else
+                                {
                                     if(P != PRT)
                                     {
                                         vex.dialog.alert(

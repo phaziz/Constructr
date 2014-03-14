@@ -70,6 +70,36 @@
      * 
      * */
 
+    $constructr -> get('/constructr/get-image-list/', $ADMIN_CHECK, function () use ($constructr)
+        {
+            if(_LOGGING == true)
+            {
+                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
+            }
+
+            $IMAGE_LIST .= '[';
+            $EXTENSIONS = array("jpg","JPG", "bmp", "BMP", "gif", "GIF", "jpeg","JPEG", "png","PNG");
+
+            if ($HANDLE = opendir('./Uploads/'))
+            {
+                while (false !== ($IMAGE = readdir($HANDLE)))
+                {
+                    if(in_array(pathinfo($IMAGE,PATHINFO_EXTENSION), $EXTENSIONS)) 
+                    {
+                        $IMAGE_LIST .=  '{"image":"' . _BASE_URL . '/Uploads/' . $IMAGE . '","thumb": "' . _BASE_URL . '/Uploads/' . $IMAGE . '","folder": "Uploads"},';
+                    }
+                }
+                closedir($HANDLE);
+            }
+
+            $IMAGE_LIST .= ']';
+            $IMAGES_JSON = str_replace('"},]','"}]',$IMAGE_LIST);
+            echo $IMAGES_JSON;
+
+            die();
+        }
+    );
+
     $constructr -> get('/constructr/content/:PAGE_ID/:NEW_CONTENT_ORDER/new/', $ADMIN_CHECK, function ($PAGE_ID,$NEW_CONTENT_ORDER) use ($constructr,$DBCON)
         {
             $START = microtime(true);

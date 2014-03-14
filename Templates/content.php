@@ -234,17 +234,22 @@
                 $(function()
                     {
                         'use strict';
+
                         $('.tt').tooltip();
+
                         $('body').on('mouseover', '.dropdown-toggle', function(e)
                             {
                                 $(e.currentTarget).trigger('click');
                             }
                         )
+
                         function autoBlinder()
                         {
                             $('.response').fadeOut();
                         }
+
                         setInterval(autoBlinder,4500);
+
                         $('.datatable').dataTable(
                             {
                                 "aaSorting": [],
@@ -267,6 +272,7 @@
                                 }
                             }
                         );
+
                         $('.datatable').each(function()
                             {
                                 var datatable = $(this);
@@ -277,102 +283,84 @@
                                 length_sel.addClass('form-control input-sm');
                             }
                         );
-                        $('.editer').click(function(e)
-                        {
-                            e.preventDefault();
-                            var U = $(this).attr('href');
-                            vex.dialog.buttons.YES.text = 'Ja';
-                            vex.dialog.buttons.NO.text = 'Abbrechen';
-                            vex.dialog.confirm(
-                                {
-                                    className: 'vex-theme-flat-attack', 
-                                    message: 'M&ouml;chten Sie den gew&auml;hlte Inhalt wirklich bearbeiten?',
-                                    callback: function(value)
+
+                        $('.reorder').click(function(e)
+                            {
+                                e.preventDefault();
+                                var U = $(this).attr('href');
+                                vex.dialog.buttons.YES.text = 'Ja';
+                                vex.dialog.buttons.NO.text = 'Abbrechen';
+                                vex.dialog.confirm(
                                     {
-                                        if(value == true)
+                                        className: 'vex-theme-flat-attack', 
+                                        message: 'Inhalt wirklich verschieben?',
+                                        callback: function(value)
                                         {
-                                            window.location = (U);
-                                        } 
-                                        else
-                                        {
-                                            return false
+                                            if(value == true)
+                                            {
+                                                window.location = (U);
+                                            }
+                                            else
+                                            {
+                                                return false
+                                            }
                                         }
                                     }
-                                }
-                            );
-                       });
-                       $('.reorder').click(function(e)
-                       {
-                            e.preventDefault();
-                            var U = $(this).attr('href');
-                            vex.dialog.buttons.YES.text = 'Ja';
-                            vex.dialog.buttons.NO.text = 'Abbrechen';
-                            vex.dialog.confirm(
-                                {
-                                    className: 'vex-theme-flat-attack', 
-                                    message: 'Inhalt wirklich verschieben?',
-                                    callback: function(value)
+                                );
+                            }
+                        );
+                        
+                        $('.deleter').click(function(e)
+                            {
+                                e.preventDefault();
+                                var U = $(this).attr('href');
+                                vex.dialog.buttons.YES.text = 'Ja';
+                                vex.dialog.buttons.NO.text = 'Abbrechen';
+                                vex.dialog.confirm(
                                     {
-                                        if(value == true)
+                                        className: 'vex-theme-flat-attack', 
+                                        message: 'M&ouml;chten Sie wirklich diesen Inhalt l&ouml;schen?',
+                                        callback: function(value)
                                         {
-                                            window.location = (U);
-                                        }
-                                        else
-                                        {
-                                            return false
+                                            if(value == true)
+                                            {
+                                                window.location = (U);
+                                            }
+                                            else
+                                            {
+                                                return false
+                                            }
                                         }
                                     }
-                                }
-                            );
-                       });
-                       $('.deleter').click(function(e)
-                       {
-                            e.preventDefault();
-                            var U = $(this).attr('href');
-                            vex.dialog.buttons.YES.text = 'Ja';
-                            vex.dialog.buttons.NO.text = 'Abbrechen';
-                            vex.dialog.confirm(
-                                {
-                                    className: 'vex-theme-flat-attack', 
-                                    message: 'M&ouml;chten Sie wirklich diesen Inhalt l&ouml;schen?',
-                                    callback: function(value)
+                                );
+                            }
+                        );
+
+                        $('.activator').click(function(e)
+                            {
+                                e.preventDefault();
+                                var U = $(this).attr('href');
+                                vex.dialog.buttons.YES.text = 'Ja';
+                                vex.dialog.buttons.NO.text = 'Abbrechen';
+                                vex.dialog.confirm(
                                     {
-                                        if(value == true)
+                                        className: 'vex-theme-flat-attack', 
+                                        message: 'Soll die Sichtbarkeit des Inhalts wirklich angepasst werden?',
+                                        callback: function(value)
                                         {
-                                            window.location = (U);
-                                        }
-                                        else
-                                        {
-                                            return false
+                                            if(value == true)
+                                            {
+                                                window.location = (U);
+                                            }
+                                            else
+                                            {
+                                                return false
+                                            }
                                         }
                                     }
-                                }
-                            );
-                       });
-                       $('.activator').click(function(e)
-                       {
-                            e.preventDefault();
-                            var U = $(this).attr('href');
-                            vex.dialog.buttons.YES.text = 'Ja';
-                            vex.dialog.buttons.NO.text = 'Abbrechen';
-                            vex.dialog.confirm(
-                                {
-                                    className: 'vex-theme-flat-attack', 
-                                    message: 'Soll die Sichtbarkeit des Inhalts wirklich angepasst werden?',
-                                    callback: function(value)
-                                    {
-                                        if(value == true)
-                                        {
-                                            window.location = (U);
-                                        }
-                                        else
-                                        {
-                                            return false
-                                        }
-                                    }
-                                }
-                            );
-                       });
+                                );
+                            }
+                        );
                     }
                 );
             </script>

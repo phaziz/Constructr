@@ -154,17 +154,22 @@
                 $(function()
                     {
                         'use strict';
+
                         $('body').on('mouseover', '.dropdown-toggle', function(e)
                             {
                                 $(e.currentTarget).trigger('click')
                             }
                         )
+
                         $('#page_name').focus();
+
                         $( "#new_page_form" ).bind( "submit", function()
                             {
                                 $("#submitter").attr("disabled", "disabled");
+
                                 var U = $('#page_name').val();
                                 var P = $('#page_url').val();
+
                                 if(U == '' || P == '')
                                 {
                                     if(U == '')
@@ -182,6 +187,7 @@
                                         );
                                         return false;
                                     }
+
                                     if(P == '')
                                     {
                                         vex.dialog.alert(

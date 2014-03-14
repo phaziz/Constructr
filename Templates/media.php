@@ -188,15 +188,18 @@
                 $(function()
                     {
                         'use strict';
+
                         $('body').on('mouseover', '.dropdown-toggle', function(e)
                             {
                                 $(e.currentTarget).trigger('click')
                             }
                         )
+
                         function autoBlinder()
                         {
                             $('.response').fadeOut();
                         }
+
                         $('.datatable').dataTable(
                             {
                                 "aaSorting": [],
@@ -221,6 +224,7 @@
                                 }
                             }
                         );
+
                         $('.datatable').each(function()
                             {
                                 var datatable = $(this);
@@ -231,8 +235,11 @@
                                 length_sel.addClass('form-control input-sm');
                             }
                         );
+
                         setInterval(autoBlinder,4500);
+
                         $('.tt').tooltip();
+
                         $('.deleter').click(function(e)
                             {
                                 e.preventDefault();

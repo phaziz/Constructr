@@ -113,11 +113,13 @@
                 $(function()
                     {
                         'use strict';
+
                         $('body').on('mouseover', '.dropdown-toggle', function(e)
                             {
                                 $(e.currentTarget).trigger('click');
                             }
                         )
+
                         $('.tt').tooltip();
                     }
                 );

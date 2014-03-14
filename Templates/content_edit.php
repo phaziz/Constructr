@@ -10,8 +10,7 @@
             <link href="<?php echo _BASE_URL;?>/Assets/css/app.css" rel="stylesheet">
             <link href="<?php echo _BASE_URL;?>/Assets/vex/css/vex.css" rel="stylesheet">
             <link href="<?php echo _BASE_URL;?>/Assets/vex/css/vex-theme-flat-attack.css" rel="stylesheet">
-            <link rel="stylesheet" type="text/css" href="<?php echo _BASE_URL;?>/Assets/wysiwyg/src/bootstrap-wysihtml5.css" media="all">
-            <link rel="stylesheet" type="text/css" href="<?php echo _BASE_URL;?>/Assets/wysiwyg/dist/bootstrap-wysihtml5-0.0.2.css" media="all">
+
             <!--[if lt IE 9]>
                 <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
             <![endif]-->
@@ -128,33 +127,32 @@
             <script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
             <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
             <script src="<?php echo _BASE_URL ?>/Assets/vex/js/vex.combined.min.js"></script>
-            <script src="<?php echo _BASE_URL ?>/Assets/wysiwyg/lib/js/wysihtml5-0.3.0.min.js"></script>
-            <script src="<?php echo _BASE_URL ?>/Assets/wysiwyg/src/bootstrap-wysihtml5.js"></script>
+            <script src="<?php echo _BASE_URL ?>/Assets/ckeditor/ckeditor.js"></script>
+            <script src="<?php echo _BASE_URL ?>/Assets/ckeditor/adapters/jquery.js"></script>
             <script>
                 $(function()
                     {
                         'use strict';
+
                         $('body').on('mouseover', '.dropdown-toggle', function(e)
                             {
                                 $(e.currentTarget).trigger('click');
                             }
                         )
-                        $('.textarea').wysihtml5(
+
+                        $( '#content' ).ckeditor(
                             {
-                                "font-styles": true,
-                                "emphasis": true,
-                                "lists": true,
-                                "html": true,
-                                "link": true,
-                                "image": true,
-                                "color": true
+                                "customConfig":"",
+                                "extraPlugins":"imagebrowser",
+                                "imageBrowser_listUrl":"<?php echo _BASE_URL . '/constructr/get-image-list/'; ?>"
                             }
                         );
-                        $('#page_name').focus();
+
                         $( "#new_page_form" ).bind( "submit", function()
                             {
                                 $("#submitter").attr("disabled", "disabled");
                                 var C = $('#content').val();
+
                                 if(C == '')
                                 {
                                     $('#content').focus();

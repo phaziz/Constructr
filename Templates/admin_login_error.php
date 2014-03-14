@@ -61,6 +61,7 @@
                 $(function()
                     {
                         'use strict';
+
                         vex.dialog.alert(
                             {
                                 className: 'vex-theme-flat-attack',

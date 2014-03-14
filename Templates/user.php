@@ -160,12 +160,15 @@
                 $(function()
                     {
                         'use strict';
+
                         $('.tt').tooltip();
+
                         $('body').on('mouseover', '.dropdown-toggle', function(e)
                             {
                                 $(e.currentTarget).trigger('click')
                             }
                         )
+
                         $('.datatable').dataTable(
                             {
                                 "aaSorting": [[ 1,"asc"]],
@@ -191,6 +194,7 @@
                                 }
                             }
                         );
+
                         $('.datatable').each(function()
                             {
                                 var datatable = $(this);
@@ -201,8 +205,9 @@
                                 length_sel.addClass('form-control input-sm');
                             }
                         );
-                       $('.status-updater').click(function(e)
-                           {
+
+                        $('.status-updater').click(function(e)
+                            {
                                 e.preventDefault();
                                 var U = $(this).attr('href');
                                 vex.dialog.buttons.YES.text = 'Ja';
@@ -224,15 +229,16 @@
                                         }
                                     }
                                 );
-                           }
-                       );
-                       $('.user-editer').click(function(e)
-                       {
-                            e.preventDefault();
-                            var U = $(this).attr('href');
-                            vex.dialog.buttons.YES.text = 'Ja';
-                            vex.dialog.buttons.NO.text = 'Abbrechen';
-                            vex.dialog.confirm(
+                            }
+                        );
+
+                        $('.user-editer').click(function(e)
+                            {
+                                e.preventDefault();
+                                var U = $(this).attr('href');
+                                vex.dialog.buttons.YES.text = 'Ja';
+                                vex.dialog.buttons.NO.text = 'Abbrechen';
+                                vex.dialog.confirm(
                                 {
                                     className: 'vex-theme-flat-attack', 
                                     message: 'Soll der Benutzer wirklich ge&auml;ndert werden?',
@@ -249,8 +255,9 @@
                                         }
                                     }
                                 );
-                           }
-                       );
+                            }
+                        );
+
                         $('.user-deleter').click(function(e)
                             {
                                 e.preventDefault();

@@ -18,7 +18,7 @@
                     <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
                     <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
                         <div class="jumbotron">
-                            <h1>Anmeldung erforderlich</h1>
+                            <h1>Constructr CMS // Anmeldung erforderlich</h1>
                             <br><br>
                             <form role="form" action="<?php echo $_ACTION ?>" method="<?php echo $_METHOD ?>" enctype="<?php echo $_ENCTYPE ?>">
                                 <input type="hidden" name="_admin_guid" value="<?php if($GUID){echo $GUID;}?>"  id="_admin_guid">

@@ -322,39 +322,51 @@
             if($PAGE_ID != '' && $CONTENT_ID != '' && $ACT_ORDER != '')
             {
                 $NEW_ORDER = ($ACT_ORDER - 1);
+                $NULL_MARKER = 0;
 
                 try 
                 {
                     $UPDATE_CONTENT = $DBCON -> prepare('
                         UPDATE constructr_content 
                         SET 
-                        content_order = :TEMP_ORDER 
-                        WHERE content_order = :NEW_ORDER 
-                        AND content_page_id = :PAGE_ID 
-                        LIMIT 1;
-                        UPDATE constructr_content 
-                        SET 
-                        content_order = :NEW_ORDER 
-                        WHERE content_order = :ACT_ORDER 
-                        AND content_id = :CONTENT_ID
-                        AND content_page_id = :PAGE_ID 
-                        LIMIT 1;
-                        UPDATE constructr_content 
-                        SET 
+                        content_order = :NEW_ORDER,
+                        content_temp_marker = :TEMP_MARKER 
+                        WHERE 
                         content_order = :ACT_ORDER 
-                        WHERE content_order = :TEMP_ORDER 
-                        AND content_page_id = :PAGE_ID 
+                        AND 
+                        content_page_id = :PAGE_ID 
                         LIMIT 1;
+
+                        UPDATE constructr_content 
+                        SET 
+                        content_order = :ACT_ORDER,
+                        content_temp_marker = :TEMP_MARKER 
+                        WHERE 
+                        content_order = :NEW_ORDER 
+                        AND 
+                        content_page_id = :PAGE_ID 
+                        AND 
+                        content_temp_marker = :NULL_MARKER
+                        LIMIT 1;
+                        
+                        UPDATE constructr_content 
+                        SET 
+                        content_temp_marker = :NULL_MARKER 
+                        WHERE 
+                        content_temp_marker = :TEMP_MARKER 
+                        AND 
+                        content_page_id = :PAGE_ID;
                     ');
 
                     $UPDATE_CONTENT -> execute(
                         array
                         (
-                            ':TEMP_ORDER' => 0,
+                            ':TEMP_MARKER' => 666,
                             ':NEW_ORDER' => $NEW_ORDER,
                             ':ACT_ORDER' => $ACT_ORDER,
                             ':PAGE_ID' => $PAGE_ID,
-                            ':CONTENT_ID' => $CONTENT_ID
+                            ':CONTENT_ID' => $CONTENT_ID,
+                            ':NULL_MARKER' => $NULL_MARKER,
                         )
                     );
                 }
@@ -394,39 +406,51 @@
             if($PAGE_ID != '' && $CONTENT_ID != '' && $ACT_ORDER != '')
             {
                 $NEW_ORDER = ($ACT_ORDER + 1);
+                $NULL_MARKER = 0;
 
                 try
                 {
                     $UPDATE_CONTENT = $DBCON -> prepare('
                         UPDATE constructr_content 
                         SET 
-                        content_order = :TEMP_ORDER 
-                        WHERE content_order = :NEW_ORDER 
-                        AND content_page_id = :PAGE_ID 
-                        LIMIT 1;
-                        UPDATE constructr_content 
-                        SET 
-                        content_order = :NEW_ORDER 
-                        WHERE content_order = :ACT_ORDER 
-                        AND content_id = :CONTENT_ID
-                        AND content_page_id = :PAGE_ID 
-                        LIMIT 1;
-                        UPDATE constructr_content 
-                        SET 
+                        content_order = :NEW_ORDER,
+                        content_temp_marker = :TEMP_MARKER 
+                        WHERE 
                         content_order = :ACT_ORDER 
-                        WHERE content_order = :TEMP_ORDER 
-                        AND content_page_id = :PAGE_ID 
+                        AND 
+                        content_page_id = :PAGE_ID 
                         LIMIT 1;
+
+                        UPDATE constructr_content 
+                        SET 
+                        content_order = :ACT_ORDER,
+                        content_temp_marker = :TEMP_MARKER 
+                        WHERE 
+                        content_order = :NEW_ORDER 
+                        AND 
+                        content_page_id = :PAGE_ID 
+                        AND 
+                        content_temp_marker = :NULL_MARKER
+                        LIMIT 1;
+                        
+                        UPDATE constructr_content 
+                        SET 
+                        content_temp_marker = :NULL_MARKER 
+                        WHERE 
+                        content_temp_marker = :TEMP_MARKER 
+                        AND 
+                        content_page_id = :PAGE_ID;
                     ');
 
                     $UPDATE_CONTENT -> execute(
                         array
                         (
-                            ':TEMP_ORDER' => 0,
+                            ':TEMP_MARKER' => 666,
                             ':NEW_ORDER' => $NEW_ORDER,
                             ':ACT_ORDER' => $ACT_ORDER,
                             ':PAGE_ID' => $PAGE_ID,
-                            ':CONTENT_ID' => $CONTENT_ID
+                            ':CONTENT_ID' => $CONTENT_ID,
+                            ':NULL_MARKER' => $NULL_MARKER,
                         )
                     );
                 }

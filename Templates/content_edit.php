@@ -144,7 +144,14 @@
                             {
                                 "customConfig":"",
                                 "extraPlugins":"imagebrowser",
-                                "imageBrowser_listUrl":"<?php echo _BASE_URL . '/constructr/get-image-list/'; ?>"
+                                "imageBrowser_listUrl":"<?php echo _BASE_URL . '/constructr/get-image-list/'; ?>",
+                                on:
+                                    {
+                                        'instanceReady': function(evt)
+                                        {
+                                            CKEDITOR.instances.txtComment.focus();
+                                        }
+                                    }
                             }
                         );
 

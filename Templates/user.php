@@ -40,6 +40,7 @@
                             <ul class="dropdown-menu">
                                 <li><a href="<?php echo _BASE_URL ?>/constructr/media/"><span class="glyphicon glyphicon-camera"></span> &Uuml;bersicht</a></li>
                                 <li><a href="<?php echo _BASE_URL ?>/constructr/media/new/"><span class="glyphicon glyphicon-log-in"></span> Neuer Upload</a></li>
+                                <li><a href="<?php echo _BASE_URL ?>/constructr/media/trash/"><span class="glyphicon glyphicon-trash"></span> M&uuml;lleimer</a></li>
                             </ul>
                         </li>
                         <li class="dropdown active">

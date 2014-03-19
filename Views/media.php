@@ -191,6 +191,8 @@
 
     $constructr -> get('/constructr/media/details/:MEDIA_ID/', $ADMIN_CHECK, function ($MEDIA_ID) use ($constructr,$DBCON)
         {
+            $USERNAME = $_SESSION['backend-user-username'];
+
             if(_LOGGING == true)
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
@@ -239,6 +241,88 @@
                 }
 
                 $constructr -> redirect(_BASE_URL . '/constructr/media/?res=details-media-false');
+                die();
+            }
+        }
+    );
+
+    $constructr -> get('/constructr/media/trash(/)', $ADMIN_CHECK, function () use ($constructr,$DBCON)
+        {
+            $START = microtime(true);
+            $USERNAME = $_SESSION['backend-user-username'];
+            $MEDIA_COUNTER = 0;
+
+            if(_LOGGING == true)
+            {
+                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
+            }
+
+            try
+            {
+                $MEDIA = $DBCON -> query('SELECT * FROM constructr_media ORDER BY media_datetime DESC;');
+                $MEDIA_COUNTER = $MEDIA -> rowCount();
+                $ALL_FILES = scandir('./Uploads');
+                $DIR_FILES = array();
+                $i = 0;
+                foreach ($ALL_FILES as $FILE)
+                {
+                    if($FILE != '.' && $FILE != '..' && $FILE != 'index.php')
+                    {
+                         $DIR_FILES[] = 'Uploads/' . $FILE;
+                    }
+                    $i++;
+                };
+            }
+            catch (PDOException $e)
+            {
+                $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());   
+                $constructr -> redirect(_BASE_URL . '/constructr/');             
+                die();
+            }
+
+            $IMAGES = array('.jpg','.jepg','.JPG','.JPEG','.gif','.GIF','.png','.PNG');
+
+            $MEM = 0;
+            $MEM = number_format(((memory_get_usage()/1014)/1024),2,',','.') . ' MB';
+
+            $constructr -> render('media-trashcan.php',
+                array
+                (
+                    'MEM' => $MEM,
+                    'MEDIA' => $MEDIA,
+                    'DIR_FILES' => $DIR_FILES,
+                    'IMAGES' => $IMAGES,
+                    'MEDIA_COUNTER' => $MEDIA_COUNTER,
+                    'USERNAME' => $USERNAME,
+                    'SUBTITLE' => 'Admin-Dashboard / M&uuml;lleimer',
+                    'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.'
+                )
+            );
+            die();
+        }
+    );
+
+    $constructr -> get('/constructr/media/trash/delete/:MEDIA_FILE/', $ADMIN_CHECK, function ($MEDIA_FILE) use ($constructr,$DBCON)
+        {
+            if(_LOGGING == true)
+            {
+                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+            }
+
+            if($MEDIA_FILE != '')
+            {
+                unlink('./' . base64_decode($MEDIA_FILE));
+                $constructr -> redirect(_BASE_URL . '/constructr/media/trash/?res=del-media-true');
+                die();
+            }
+            else
+            {
+                if(_LOGGING == true)
+                {
+                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                }
+
+                $constructr -> redirect(_BASE_URL . '/constructr/media/trash/?res=del-media-false');
                 die();
             }
         }

@@ -7,8 +7,8 @@
             <title><?php echo _TITLE . ' - ' . $SUBTITLE; ?></title>
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet">
-            <link href="<?php echo _BASE_URL;?>/Assets/css/app.css" rel="stylesheet">
             <link href="<?php echo _BASE_URL;?>/Assets/datatables-bootstrap3/assets/css/datatables.css" rel="stylesheet">
+            <link href="<?php echo _BASE_URL;?>/Assets/css/app.css" rel="stylesheet">
             <link href="<?php echo _BASE_URL;?>/Assets/vex/css/vex.css" rel="stylesheet">
             <link href="<?php echo _BASE_URL;?>/Assets/vex/css/vex-theme-flat-attack.css" rel="stylesheet">
             <!--[if lt IE 9]>
@@ -38,9 +38,9 @@
                         <li class="dropdown active">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Medienverwaltung <b class="caret"></b></a>
                             <ul class="dropdown-menu">
-                                <li class="active"><a href="<?php echo _BASE_URL ?>/constructr/media/"><span class="glyphicon glyphicon-camera"></span> &Uuml;bersicht</a></li>
+                                <li><a href="<?php echo _BASE_URL ?>/constructr/media/"><span class="glyphicon glyphicon-camera"></span> &Uuml;bersicht</a></li>
                                 <li><a href="<?php echo _BASE_URL ?>/constructr/media/new/"><span class="glyphicon glyphicon-log-in"></span> Neuer Upload</a></li>
-                                <li><a href="<?php echo _BASE_URL ?>/constructr/media/trash/"><span class="glyphicon glyphicon-trash"></span> M&uuml;lleimer</a></li>
+                                <li class="active"><a href="<?php echo _BASE_URL ?>/constructr/media/trash/"><span class="glyphicon glyphicon-trash"></span> M&uuml;lleimer</a></li>
                             </ul>
                         </li>
                         <li class="dropdown">
@@ -83,26 +83,16 @@
                                 <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
                                 <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
                                         <?php
-                                            if($_GET['res'] == 'create-media-true')
-                                            {
-                                                echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Erfolg!</strong> Die Datei wurde ohne Fehler gespeichert.</div>';
-                                            }
-                                            else if($_GET['res'] == 'create-media-false')
-                                            {
-                                                echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Fehler!</strong> Es ist ein Fehler beim speichern der Datei aufgetreten.</div>';
-                                            }
+
                                             if($_GET['res'] == 'del-media-true')
                                             {
-                                                echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Erfolg!</strong> Der Upload wurde in den Papierkorb verschoben.</div>';
+                                                echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Erfolg!</strong> Die Datei wurde endg&uuml;ltig gel&ouml;scht.</div>';
                                             }
                                             else if($_GET['res'] == 'del-media-false')
                                             {
-                                                echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Fehler!</strong> Es ist ein Fehler beim l&ouml;schen des Uploads aufgetreten.</div>';
+                                                echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Fehler!</strong> Es ist ein Fehler beim l&ouml;schen der Datei aufgetreten.</div>';
                                             }
-                                            if($_GET['res'] == 'details-media-false')
-                                            {
-                                                echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Fehler!</strong> Es ist ein Fehler aufgetreten.</div>';
-                                            }
+
                                         ?>
                                 </div><!-- // EOF COL-... -->
                                 <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
@@ -114,59 +104,48 @@
                     <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
                     <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
                         <div class="jumbotron">
-                            <h2><?php echo $MEDIA_COUNTER; ?> Vorhandene Medien <a data-toggle="tooltip" data-placement="top" title="Neuer Uplaod" class="tt" href="<?php echo _BASE_URL . '/constructr/media/new/' ?>"><button type="button" class="btn btn-info btn-sm" title="Neuer Upload"><span class="glyphicon glyphicon-plus"></span></button></a></h2>
+                            <h2>Dateien im M&uuml;lleimer</h2>
                             <br><br>
                             <div class="table-responsive">
-                            <table class="datatable table table-bordered table-condensed table-striped table-hover">
-                                <thead>
-                                    <tr>
-                                        <th class="center"><small>Vorschau</small></th>
-                                        <th><small>Datei</small></th>
-                                        <th><small>Alias</small></th>
-                                        <th class="center"><small>Datum</small></th>
-                                        <th class="center"><small>Aktionen</small></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                        if($MEDIA)
-                                        {
-                                            foreach ($MEDIA as $MEDIA)
+                                <table class="datatable table table-bordered table-condensed table-striped table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th><small>Datei</small></th>
+                                            <th class="center"><small>Aktionen</small></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+            
+                                            if($MEDIA)
                                             {
-                                                $FILE_TYPE = strrchr($MEDIA['media_file'],'.');
-                                                echo '<tr>';
-                                                echo '<td class="center"><img src="' . _BASE_URL . '/' . $MEDIA['media_file'] . '" alt="' . $MEDIA['media_originalname'] . '" height="10%" width=""></td>';
-                                                echo '<td><small><strong>' . $MEDIA['media_originalname'] . '</small></td>';
-                                                echo '<td><small>' . _BASE_URL . '/' . $MEDIA['media_file'] . '</small></td>';
-                                                if($MEDIA['media_datetime'] != '0000-00-00 00:00:00')
+                                                $i = 0;
+            
+                                                foreach ($MEDIA as $MEDIA_FILE)
                                                 {
-                                                    echo '<td class="center"><small>' . date("d.m.Y, H:i", strtotime(substr($MEDIA['media_datetime'], 0, 18))) . ' Uhr</small></td>';                                                
+                                                    foreach($DIR_FILES as $DIR_FILE)
+                                                    {
+                                                        if($MEDIA_FILE['media_file'] != $DIR_FILE)
+                                                        {
+                                                            echo '<tr><td><a href="' . _BASE_URL . '/' . $DIR_FILE . '" title="Datei ansehen" onclick="window.open(this.href);return false;">' . $DIR_FILE . '</a></td>';
+                                                            echo '<td class="center">';
+                                                            echo '<a onclick="window.open(this.href);return false;" data-toggle="tooltip" data-placement="top" title="Einfache Vorschau" class="preview tt" href="' . _BASE_URL . '/' . $DIR_FILE . '"><button type="button" class="btn btn-warning btn-xs" title="Einfache Vorschau"><span class="glyphicon glyphicon-eye-close"></span></button></a>&#160;';
+                                                            echo '<a data-toggle="tooltip" data-placement="top" title="Datei endg&uuml;ltig l&ouml;schen" class="deleter tt" href="' . _BASE_URL . '/constructr/media/trash/delete/' . base64_encode($DIR_FILE) . '/" title="Datei endg&uuml;ltig l&ouml;schen"><button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span></button></a>';
+                                                            echo '</td></tr>';
+                                                        }
+                                                    }
+                                                    $i++;
                                                 }
-                                                else
-                                                {
-                                                    echo '<td class="center"><small>./.</small></td>';
-                                                }
-                                                echo '<td class="center">';
-                                                echo '<a onclick="window.open(this.href);return false;" data-toggle="tooltip" data-placement="top" title="Einfache Vorschau" class="preview tt" href="' . _BASE_URL . '/' . $MEDIA['media_file'] . '"><button type="button" class="btn btn-warning btn-xs" title="Einfache Vorschau"><span class="glyphicon glyphicon-eye-close"></span></button></a>';
-                                                echo '&#160;';
-                                                if(in_array($FILE_TYPE,$IMAGES))
-                                                {
-                                                    echo '<a data-toggle="tooltip" data-placement="top" title="Detail-Vorschau" class="preview tt" href="' . _BASE_URL . '/constructr/media/details/' . $MEDIA['media_id'] . '/"><button type="button" class="btn btn-info btn-xs" title="Detail-Vorschau"><span class="glyphicon glyphicon-eye-open"></span></button></a>';
-                                                    echo '&#160;';
-                                                }
-                                                echo '<a data-toggle="tooltip" data-placement="top" title="Upload l&ouml;schen" class="deleter tt" href="' . _BASE_URL . '/constructr/media/delete/' . $MEDIA['media_id'] . '/" title="Upload l&ouml;schen"><button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span></button></a>';
-                                                echo '</td>';
-                                                echo '</tr>';
                                             }
-                                        }
-                                        else
-                                        {
-                                            echo '<tr><td colspan="7">Keine Uploads gefunden!</td></tr>';
-                                        };
-                                    ?>
-                                </tbody>
-                            </table>
-                            </div><!-- EOF TABLE RESPONSIVE-->
+                                            else
+                                            {
+                                                echo '<tr><td colspan="2">Leine Dateien im M&uuml;lleimer gefunden!</td></tr>';
+                                            };
+            
+                                        ?>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div><!-- // EOF JUMBOTRON -->
                     </div><!-- // EOF COL-... -->
                     <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
@@ -201,15 +180,14 @@
                             $('.response').fadeOut();
                         }
 
+                        setInterval(autoBlinder,4500);
+
                         $('.datatable').dataTable(
                             {
                                 "aaSorting": [],
                                 "aoColumns": [
-                                    { "sWidth": "10%", "bSortable":false},
-                                    { "sWidth": "30%", "bSortable":true},
-                                    { "sWidth": "30%", "bSortable":true},
-                                    { "sWidth": "15%", "bSortable":true},
-                                    { "sWidth": "15%", "bSortable":false}
+                                    { "sWidth": "80%", "bSortable":true},
+                                    { "sWidth": "20%", "bSortable":false}
                                 ],
                                 "sPaginationType":"bs_full",
                                 "iDisplayLength": -1,
@@ -237,8 +215,6 @@
                             }
                         );
 
-                        setInterval(autoBlinder,4500);
-
                         $('.tt').tooltip();
 
                         $('.deleter').click(function(e)
@@ -250,7 +226,7 @@
                                 vex.dialog.confirm(
                                     {
                                         className: 'vex-theme-flat-attack', 
-                                        message: 'M&ouml;chten Sie diesen Upload wirklich vollst&auml;ndig l&ouml;schen?',
+                                        message: 'M&ouml;chten Sie diesen Datei wirklich vollst&auml;ndig und endg&uuml;ltig l&ouml;schen?',
                                         callback: function(value)
                                         {
                                             if(value == true)

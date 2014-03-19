@@ -322,40 +322,40 @@
             if($PAGE_ID != '' && $CONTENT_ID != '' && $ACT_ORDER != '')
             {
                 $NEW_ORDER = ($ACT_ORDER - 1);
-                $NULL_MARKER = 0;
+				$NULL_MARKER = 0;
 
                 try 
                 {
                     $UPDATE_CONTENT = $DBCON -> prepare('
                         UPDATE constructr_content 
                         SET 
-                        content_order = :NEW_ORDER,
-                        content_temp_marker = :TEMP_MARKER 
+                    	content_order = :NEW_ORDER,
+                    	content_temp_marker = :TEMP_MARKER 
                         WHERE 
-                        content_order = :ACT_ORDER 
+                    	content_order = :ACT_ORDER 
                         AND 
-                        content_page_id = :PAGE_ID 
+                    	content_page_id = :PAGE_ID 
                         LIMIT 1;
 
                         UPDATE constructr_content 
                         SET 
-                        content_order = :ACT_ORDER,
-                        content_temp_marker = :TEMP_MARKER 
+                    	content_order = :ACT_ORDER,
+                    	content_temp_marker = :TEMP_MARKER 
                         WHERE 
-                        content_order = :NEW_ORDER 
+                    	content_order = :NEW_ORDER 
                         AND 
-                        content_page_id = :PAGE_ID 
+                    	content_page_id = :PAGE_ID 
                         AND 
-                        content_temp_marker = :NULL_MARKER
+                    	content_temp_marker = :NULL_MARKER
                         LIMIT 1;
-                        
+						
                         UPDATE constructr_content 
                         SET 
-                        content_temp_marker = :NULL_MARKER 
+                    	content_temp_marker = :NULL_MARKER 
                         WHERE 
-                        content_temp_marker = :TEMP_MARKER 
+                    	content_temp_marker = :TEMP_MARKER 
                         AND 
-                        content_page_id = :PAGE_ID;
+                    	content_page_id = :PAGE_ID;
                     ');
 
                     $UPDATE_CONTENT -> execute(
@@ -406,40 +406,40 @@
             if($PAGE_ID != '' && $CONTENT_ID != '' && $ACT_ORDER != '')
             {
                 $NEW_ORDER = ($ACT_ORDER + 1);
-                $NULL_MARKER = 0;
+				$NULL_MARKER = 0;
 
                 try
                 {
                     $UPDATE_CONTENT = $DBCON -> prepare('
                         UPDATE constructr_content 
                         SET 
-                        content_order = :NEW_ORDER,
-                        content_temp_marker = :TEMP_MARKER 
+                    	content_order = :NEW_ORDER,
+                    	content_temp_marker = :TEMP_MARKER 
                         WHERE 
-                        content_order = :ACT_ORDER 
+                    	content_order = :ACT_ORDER 
                         AND 
-                        content_page_id = :PAGE_ID 
+                    	content_page_id = :PAGE_ID 
                         LIMIT 1;
 
                         UPDATE constructr_content 
                         SET 
-                        content_order = :ACT_ORDER,
-                        content_temp_marker = :TEMP_MARKER 
+                    	content_order = :ACT_ORDER,
+                    	content_temp_marker = :TEMP_MARKER 
                         WHERE 
-                        content_order = :NEW_ORDER 
+                    	content_order = :NEW_ORDER 
                         AND 
-                        content_page_id = :PAGE_ID 
+                    	content_page_id = :PAGE_ID 
                         AND 
-                        content_temp_marker = :NULL_MARKER
+                    	content_temp_marker = :NULL_MARKER
                         LIMIT 1;
-                        
+						
                         UPDATE constructr_content 
                         SET 
-                        content_temp_marker = :NULL_MARKER 
+                    	content_temp_marker = :NULL_MARKER 
                         WHERE 
-                        content_temp_marker = :TEMP_MARKER 
+                    	content_temp_marker = :TEMP_MARKER 
                         AND 
-                        content_page_id = :PAGE_ID;
+                    	content_page_id = :PAGE_ID;
                     ');
 
                     $UPDATE_CONTENT -> execute(
@@ -571,7 +571,7 @@
         }
     );
 
-    $constructr -> get('/constructr/content/:PAGE_ID/:CONTENT_ID/delete/', $ADMIN_CHECK, function ($PAGE_ID,$CONTENT_ID) use ($constructr,$DBCON)
+    $constructr -> get('/constructr/content/:PAGE_ID/:CONTENT_ID/:ACT_ORDER/delete/', $ADMIN_CHECK, function ($PAGE_ID,$CONTENT_ID,$ACT_ORDER) use ($constructr,$DBCON)
         {
             $USERNAME = $_SESSION['backend-user-username'];
 
@@ -588,9 +588,22 @@
                         DELETE FROM constructr_content
                         WHERE content_id = :CONTENT_ID
                         LIMIT 1;
+
+                        UPDATE constructr_content
+                        SET content_order = (content_order - 1)
+                        WHERE content_order > :ACT_ORDER
+                        AND content_page_id = :PAGE_ID;
                     ');
 
-                    $DELETER -> execute(array(':CONTENT_ID' => $CONTENT_ID));
+                    $DELETER -> execute(
+                        array
+                        (
+                            ':CONTENT_ID' => $CONTENT_ID,
+                            ':PAGE_ID' => $PAGE_ID,
+                            ':ACT_ORDER' => $ACT_ORDER
+                        )
+                    );
+
                     $constructr -> redirect(_BASE_URL . '/constructr/content/' . $PAGE_ID . '/?res=del-content-true');
                     die();
                 }

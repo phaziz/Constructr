@@ -167,7 +167,7 @@
                                             foreach ($PAGES as $PAGE)
                                             {
                                                 echo '<tr>';
-                                                echo '<td><small>';
+                                                echo '<td>';
                                                 if($PAGE['pages_level'] >= 2)
                                                 {
                                                     for($i = 1; $i <= $PAGE['pages_level']; $i++)
@@ -175,7 +175,7 @@
                                                         echo '&#160;&#160;&#160;';
                                                     }
                                                 }
-                                                echo '<strong><a class="tt" data-toggle="tooltip" data-placement="top" title="Inhalte von Seite ' . $PAGE['pages_name'] . ' bearbeiten" href="' . _BASE_URL . '/constructr/content/' . $PAGE['pages_id'] . '/" title="Inhalte von Seite ' . $PAGE['pages_name'] . ' bearbeiten">' . $PAGE['pages_name'] . '</a></strong></small></td>';
+                                                echo '<strong><a class="tt" data-toggle="tooltip" data-placement="top" title="Inhalte von Seite ' . $PAGE['pages_name'] . ' bearbeiten" href="' . _BASE_URL . '/constructr/content/' . $PAGE['pages_id'] . '/" title="Inhalte von Seite ' . $PAGE['pages_name'] . ' bearbeiten">' . $PAGE['pages_name'] . '</a></strong></td>';
                                                 echo '<td><small>' . _BASE_URL . '/' . $PAGE['pages_url'] . '</small></td>';
                                                 if($PAGE['pages_datetime'] != '0000-00-00 00:00:00')
                                                 {

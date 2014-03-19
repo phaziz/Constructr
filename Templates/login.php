@@ -18,7 +18,7 @@
                     <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
                     <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
                         <div class="jumbotron">
-                            <h1>Constructr CMS // Anmeldung erforderlich</h1>
+                            <h1>ConstructrCMS // Anmeldung erforderlich:</h1>
                             <br><br>
                             <form role="form" action="<?php echo $_ACTION ?>" method="<?php echo $_METHOD ?>" enctype="<?php echo $_ENCTYPE ?>">
                                 <input type="hidden" name="_admin_guid" value="<?php if($GUID){echo $GUID;}?>"  id="_admin_guid">
@@ -55,5 +55,22 @@
                     }
                 )
             </script>
+			<script type="text/javascript">
+			  var _paq = _paq || [];
+			  _paq.push(["setDocumentTitle", document.domain + "/" + document.title]);
+			  _paq.push(["setCookieDomain", "*.constructr.phaziz.com"]);
+			  _paq.push(["trackPageView"]);
+			  _paq.push(["enableLinkTracking"]);
+			  (function() {
+			    var u=(("https:" == document.location.protocol) ? "https" : "http") + "://piwik.phaziz.com/";
+			    _paq.push(["setTrackerUrl", u+"piwik.php"]);
+			    _paq.push(["setSiteId", "3"]);
+			    var d=document, g=d.createElement("script"), s=d.getElementsByTagName("script")[0]; g.type="text/javascript";
+			    g.defer=true; g.async=true; g.src=u+"piwik.js"; s.parentNode.insertBefore(g,s);
+			  })();
+			</script>
+			<noscript>
+				<img src="http://piwik.phaziz.com/piwik.php?idsite=3&amp;rec=1" style="border:0" alt="" />
+			</noscript>
         </body>
     </html>

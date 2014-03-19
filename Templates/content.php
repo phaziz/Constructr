@@ -154,7 +154,8 @@
                                 </thead>
                                 <tbody>
                                     <?php
-                                        if($CONTENT){
+                                        if($CONTENT)
+                                        {
                                             foreach ($CONTENT as $CONTENT)
                                             {
                                                 echo '<tr>';
@@ -199,7 +200,7 @@
                                                 }
                                                 echo '<a data-toggle="tooltip" data-placement="top" title="Inhalt bearbeiten" class="editer tt" href="' . _BASE_URL . '/constructr/content/' . $PAGE_ID . '/' . $CONTENT['content_id'] . '/edit/"><button type="button" class="btn btn-success btn-xs" title="Inhalt bearbeiten"><span class="glyphicon glyphicon-pencil"></span></button></a>';
                                                 echo '&#160;';
-                                                echo '<a data-toggle="tooltip" data-placement="top" title="Diesen Inhalt l&ouml;schen" class="deleter tt" href="' . _BASE_URL . '/constructr/content/' . $PAGE_ID . '/' . $CONTENT['content_id'] . '/delete/" title="Inhalt l&ouml;schen"><button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span></button></a>';
+                                                echo '<a data-toggle="tooltip" data-placement="top" title="Diesen Inhalt l&ouml;schen" class="deleter tt" href="' . _BASE_URL . '/constructr/content/' . $PAGE_ID . '/' . $CONTENT['content_id'] . '/' . $CONTENT['content_order'] .  '/delete/" title="Inhalt l&ouml;schen"><button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span></button></a>';
                                                 echo '</td>';
                                                 echo '</tr>';
                                             }
@@ -254,9 +255,9 @@
                             {
                                 "aaSorting": [],
                                 "aoColumns": [
-                                    { "sWidth": "70%", "bSortable":false},
-                                    { "sWidth": "15%", "bSortable":false},
-                                    { "sWidth": "15%", "bSortable":false}
+                                    { "sWidth": "60%", "bSortable":false},
+                                    { "sWidth": "20%", "bSortable":false},
+                                    { "sWidth": "20%", "bSortable":false}
                                 ],
                                 "sPaginationType":"bs_full",
                                 "iDisplayLength": -1,

@@ -3,16 +3,7 @@
     <!--[if IE 7]><html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
     <!--[if IE 8]><html class="no-js lt-ie9" lang="en"><![endif]-->
     <!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
-        <head>
-            <link rel="shortcut icon" href="<?php echo _BASE_URL;?>/favicon.ico" type="image/x-icon">
-            <link rel="apple-touch-icon" href="<?php echo _BASE_URL;?>/apple-touch-icon.png">
-            <link rel="apple-touch-icon" sizes="57x57" href="<?php echo _BASE_URL;?>/apple-touch-icon-57x57.png">
-            <link rel="apple-touch-icon" sizes="72x72" href="<?php echo _BASE_URL;?>/apple-touch-icon-72x72.png">
-            <link rel="apple-touch-icon" sizes="76x76" href="<?php echo _BASE_URL;?>/apple-touch-icon-76x76.png">
-            <link rel="apple-touch-icon" sizes="114x114" href="<?php echo _BASE_URL;?>/apple-touch-icon-114x114.png">
-            <link rel="apple-touch-icon" sizes="120x120" href="<?php echo _BASE_URL;?>/apple-touch-icon-120x120.png">
-            <link rel="apple-touch-icon" sizes="144x144" href="<?php echo _BASE_URL;?>/apple-touch-icon-144x144.png">
-            <link rel="apple-touch-icon" sizes="152x152" href="<?php echo _BASE_URL;?>/apple-touch-icon-152x152.png">
+        <head>            
             <?php
 
                 if($PAGE_DATA)
@@ -60,5 +51,23 @@
 
                 ?>
             </div>
+			<script type="text/javascript">
+			  var _paq = _paq || [];
+			  _paq.push(["setDocumentTitle", document.domain + "/" + document.title]);
+			  _paq.push(["setCookieDomain", "*.constructr.phaziz.com"]);
+			  _paq.push(["trackPageView"]);
+			  _paq.push(["enableLinkTracking"]);
+			
+			  (function() {
+			    var u=(("https:" == document.location.protocol) ? "https" : "http") + "://piwik.phaziz.com/";
+			    _paq.push(["setTrackerUrl", u+"piwik.php"]);
+			    _paq.push(["setSiteId", "3"]);
+			    var d=document, g=d.createElement("script"), s=d.getElementsByTagName("script")[0]; g.type="text/javascript";
+			    g.defer=true; g.async=true; g.src=u+"piwik.js"; s.parentNode.insertBefore(g,s);
+			  })();
+			</script>
+			<noscript>
+				<img src="http://piwik.phaziz.com/piwik.php?idsite=3&amp;rec=1" style="border:0" alt="piwik" />
+			</noscript>
         </body>
     </html>

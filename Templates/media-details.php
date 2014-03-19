@@ -82,14 +82,16 @@
                             <h2>Detailansicht | <a href="<?php echo _BASE_URL . '/constructr/media/' ?>" class="tt" data-toggle="tooltip" data-placement="top" title="Zur&uuml;ck zur &Uuml;bersicht">zur&uuml;ck</a></h2>
                             <br><br>
                                 <?php
+
                                     if($DETAILS)
                                     {
-                                        echo '<center><img src="' . _BASE_URL . '/' . $DETAILS['media_file'] . '"></center>';
+                                        echo '<center><img src="' . _BASE_URL . '/' . $DETAILS['media_file'] . '" height="100%" width="100%"></center>';
                                     }
                                     else
                                     {
                                         echo '<tr><td colspan="7">Es ist ein Fehler aufgetreten!</td></tr>';
                                     };
+
                                 ?>
                         </div><!-- // EOF JUMBOTRON -->
                     </div><!-- // EOF COL-... -->

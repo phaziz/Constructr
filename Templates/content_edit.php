@@ -6,8 +6,8 @@
         <head>
             <title><?php echo _TITLE . ' - ' . $SUBTITLE; ?></title>
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet">
-            <link href="<?php echo _BASE_URL;?>/Assets/css/app.css" rel="stylesheet">
+            <link href="<?php echo _BASE_URL;?>/Assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+            <link href="<?php echo _BASE_URL;?>/Assets/css/constructr.css" rel="stylesheet">
             <link href="<?php echo _BASE_URL;?>/Assets/vex/css/vex.css" rel="stylesheet">
             <link href="<?php echo _BASE_URL;?>/Assets/vex/css/vex-theme-flat-attack.css" rel="stylesheet">
 
@@ -125,16 +125,14 @@
                     <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
                 </div><!-- // EOF ROW -->
             </div><!-- // EOF CONTAINER -->
-            <script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
-            <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+            <script src="<?php echo _BASE_URL ?>/Assets/jquery-2-1-0.min.js"></script>
+            <script src="<?php echo _BASE_URL ?>/Assets/bootstrap/js/bootstrap.min.js"></script>
             <script src="<?php echo _BASE_URL ?>/Assets/vex/js/vex.combined.min.js"></script>
             <script src="<?php echo _BASE_URL ?>/Assets/ckeditor/ckeditor.js"></script>
             <script src="<?php echo _BASE_URL ?>/Assets/ckeditor/adapters/jquery.js"></script>
             <script>
                 $(function()
                     {
-                        'use strict';
-
                         $('body').on('mouseover', '.dropdown-toggle', function(e)
                             {
                                 $(e.currentTarget).trigger('click');
@@ -142,7 +140,6 @@
                         )
 
 						$( '#content' ).focus();
-
                         $( '#content' ).ckeditor(
                             {
                                 "customConfig":"",

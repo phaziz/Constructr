@@ -6,11 +6,16 @@
         <head>
             <title><?php echo _TITLE . ' - ' . $SUBTITLE; ?></title>
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet">
-            <link href="<?php echo _BASE_URL;?>/Assets/css/app.css" rel="stylesheet">
+            <link href="<?php echo _BASE_URL;?>/Assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+            <link href="<?php echo _BASE_URL;?>/Assets/css/constructr.css" rel="stylesheet">
             <link href="<?php echo _BASE_URL;?>/Assets/datatables-bootstrap3/assets/css/datatables.css" rel="stylesheet">
             <link href="<?php echo _BASE_URL;?>/Assets/vex/css/vex.css" rel="stylesheet">
             <link href="<?php echo _BASE_URL;?>/Assets/vex/css/vex-theme-flat-attack.css" rel="stylesheet">
+            
+            <link href="<?php echo _BASE_URL;?>/Assets/ekko-lightbox/ekko-lightbox.min.css" rel="stylesheet">
+            <link href="<?php echo _BASE_URL;?>/Assets/ekko-lightbox/ekko-lightbox-dark.css" rel="stylesheet">
+            
+            
             <!--[if lt IE 9]>
                 <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
             <![endif]-->
@@ -135,7 +140,7 @@
                                             {
                                                 $FILE_TYPE = strrchr($MEDIA['media_file'],'.');
                                                 echo '<tr>';
-                                                echo '<td class="center"><img src="' . _BASE_URL . '/' . $MEDIA['media_file'] . '" alt="' . $MEDIA['media_originalname'] . '" height="10%" width=""></td>';
+                                                echo '<td class="center"><a href="' . _BASE_URL . '/' . $MEDIA['media_file'] . '" data-toggle="lightbox" data-title="' . $MEDIA['media_originalname'] . '" data-footer="' . $MEDIA['media_originalname'] . '"><img src="' . _BASE_URL . '/' . $MEDIA['media_file'] . '" alt="' . $MEDIA['media_originalname'] . '" height="10%" width=""></a></td>';
                                                 echo '<td><small><strong>' . $MEDIA['media_originalname'] . '</small></td>';
                                                 echo '<td><small>' . _BASE_URL . '/' . $MEDIA['media_file'] . '</small></td>';
                                                 if($MEDIA['media_datetime'] != '0000-00-00 00:00:00')
@@ -147,7 +152,7 @@
                                                     echo '<td class="center"><small>./.</small></td>';
                                                 }
                                                 echo '<td class="center">';
-                                                echo '<a onclick="window.open(this.href);return false;" data-toggle="tooltip" data-placement="top" title="Einfache Vorschau" class="preview tt" href="' . _BASE_URL . '/' . $MEDIA['media_file'] . '"><button type="button" class="btn btn-warning btn-xs" title="Einfache Vorschau"><span class="glyphicon glyphicon-eye-close"></span></button></a>';
+                                                echo '<a href="' . _BASE_URL . '/' . $MEDIA['media_file'] . '" data-toggle="lightbox" data-title="' . $MEDIA['media_originalname'] . '" data-footer="' . $MEDIA['media_originalname'] . '" <button type="button" class="btn btn-warning btn-xs" title="Einfache Vorschau"><span class="glyphicon glyphicon-eye-close"></span></button></a>';
                                                 echo '&#160;';
                                                 if(in_array($FILE_TYPE,$IMAGES))
                                                 {
@@ -180,21 +185,31 @@
                     <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
                 </div><!-- // EOF ROW -->
             </div><!-- // EOF CONTAINER -->
-            <script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
-            <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+            <script src="<?php echo _BASE_URL ?>/Assets/jquery-2-1-0.min.js"></script>
+            <script src="<?php echo _BASE_URL ?>/Assets/bootstrap/js/bootstrap.min.js"></script>
             <script src="<?php echo _BASE_URL;?>/Assets/datatables/media/js/jquery.dataTables.min.js"></script>
             <script src="<?php echo _BASE_URL;?>/Assets/datatables-bootstrap3/assets/js/datatables.js"></script>
             <script src="<?php echo _BASE_URL ?>/Assets/vex/js/vex.combined.min.js"></script>
+            <script src="<?php echo _BASE_URL ?>/Assets/ekko-lightbox/ekko-lightbox.min.js"></script>
             <script>
                 $(function()
                     {
-                        'use strict';
-
                         $('body').on('mouseover', '.dropdown-toggle', function(e)
                             {
                                 $(e.currentTarget).trigger('click')
                             }
                         )
+
+                        $(document).delegate('*[data-toggle="lightbox"]', 'click', function(event)
+                            {
+                                event.preventDefault();
+                                return $(this).ekkoLightbox(
+                                    {
+                                        always_show_close: true
+                                    }
+                                );
+                            }
+                        );
 
                         function autoBlinder()
                         {

@@ -126,6 +126,7 @@
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
             }
+
             $USERNAME = $constructr -> request() -> get('username');
             
             if($USERNAME != '')
@@ -143,30 +144,31 @@
 
                     $COUNTR = $BACKENDUSER -> rowCount();
 
-                    if($COUNTR != 1)
+                    if($COUNTR == 0)
                     {
                         if(_LOGGING == true)
                         {
                             $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . '/' . $USERNAME . '/TRUE/');                
                         }
 
+                        echo 'jep';
                         die();
                     }
                     else
                     {
                         if(_LOGGING == true)
                         {
-                            $log = $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . '/' . $USERNAME . '/FALSE/');                
+                            $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . '/' . $USERNAME . '/FALSE/');                
                         }
 
+                        echo 'nep';
                         die();
                     }
                 }
                 catch (PDOException $e)
                 {
                     $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                    $constructr -> redirect(_BASE_URL . '/constructr/user/error/');
-
+                    echo 'nep';
                     die();
                 }
             }
@@ -177,6 +179,7 @@
                     $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . '/' . $USERNAME . '/FALSE/');                
                 }
 
+                echo 'nep';
                 die();
             }
         }
@@ -193,8 +196,7 @@
 
             if($USERNAME != '')
             {
-                try
-                {
+                try {
                     $BACKENDUSER = $DBCON -> prepare('SELECT * FROM constructr_backenduser WHERE beu_username = :USERNAME LIMIT 1;');
 
                     $BACKENDUSER -> execute(
@@ -213,6 +215,7 @@
                             $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . '/' . $USERNAME . '/TRUE/');                
                         }
 
+                        echo 'jep';
                         die();
                     }
                     else
@@ -222,13 +225,14 @@
                             $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . '/' . $USERNAME . '/FALSE/');                
                         }
 
+                        echo 'nep';
                         die();
                     }
                 }
                 catch (PDOException $e)
                 {
                     $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                    $constructr -> redirect(_BASE_URL . '/constructr/user/error/');
+                    echo 'nep';
                     die();
                 }
             }
@@ -238,6 +242,8 @@
                 {
                     $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . '/' . $USERNAME . '/FALSE/');                
                 }
+
+                echo 'nep';
                 die();
             }
         }

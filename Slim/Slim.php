@@ -178,7 +178,6 @@ class Slim
         $this->container->singleton('view', function ($c) {
             $viewClass = $c['settings']['view'];
             $templatesPath = $c['settings']['templates.path'];
-
             $view = ($viewClass instanceOf \Slim\View) ? $viewClass : new $viewClass;
             $view->setTemplatesDirectory($templatesPath);
             return $view;

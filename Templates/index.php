@@ -21,53 +21,67 @@
 
             ?>
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet">
-            <link href="<?php echo _BASE_URL;?>/Assets/css/app.css" rel="stylesheet">
-            <!--[if lt IE 9]>
-                <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-            <![endif]-->
+            <link href="<?php echo _BASE_URL;?>/Assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+            <link href="<?php echo _BASE_URL;?>/Assets/css/constructr.css" rel="stylesheet">
         </head>
-        <body>
-            <div class="container">
-                <?php
+        <body style="padding-top: 100px;">
 
-                    if($PAGES)
-                    {
-                        echo '<nav><ul>';
-                        foreach($PAGES as $PAGE)
-                        {
-                            echo '<li><a href="' . _BASE_URL . '/' . $PAGE['pages_url'] . '" title="' . $PAGE['pages_name'] . '">' . $PAGE['pages_name'] . '</a></li>';
-                        }
-                        echo '</ul></nav>';
-                    }
-                    echo '<br><br>';
-                    if($CONTENT)
-                    {
-                        foreach($CONTENT as $CONTENT)
-                        {
-                            echo $CONTENT['content_content'];
-                        }
-                    }
-
-                ?>
+            <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="http://constructr.phaziz.com/">ConstructrCMS</a>
+                    </div>
+                    <div class="collapse navbar-collapse">
+                        <ul class="nav navbar-nav">
+                            <?php
+            
+                                if($PAGES)
+                                {
+                                    foreach($PAGES as $PAGE)
+                                    {
+                                        echo '<li><a href="' . _BASE_URL . '/' . $PAGE['pages_url'] . '" title="' . $PAGE['pages_name'] . '">' . $PAGE['pages_name'] . '</a></li>';
+                                    }
+                                }
+        
+                            ?>
+                      </ul>
+                    </div>
+                </div>
             </div>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <?php
+        
+                            if($CONTENT)
+                            {
+                                foreach($CONTENT as $CONTENT)
+                                {
+                                    echo $CONTENT['content_content'];
+                                }
+                            }
+        
+                        ?>
+                    </div>
+                </div>
+            </div>
+
+            <script src="<?php echo _BASE_URL ?>/Assets/jquery-2-1-0.min.js"></script>
+            <script src="<?php echo _BASE_URL ?>/Assets/bootstrap/js/bootstrap.min.js"></script>
 			<script type="text/javascript">
-			  var _paq = _paq || [];
-			  _paq.push(["setDocumentTitle", document.domain + "/" + document.title]);
-			  _paq.push(["setCookieDomain", "*.constructr.phaziz.com"]);
-			  _paq.push(["trackPageView"]);
-			  _paq.push(["enableLinkTracking"]);
-			
-			  (function() {
-			    var u=(("https:" == document.location.protocol) ? "https" : "http") + "://piwik.phaziz.com/";
-			    _paq.push(["setTrackerUrl", u+"piwik.php"]);
-			    _paq.push(["setSiteId", "3"]);
-			    var d=document, g=d.createElement("script"), s=d.getElementsByTagName("script")[0]; g.type="text/javascript";
-			    g.defer=true; g.async=true; g.src=u+"piwik.js"; s.parentNode.insertBefore(g,s);
-			  })();
+                var _paq=_paq||[];_paq.push(["setDocumentTitle",document.domain+"/"+document.title]);_paq.push(["setCookieDomain","*.constructr.phaziz.com"]);_paq.push(["trackPageView"]);_paq.push(["enableLinkTracking"]);
+                (function(){var c=("https:"==document.location.protocol?"https":"http")+"://piwik.phaziz.com/";_paq.push(["setTrackerUrl",c+"piwik.php"]);_paq.push(["setSiteId","3"]);var a=document,b=a.createElement("script"),a=a.getElementsByTagName("script")[0];b.type="text/javascript";b.defer=!0;b.async=!0;b.src=c+"piwik.js";a.parentNode.insertBefore(b,a)})();
 			</script>
 			<noscript>
 				<img src="http://piwik.phaziz.com/piwik.php?idsite=3&amp;rec=1" style="border:0" alt="piwik" />
 			</noscript>
+
         </body>
     </html>

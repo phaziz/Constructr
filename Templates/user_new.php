@@ -6,8 +6,8 @@
         <head>
             <title><?php echo _TITLE . ' - ' . $SUBTITLE; ?></title>
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet">
-            <link href="<?php echo _BASE_URL;?>/Assets/css/app.css" rel="stylesheet">
+            <link href="<?php echo _BASE_URL;?>/Assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+            <link href="<?php echo _BASE_URL;?>/Assets/css/constructr.css" rel="stylesheet">
             <link href="<?php echo _BASE_URL;?>/Assets/vex/css/vex.css" rel="stylesheet">
             <link href="<?php echo _BASE_URL;?>/Assets/vex/css/vex-theme-flat-attack.css" rel="stylesheet">
             <!--[if lt IE 9]>
@@ -93,7 +93,7 @@
                                 <div class="form-group">
                                     <label for="password" class="col-sm-2 control-label">Passwort:</label>
                                     <div class="col-sm-10 pwd-container">
-                                        <input type="password" class="form-control input-sm" name="password" id="password" placeholder="" maxlength="25">
+                                        <input type="password" class="form-control input-sm" name="password" id="password" placeholder="" maxlength="50">
                                         <span class="pwstrength_viewport_verdict"></span>
                                         <small><span class="help-block">Passwort eingeben</span></small>
                                     </div>
@@ -101,7 +101,7 @@
                                 <div class="form-group">
                                     <label for="password_retype" class="col-sm-2 control-label">Passwort Wiederholung:</label>
                                     <div class="col-sm-10 pwd-container">
-                                        <input type="password" class="form-control input-sm" name="password_retype" id="password_retype" placeholder="" maxlength="25">
+                                        <input type="password" class="form-control input-sm" name="password_retype" id="password_retype" placeholder="" maxlength="50">
                                         <span class="pwstrength_viewport_verdict"></span>
                                         <small><span class="help-block">Passwort bitte erneut eingeben</span></small>
                                     </div>
@@ -134,16 +134,13 @@
                     <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
                 </div><!-- // EOF ROW -->
             </div><!-- // EOF CONTAINER -->
-            <script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
-            <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
-            <script src="<?php echo _BASE_URL ?>/Assets/jquery-pwstrength/examples/pwstrength.js"></script>
-            <script src="<?php echo _BASE_URL ?>/Assets/jquery-pwstrength/examples/pwstrength.js"></script>
+            <script src="<?php echo _BASE_URL ?>/Assets/jquery-2-1-0.min.js"></script>
+            <script src="<?php echo _BASE_URL ?>/Assets/bootstrap/js/bootstrap.min.js"></script>
+            <script src="<?php echo _BASE_URL ?>/Assets/jquery-pwstrength/dist/pwstrength-bootstrap-1.1.0.min.js"></script>
             <script src="<?php echo _BASE_URL ?>/Assets/vex/js/vex.combined.min.js"></script>
             <script>
                 $(function()
                     {
-                        'use strict';
-
                         $('body').on('mouseover', '.dropdown-toggle', function(e)
                             {
                                 $(e.currentTarget).trigger('click')

@@ -6,8 +6,8 @@
         <head>
             <title><?php echo _TITLE . ' - ' . $SUBTITLE; ?></title>
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet">
-            <link href="<?php echo _BASE_URL;?>/Assets/css/app.css" rel="stylesheet">
+            <link href="<?php echo _BASE_URL;?>/Assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+            <link href="<?php echo _BASE_URL;?>/Assets/css/constructr.css" rel="stylesheet">
             <!--[if lt IE 9]>
                 <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
             <![endif]-->
@@ -45,29 +45,11 @@
                     <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
                 </div><!-- // EOF ROW -->
             </div><!-- // EOF CONTAINER -->
-            <script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
-            <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+            <script src="<?php echo _BASE_URL ?>/Assets/jquery-2-1-0.min.js"></script>
+            <script src="<?php echo _BASE_URL ?>/Assets/bootstrap/js/bootstrap.min.js"></script>
             <script>
-                $(function()
-                    {
-                        'use strict';
-                        $('#_admin_username').focus();
-                    }
-                )
-            </script>
-			<script type="text/javascript">
-			  var _paq = _paq || [];
-			  _paq.push(["setDocumentTitle", document.domain + "/" + document.title]);
-			  _paq.push(["setCookieDomain", "*.constructr.phaziz.com"]);
-			  _paq.push(["trackPageView"]);
-			  _paq.push(["enableLinkTracking"]);
-			  (function() {
-			    var u=(("https:" == document.location.protocol) ? "https" : "http") + "://piwik.phaziz.com/";
-			    _paq.push(["setTrackerUrl", u+"piwik.php"]);
-			    _paq.push(["setSiteId", "3"]);
-			    var d=document, g=d.createElement("script"), s=d.getElementsByTagName("script")[0]; g.type="text/javascript";
-			    g.defer=true; g.async=true; g.src=u+"piwik.js"; s.parentNode.insertBefore(g,s);
-			  })();
+                $(function(){$("#_admin_username").focus()});var _paq=_paq||[];_paq.push(["setDocumentTitle",document.domain+"/"+document.title]);_paq.push(["setCookieDomain","*.constructr.phaziz.com"]);_paq.push(["trackPageView"]);_paq.push(["enableLinkTracking"]);
+                (function(){var c=("https:"==document.location.protocol?"https":"http")+"://piwik.phaziz.com/";_paq.push(["setTrackerUrl",c+"piwik.php"]);_paq.push(["setSiteId","3"]);var a=document,b=a.createElement("script"),a=a.getElementsByTagName("script")[0];b.type="text/javascript";b.defer=!0;b.async=!0;b.src=c+"piwik.js";a.parentNode.insertBefore(b,a)})();
 			</script>
 			<noscript>
 				<img src="http://piwik.phaziz.com/piwik.php?idsite=3&amp;rec=1" style="border:0" alt="" />

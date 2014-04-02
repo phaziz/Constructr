@@ -158,7 +158,6 @@
                                     <tr>
                                         <th><small>Name</small></th>
                                         <th><small>Alias (URL)</small></th>
-                                        <th class="center"><small>Datum</small></th>
                                         <th class="center"><small>Aktionen</small></th>
                                     </tr>
                                 </thead>
@@ -178,14 +177,6 @@
                                                 }
                                                 echo '<strong><a class="tt" data-toggle="tooltip" data-placement="top" title="Inhalte von Seite ' . $PAGE['pages_name'] . ' bearbeiten" href="' . _BASE_URL . '/constructr/content/' . $PAGE['pages_id'] . '/" title="Inhalte von Seite ' . $PAGE['pages_name'] . ' bearbeiten">' . $PAGE['pages_name'] . '</a></strong></td>';
                                                 echo '<td><small>' . _BASE_URL . '/' . $PAGE['pages_url'] . '</small></td>';
-                                                if($PAGE['pages_datetime'] != '0000-00-00 00:00:00')
-                                                {
-                                                    echo '<td class="center"><small>' . date("d.m.Y, H:i", strtotime(substr($PAGE['pages_datetime'], 0, 18))) . ' Uhr</small></td>';                                                
-                                                }
-                                                else
-                                                {
-                                                    echo '<td class="center"><small>./.</small></td>';
-                                                }
                                                 echo '<td class="right">';
                                                 if($PAGE['pages_lft'] != 1 && $PAGE['pages_upper'] != 0)
                                                 {
@@ -269,8 +260,7 @@
                                 "aaSorting": [],
                                 "aoColumns": [
                                     { "sWidth": "40%", "bSortable":false},
-                                    { "sWidth": "25%", "bSortable":false},
-                                    { "sWidth": "15%", "bSortable":false},
+                                    { "sWidth": "40%", "bSortable":false},
                                     { "sWidth": "20%", "bSortable":false}
                                 ],
                                 "sPaginationType":"bs_full",

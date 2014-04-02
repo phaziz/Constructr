@@ -86,9 +86,7 @@
                             <table class="datatable table table-bordered table-condensed table-striped table-hover">
                                 <thead>
                                     <tr>
-                                        <th class="center">Kennung</th>
                                         <th>Benutzername</th>
-                                        <th>Art</th>
                                         <th>eMail</th>
                                         <th class="center">Letzte Anmeldung</th>
                                         <th class="center">Aktionen</th>
@@ -101,16 +99,7 @@
                                             foreach ($BACKENDUSER as $USER)
                                             {
                                                 echo '<tr>';
-                                                echo '<td class="center">' . $USER['beu_id'] . '</td>';
                                                 echo '<td>' . $USER['beu_username'] . '</td>';
-                                                if($USER['beu_art'] != 1)
-                                                {
-                                                    echo '<td class="center">intern</td>';                                                
-                                                }
-                                                else
-                                                {
-                                                    echo '<td class="center">extern</td>';
-                                                }
                                                 echo '<td>' . $USER['beu_email'] . '</td>';
                                                 if($USER['beu_last_login'] != '0000-00-00 00:00:00')
                                                 {
@@ -172,12 +161,10 @@
                             {
                                 "aaSorting": [[ 1,"asc"]],
                                 "aoColumns": [
-                                    { "sWidth": "8%", "bSortable":true},
-                                    { "sWidth": "39%", "bSortable":true},
-                                    { "sWidth": "8%", "bSortable":true},
-                                    { "sWidth": "20%", "bSortable":true},
-                                    { "sWidth": "15%", "bSortable":true},
-                                    { "sWidth": "15%", "bSortable":false}
+                                    { "sWidth": "30%", "bSortable":true},
+                                    { "sWidth": "25%", "bSortable":true},
+                                    { "sWidth": "25%", "bSortable":true},
+                                    { "sWidth": "20%", "bSortable":false}
                                 ],
                                 "sPaginationType":"bs_full",
                                 "iDisplayLength": 10,

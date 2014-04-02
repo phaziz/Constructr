@@ -11,6 +11,45 @@
             $USERNAME = $_SESSION['backend-user-username'];
             $MEDIA_COUNTER = 0;
 
+            if(isset($_SESSION['backend-user-id']) && $_SESSION['backend-user-id'] != '')
+            {
+                try
+                {
+                    $RIGHT_CHECKER = $DBCON -> prepare('SELECT * FROM constructr_backenduser_rights WHERE cbr_right = :RIGHT_ID AND cbr_user_id = :USER_ID AND cbr_value = :CBR_VALUE LIMIT 1;');
+                    $RIGHT_CHECKER -> execute(
+                        array
+                        (
+                            ':USER_ID' => $_SESSION['backend-user-id'],
+                            ':RIGHT_ID' => 40,
+                            ':CBR_VALUE' => 1
+                        )
+                    );
+    
+                    $RIGHTS_COUNTR = $RIGHT_CHECKER -> rowCount();
+                    
+                    if($RIGHTS_COUNTR != 1)
+                    {
+                        $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Error 40: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                        $constructr -> redirect(_BASE_URL . '/constructr/?no-rights=true');
+                        die();
+                    }
+                    else {
+                        $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success 40: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                    }
+                }
+                catch (PDOException $e) 
+                {
+                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
+                    die();
+                }
+            }
+            else
+            {
+                $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': Error User-Rights-Check: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                $constructr -> redirect(_BASE_URL . '/constructr/logout/');
+                die();
+            }
+
             if(_LOGGING == true)
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
@@ -55,6 +94,46 @@
     $constructr -> get('/constructr/media/new(/)', $ADMIN_CHECK, function () use ($constructr,$DBCON)
         {
             $START = microtime(true);
+
+            if(isset($_SESSION['backend-user-id']) && $_SESSION['backend-user-id'] != '')
+            {
+                try
+                {
+                    $RIGHT_CHECKER = $DBCON -> prepare('SELECT * FROM constructr_backenduser_rights WHERE cbr_right = :RIGHT_ID AND cbr_user_id = :USER_ID AND cbr_value = :CBR_VALUE LIMIT 1;');
+                    $RIGHT_CHECKER -> execute(
+                        array
+                        (
+                            ':USER_ID' => $_SESSION['backend-user-id'],
+                            ':RIGHT_ID' => 41,
+                            ':CBR_VALUE' => 1
+                        )
+                    );
+    
+                    $RIGHTS_COUNTR = $RIGHT_CHECKER -> rowCount();
+                    
+                    if($RIGHTS_COUNTR != 1)
+                    {
+                        $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Error 41: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                        $constructr -> redirect(_BASE_URL . '/constructr/?no-rights=true');
+                        die();
+                    }
+                    else {
+                        $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success 41: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                    }
+                }
+                catch (PDOException $e) 
+                {
+                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
+                    die();
+                }
+            }
+            else
+            {
+                $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': Error User-Rights-Check: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                $constructr -> redirect(_BASE_URL . '/constructr/logout/');
+                die();
+            }
+
             $USERNAME = $_SESSION['backend-user-username'];
     
             if(_LOGGING == true)
@@ -83,6 +162,45 @@
     
     $constructr -> post('/constructr/media/new/', $ADMIN_CHECK, function () use ($constructr,$DBCON)
         {
+            if(isset($_SESSION['backend-user-id']) && $_SESSION['backend-user-id'] != '')
+            {
+                try
+                {
+                    $RIGHT_CHECKER = $DBCON -> prepare('SELECT * FROM constructr_backenduser_rights WHERE cbr_right = :RIGHT_ID AND cbr_user_id = :USER_ID AND cbr_value = :CBR_VALUE LIMIT 1;');
+                    $RIGHT_CHECKER -> execute(
+                        array
+                        (
+                            ':USER_ID' => $_SESSION['backend-user-id'],
+                            ':RIGHT_ID' => 41,
+                            ':CBR_VALUE' => 1
+                        )
+                    );
+    
+                    $RIGHTS_COUNTR = $RIGHT_CHECKER -> rowCount();
+                    
+                    if($RIGHTS_COUNTR != 1)
+                    {
+                        $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Error 41 ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                        $constructr -> redirect(_BASE_URL . '/constructr/?no-rights=true');
+                        die();
+                    }
+                    else {
+                        $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success 41: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                    }
+                }
+                catch (PDOException $e) 
+                {
+                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
+                    die();
+                }
+            }
+            else
+            {
+                $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': Error User-Rights-Check: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                $constructr -> redirect(_BASE_URL . '/constructr/logout/');
+                die();
+            }
+
             if(_LOGGING == true)
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
@@ -139,6 +257,45 @@
 
     $constructr -> get('/constructr/media/delete/:MEDIA_ID/', $ADMIN_CHECK, function ($MEDIA_ID) use ($constructr,$DBCON)
         {
+            if(isset($_SESSION['backend-user-id']) && $_SESSION['backend-user-id'] != '')
+            {
+                try
+                {
+                    $RIGHT_CHECKER = $DBCON -> prepare('SELECT * FROM constructr_backenduser_rights WHERE cbr_right = :RIGHT_ID AND cbr_user_id = :USER_ID AND cbr_value = :CBR_VALUE LIMIT 1;');
+                    $RIGHT_CHECKER -> execute(
+                        array
+                        (
+                            ':USER_ID' => $_SESSION['backend-user-id'],
+                            ':RIGHT_ID' => 42,
+                            ':CBR_VALUE' => 1
+                        )
+                    );
+    
+                    $RIGHTS_COUNTR = $RIGHT_CHECKER -> rowCount();
+                    
+                    if($RIGHTS_COUNTR != 1)
+                    {
+                        $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Error 42: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                        $constructr -> redirect(_BASE_URL . '/constructr/?no-rights=true');
+                        die();
+                    }
+                    else {
+                        $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success 42: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                    }
+                }
+                catch (PDOException $e) 
+                {
+                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
+                    die();
+                }
+            }
+            else
+            {
+                $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': Error User-Rights-Check: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                $constructr -> redirect(_BASE_URL . '/constructr/logout/');
+                die();
+            }
+
             if(_LOGGING == true)
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
@@ -191,6 +348,45 @@
 
     $constructr -> get('/constructr/media/details/:MEDIA_ID/', $ADMIN_CHECK, function ($MEDIA_ID) use ($constructr,$DBCON)
         {
+            if(isset($_SESSION['backend-user-id']) && $_SESSION['backend-user-id'] != '')
+            {
+                try
+                {
+                    $RIGHT_CHECKER = $DBCON -> prepare('SELECT * FROM constructr_backenduser_rights WHERE cbr_right = :RIGHT_ID AND cbr_user_id = :USER_ID AND cbr_value = :CBR_VALUE LIMIT 1;');
+                    $RIGHT_CHECKER -> execute(
+                        array
+                        (
+                            ':USER_ID' => $_SESSION['backend-user-id'],
+                            ':RIGHT_ID' => 43,
+                            ':CBR_VALUE' => 1
+                        )
+                    );
+    
+                    $RIGHTS_COUNTR = $RIGHT_CHECKER -> rowCount();
+                    
+                    if($RIGHTS_COUNTR != 1)
+                    {
+                        $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Error 43: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                        $constructr -> redirect(_BASE_URL . '/constructr/?no-rights=true');
+                        die();
+                    }
+                    else {
+                        $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success 43: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                    }
+                }
+                catch (PDOException $e) 
+                {
+                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
+                    die();
+                }
+            }
+            else
+            {
+                $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': Error User-Rights-Check: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                $constructr -> redirect(_BASE_URL . '/constructr/logout/');
+                die();
+            }
+
             $USERNAME = $_SESSION['backend-user-username'];
 
             if(_LOGGING == true)
@@ -248,6 +444,45 @@
 
     $constructr -> get('/constructr/media/trash(/)', $ADMIN_CHECK, function () use ($constructr,$DBCON)
         {
+            if(isset($_SESSION['backend-user-id']) && $_SESSION['backend-user-id'] != '')
+            {
+                try
+                {
+                    $RIGHT_CHECKER = $DBCON -> prepare('SELECT * FROM constructr_backenduser_rights WHERE cbr_right = :RIGHT_ID AND cbr_user_id = :USER_ID AND cbr_value = :CBR_VALUE LIMIT 1;');
+                    $RIGHT_CHECKER -> execute(
+                        array
+                        (
+                            ':USER_ID' => $_SESSION['backend-user-id'],
+                            ':RIGHT_ID' => 44,
+                            ':CBR_VALUE' => 1
+                        )
+                    );
+    
+                    $RIGHTS_COUNTR = $RIGHT_CHECKER -> rowCount();
+                    
+                    if($RIGHTS_COUNTR != 1)
+                    {
+                        $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Error 44: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                        $constructr -> redirect(_BASE_URL . '/constructr/?no-rights=true');
+                        die();
+                    }
+                    else {
+                        $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success 44: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                    }
+                }
+                catch (PDOException $e) 
+                {
+                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
+                    die();
+                }
+            }
+            else
+            {
+                $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': Error User-Rights-Check: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                $constructr -> redirect(_BASE_URL . '/constructr/logout/');
+                die();
+            }
+
             $START = microtime(true);
             $USERNAME = $_SESSION['backend-user-username'];
             $MEDIA_COUNTER = 0;
@@ -304,6 +539,45 @@
 
     $constructr -> get('/constructr/media/trash/delete/:MEDIA_FILE/', $ADMIN_CHECK, function ($MEDIA_FILE) use ($constructr,$DBCON)
         {
+            if(isset($_SESSION['backend-user-id']) && $_SESSION['backend-user-id'] != '')
+            {
+                try
+                {
+                    $RIGHT_CHECKER = $DBCON -> prepare('SELECT * FROM constructr_backenduser_rights WHERE cbr_right = :RIGHT_ID AND cbr_user_id = :USER_ID AND cbr_value = :CBR_VALUE LIMIT 1;');
+                    $RIGHT_CHECKER -> execute(
+                        array
+                        (
+                            ':USER_ID' => $_SESSION['backend-user-id'],
+                            ':RIGHT_ID' => 45,
+                            ':CBR_VALUE' => 1
+                        )
+                    );
+    
+                    $RIGHTS_COUNTR = $RIGHT_CHECKER -> rowCount();
+                    
+                    if($RIGHTS_COUNTR != 1)
+                    {
+                        $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Error 45: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                        $constructr -> redirect(_BASE_URL . '/constructr/?no-rights=true');
+                        die();
+                    }
+                    else {
+                        $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success 45: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                    }
+                }
+                catch (PDOException $e) 
+                {
+                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
+                    die();
+                }
+            }
+            else
+            {
+                $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': Error User-Rights-Check: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                $constructr -> redirect(_BASE_URL . '/constructr/logout/');
+                die();
+            }
+
             if(_LOGGING == true)
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);

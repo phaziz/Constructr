@@ -149,7 +149,6 @@
                                 <thead>
                                     <tr>
                                         <th><small>Inhalt</small></th>
-                                        <th class="center"><small>Datum</small></th>
                                         <th class="center"><small>Aktionen</small></th>
                                     </tr>
                                 </thead>
@@ -170,15 +169,7 @@
                                                     $CONTENT_LINKER = strip_tags($CONTENT['content_content']);
                                                 }
                                                 echo '<a href="' . _BASE_URL . '/constructr/content/' . $PAGE_ID . '/' . $CONTENT['content_id'] . '/edit/" title="Inhalte bearbeiten">' . $CONTENT_LINKER . '</a></small></td>';
-                                                if($CONTENT['content_datetime'] != '0000-00-00 00:00:00')
-                                                {
-                                                    echo '<td class="center"><small>' . date("d.m.Y, H:i", strtotime(substr($CONTENT['content_datetime'], 0, 18))) . ' Uhr</small></td>';                                                
-                                                }
-                                                else
-                                                {
-                                                    echo '<td class="center"><small>./.</small></td>';
-                                                }
-                                                echo '<td class="right">';
+                                                echo '<td class="center">';
                                                 if($CONTENT['content_order'] > 1)
                                                 {
                                                     echo '<a data-toggle="tooltip" data-placement="top" title="Inhalt nach oben verschieben" class="reorder tt" href="' . _BASE_URL . '/constructr/content/' . $PAGE_ID . '/' . $CONTENT['content_id'] . '/' . $CONTENT['content_order'] . '/up/"><button type="button" class="btn btn-primary btn-xs" title="Seite nach oben verschieben"><span class="glyphicon glyphicon-arrow-up"></span></button></a>';
@@ -254,8 +245,7 @@
                             {
                                 "aaSorting": [],
                                 "aoColumns": [
-                                    { "sWidth": "60%", "bSortable":false},
-                                    { "sWidth": "20%", "bSortable":false},
+                                    { "sWidth": "80%", "bSortable":false},
                                     { "sWidth": "20%", "bSortable":false}
                                 ],
                                 "sPaginationType":"bs_full",

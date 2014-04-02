@@ -12,7 +12,7 @@
         TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
         0. YOU JUST DO WHAT THE FUCK YOU WANT TO MIT-LICENSE-STYLE!
         
-        Visit http://phaziz.com
+        +++ Visit http://phaziz.com +++
     ***************************************************************************
     */
 
@@ -20,7 +20,7 @@
     session_start();
 
     define('_BASE_URL','http://' . $_SERVER['HTTP_HOST'] . '');
-    define('_VERSION','20140306');
+    define('_VERSION','20140317');
     define('_SALT','$2y$07$R.gJb2U2N.FmZ4hPp1y2CN$');
     define('_LOGGING',true);
     define('_DEBUGGING',true);
@@ -37,10 +37,10 @@
 
     \Slim\Slim::registerAutoloader();
 
-    $HOSTNAME = "";
-    $DATABASE = "";
-    $USERNAME = "";
-    $PASSWORD = "";
+    $HOSTNAME = "localhost";
+    $DATABASE = "d01980d3";
+    $USERNAME = "d01980d3";
+    $PASSWORD = "bDPy3v6mdXnvrhGf";
 
     try
     {
@@ -259,6 +259,7 @@
     else
     {
         require_once './Views/backenduser.php';
+        require_once './Views/backenduser-rights.php';
         require_once './Views/login.php';
         require_once './Views/logout.php';
         require_once './Views/admin.php';

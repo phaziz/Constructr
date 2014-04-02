@@ -88,6 +88,19 @@
                                 <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
                             </div><!-- // EOF ROW -->
                         <?php
+                    } else if(isset($_GET['no-rights']) && $_GET['no-rights'] == true)
+                    {
+                        ?>
+                            <div class="row response">
+                                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
+                                <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                                    <?php
+                                        echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Erfolg!</strong> Es fehlen die Zugriffsrechte f&uuml;r dieses Modul.</div>';
+                                    ?>
+                                </div><!-- // EOF COL-... -->
+                                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
+                            </div><!-- // EOF ROW -->
+                        <?php
                     }
                 ?>
 

@@ -88,6 +88,7 @@
                         $_SESSION['backend-user-username'] = $_ADMIN_USERNAME;
                         $_SESSION['backend-user-password'] = $_ADMIN_PASSWORD;
                         $USER_ID = $USER['beu_id'];
+                        $_SESSION['backend-user-id'] = $USER_ID;
                         $LAST_LOGIN = date('Y-m-d H:i:s');
 
                         try 

@@ -144,7 +144,8 @@
                             {
                                 "customConfig":"",
                                 "extraPlugins":"imagebrowser",
-                                "imageBrowser_listUrl":"<?php echo _BASE_URL . '/constructr/get-image-list/'; ?>"
+                                "imageBrowser_listUrl":"<?php echo _BASE_URL . '/constructr/get-image-list/'; ?>",
+                                "allowedContent":true
                             }
                         );
 

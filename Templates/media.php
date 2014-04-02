@@ -128,7 +128,6 @@
                                         <th class="center"><small>Vorschau</small></th>
                                         <th><small>Datei</small></th>
                                         <th><small>Alias</small></th>
-                                        <th class="center"><small>Datum</small></th>
                                         <th class="center"><small>Aktionen</small></th>
                                     </tr>
                                 </thead>
@@ -143,14 +142,6 @@
                                                 echo '<td class="center"><a href="' . _BASE_URL . '/' . $MEDIA['media_file'] . '" data-toggle="lightbox" data-title="' . $MEDIA['media_originalname'] . '" data-footer="' . $MEDIA['media_originalname'] . '"><img src="' . _BASE_URL . '/' . $MEDIA['media_file'] . '" alt="' . $MEDIA['media_originalname'] . '" height="10%" width=""></a></td>';
                                                 echo '<td><small><strong>' . $MEDIA['media_originalname'] . '</small></td>';
                                                 echo '<td><small>' . _BASE_URL . '/' . $MEDIA['media_file'] . '</small></td>';
-                                                if($MEDIA['media_datetime'] != '0000-00-00 00:00:00')
-                                                {
-                                                    echo '<td class="center"><small>' . date("d.m.Y, H:i", strtotime(substr($MEDIA['media_datetime'], 0, 18))) . ' Uhr</small></td>';                                                
-                                                }
-                                                else
-                                                {
-                                                    echo '<td class="center"><small>./.</small></td>';
-                                                }
                                                 echo '<td class="center">';
                                                 echo '<a href="' . _BASE_URL . '/' . $MEDIA['media_file'] . '" data-toggle="lightbox" data-title="' . $MEDIA['media_originalname'] . '" data-footer="' . $MEDIA['media_originalname'] . '" <button type="button" class="btn btn-warning btn-xs" title="Einfache Vorschau"><span class="glyphicon glyphicon-eye-close"></span></button></a>';
                                                 echo '&#160;';
@@ -222,8 +213,7 @@
                                 "aoColumns": [
                                     { "sWidth": "10%", "bSortable":false},
                                     { "sWidth": "30%", "bSortable":true},
-                                    { "sWidth": "30%", "bSortable":true},
-                                    { "sWidth": "15%", "bSortable":true},
+                                    { "sWidth": "45%", "bSortable":true},
                                     { "sWidth": "15%", "bSortable":false}
                                 ],
                                 "sPaginationType":"bs_full",

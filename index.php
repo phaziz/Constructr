@@ -19,12 +19,8 @@
     session_cache_limiter(false);
     session_start();
 
-    define('_BASE_URL','http://' . $_SERVER['HTTP_HOST'] . '');
-    define('_VERSION','20140317');
-    define('_SALT','$2y$07$R.gJb2U2N.FmZ4hPp1y2CN$');
-    define('_LOGGING',true);
-    define('_DEBUGGING',true);
-    define('_TITLE','CONSTRUCTR');
+    // Your main config-file - edit for your needs :)
+    require_once('./Config/constructr.conf.php');
 
     if(!defined("CRYPT_BLOWFISH") && CRYPT_BLOWFISH)
     {
@@ -105,6 +101,17 @@
 
     if ($FINDR === false)
     {
+
+        if(_EXT_WWW != '')
+        {
+            $constructr -> get('/', function () use ($constructr)
+                {
+                    $constructr -> redirect(_BASE_URL . '/Web/index.php');
+                    die();        
+                }
+            );
+        }
+
         $START = microtime(true);
         
         $constructr -> get('(:ROUTE+)', function ($ROUTE) use ($constructr,$DBCON)
@@ -126,8 +133,22 @@
 
                 try
                 {
-                   $PAGES = $DBCON -> query('SELECT * FROM constructr_pages WHERE pages_active = 1 ORDER BY pages_lft ASC;');
-                   $PAGES = $PAGES -> fetchAll();
+                    $PAGES = $DBCON -> query('
+                        SELECT n.*,
+                                 round((n.pages_rgt-n.pages_lft-1)/2,0) AS pages_subpages_countr,
+                                 count(*)-1+(n.pages_lft>1) AS pages_level,
+                                 ((min(p.pages_rgt)-n.pages_rgt-(n.pages_lft>1))/2) > 0 AS pages_lower,
+                                 (((n.pages_lft-max(p.pages_lft)>1))) AS pages_upper
+                            FROM constructr_pages n,
+                                 constructr_pages p
+                           WHERE n.pages_lft BETWEEN p.pages_lft AND p.pages_rgt
+                             AND (p.pages_id != n.pages_id OR n.pages_lft = 1)
+                             AND n.pages_active = 1
+                             AND p.pages_active = 1
+                        GROUP BY n.pages_id
+                        ORDER BY n.pages_lft;
+                    ');
+                    $PAGES = $PAGES -> fetchAll();
                 }
                 catch (PDOException $e)
                 {

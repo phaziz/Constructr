@@ -48,18 +48,17 @@
             );
         }
     );
-    
-    
+
     $constructr -> get('/constructr/optimization/', $ADMIN_CHECK, function () use ($constructr,$DBCON)
         {
             try
             {
                 $OPTIMIZER = $DBCON -> query('
-                    OPTIMIZE TABLE 
-                    constructr_backenduser,
-                    constructr_content,
-                    constructr_media,
-                    constructr_pages
+                    OPTIMIZE TABLE constructr_backenduser;
+                    OPTIMIZE TABLE constructr_backenduser_rights;
+                    OPTIMIZE TABLE constructr_content;
+                    OPTIMIZE TABLE constructr_media;
+                    OPTIMIZE TABLE constructr_pages;
                 ');
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                 $constructr -> redirect('../?optimized=true');

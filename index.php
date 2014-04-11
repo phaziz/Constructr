@@ -33,10 +33,10 @@
 
     \Slim\Slim::registerAutoloader();
 
-    $HOSTNAME = "localhost";
-    $DATABASE = "d01980d3";
-    $USERNAME = "d01980d3";
-    $PASSWORD = "bDPy3v6mdXnvrhGf";
+    $HOSTNAME = "";
+    $DATABASE = "";
+    $USERNAME = "";
+    $PASSWORD = "";
 
     try
     {

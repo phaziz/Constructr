@@ -24,14 +24,12 @@
                     <ul class="sidebar-nav" id="sidebar">     
                         <li><a class="tt" href="<?php echo _BASE_URL ?>" onclick="window.open(this.href);return false;" title="Internetseite anzeigen" data-toggle="tooltip" data-placement="right">Internetseite</a></li>
                         <li><a class="tt" href="<?php echo _BASE_URL ?>/constructr/" title="Dashboard anzeigen" data-toggle="tooltip" data-placement="right">Dashboard</a></li>
-                        <li><a class="tt" href="<?php echo _BASE_URL ?>/constructr/pages/" title="Seitenverwaltung anzeigen" data-toggle="tooltip" data-placement="right">Seiten</a></li>
+                        <li class="active"><a class="tt" href="<?php echo _BASE_URL ?>/constructr/pages/" title="Seitenverwaltung anzeigen" data-toggle="tooltip" data-placement="right">Seiten</a></li>
                         <li><a class="tt" href="<?php echo _BASE_URL ?>/constructr/media/" title="Medienverwaltung anzeigen" data-toggle="tooltip" data-placement="right">Medien</a></li>
                         <li><a class="tt" href="<?php echo _BASE_URL ?>/constructr/media/trash/" title="M&uuml;lleimer anzeigen" data-toggle="tooltip" data-placement="right">M&uuml;lleimer</a></li>
                         <li><a class="tt" href="<?php echo _BASE_URL ?>/constructr/user/" title="Benutzerverwaltung anzeigen" data-toggle="tooltip" data-placement="right">Benutzer</a></li>
                         <li><a class="tt" href="<?php echo _BASE_URL ?>/constructr/logout/" title="<?php echo $_SESSION['backend-user-username']; ?> abmelden" data-toggle="tooltip" data-placement="right">abmelden</a></li>
                     </ul>
-                    <p><small class="trademark">&#160;&#160;&#160;Constructr CMS</small></p>
-                    <p><small class="trademark">&#160;&#160;&#160;Version: <?php echo _VERSION; ?><br>&#160;&#160;&#160;<?php echo $TIMER; ?><br>&#160;&#160;&#160;<?php echo $MEM; ?><br>&#160;&#160;&#160;<a href="http://phaziz.com/" onclick="window.open(this.href);return false;">phaziz.com</a></small></p>
                 </div>
                 <div id="page-content-wrapper">
                     <div class="page-content inset">

@@ -3,7 +3,7 @@
     /*
      * LOGIN START
      * */
-    $constructr -> get('/constructr/login(/)', function () use ($constructr)
+    $constructr -> get('/constructr/login/', function () use ($constructr)
         {
             if(_LOGGING == true)
             {
@@ -25,7 +25,7 @@
         }
     );
 
-    $constructr -> get('/constructr/login-error(/)', function () use ($constructr)
+    $constructr -> get('/constructr/login-error/', function () use ($constructr)
         {
             if(_LOGGING == true)
             {

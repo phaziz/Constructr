@@ -27,8 +27,6 @@
                         <li><a class="tt" href="<?php echo _BASE_URL ?>/constructr/user/" title="Benutzerverwaltung anzeigen" data-toggle="tooltip" data-placement="right">Benutzer</a></li>
                         <li><a class="tt" href="<?php echo _BASE_URL ?>/constructr/logout/" title="<?php echo $_SESSION['backend-user-username']; ?> abmelden" data-toggle="tooltip" data-placement="right">abmelden</a></li>
                     </ul>
-                    <p><small class="trademark">&#160;&#160;&#160;Constructr CMS</small></p>
-                    <p><small class="trademark">&#160;&#160;&#160;Version: <?php echo _VERSION; ?><br>&#160;&#160;&#160;<?php echo $TIMER; ?><br>&#160;&#160;&#160;<?php echo $MEM; ?><br>&#160;&#160;&#160;<a href="http://phaziz.com/" onclick="window.open(this.href);return false;">phaziz.com</a></small></p>
                 </div>
                 <div id="page-content-wrapper">
                     <div class="page-content inset">

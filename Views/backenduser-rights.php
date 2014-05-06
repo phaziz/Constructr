@@ -89,7 +89,7 @@
         }
     );
 
-    $constructr -> get('/constructr/user/set-user-right/:new_value/:right_id/:user_id/:user_name(/)', $ADMIN_CHECK, function ($NEW_VALUE,$RIGHT_ID,$USER_ID,$USER_NAME) use ($constructr,$DBCON)
+    $constructr -> get('/constructr/user/set-user-right/:new_value/:right_id/:user_id/:user_name/', $ADMIN_CHECK, function ($NEW_VALUE,$RIGHT_ID,$USER_ID,$USER_NAME) use ($constructr,$DBCON)
         {
             $USERNAME = $_SESSION['backend-user-username'];
 

@@ -3,7 +3,7 @@
     /*
      * BENUTZERVERWALTUNG START
      * */
-    $constructr -> get('/constructr/user(/)', $ADMIN_CHECK, function () use ($constructr,$DBCON)
+    $constructr -> get('/constructr/user/', $ADMIN_CHECK, function () use ($constructr,$DBCON)
         {
             $START = microtime(true);
             $USERNAME = $_SESSION['backend-user-username'];
@@ -83,7 +83,7 @@
         }
     );
 
-    $constructr -> get('/constructr/user/success(/)', $ADMIN_CHECK, function () use ($constructr,$DBCON)
+    $constructr -> get('/constructr/user/success/', $ADMIN_CHECK, function () use ($constructr,$DBCON)
         {
             $START = microtime(true);
             $USERNAME = $_SESSION['backend-user-username'];
@@ -149,7 +149,7 @@
         }
     );
 
-    $constructr -> get('/constructr/user/error(/)', $ADMIN_CHECK, function () use ($constructr,$DBCON)
+    $constructr -> get('/constructr/user/error/', $ADMIN_CHECK, function () use ($constructr,$DBCON)
         {
             $START = microtime(true);
             $USERNAME = $_SESSION['backend-user-username'];
@@ -215,7 +215,7 @@
         }
     );
 
-    $constructr -> get('/constructr/user/new(/)', $ADMIN_CHECK, function () use ($constructr,$DBCON)
+    $constructr -> get('/constructr/user/new/', $ADMIN_CHECK, function () use ($constructr,$DBCON)
         {
             $START = microtime(true);
             $USERNAME = $_SESSION['backend-user-username'];
@@ -650,7 +650,7 @@
         }
     );
     
-    $constructr -> get('/constructr/user/edit/:USER_ID(/)', $ADMIN_CHECK, function ($USER_ID) use ($constructr,$DBCON)
+    $constructr -> get('/constructr/user/edit/:USER_ID/', $ADMIN_CHECK, function ($USER_ID) use ($constructr,$DBCON)
         {
             $START = microtime(true);
             $USERNAME = $_SESSION['backend-user-username'];
@@ -756,7 +756,7 @@
         }
     );
 
-    $constructr -> post('/constructr/user/edit/:USER_ID(/)', $ADMIN_CHECK, function ($USER_ID) use ($constructr,$DBCON)
+    $constructr -> post('/constructr/user/edit/:USER_ID/', $ADMIN_CHECK, function ($USER_ID) use ($constructr,$DBCON)
         {
             if(_LOGGING == true)
             {

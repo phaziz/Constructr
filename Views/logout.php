@@ -3,7 +3,7 @@
     /*
      * LOGOUT START
      * */
-    $constructr -> get('/constructr/logout(/)', function () use ($constructr)
+    $constructr -> get('/constructr/logout/', function () use ($constructr)
         {
             if(_LOGGING == true)
             {

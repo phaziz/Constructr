@@ -5,13 +5,13 @@
      * DER ANFANG ALLEN ÜBELS...
      * 
      * */
-    $constructr -> get('/constructr/pages(/)', $ADMIN_CHECK, function () use ($constructr,$DBCON)
+    $constructr -> get('/constructr/pages/', $ADMIN_CHECK, function () use ($constructr,$DBCON)
         {
             $START = microtime(true);
             $USERNAME = $_SESSION['backend-user-username'];
             $PAGES_COUNTR = 0;
 
-            $constructr -> view -> setData('BackendUserRight',10);
+            $constructr -> view -> setData('BackendUserRight',10);            
 
             if(isset($_SESSION['backend-user-id']) && $_SESSION['backend-user-id'] != '')
             {
@@ -106,7 +106,7 @@
      * 
      * */
 
-    $constructr -> get('/constructr/pages/new(/)', $ADMIN_CHECK, function () use ($constructr,$DBCON)
+    $constructr -> get('/constructr/pages/new/', $ADMIN_CHECK, function () use ($constructr,$DBCON)
         {
             $START = microtime(true);
 
@@ -387,7 +387,7 @@
         }
     );
 
-    $constructr -> get('/constructr/pages/new/sub/:ID_MOTHER/:MOTHER_LFT(/)', $ADMIN_CHECK, function ($MOTHER_ID,$MOTHER_LFT) use ($constructr,$DBCON)
+    $constructr -> get('/constructr/pages/new/sub/:ID_MOTHER/:MOTHER_LFT/', $ADMIN_CHECK, function ($MOTHER_ID,$MOTHER_LFT) use ($constructr,$DBCON)
         {
             $constructr -> view -> setData('BackendUserRight',12);
 
@@ -644,7 +644,7 @@
         }
     );
 
-    $constructr -> get('/constructr/pages/edit/:PAGE_ID(/)', $ADMIN_CHECK, function ($PAGE_ID) use ($constructr,$DBCON)
+    $constructr -> get('/constructr/pages/edit/:PAGE_ID/', $ADMIN_CHECK, function ($PAGE_ID) use ($constructr,$DBCON)
         {
             $START = microtime(true);
 
@@ -867,7 +867,7 @@
         }
     );
 
-    $constructr -> get('/constructr/pages/activate/:PAGE_ID(/)', $ADMIN_CHECK, function ($PAGE_ID) use ($constructr,$DBCON)
+    $constructr -> get('/constructr/pages/activate/:PAGE_ID/', $ADMIN_CHECK, function ($PAGE_ID) use ($constructr,$DBCON)
         {
             $constructr -> view -> setData('BackendUserRight',14);
 
@@ -953,7 +953,7 @@
         }
     );
     
-    $constructr -> get('/constructr/pages/deactivate/:PAGE_ID(/)', $ADMIN_CHECK, function ($PAGE_ID) use ($constructr,$DBCON)
+    $constructr -> get('/constructr/pages/deactivate/:PAGE_ID/', $ADMIN_CHECK, function ($PAGE_ID) use ($constructr,$DBCON)
         {
             $constructr -> view -> setData('BackendUserRight',14);
 

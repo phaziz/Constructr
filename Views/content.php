@@ -27,7 +27,7 @@
                             ':CBR_VALUE' => 1
                         )
                     );
-    
+
                     $RIGHTS_COUNTR = $RIGHT_CHECKER -> rowCount();
                     
                     if($RIGHTS_COUNTR != 1)
@@ -301,6 +301,34 @@
                     $STMT -> bindParam(':PAGE_ID',$PAGE_ID,PDO::PARAM_INT);
                     $STMT -> bindParam(':CONTENT_ACTIVE',$CONTENT_ACTIVE,PDO::PARAM_INT);
                     $STMT -> execute();
+
+                    // CACHE-FILE schreiben
+                    if(_CREATE_STATIC == true)
+                    {
+                        $PAGE_CONTENT = $DBCON -> prepare('SELECT * FROM constructr_pages WHERE pages_id = :PAGE_ID LIMIT 1;');
+                        $PAGE_CONTENT -> execute(
+                            array
+                            (
+                                ':PAGE_ID' => $PAGE_ID
+                            )
+                        );
+
+                        $PAGE_CONTENT = $PAGE_CONTENT -> fetch();
+
+                        if(count($PAGE_CONTENT) != 0 && count($PAGE_CONTENT != ''))
+                        {
+                            $_HTML_CONTENT = file_get_contents(_BASE_URL . '/' . $PAGE_CONTENT['pages_url']);
+
+                            if($_HTML_CONTENT != '')
+                            {
+                                $PHYSICAL_FILE = fopen('./Static/' . str_replace('/','_',_BASE_URL . '/' . $PAGE_CONTENT['pages_url']) . '.html',"w+");
+                                fwrite($PHYSICAL_FILE, $_HTML_CONTENT);
+                                fclose($PHYSICAL_FILE);
+                            }
+                        }
+                    }
+                    // CACHE-FILE schreiben
+
                     $constructr -> redirect(_BASE_URL . '/constructr/content/' . $PAGE_ID . '/?res=create-content-true');
                     die();
                 }
@@ -494,6 +522,33 @@
                         )
                     );
 
+                    // CACHE-FILE schreiben
+                    if(_CREATE_STATIC == true)
+                    {
+                        $PAGE_CONTENT = $DBCON -> prepare('SELECT * FROM constructr_pages WHERE pages_id = :PAGE_ID LIMIT 1;');
+                        $PAGE_CONTENT -> execute(
+                            array
+                            (
+                                ':PAGE_ID' => $PAGE_ID
+                            )
+                        );
+
+                        $PAGE_CONTENT = $PAGE_CONTENT -> fetch();
+
+                        if(count($PAGE_CONTENT) != 0 && count($PAGE_CONTENT != ''))
+                        {
+                            $_HTML_CONTENT = file_get_contents(_BASE_URL . '/' . $PAGE_CONTENT['pages_url']);
+
+                            if($_HTML_CONTENT != '')
+                            {
+                                $PHYSICAL_FILE = fopen('./Static/' . str_replace('/','_',_BASE_URL . '/' . $PAGE_CONTENT['pages_url']) . '.html',"w+");
+                                fwrite($PHYSICAL_FILE, $_HTML_CONTENT);
+                                fclose($PHYSICAL_FILE);
+                            }
+                        }
+                    }
+                    // CACHE-FILE schreiben
+
                     $constructr -> redirect(_BASE_URL . '/constructr/content/' . $PAGE_ID . '/?res=edit-content-true');
                     die();
                 }
@@ -569,40 +624,40 @@
             if($PAGE_ID != '' && $CONTENT_ID != '' && $ACT_ORDER != '')
             {
                 $NEW_ORDER = ($ACT_ORDER - 1);
-				$NULL_MARKER = 0;
+                $NULL_MARKER = 0;
 
                 try 
                 {
                     $UPDATE_CONTENT = $DBCON -> prepare('
                         UPDATE constructr_content 
                         SET 
-                    	content_order = :NEW_ORDER,
-                    	content_temp_marker = :TEMP_MARKER 
+                        content_order = :NEW_ORDER,
+                        content_temp_marker = :TEMP_MARKER 
                         WHERE 
-                    	content_order = :ACT_ORDER 
+                        content_order = :ACT_ORDER 
                         AND 
-                    	content_page_id = :PAGE_ID 
+                        content_page_id = :PAGE_ID 
                         LIMIT 1;
 
                         UPDATE constructr_content 
                         SET 
-                    	content_order = :ACT_ORDER,
-                    	content_temp_marker = :TEMP_MARKER 
+                        content_order = :ACT_ORDER,
+                        content_temp_marker = :TEMP_MARKER 
                         WHERE 
-                    	content_order = :NEW_ORDER 
+                        content_order = :NEW_ORDER 
                         AND 
-                    	content_page_id = :PAGE_ID 
+                        content_page_id = :PAGE_ID 
                         AND 
-                    	content_temp_marker = :NULL_MARKER
+                        content_temp_marker = :NULL_MARKER
                         LIMIT 1;
-						
+                        
                         UPDATE constructr_content 
                         SET 
-                    	content_temp_marker = :NULL_MARKER 
+                        content_temp_marker = :NULL_MARKER 
                         WHERE 
-                    	content_temp_marker = :TEMP_MARKER 
+                        content_temp_marker = :TEMP_MARKER 
                         AND 
-                    	content_page_id = :PAGE_ID;
+                        content_page_id = :PAGE_ID;
                     ');
 
                     $UPDATE_CONTENT -> execute(
@@ -695,40 +750,40 @@
             if($PAGE_ID != '' && $CONTENT_ID != '' && $ACT_ORDER != '')
             {
                 $NEW_ORDER = ($ACT_ORDER + 1);
-				$NULL_MARKER = 0;
+                $NULL_MARKER = 0;
 
                 try
                 {
                     $UPDATE_CONTENT = $DBCON -> prepare('
                         UPDATE constructr_content 
                         SET 
-                    	content_order = :NEW_ORDER,
-                    	content_temp_marker = :TEMP_MARKER 
+                        content_order = :NEW_ORDER,
+                        content_temp_marker = :TEMP_MARKER 
                         WHERE 
-                    	content_order = :ACT_ORDER 
+                        content_order = :ACT_ORDER 
                         AND 
-                    	content_page_id = :PAGE_ID 
+                        content_page_id = :PAGE_ID 
                         LIMIT 1;
 
                         UPDATE constructr_content 
                         SET 
-                    	content_order = :ACT_ORDER,
-                    	content_temp_marker = :TEMP_MARKER 
+                        content_order = :ACT_ORDER,
+                        content_temp_marker = :TEMP_MARKER 
                         WHERE 
-                    	content_order = :NEW_ORDER 
+                        content_order = :NEW_ORDER 
                         AND 
-                    	content_page_id = :PAGE_ID 
+                        content_page_id = :PAGE_ID 
                         AND 
-                    	content_temp_marker = :NULL_MARKER
+                        content_temp_marker = :NULL_MARKER
                         LIMIT 1;
-						
+                        
                         UPDATE constructr_content 
                         SET 
-                    	content_temp_marker = :NULL_MARKER 
+                        content_temp_marker = :NULL_MARKER 
                         WHERE 
-                    	content_temp_marker = :TEMP_MARKER 
+                        content_temp_marker = :TEMP_MARKER 
                         AND 
-                    	content_page_id = :PAGE_ID;
+                        content_page_id = :PAGE_ID;
                     ');
 
                     $UPDATE_CONTENT -> execute(

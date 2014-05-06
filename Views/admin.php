@@ -5,7 +5,7 @@
      * DER ANFANG ALLEN ÜBELS...
      * 
      * */
-    $constructr -> get('/constructr(/)', $ADMIN_CHECK, function () use ($constructr,$DBCON)
+    $constructr -> get('/constructr/', $ADMIN_CHECK, function () use ($constructr,$DBCON)
         {
             $START = microtime(true);
             $USERNAME = $_SESSION['backend-user-username'];

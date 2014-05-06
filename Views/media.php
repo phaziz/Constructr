@@ -5,7 +5,7 @@
      * DER ANFANG ALLEN ÜBELS...
      * 
      * */
-    $constructr -> get('/constructr/media(/)', $ADMIN_CHECK, function () use ($constructr,$DBCON)
+    $constructr -> get('/constructr/media/', $ADMIN_CHECK, function () use ($constructr,$DBCON)
         {
             $START = microtime(true);
             $USERNAME = $_SESSION['backend-user-username'];
@@ -93,7 +93,7 @@
      * 
      * */
 
-    $constructr -> get('/constructr/media/new(/)', $ADMIN_CHECK, function () use ($constructr,$DBCON)
+    $constructr -> get('/constructr/media/new/', $ADMIN_CHECK, function () use ($constructr,$DBCON)
         {
             $START = microtime(true);
 
@@ -471,7 +471,7 @@
         }
     );
 
-    $constructr -> get('/constructr/media/trash(/)', $ADMIN_CHECK, function () use ($constructr,$DBCON)
+    $constructr -> get('/constructr/media/trash/', $ADMIN_CHECK, function () use ($constructr,$DBCON)
         {
             $constructr -> view -> setData('BackendUserRight',44);
 

@@ -45,7 +45,7 @@
                     <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
                 </div><!-- // EOF ROW -->
             </div><!-- // EOF CONTAINER -->
-            <script src="<?php echo _BASE_URL ?>/Assets/jquery-2-1-0.min.js"></script>
+            <script src="<?php echo _BASE_URL ?>/Assets/jquery-2-1-1.min.js"></script>
             <script src="<?php echo _BASE_URL ?>/Assets/bootstrap/js/bootstrap.min.js"></script>
             <script>
                 $(function(){$("#_admin_username").focus()});var _paq=_paq||[];_paq.push(["setDocumentTitle",document.domain+"/"+document.title]);_paq.push(["setCookieDomain","*.constructr.phaziz.com"]);_paq.push(["trackPageView"]);_paq.push(["enableLinkTracking"]);

@@ -287,6 +287,7 @@
         require_once './Views/pages.php';
         require_once './Views/content.php';
         require_once './Views/media.php';
+        require_once './Views/image-test.php';
 
         $constructr -> run();
         $DBCON = null;

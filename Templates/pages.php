@@ -209,7 +209,7 @@
                 </div>
             </div>
 
-            <script src="<?php echo _BASE_URL ?>/Assets/jquery-2-1-0.min.js"></script>
+            <script src="<?php echo _BASE_URL ?>/Assets/jquery-2-1-1.min.js"></script>
             <script src="<?php echo _BASE_URL ?>/Assets/bootstrap/js/bootstrap.min.js"></script>
             <script src="<?php echo _BASE_URL;?>/Assets/datatables/media/js/jquery.dataTables.min.js"></script>
             <script src="<?php echo _BASE_URL;?>/Assets/datatables-bootstrap3/assets/js/datatables.js"></script>

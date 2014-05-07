@@ -1,12 +1,48 @@
 <?php
 
+    function get_xmp_array( &$xmp_raw )
+    {
+        $xmp_arr = array();
+        foreach (array(
+                'Title' => '<dc:title>\s*<rdf:Alt>\s*(.*?)\s*<\/rdf:Alt>\s*<\/dc:title>',
+                'Description' => '<dc:description>\s*<rdf:Alt>\s*(.*?)\s*<\/rdf:Alt>\s*<\/dc:description>',
+                'Keywords' => '<dc:subject>\s*<rdf:Bag>\s*(.*?)\s*<\/rdf:Bag>\s*<\/dc:subject>',
+                'Hierarchical Keywords' => '<lr:hierarchicalSubject>\s*<rdf:Bag>\s*(.*?)\s*<\/rdf:Bag>\s*<\/lr:hierarchicalSubject>'
+        ) as $key => $regex )
+        {
+            $xmp_arr[$key] = preg_match( "/$regex/is", $xmp_raw, $match ) ? $match[1] : '';
+            $xmp_arr[$key] = preg_match_all( "/<rdf:li[^>]*>([^>]*)<\/rdf:li>/is", $xmp_arr[$key], $match ) ? $match[1] : $xmp_arr[$key];
+            if(!empty($xmp_arr[$key]) && $key == 'Hierarchical Keywords')
+            {
+                foreach($xmp_arr[$key] as $li => $val ) $xmp_arr[$key][$li] = explode( '|', $val );
+                unset($li,$val);
+            }
+        }
+        return $xmp_arr;
+    }
+
+    function getXmpData($filename)
+    {
+        $buffer = NULL;
+        $file_pointer = fopen($filename, 'r');
+        $chunk = fread($file_pointer,50000);
+        if (($posStart = strpos($chunk, '<x:xmpmeta')) !== FALSE) {
+            $buffer = substr($chunk, $posStart);
+            $posEnd = strpos($buffer, '</x:xmpmeta>');
+            $buffer = substr($buffer, 0, $posEnd + 12);
+        }
+        fclose($file_pointer);
+        return $buffer;
+    }
+
     function retExifData($imagePath)
     {
         if ((isset($imagePath)) and (file_exists($imagePath))) 
         {
-          $exif_ifd0 = read_exif_data($imagePath ,'IFD0' ,0);       
+          $exif_ifd0 = read_exif_data($imagePath ,'IFD0' ,0);
           $exif_exif = read_exif_data($imagePath ,'EXIF' ,0);
-          $notFound = "Unavailable";
+
+          $notFound = "./";
 
           if (@array_key_exists('Make', $exif_ifd0)) 
           {
@@ -23,7 +59,16 @@
           {
               $camModel = $notFound; 
           }
-          
+
+          if (@array_key_exists('Keywords', $exif_ifd0)) 
+          {
+            $Keywords2 = $exif_ifd0['Keywords'];
+          }
+          else
+          {
+              $Keywords2 = $notFound; 
+          }
+
           if (@array_key_exists('ExposureTime', $exif_ifd0)) 
           {
             $camExposure = $exif_ifd0['ExposureTime'];
@@ -59,7 +104,16 @@
           {
                $camIso = $notFound; 
           }
-          
+
+          if (@array_key_exists('Keywords',$exif_exif)) 
+          {
+                $Keywords1 = $exif_exif['Keywords'];
+          } 
+          else 
+          {
+               $Keywords1 = $notFound; 
+          }
+
           $return = array();
           $return['camera'] = $camMake;
           $return['model'] = $camModel;
@@ -67,6 +121,8 @@
           $return['aperture'] = $camAperture;
           $return['date'] = $camDate;
           $return['iso'] = $camIso;
+          $return['keywords1'] = $Keywords1;
+          $return['keywords2'] = $Keywords2;
           return $return;
         }
         else

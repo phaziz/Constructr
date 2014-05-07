@@ -1,5 +1,12 @@
 <?php
 
+    require_once './Assets/metadata-toolkit/JPEG.php';
+    require_once './Assets/metadata-toolkit/EXIF.php';
+    require_once './Assets/metadata-toolkit/JFIF.php';
+    require_once './Assets/metadata-toolkit/Photoshop_IRB.php';
+    require_once './Assets/metadata-toolkit/PictureInfo.php';
+    require_once './Assets/metadata-toolkit/XMP.php';
+
     /*
      * 
      * DER ANFANG ALLEN ÜBELS...
@@ -228,17 +235,10 @@
             $FILE_TYPE = strrchr($FILEUPLOAD,'.');
             $NEW_UPLOAD = 'Uploads/' . $ORIGINALNAME;
 
-            if($FILE_TYPE == '.jpg' || $FILE_TYPE == '.jpeg' || $FILE_TYPE == '.JPG' || $FILE_TYPE == '.JPEG')
-            {
-                $MEDIA_EXIF = implode (' // ' ,@retExifData($_FILES['fileupload']['tmp_name']));    
-            }
-            else 
-            {
-                $MEDIA_EXIF = '';    
-            }
-
             $UPLOAD = copy($_FILES['fileupload']['tmp_name'], $NEW_UPLOAD);
             @chmod($NEW_UPLOAD, 0777);
+
+            $MEDIA_EXIF = '';    
 
             if($FILEUPLOAD == true)
             {

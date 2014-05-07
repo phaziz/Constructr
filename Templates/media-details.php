@@ -57,34 +57,27 @@
                                     <h2>Detailansicht <?php echo _BASE_URL . '/' . $DETAILS['media_file']; ?> | <a href="<?php echo _BASE_URL . '/constructr/media/' ?>" class="tt" data-toggle="tooltip" data-placement="top" title="Zur&uuml;ck zur &Uuml;bersicht">zur&uuml;ck</a></h2>
                                     <br><br>
                                         <?php
-        
+
                                             if($DETAILS)
                                             {
                                                 echo '<center><img src="' . _BASE_URL . '/' . $DETAILS['media_file'] . '" style="max-height:100%;max-width:100%"></center>';
                                                 echo '<br><br>';
-        
-                                                $EXIF = @exif_read_data("./" . $DETAILS['media_file'], 'IFD0');
-                                                echo $EXIF === false ? "Keine Headerdaten gefunden.<br>" : "Bild beinhaltet Header<br>";
-                                                $EXIF = @exif_read_data("./" . $DETAILS['media_file'], 0, true);
-                                                
-                                                if($EXIF)
-                                                {
-                                                    foreach ($EXIF as $KEY => $SECTION)
-                                                    {
-                                                        foreach ($SECTION as $NAME => $VAL)
-                                                        {
-                                                            echo "$KEY.$NAME: $VAL<br />\n";
-                                                        }
-                                                    }
-                                                }
+                                                $jpeg_header_data = get_jpeg_header_data('./' . $DETAILS['media_file']);
+                                                echo Interpret_EXIF_to_HTML(get_EXIF_JPEG('./' . $DETAILS['media_file']),'./' . $DETAILS['media_file']);
+                                                echo Interpret_IRB_to_HTML(get_Photoshop_IRB(get_jpeg_header_data('./' . $DETAILS['media_file'])),'./' . $DETAILS['media_file']);
+                                                echo Generate_JPEG_APP_Segment_HTML($jpeg_header_data);
+                                                echo Interpret_intrinsic_values_to_HTML(get_jpeg_intrinsic_values($jpeg_header_data));
+                                                echo Interpret_Comment_to_HTML($jpeg_header_data);
+                                                echo Interpret_JFIF_to_HTML(get_JFIF($jpeg_header_data),'./' . $DETAILS['media_file']);
+                                                echo Interpret_JFXX_to_HTML(get_JFXX($jpeg_header_data),'./' . $DETAILS['media_file']);
+                                                echo Interpret_App12_Pic_Info_to_HTML($jpeg_header_data);
+                                                echo Interpret_EXIF_to_HTML(get_EXIF_JPEG('./' . $DETAILS['media_file']),'./' . $DETAILS['media_file']);
+                                                echo Interpret_XMP_to_HTML(read_XMP_array_from_text(get_XMP_text($jpeg_header_data)));
+                                                echo Interpret_IRB_to_HTML(get_Photoshop_IRB( $jpeg_header_data),'./' . $DETAILS['media_file']);
+                                                echo Interpret_EXIF_to_HTML(get_Meta_JPEG('./' . $DETAILS['media_file']),'./' . $DETAILS['media_file']);
                                             }
-                                            else
-                                            {
-                                                echo '<tr><td colspan="7">Es ist ein Fehler aufgetreten!</td></tr>';
-                                            };
-        
+
                                         ?>
-                                        
                                 </div><!-- // EOF JUMBOTRON -->
                             </div><!-- // EOF COL-... -->
                             <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
@@ -101,7 +94,7 @@
                 </div>
             </div>
 
-            <script src="<?php echo _BASE_URL ?>/Assets/jquery-2-1-0.min.js"></script>
+            <script src="<?php echo _BASE_URL ?>/Assets/jquery-2-1-1.min.js"></script>
             <script src="<?php echo _BASE_URL ?>/Assets/bootstrap/js/bootstrap.min.js"></script>
             <script src="<?php echo _BASE_URL;?>/Assets/datatables/media/js/jquery.dataTables.min.js"></script>
             <script src="<?php echo _BASE_URL;?>/Assets/datatables-bootstrap3/assets/js/datatables.js"></script>

@@ -90,7 +90,6 @@
                     'MEM' => $MEM,
                     'USERNAME' => $USERNAME,
                     'PAGES' => $PAGES,
-                    'NEW_PAGES' => $NEW_PAGES,
                     'PAGES_COUNTR' => $PAGES_COUNTR,
                     'SUBTITLE' => 'Admin-Dashboard / Seitenverwaltung',
                     'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.'

@@ -185,22 +185,22 @@ function Interpret_JFIF_to_HTML( $JFIF_array, $filename )
         if ( $JFIF_array !== FALSE )
         {
                 $output .= "<H2 class=\"JFIF_Main_Heading\">Contains JPEG File Interchange Format (JFIF) Information</H2>\n";
-                $output .= "\n<table class=\"JFIF_Table\" border=1>\n";
-                $output .= "<tr class=\"JFIF_Table_Row\"><td class=\"JFIF_Caption_Cell\">JFIF version: </td><td class=\"JFIF_Value_Cell\">". sprintf( "%d.%02d", $JFIF_array['Version1'], $JFIF_array['Version2'] ) . "</td></tr>\n";
+                $output .= "\n<table class=\"\" >\n";
+                $output .= "<tr ><td class=\"\">JFIF version: </td><td class=\"\">". sprintf( "%d.%02d", $JFIF_array['Version1'], $JFIF_array['Version2'] ) . "</td></tr>\n";
                 if ( $JFIF_array['Units'] == 0 )
                 {
-                        $output .= "<tr class=\"JFIF_Table_Row\"><td class=\"JFIF_Caption_Cell\">Pixel Aspect Ratio: </td><td class=\"JFIF_Value_Cell\">" . $JFIF_array['XDensity'] ." x " . $JFIF_array['YDensity'] . "</td></tr>\n";
+                        $output .= "<tr ><td class=\"\">Pixel Aspect Ratio: </td><td class=\"\">" . $JFIF_array['XDensity'] ." x " . $JFIF_array['YDensity'] . "</td></tr>\n";
                 }
                 elseif ( $JFIF_array['Units'] == 1 )
                 {
-                        $output .= "<tr class=\"JFIF_Table_Row\"><td class=\"JFIF_Caption_Cell\">Resolution: </td><td class=\"JFIF_Value_Cell\">" . $JFIF_array['XDensity'] ." x " . $JFIF_array['YDensity'] . " pixels per inch</td></tr>\n";
+                        $output .= "<tr ><td class=\"\">Resolution: </td><td class=\"\">" . $JFIF_array['XDensity'] ." x " . $JFIF_array['YDensity'] . " pixels per inch</td></tr>\n";
                 }
                 elseif ( $JFIF_array['Units'] == 2 )
                 {
-                        $output .= "<tr class=\"JFIF_Table_Row\"><td class=\"JFIF_Caption_Cell\">Resolution: </td><td class=\"JFIF_Value_Cell\">" . $JFIF_array['XDensity'] ." x " . $JFIF_array['YDensity'] . " pixels per cm</td></tr>\n";
+                        $output .= "<tr ><td class=\"\">Resolution: </td><td class=\"\">" . $JFIF_array['XDensity'] ." x " . $JFIF_array['YDensity'] . " pixels per cm</td></tr>\n";
                 }
 
-                $output .= "<tr class=\"JFIF_Table_Row\"><td class=\"JFIF_Caption_Cell\">JFIF (uncompressed) thumbnail: </td><td class=\"JFIF_Value_Cell\">";
+                $output .= "<tr ><td class=\"\">JFIF (uncompressed) thumbnail: </td><td class=\"\">";
                 if ( ( $JFIF_array['ThumbX'] != 0 ) && ( $JFIF_array['ThumbY'] != 0 ) )
                 {
                         $output .= $JFIF_array['ThumbX'] ." x " . $JFIF_array['ThumbY'] . " pixels, Thumbnail Display Not Yet Implemented</td></tr>\n";
@@ -396,10 +396,10 @@ function Interpret_JFXX_to_HTML( $JFXX_array, $filename )
         $output = "";
         if ( $JFXX_array !== FALSE )
         {
-                $output .= "<H2 class=\"JFXX_Main_Heading\">Contains JPEG File Interchange Extension Format  (JFXX) Thumbnail</H2>\n";
+                $output .= "<H2 class=\"\">Contains JPEG File Interchange Extension Format  (JFXX) Thumbnail</H2>\n";
                 switch ( $JFXX_array['Extension_Code'] )
                 {
-                        case 0x10 :     $output .= "<p class=\"JFXX_Text\">JFXX Thumbnail is JPEG Encoded</p>\n";
+                        case 0x10 :     $output .= "<p>JFXX Thumbnail is JPEG Encoded</p>\n";
 
                                         // Change: as of version 1.11 - Changed to make thumbnail link portable across directories
                                         // Build the path of the thumbnail script and its filename parameter to put in a url
@@ -408,15 +408,15 @@ function Interpret_JFXX_to_HTML( $JFXX_array, $filename )
                                         $link_str .= get_relative_path( $filename, dirname(__FILE__) );
 
                                         // Add thumbnail link to html
-                                        $output .= "<a class=\"JFXX_Thumbnail_Link\" href=\"$link_str\"><img  class=\"JFXX_Thumbnail\" src=\"$link_str\"></a>\n";
+                                        $output .= "<a class=\"JFXX_Thumbnail_Link\" href=\"$link_str\"><img  class=\"\" src=\"$link_str\"></a>\n";
                                         break;
-                        case 0x11 :     $output .= "<p class=\"JFXX_Text\">JFXX Thumbnail is Encoded 1 byte/pixel</p>\n";
-                                        $output .= "<p class=\"JFXX_Text\">Thumbnail Display Not Implemented Yet</p>\n";
+                        case 0x11 :     $output .= "<p>JFXX Thumbnail is Encoded 1 byte/pixel</p>\n";
+                                        $output .= "<p>Thumbnail Display Not Implemented Yet</p>\n";
                                         break;
-                        case 0x13 :     $output .= "<p class=\"JFXX_Text\">JFXX Thumbnail is Encoded 3 bytes/pixel</p>\n";
-                                        $output .= "<p class=\"JFXX_Text\">Thumbnail Display Not Implemented Yet</p>\n";
+                        case 0x13 :     $output .= "<p>JFXX Thumbnail is Encoded 3 bytes/pixel</p>\n";
+                                        $output .= "<p>Thumbnail Display Not Implemented Yet</p>\n";
                                         break;
-                        default :       $output .= "<p class=\"JFXX_Text\">JFXX Thumbnail is Encoded with Unknown format</p>\n";
+                        default :       $output .= "<p>JFXX Thumbnail is Encoded with Unknown format</p>\n";
                                         break;
 
                         // TODO: Implement JFXX one and three bytes per pixel thumbnail decoding

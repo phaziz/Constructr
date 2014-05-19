@@ -12,7 +12,7 @@
 *               information. Hence it is neccessary to be able to seek to
 *               any point in the file. This causes the HTTP and FTP wrappers
 *               not to work - i.e. the EXIF functions will only work with local
-*               files.
+*               files. 
 *               To work on an internet file, copy it locally to start with:
 *
 *               $newfilename = tempnam ( $dir, "tmpexif" );
@@ -560,7 +560,7 @@ function Interpret_EXIF_to_HTML( $Exif_array, $filename )
         }
 
         // Output secondary heading
-        $output_str .= "<h3 class=\"EXIF_Secondary_Heading\">Main Image Information</h2>\n";
+        $output_str .= "<h3 class=\"\">Main Image Information</h2>\n";
 
         // Interpret the zeroth IFD to html
         $output_str .= interpret_IFD( $Exif_array[0], $filename, $Exif_array['Byte_Align'] );
@@ -570,7 +570,7 @@ function Interpret_EXIF_to_HTML( $Exif_array, $filename )
         {
                 // There is a first IFD for a thumbnail
                 // Add a heading for it to the output
-                $output_str .= "<h3 class=\"EXIF_Secondary_Heading\">Thumbnail Information</h2>\n";
+                $output_str .= "<h3 class=\"\">Thumbnail Information</h2>\n";
 
                 // Interpret the IFD to html and add it to the output
                 $output_str .= interpret_IFD( $Exif_array[1], $filename, $Exif_array['Byte_Align'] );
@@ -581,7 +581,7 @@ function Interpret_EXIF_to_HTML( $Exif_array, $filename )
         while ( array_key_exists( $i, $Exif_array ) )
         {
                 // Add a heading for the IFD
-                $output_str .= "<h3  class=\"EXIF_Secondary_Heading\">Image File Directory (IFD) $i Information</h2>\n";
+                $output_str .= "<h3  class=\"\">Image File Directory (IFD) $i Information</h2>\n";
 
                 // Interpret the IFD to html and add it to the output
                 $output_str .= interpret_IFD( $Exif_array[$i], $filename, $Exif_array['Byte_Align'] );
@@ -1986,7 +1986,7 @@ function get_Special_Tag_Text_Value( $Tag, $Tag_Definitions_Name )
 function interpret_IFD( $IFD_array, $filename )
 {
         // Create the output string with the table tag
-        $output_str = "<table class=\"EXIF_Table\" border=1>\n";
+        $output_str = "<table class=\"table\">\n";
 
         // Create an extra output string to receive any supplementary html
         // which cannot go inside the table
@@ -2005,7 +2005,7 @@ function interpret_IFD( $IFD_array, $filename )
         {
 
                 // This is an EXIF IFD but NO makernote is present - Add a message to the output
-                $extra_IFD_str .= "<h3 class=\"EXIF_Secondary_Heading\">No Makernote Present</h3>";
+                $extra_IFD_str .= "<h3 class=\"\">No Makernote Present</h3>";
         }
 
         // Cycle through each tag in the IFD
@@ -2036,7 +2036,7 @@ function interpret_IFD( $IFD_array, $filename )
                         {
                                 // This is a sub-IFD tag
                                 // Add a sub-heading for the sub-IFD
-                                $extra_IFD_str .= "<h3 class=\"EXIF_Secondary_Heading\">" . $Exif_Tag['Tag Name'] . " contents</h3>";
+                                $extra_IFD_str .= "<h3 class=\"\">" . $Exif_Tag['Tag Name'] . " contents</h3>";
 
                                 // Cycle through each sub-IFD in the chain
                                 foreach ( $Exif_Tag['Data'] as $subIFD )
@@ -2050,7 +2050,7 @@ function interpret_IFD( $IFD_array, $filename )
                         {
                                 // This is a Makernote Tag
                                 // Add a sub-heading for the Makernote
-                                $extra_IFD_str .= "<h3 class=\"EXIF_Secondary_Heading\">Maker Note Contents</h3>";
+                                $extra_IFD_str .= "<h3 class=\"\">Maker Note Contents</h3>";
 
                                 // Interpret the Makernote and add the html to the secondary output
                                 $extra_IFD_str .= Interpret_Makernote_to_HTML( $Exif_Tag, $filename );
@@ -2059,7 +2059,7 @@ function interpret_IFD( $IFD_array, $filename )
                         else if ( $Exif_Tag['Type'] == "IPTC" )
                         {
                                 // This is a IPTC/NAA Record, interpret it and output to the secondary html
-                                $extra_IFD_str .= "<h3 class=\"EXIF_Secondary_Heading\">Contains IPTC/NAA Embedded in EXIF</h3>";
+                                $extra_IFD_str .= "<h3 class=\"\">Contains IPTC/NAA Embedded in EXIF</h3>";
                                 $extra_IFD_str .=Interpret_IPTC_to_HTML( $Exif_Tag['Data'] );
                         }
                                 // Change: Check for embedded XMP as of version 1.11
@@ -2067,7 +2067,7 @@ function interpret_IFD( $IFD_array, $filename )
                         else if ( $Exif_Tag['Type'] == "XMP" )
                         {
                                 // This is a XMP Record, interpret it and output to the secondary html
-                                $extra_IFD_str .= "<h3 class=\"EXIF_Secondary_Heading\">Contains XMP Embedded in EXIF</h3>";
+                                $extra_IFD_str .= "<h3 class=\"\">Contains XMP Embedded in EXIF</h3>";
                                 $extra_IFD_str .= Interpret_XMP_to_HTML( $Exif_Tag['Data'] );
                         }
                                 // Change: Check for embedded IRB as of version 1.11
@@ -2075,19 +2075,19 @@ function interpret_IFD( $IFD_array, $filename )
                         else if ( $Exif_Tag['Type'] == "IRB" )
                         {
                                 // This is a Photoshop IRB Record, interpret it and output to the secondary html
-                                $extra_IFD_str .= "<h3 class=\"EXIF_Secondary_Heading\">Contains Photoshop IRB Embedded in EXIF</h3>";
+                                $extra_IFD_str .= "<h3 class=\"\">Contains Photoshop IRB Embedded in EXIF</h3>";
                                 $extra_IFD_str .= Interpret_IRB_to_HTML( $Exif_Tag['Data'], $filename );
                         }
                                 // Check if the tag is Numeric
                         else if ( $Exif_Tag['Type'] == "Numeric" )
                         {
                                 // Numeric Tag - Output text value as is.
-                                $output_str .= "<tr class=\"EXIF_Table_Row\"><td class=\"EXIF_Caption_Cell\">" . $Exif_Tag['Tag Name'] . "</td><td class=\"EXIF_Value_Cell\">" . $Exif_Tag['Text Value'] . "</td></tr>\n";
+                                $output_str .= "<tr class=\"\"><td class=\"\">" . $Exif_Tag['Tag Name'] . "</td><td class=\"EXIF_Value_Cell\">" . $Exif_Tag['Text Value'] . "</td></tr>\n";
                         }
                         else
                         {
                                 // Other tag - Output text as preformatted
-                                $output_str .= "<tr class=\"EXIF_Table_Row\"><td class=\"EXIF_Caption_Cell\">" . $Exif_Tag['Tag Name'] . "</td><td class=\"EXIF_Value_Cell\"><pre>" . trim( $Exif_Tag['Text Value']) . "</pre></td></tr>\n";
+                                $output_str .= "<tr class=\"\"><td class=\"\">" . $Exif_Tag['Tag Name'] . "</td><td class=\"EXIF_Value_Cell\">" . trim( $Exif_Tag['Text Value']) . "</td></tr>\n";
                         }
 
                 }
@@ -2118,14 +2118,14 @@ function interpret_IFD( $IFD_array, $filename )
                                 $link_str .= get_relative_path( $filename, dirname(__FILE__) );
 
                                 // Add thumbnail link to html
-                                $output_str .= "<tr class=\"EXIF_Table_Row\"><td class=\"EXIF_Caption_Cell\">" . $Exif_Tag['Tag Name'] . "</td><td class=\"EXIF_Value_Cell\"><a class=\"EXIF_First_IFD_Thumb_Link\" href=\"$link_str\"><img class=\"EXIF_First_IFD_Thumb\" src=\"$link_str\"></a></td></tr>\n";
+                                $output_str .= "<tr class=\"\"><td class=\"\">" . $Exif_Tag['Tag Name'] . "</td><td class=\"EXIF_Value_Cell\"><a class=\"EXIF_First_IFD_Thumb_Link\" href=\"$link_str\"><img class=\"EXIF_First_IFD_Thumb\" src=\"$link_str\"></a></td></tr>\n";
                         }
                                 // Check if this is the Makernote
                         else if ( $Exif_Tag['Type'] == "Maker Note" )
                         {
                                 // This is the makernote, but has not been decoded
                                 // Add a message to the secondary output
-                                $extra_IFD_str .= "<h3 class=\"EXIF_Secondary_Heading\">Makernote Coding Unknown</h3>\n";
+                                $extra_IFD_str .= "<h3 class=\"\">Makernote Coding Unknown</h3>\n";
                         }
                         else
                         {
@@ -2140,12 +2140,12 @@ function interpret_IFD( $IFD_array, $filename )
                                         if ( $Exif_Tag['Data Type'] == 2 )
                                         {
                                                 // This is a Ascii String field - add it preformatted to the output
-                                                $output_str .= "<tr class=\"EXIF_Table_Row\"><td class=\"EXIF_Caption_Cell\">" . $Exif_Tag['Tag Name'] . "</td><td class=\"EXIF_Value_Cell\"><pre>" . trim( $Exif_Tag['Text Value'] ) . "</pre></td></tr>\n";
+                                                $output_str .= "<tr class=\"\"><td class=\"\">" . $Exif_Tag['Tag Name'] . "</td><td class=\"EXIF_Value_Cell\">" . trim( $Exif_Tag['Text Value'] ) . "</td></tr>\n";
                                         }
                                         else
                                         {
                                                 // Not an ASCII string - add it as is to the output
-                                                $output_str .= "<tr class=\"EXIF_Table_Row\"><td class=\"EXIF_Caption_Cell\">" . $Exif_Tag['Tag Name'] . "</td><td class=\"EXIF_Value_Cell\">" . trim( $Exif_Tag['Text Value'] ) . "</td></tr>\n";
+                                                $output_str .= "<tr class=\"\"><td class=\"\">" . $Exif_Tag['Tag Name'] . "</td><td class=\"EXIF_Value_Cell\">" . trim( $Exif_Tag['Text Value'] ) . "</td></tr>\n";
                                         }
                                 }
                         }

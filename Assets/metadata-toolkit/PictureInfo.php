@@ -266,9 +266,9 @@ function Interpret_App12_Pic_Info_to_HTML( $jpeg_header_data )
         if ( $PI !== array(FALSE, FALSE) )
         {
                 // Picture Info exists - add it to the output
-                $output .= "<h2 class=\"Picture_Info_Main_Heading\">Picture Info Text</h2>\n";
-                $output .= "<p><span class=\"Picture_Info_Caption_Text\">Header: </span><span class=\"Picture_Info_Value_Text\">" . HTML_UTF8_Escape( $PI['Header'] ) . "</span></p>\n";
-                $output .= "<p class=\"Picture_Info_Caption_Text\">Picture Info Text:</p><pre class=\"Picture_Info_Value_Text\">" . HTML_UTF8_Escape( $PI['Picture Info'] ) . "</pre>\n";
+                $output .= "<h2 class=\"\">Picture Info Text</h2>\n";
+                $output .= "<p><span class=\"\">Header: </span><span class=\"\">" . HTML_UTF8_Escape( $PI['Header'] ) . "</span></p>\n";
+                $output .= "<p class=\"\">Picture Info Text:</p>" . HTML_UTF8_Escape( $PI['Picture Info'] ) . "\n";
         }
 
         // Return the result

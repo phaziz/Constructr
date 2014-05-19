@@ -1,3 +1,8 @@
+2014-05-07
+Media Detailansicht überarbeitet (metadata toolkit)
+jQuery Update
+Backend Design Update
+
 2014-04-11
 Mülleimer überarbeitet.
 Dateispeicherung überarbeitet.

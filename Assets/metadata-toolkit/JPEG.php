@@ -417,7 +417,7 @@ function Interpret_Comment_to_HTML( $jpeg_header_data )
         if ( $comment !== FALSE )
         {
                 // Comment exists - add it to the output
-                $output .= "<h2 class=\"JPEG_Comment_Main_Heading\">JPEG Comment</h2>\n";
+                $output .= "<h2 class=\"JPEG_Comment_\">JPEG Comment</h2>\n";
                 $output .= "<p class=\"JPEG_Comment_Text\">$comment</p>\n";
         }
 
@@ -524,23 +524,23 @@ function Interpret_intrinsic_values_to_HTML( $values )
         if ( $values != FALSE )
         {
                 // Write Heading
-                $OutputStr = "<h2 class=\"JPEG_Intrinsic_Main_Heading\">Intrinsic JPEG Information</h2>\n";
+                $OutputStr = "<h2 class=\"\">Intrinsic JPEG Information</h2>\n";
 
                 // Create Table
-                $OutputStr .= "<table class=\"JPEG_Intrinsic_Table\" border=1>\n";
+                $OutputStr .= "<table class=\"table\">\n";
 
                 // Put image height and width into table
-                $OutputStr .= "<tr class=\"JPEG_Intrinsic_Table_Row\"><td class=\"JPEG_Intrinsic_Caption_Cell\">Image Height</td><td class=\"JPEG_Intrinsic_Value_Cell\">" . $values['Image Height'] . " pixels</td></tr>\n";
-                $OutputStr .= "<tr class=\"JPEG_Intrinsic_Table_Row\"><td class=\"JPEG_Intrinsic_Caption_Cell\">Image Width</td><td class=\"JPEG_Intrinsic_Value_Cell\">" . $values['Image Width'] . " pixels</td></tr>\n";
+                $OutputStr .= "<tr class=\"\"><td class=\"\">Image Height</td><td class=\"\">" . $values['Image Height'] . " pixels</td></tr>\n";
+                $OutputStr .= "<tr class=\"\"><td class=\"\">Image Width</td><td class=\"\">" . $values['Image Width'] . " pixels</td></tr>\n";
 
                 // Put colour depth into table
                 if ( count( $values['Components'] ) == 1 )
                 {
-                        $OutputStr .= "<tr class=\"JPEG_Intrinsic_Table_Row\"><td class=\"JPEG_Intrinsic_Caption_Cell\">Colour Depth</td><td class=\"JPEG_Intrinsic_Value_Cell\">" . $values['Bits per Component'] . " bit Monochrome</td></tr>\n";
+                        $OutputStr .= "<tr class=\"\"><td class=\"\">Colour Depth</td><td class=\"\">" . $values['Bits per Component'] . " bit Monochrome</td></tr>\n";
                 }
                 else
                 {
-                        $OutputStr .= "<tr class=\"JPEG_Intrinsic_Table_Row\"><td class=\"JPEG_Intrinsic_Caption_Cell\">Colour Depth</td><td class=\"JPEG_Intrinsic_Value_Cell\">" . ($values['Bits per Component'] * count( $values['Components'] ) ) . " bit</td></tr>\n";
+                        $OutputStr .= "<tr class=\"\"><td class=\"\">Colour Depth</td><td class=\"\">" . ($values['Bits per Component'] * count( $values['Components'] ) ) . " bit</td></tr>\n";
                 }
 
                 // Close Table
@@ -728,10 +728,10 @@ function Generate_JPEG_APP_Segment_HTML( $jpeg_header_data )
 
 
         // Write Heading
-        $output = "<h2 class=\"JPEG_APP_Segments_Main_Heading\">Application Metadata Segments</h2>\n";
+        $output = "<h2 class=\"\">Application Metadata Segments</h2>\n";
 
         // Create table
-        $output .= "<table class=\"JPEG_APP_Segments_Table\" border=1>\n";
+        $output .= "<table class=\"table\">\n";
 
 
         // Cycle through each segment in the array
@@ -779,7 +779,7 @@ function Generate_JPEG_APP_Segment_HTML( $jpeg_header_data )
                         $seg_name = htmlentities( $seg_name );
 
                         // Output a Table row containing this APP segment
-                        $output .= "<tr class=\"JPEG_APP_Segments_Table_Row\"><td class=\"JPEG_APP_Segments_Caption_Cell\">$seg_name</td><td class=\"JPEG_APP_Segments_Type_Cell\">" . $jpeg_header['SegName'] . "</td><td  class=\"JPEG_APP_Segments_Size_Cell\" align=\"right\">" . strlen( $jpeg_header['SegData']). " bytes</td></tr>\n";
+                        $output .= "<tr class=\"\"><td class=\"\">$seg_name</td><td class=\"\">" . $jpeg_header['SegName'] . "</td><td  class=\"Size_Cell\" align=\"right\">" . strlen( $jpeg_header['SegData']). " bytes</td></tr>\n";
                 }
         }
 

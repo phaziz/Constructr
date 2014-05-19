@@ -233,8 +233,8 @@ function read_XMP_array_from_text( $xmptext )
 function write_XMP_array_to_text( $xmparray )
 {
         // Add the XMP packet header
-        // The sequence 0xEFBBBF is the UTF-8 encoded version of the Unicode “zero
-        // width non-breaking space character” (U+FEFF), which is used for detecting
+        // The sequence 0xEFBBBF is the UTF-8 encoded version of the Unicode ï¿½zero
+        // width non-breaking space characterï¿½ (U+FEFF), which is used for detecting
         // whether UTF-16 or UTF-8 is being used.
         $output_XMP_text = "<?xpacket begin='\xef\xbb\xbf' id='W5M0MpCehiHzreSzNTczkc9d'?>\n";
 
@@ -312,7 +312,7 @@ function Interpret_XMP_to_HTML( $XMP_array )
                 }
 
                 // Add heading to html output
-                $output .= "<h2 class=\"XMP_Main_Heading\">Contains Extensible Metadata Platform (XMP) / Resource Description Framework (RDF) Information</h2>\n";
+                $output .= "<h2 class=\"\">Contains Extensible Metadata Platform (XMP) / Resource Description Framework (RDF) Information</h2>\n";
 
                 // Cycle through each of the items in the RDF tree array, and process them
                 foreach ($RDF_Contents as $RDF_Item)
@@ -337,35 +337,35 @@ function Interpret_XMP_to_HTML( $XMP_array )
                                                 switch ( substr( $key,6) )
                                                 {
                                                         case "photoshop":
-                                                                $output .= "<h3 class=\"XMP_Secondary_Heading\">Photoshop RDF Segment</h3>\n";
+                                                                $output .= "<h3 class=\"\">Photoshop RDF Segment</h3>\n";
                                                                 break;
                                                         case "xapBJ":
-                                                                $output .= "<h3 class=\"XMP_Secondary_Heading\">Basic Job Ticket RDF Segment</h3>\n";
+                                                                $output .= "<h3 class=\"\">Basic Job Ticket RDF Segment</h3>\n";
                                                                 break;
                                                         case "xapMM":
-                                                                $output .= "<h3 class=\"XMP_Secondary_Heading\">Media Management RDF Segment</h3>\n";
+                                                                $output .= "<h3 class=\"\">Media Management RDF Segment</h3>\n";
                                                                 break;
                                                         case "xapRights":
-                                                                $output .= "<h3 class=\"XMP_Secondary_Heading\">Rights Management RDF Segment</h3>\n";
+                                                                $output .= "<h3 class=\"\">Rights Management RDF Segment</h3>\n";
                                                                 break;
                                                         case "dc":
-                                                                $output .= "<h3 class=\"XMP_Secondary_Heading\">Dublin Core Metadata Initiative RDF Segment</h3>\n";
+                                                                $output .= "<h3 class=\"\">Dublin Core Metadata Initiative RDF Segment</h3>\n";
                                                                 break;
                                                         case "xmp":
                                                         case "xap":
-                                                                $output .= "<h3 class=\"XMP_Secondary_Heading\">XMP Basic Segment</h3>\n";
+                                                                $output .= "<h3 class=\"\">XMP Basic Segment</h3>\n";
                                                                 break;
                                                         case "xmpTPg":
-                                                                $output .= "<h3 class=\"XMP_Secondary_Heading\">XMP Paged-Text Segment</h3>\n";
+                                                                $output .= "<h3 class=\"\">XMP Paged-Text Segment</h3>\n";
                                                                 break;
                                                         case "xmpTPg":
-                                                                $output .= "<h3 class=\"XMP_Secondary_Heading\">Adobe PDF Segment</h3>\n";
+                                                                $output .= "<h3 class=\"\">Adobe PDF Segment</h3>\n";
                                                                 break;
                                                         case "tiff":
-                                                                $output .= "<h3 class=\"XMP_Secondary_Heading\">XMP - embedded TIFF Segment</h3>\n";
+                                                                $output .= "<h3 class=\"\">XMP - embedded TIFF Segment</h3>\n";
                                                                 break;
                                                         case "exif":
-                                                                $output .= "<h3 class=\"XMP_Secondary_Heading\">XMP - embedded EXIF Segment</h3>\n";
+                                                                $output .= "<h3 class=\"\">XMP - embedded EXIF Segment</h3>\n";
                                                                 break;
                                                         case "xapGImg":  // Sub Category - Do nothing
                                                                 break;
@@ -381,7 +381,7 @@ function Interpret_XMP_to_HTML( $XMP_array )
                                                                 break;
 
                                                         default:
-                                                                $output .= "<h3 class=\"XMP_Secondary_Heading\">Unknown RDF Segment '" . substr( $key,6) . "'</h3>\n";
+                                                                $output .= "<h3 class=\"\">Unknown RDF Segment '" . substr( $key,6) . "'</h3>\n";
                                                                 break;
                                                 }
 
@@ -391,7 +391,7 @@ function Interpret_XMP_to_HTML( $XMP_array )
                                 }
 
                                 // Add the start of the table to the HTML output
-                                $output .= "\n<table  class=\"XMP_Table\" border=1>\n";
+                                $output .= "\n<table  class=\"\">\n";
 
 
                                 // Check if this element has sub-items
@@ -417,7 +417,7 @@ function Interpret_XMP_to_HTML( $XMP_array )
                                                         $value_str = "&nbsp;";
                                                 }
                                                 // Add the table row to the output html
-                                                $output .= "<tr class=\"XMP_Table_Row\"><td  class=\"XMP_Caption_Cell\">" . $tag_caption . ":</td><td  class=\"XMP_Value_Cell\">" . $value_str . "</td></tr>\n";
+                                                $output .= "<tr class=\"\"><td  class=\"\">" . $tag_caption . ":</td><td  class=\"XMP_Value_Cell\">" . $value_str . "</td></tr>\n";
                                         }
                                 }
 

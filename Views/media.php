@@ -240,6 +240,26 @@
 
             $MEDIA_EXIF = '';    
 
+            if($FILE_TYPE == '.jpg' || $FILE_TYPE == '.jepg' || $FILE_TYPE == '.JPG' || $FILE_TYPE == '.JPEG')
+            {
+
+            $jpeg_header_data = get_jpeg_header_data('./' . $DETAILS['media_file']);
+
+                if($jpeg_header_data && $jpeg_header_data != '')
+                {
+                    $METADATA = strip_tags(get_XMP_text($jpeg_header_data));
+                    if($METADATA && $METADATA != '')
+                    {
+                        $METADATA = explode("     ",$METADATA);
+                        $METADATA = array_filter($METADATA, 'strlen');
+                        $MEDIA_EXIF .= '###' . $METADATA[1] . '###';
+                        $MEDIA_EXIF .= '###' . utf8_decode($METADATA[2]) . '###';
+                        $MEDIA_EXIF .= '###' . utf8_decode($METADATA[3]) . '###';
+                        $MEDIA_EXIF .= '###' . utf8_decode($METADATA[4]) . '###';
+                    }                                                
+                }
+            }
+
             if($FILEUPLOAD == true)
             {
                 try

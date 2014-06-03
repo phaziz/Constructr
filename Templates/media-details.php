@@ -57,26 +57,49 @@
                                     <h2>Detailansicht <?php echo _BASE_URL . '/' . $DETAILS['media_file']; ?> | <a href="<?php echo _BASE_URL . '/constructr/media/' ?>" class="tt" data-toggle="tooltip" data-placement="top" title="Zur&uuml;ck zur &Uuml;bersicht">zur&uuml;ck</a></h2>
                                     <br><br>
                                         <?php
-
                                             if($DETAILS)
                                             {
                                                 echo '<center><img src="' . _BASE_URL . '/' . $DETAILS['media_file'] . '" style="max-height:100%;max-width:100%"></center>';
                                                 echo '<br><br>';
                                                 $jpeg_header_data = get_jpeg_header_data('./' . $DETAILS['media_file']);
-                                                echo Interpret_EXIF_to_HTML(get_EXIF_JPEG('./' . $DETAILS['media_file']),'./' . $DETAILS['media_file']);
-                                                echo Interpret_IRB_to_HTML(get_Photoshop_IRB(get_jpeg_header_data('./' . $DETAILS['media_file'])),'./' . $DETAILS['media_file']);
-                                                echo Generate_JPEG_APP_Segment_HTML($jpeg_header_data);
-                                                echo Interpret_intrinsic_values_to_HTML(get_jpeg_intrinsic_values($jpeg_header_data));
-                                                echo Interpret_Comment_to_HTML($jpeg_header_data);
-                                                echo Interpret_JFIF_to_HTML(get_JFIF($jpeg_header_data),'./' . $DETAILS['media_file']);
-                                                echo Interpret_JFXX_to_HTML(get_JFXX($jpeg_header_data),'./' . $DETAILS['media_file']);
-                                                echo Interpret_App12_Pic_Info_to_HTML($jpeg_header_data);
-                                                echo Interpret_EXIF_to_HTML(get_EXIF_JPEG('./' . $DETAILS['media_file']),'./' . $DETAILS['media_file']);
-                                                echo Interpret_XMP_to_HTML(read_XMP_array_from_text(get_XMP_text($jpeg_header_data)));
-                                                echo Interpret_IRB_to_HTML(get_Photoshop_IRB( $jpeg_header_data),'./' . $DETAILS['media_file']);
-                                                echo Interpret_EXIF_to_HTML(get_Meta_JPEG('./' . $DETAILS['media_file']),'./' . $DETAILS['media_file']);
-                                            }
 
+                                                $FILE_TYPE = strrchr($DETAILS['media_file'],'.');
+
+                                                if($FILE_TYPE == '.jpg' || $FILE_TYPE == '.jepg' || $FILE_TYPE == '.JPG' || $FILE_TYPE == '.JPEG')
+                                                {
+
+                                                    $jpeg_header_data = get_jpeg_header_data('./' . $DETAILS['media_file']);
+
+                                                    if($jpeg_header_data && $jpeg_header_data != '')
+                                                    {
+                                                        $METADATA = strip_tags(get_XMP_text($jpeg_header_data));
+                                                        if($METADATA && $METADATA != '')
+                                                        {
+                                                            $METADATA = explode("     ",$METADATA);
+                                                            $METADATA = array_filter($METADATA, 'strlen');
+                                                            $MEDIA_EXIF .= '###' . $METADATA[1] . '###';
+                                                            $MEDIA_EXIF .= '###' . utf8_decode($METADATA[2]) . '###';
+                                                            $MEDIA_EXIF .= '###' . utf8_decode($METADATA[3]) . '###';
+                                                            $MEDIA_EXIF .= '###' . utf8_decode($METADATA[4]) . '###';
+                                                        }                                                
+                                                    }
+                                                }
+
+                                                if($jpeg_header_data && $jpeg_header_data != '')
+                                                {
+                                                    $METADATA = strip_tags(get_XMP_text($jpeg_header_data));
+                                                    
+                                                    if($METADATA && $METADATA != '')
+                                                    {
+                                                        $METADATA = explode("     ",$METADATA);
+                                                        $METADATA = array_filter($METADATA, 'strlen');
+                                                        echo '<strong>Copyright Inhaber:</strong><br>' . $METADATA[1] . '<br><br>';
+                                                        echo '<strong>Copyright:</strong><br>' . utf8_decode($METADATA[2]) . '<br><br>';
+                                                        echo '<strong>Adresse:</strong><br>' . utf8_decode($METADATA[3]) . '<br><br>';
+                                                        echo '<strong>Keywords:</strong><br>' . utf8_decode($METADATA[4]) . '<br>';
+                                                    }                                                
+                                                }
+                                            }
                                         ?>
                                 </div><!-- // EOF JUMBOTRON -->
                             </div><!-- // EOF COL-... -->

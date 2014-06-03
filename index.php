@@ -81,7 +81,7 @@
         new \Slim\Middleware\SessionCookie(
             array
             (
-                'secret' => 'h5/823565$%4jc/)$3kfè4()487HD3d',
+                'secret' => 'h5/823!65$%4jc/)$3_fè4()480HD3d',
                 'cipher' => MCRYPT_RIJNDAEL_256,
                 'cipher_mode' => MCRYPT_MODE_CBC,
                 'name' => 'app-sssession',
@@ -101,7 +101,9 @@
 
     if ($FINDR === false)
     {
-
+        $view = $constructr -> view();
+        $view -> setTemplatesDirectory('./Website-Template');        
+        
         if(_EXT_WWW != '')
         {
             $constructr -> get('/', function () use ($constructr)

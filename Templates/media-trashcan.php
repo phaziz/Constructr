@@ -110,7 +110,7 @@
                                                             }
                                                             else
                                                             {
-                                                                echo '<tr><td colspan="2">Leine Dateien im M&uuml;lleimer gefunden!</td></tr>';
+                                                                echo '<tr><td colspan="2">Keine Dateien im M&uuml;lleimer gefunden!</td></tr>';
                                                             };
                                                         ?>
                                                     </tbody>
@@ -119,7 +119,7 @@
                                             }
                                             else
                                             {
-                                                echo '<p>Leider Dateien im M&uuml;lleimer gefunden!</p>';
+                                                echo '<p>Keine Dateien im M&uuml;lleimer gefunden!</p>';
                                             }
                                         ?>
                                     </div>

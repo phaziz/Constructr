@@ -12,7 +12,7 @@
     define('_BASE_URL','http://' . $_SERVER['HTTP_HOST'] . '');
 
     // VERSIONSNUMMER CONSTRUCTR CMS
-    define('_VERSION','20140408');
+    define('_VERSION','20140603');
 
     // VERSCHLÜSSELUNGS SALZ
     define('_SALT','$2y$07$R.gJb2U2N.FmZ4hPp1y2CN$');

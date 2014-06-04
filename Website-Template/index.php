@@ -40,20 +40,67 @@
             <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
             <style>
                 html,body {height:100%;width:100%;}img{border:0}a:link,a:active,a:visited,a:hover{color:#fff!important;text-decoration: none;}.vert-text {display:table-cell;vertical-align:middle;text-align:center;}.vert-text h1 {padding:0;margin:0;font-size:4.5em;font-weight:200;color:#fff;font-style:italic;}.header {display:table;height:100%;width:100%;position:relative;background:url(http://static_files.phaziz.com/tigerturtle.jpg) no-repeat center center fixed; -webkit-background-size:cover;-moz-background-size:cover;-o-background-size:cover;background-size:cover;}.header h1{color:rgb(255,255,255);font-weight:200;}.header h1 em{color:#ff0035;font-weight:100;}.header h3{color:rgb(255,255,255);font-weight:100;}.header h3 em{color:#ff0035;}.intro {padding:50px 0;}.callout {color:#ffffff;display:table;width:100%;background:url(http://static_files.phaziz.com/wolken.jpg) no-repeat center center fixed; -webkit-background-size:cover;-moz-background-size:cover;-o-background-size:cover;background-size:cover;}.shining {color:#ffffff;display:table;width:100%;background:url(http://static_files.phaziz.com/sun.jpg) no-repeat center center fixed; -webkit-background-size:cover;-moz-background-size:cover;-o-background-size:cover;background-size:cover;}.background {color:#ffffff;display:table;width:100%;background:url(http://static_files.phaziz.com/background.jpg) no-repeat center center fixed; -webkit-background-size:cover;-moz-background-size:cover;-o-background-size:cover;background-size:cover;}@media (max-width:768px) { .header {background:url(http://static_files.phaziz.com/tigerturtle.jpg) no-repeat center center scroll; }.callout {background:url(http://static_files.phaziz.com/wolken.jpg) no-repeat center center scroll; }}p.lead{margin:0;font-size:1.5em;color:rgb(0,0,0);font-weight:100;background:rgb(255,255,255);}.container{color:rgb(0,0,0);background:transparent;}footer{background:transparent;font-size:0.80em;}.white{color:rgb(255,255,255);font-weight:100;}h3{font-weight:100;}.scroller{font-size:2.00em;}.scroller:hover{color:#ff0035;font-size:2.00em;}a.more:link,a.more:active,a.more:visited,a.more:hover{color:#ff0035!important;}
+                a:link,a:active,a:visited{
+                    color: #0000ff !important;
+                }
             </style>
         </head>
         <body>
 
             <?php
+                // NAVIGATION UL...LI... START
+                if($PAGES)
+                {
+                    $level = -1;
+                    $html = '';
 
+                    foreach ($PAGES as $PAGE)
+                    {
+                        if($PAGE['pages_lft'] == 1)
+                        {
+                            $PAGE['pages_level'] = ($PAGE['pages_level'] + 1);
+                        }
+
+                        if($PAGE['pages_level'] < $level)
+                        {
+                            $diff = $level - $PAGE['pages_level'];
+                            $html .= '</li>';
+                            $html .= str_repeat('</ul></li>', $diff);
+                        }
+
+                        if($PAGE['pages_level'] > $level)
+                        {
+                            $html .= '<ul>';
+                        }
+            
+                        if($PAGE['pages_level'] == $level)
+                            $html .= '</li>';
+                            if($PAGE['pages_lft'] == 1)
+                            {
+                                $html .= '<li><a href="' . _BASE_URL . '/">' . $PAGE['pages_name'] . '</a>';    
+                            }
+                            else
+                            {
+                                $html .= '<li><a href="' . _BASE_URL . '/' . $PAGE['pages_url'] . '/">' . $PAGE['pages_name'] . '</a>';
+                            }
+                            $level = $PAGE['pages_level'];
+                    }
+            
+                    if ($level >= 0) $html .= str_repeat('</li></ul>', $level);
+            
+                    echo $html;
+                }
+                // NAVIGATION UL...LI... ENDE
+
+                // PAGE CONTENT... START
                 if($CONTENT)
-                {                    
+                {
                     foreach($CONTENT as $CONTENT)
                     {
                         echo $CONTENT['content_content'];
                     }
                 }
-
+                // PAGE CONTENT... END
             ?>
 
             <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>

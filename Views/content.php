@@ -302,7 +302,6 @@
                     $STMT -> bindParam(':CONTENT_ACTIVE',$CONTENT_ACTIVE,PDO::PARAM_INT);
                     $STMT -> execute();
 
-                    // CACHE-FILE schreiben
                     if(_CREATE_STATIC == true)
                     {
                         $PAGE_CONTENT = $DBCON -> prepare('SELECT * FROM constructr_pages WHERE pages_id = :PAGE_ID LIMIT 1;');
@@ -314,20 +313,104 @@
                         );
 
                         $PAGE_CONTENT = $PAGE_CONTENT -> fetch();
+                        $TARGET_DIR = $PAGE_CONTENT['pages_url'];
+                        $BASE_DIR = _STATIC_DIR;
+                        $DIRS = explode('/',$TARGET_DIR);
+                        $TMP_DIR = '';
+                        $ACT_DIR = '';
+
+                        if($PAGE_CONTENT['pages_lft'] != 1)
+                        {
+                            foreach($DIRS as $DIR)
+                            {
+                                if($TMP_DIR != '')
+                                {
+                                    $ACT_DIR =  $BASE_DIR . '/' . $TMP_DIR . '/' . $DIR;
+                                    $TMP_DIR = $TMP_DIR .'/'. $DIR;
+    
+                                    if(!is_dir($ACT_DIR))
+                                    {
+                                        mkdir($ACT_DIR,0777,false);
+                                    }
+                                }
+                                else
+                                {
+                                    $ACT_DIR = $BASE_DIR . '/' . $DIR;
+                                    $TMP_DIR = $DIR;
+
+                                    if(!is_dir($ACT_DIR))
+                                    {
+                                        @mkdir($ACT_DIR,0777,false);
+                                    }
+                                }
+                            }                            
+                        }
 
                         if(count($PAGE_CONTENT) != 0 && count($PAGE_CONTENT != ''))
                         {
+                            $YEP = false;
+
+                            try
+                            {
+                                $_SERVE_STATIC = $DBCON -> query('SELECT * FROM constructr_config WHERE constructr_config_expression = "_SERVE_STATIC" LIMIT 1;');
+                                $_SERVE_STATIC = $_SERVE_STATIC -> fetch();
+                                $_SERVE_STATIC = $_SERVE_STATIC['constructr_config_value'];
+                            }
+                            catch (PDOException $e)
+                            {
+                                $constructr -> getLog() -> error('ConstructrConfig error: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
+                                die();
+                            }
+
+                            if($_SERVE_STATIC == "true")
+                            {
+                                $YEP = true;
+                                try
+                                {
+                                    $UPD1 = $DBCON -> prepare('UPDATE constructr_config SET constructr_config_value = "false" WHERE constructr_config_expression = "_SERVE_STATIC" LIMIT 1;');
+                                    $UPD1 -> execute();
+                                }
+                                catch (PDOException $e)
+                                {
+                                    $constructr -> getLog() -> error('ConstructrConfig error: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
+                                    die();
+                                }
+                            }
+
                             $_HTML_CONTENT = file_get_contents(_BASE_URL . '/' . $PAGE_CONTENT['pages_url']);
+                            $_HTML_CONTENT = $_HTML_CONTENT . "\n<!-- ConstructrCMS generated static-file " . date('d.m.Y, H:i:s') . " -->";
+
+                            if($YEP == true)
+                            {
+                                try
+                                {
+                                    $UPD1 = $DBCON -> prepare('UPDATE constructr_config SET constructr_config_value = "true" WHERE constructr_config_expression = "_SERVE_STATIC" LIMIT 1;');
+                                    $UPD1 -> execute();
+                                }
+                                catch (PDOException $e)
+                                {
+                                    $constructr -> getLog() -> error('ConstructrConfig error: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
+                                    die();
+                                }
+                            }
 
                             if($_HTML_CONTENT != '')
                             {
-                                $PHYSICAL_FILE = fopen('./Static/' . str_replace('/','_',_BASE_URL . '/' . $PAGE_CONTENT['pages_url']) . '.html',"w+");
-                                fwrite($PHYSICAL_FILE, $_HTML_CONTENT);
-                                fclose($PHYSICAL_FILE);
+                                if($PAGE_CONTENT['pages_lft'] == 1)
+                                {
+                                    $PHYSICAL_FILE = fopen($BASE_DIR . '/' . 'index.html',"w+");
+                                    fwrite($PHYSICAL_FILE, $_HTML_CONTENT);
+                                    fclose($PHYSICAL_FILE);
+                                }
+                                else
+                                {
+                                    $PHYSICAL_FILE = fopen($ACT_DIR . '/' . 'index.html',"w+");
+                                    fwrite($PHYSICAL_FILE, $_HTML_CONTENT);
+                                    fclose($PHYSICAL_FILE);
+                                }
                             }
                         }
                     }
-                    // CACHE-FILE schreiben
 
                     $constructr -> redirect(_BASE_URL . '/constructr/content/' . $PAGE_ID . '/?res=create-content-true');
                     die();
@@ -522,7 +605,6 @@
                         )
                     );
 
-                    // CACHE-FILE schreiben
                     if(_CREATE_STATIC == true)
                     {
                         $PAGE_CONTENT = $DBCON -> prepare('SELECT * FROM constructr_pages WHERE pages_id = :PAGE_ID LIMIT 1;');
@@ -534,20 +616,105 @@
                         );
 
                         $PAGE_CONTENT = $PAGE_CONTENT -> fetch();
+                        $TARGET_DIR = $PAGE_CONTENT['pages_url'];
+                        $BASE_DIR = _STATIC_DIR;
+                        $DIRS = explode('/',$TARGET_DIR);
+                        $TMP_DIR = '';
+                        $ACT_DIR = '';
+
+                        if($PAGE_CONTENT['pages_lft'] != 1)
+                        {
+                            foreach($DIRS as $DIR)
+                            {
+                                if($TMP_DIR != '')
+                                {
+                                    $ACT_DIR =  $BASE_DIR . '/' . $TMP_DIR . '/' . $DIR;
+                                    $TMP_DIR = $TMP_DIR .'/'. $DIR;
+    
+                                    if(!is_dir($ACT_DIR))
+                                    {
+                                        mkdir($ACT_DIR,0777,false);
+                                    }
+                                }
+                                else
+                                {
+                                    $ACT_DIR = $BASE_DIR . '/' . $DIR;
+                                    $TMP_DIR = $DIR;
+
+                                    if(!is_dir($ACT_DIR))
+                                    {
+                                        @mkdir($ACT_DIR,0777,false);
+                                    }
+                                }
+                            }                            
+                        }
 
                         if(count($PAGE_CONTENT) != 0 && count($PAGE_CONTENT != ''))
                         {
+                            $YEP = false;
+
+                            try
+                            {
+                                $_SERVE_STATIC = $DBCON -> query('SELECT * FROM constructr_config WHERE constructr_config_expression = "_SERVE_STATIC" LIMIT 1;');
+                                $_SERVE_STATIC = $_SERVE_STATIC -> fetch();
+                                $_SERVE_STATIC = $_SERVE_STATIC['constructr_config_value'];
+                            }
+                            catch (PDOException $e)
+                            {
+                                $constructr -> getLog() -> error('ConstructrConfig error: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
+                                die();
+                            }
+
+                            if($_SERVE_STATIC == "true")
+                            {
+                                $YEP = true;
+
+                                try
+                                {
+                                    $UPD1 = $DBCON -> prepare('UPDATE constructr_config SET constructr_config_value = "false" WHERE constructr_config_expression = "_SERVE_STATIC" LIMIT 1;');
+                                    $UPD1 -> execute();
+                                }
+                                catch (PDOException $e)
+                                {
+                                    $constructr -> getLog() -> error('ConstructrConfig error: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
+                                    die();
+                                }
+                            }
+
                             $_HTML_CONTENT = file_get_contents(_BASE_URL . '/' . $PAGE_CONTENT['pages_url']);
+                            $_HTML_CONTENT = $_HTML_CONTENT . "\n<!-- ConstructrCMS generated static-file " . date('d.m.Y, H:i:s') . " -->";
+
+                            if($YEP == true)
+                            {
+                                try
+                                {
+                                    $UPD1 = $DBCON -> prepare('UPDATE constructr_config SET constructr_config_value = "true" WHERE constructr_config_expression = "_SERVE_STATIC" LIMIT 1;');
+                                    $UPD1 -> execute();
+                                }
+                                catch (PDOException $e)
+                                {
+                                    $constructr -> getLog() -> error('ConstructrConfig error: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
+                                    die();
+                                }
+                            }
 
                             if($_HTML_CONTENT != '')
                             {
-                                $PHYSICAL_FILE = fopen('./Static/' . str_replace('/','_',_BASE_URL . '/' . $PAGE_CONTENT['pages_url']) . '.html',"w+");
-                                fwrite($PHYSICAL_FILE, $_HTML_CONTENT);
-                                fclose($PHYSICAL_FILE);
+                                if($PAGE_CONTENT['pages_lft'] == 1)
+                                {
+                                    $PHYSICAL_FILE = fopen($BASE_DIR . '/' . 'index.html',"w+");
+                                    fwrite($PHYSICAL_FILE, $_HTML_CONTENT);
+                                    fclose($PHYSICAL_FILE);
+                                }
+                                else
+                                {
+                                    $PHYSICAL_FILE = fopen($ACT_DIR . '/' . 'index.html',"w+");
+                                    fwrite($PHYSICAL_FILE, $_HTML_CONTENT);
+                                    fclose($PHYSICAL_FILE);
+                                }
                             }
                         }
                     }
-                    // CACHE-FILE schreiben
 
                     $constructr -> redirect(_BASE_URL . '/constructr/content/' . $PAGE_ID . '/?res=edit-content-true');
                     die();

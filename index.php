@@ -11,7 +11,7 @@
         DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
         TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
         0. YOU JUST DO WHAT THE FUCK YOU WANT TO MIT-LICENSE-STYLE!
-        
+
         +++ Visit http://phaziz.com +++
     ***************************************************************************
     */
@@ -33,21 +33,14 @@
 
     \Slim\Slim::registerAutoloader();
 
-    $HOSTNAME = "";
-    $DATABASE = "";
-    $USERNAME = "";
-    $PASSWORD = "";
-
     try
     {
-        $DBCON = new PDO('mysql:host=' . $HOSTNAME . ';dbname=' . $DATABASE,$USERNAME,$PASSWORD,
-            array
-            (
-                PDO::ATTR_PERSISTENT => true
-            )
-        );
-        
+        $DBCON = new PDO('mysql:host=' . $HOSTNAME . ';dbname=' . $DATABASE,$USERNAME,$PASSWORD,array(PDO::ATTR_PERSISTENT => true));
         $DBCON -> setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        
+        $_SERVE_STATIC = $DBCON -> query('SELECT constructr_config_value FROM constructr_config WHERE constructr_config_expression = "_SERVE_STATIC" LIMIT 1;');
+        $_SERVE_STATIC = $_SERVE_STATIC -> fetch();
+        $_SERVE_STATIC = $_SERVE_STATIC['constructr_config_value'];
     }
     catch (PDOException $e)
     {
@@ -99,16 +92,36 @@
     $REQUEST = $constructr -> request -> getPath();
     $FINDR = strpos($REQUEST, 'constructr');
 
-    if ($FINDR === false)
+    if($FINDR === false)
     {
         $view = $constructr -> view();
         $view -> setTemplatesDirectory('./Website-Template');        
-        
+
         if(_EXT_WWW != '')
         {
             $constructr -> get('/', function () use ($constructr)
                 {
-                    $constructr -> redirect(_BASE_URL . '/Web/index.php');
+                    $constructr -> redirect(_BASE_URL . '/Web/index.php',301);
+                    die();        
+                }
+            );
+        }
+
+        if($_SERVE_STATIC == "true")
+        {
+            $constructr -> get('(:ROUTE+)', function ($ROUTE) use ($constructr)
+                {
+                    $URL = '';
+
+                    foreach($ROUTE as $ROUTE)
+                    {
+                        $URL .= '/' . $ROUTE;
+                    }
+
+                    $URL = str_replace('//','/',$URL);
+                    $STATIC_DIR = str_replace('./','/',_STATIC_DIR);
+                    $URL = _BASE_URL . $STATIC_DIR . $URL . 'index.html';
+                    $constructr -> redirect($URL,301);
                     die();        
                 }
             );
@@ -150,6 +163,7 @@
                         GROUP BY n.pages_id
                         ORDER BY n.pages_lft;
                     ');
+
                     $PAGES = $PAGES -> fetchAll();
                 }
                 catch (PDOException $e)

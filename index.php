@@ -16,9 +16,6 @@
     ***************************************************************************
     */
 
-    session_cache_limiter(false);
-    session_start();
-
     // Your main config-file - edit for your needs :)
     require_once('./Config/constructr.conf.php');
 
@@ -97,16 +94,6 @@
         $view = $constructr -> view();
         $view -> setTemplatesDirectory('./Website-Template');        
 
-        if(_EXT_WWW != '')
-        {
-            $constructr -> get('/', function () use ($constructr)
-                {
-                    $constructr -> redirect(_BASE_URL . '/Web/index.php',301);
-                    die();        
-                }
-            );
-        }
-
         if($_SERVE_STATIC == "true")
         {
             $constructr -> get('(:ROUTE+)', function ($ROUTE) use ($constructr)
@@ -120,11 +107,26 @@
 
                     $URL = str_replace('//','/',$URL);
                     $STATIC_DIR = str_replace('./','/',_STATIC_DIR);
-                    $URL = _BASE_URL . $STATIC_DIR . $URL . 'index.html';
+                    $URL = _BASE_URL . $STATIC_DIR . $URL . 'index.php';
+                    $constructr -> getLog() -> info('ConstructrCMS serves static ' . date('d.m.Y, H:i:s') . ':' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                     $constructr -> redirect($URL,301);
+                }
+            );
+            
+            $constructr -> run();
+            die();
+        }
+
+        if(_EXT_WWW != '')
+        {
+            $constructr -> get('(:ROUTE+)', function () use ($constructr)
+                {
+                    $constructr -> redirect(_BASE_URL . '/Web/index.php',301);
                     die();        
                 }
             );
+            
+            $constructr -> run();
         }
 
         $START = microtime(true);
@@ -306,5 +308,6 @@
         require_once './Views/image-test.php';
 
         $constructr -> run();
-        $DBCON = null;
     }
+    
+    $DBCON = null;

@@ -398,13 +398,13 @@
                             {
                                 if($PAGE_CONTENT['pages_lft'] == 1)
                                 {
-                                    $PHYSICAL_FILE = fopen($BASE_DIR . '/' . 'index.html',"w+");
+                                    $PHYSICAL_FILE = fopen($BASE_DIR . '/' . 'index.php',"w+");
                                     fwrite($PHYSICAL_FILE, $_HTML_CONTENT);
                                     fclose($PHYSICAL_FILE);
                                 }
                                 else
                                 {
-                                    $PHYSICAL_FILE = fopen($ACT_DIR . '/' . 'index.html',"w+");
+                                    $PHYSICAL_FILE = fopen($ACT_DIR . '/' . 'index.php',"w+");
                                     fwrite($PHYSICAL_FILE, $_HTML_CONTENT);
                                     fclose($PHYSICAL_FILE);
                                 }
@@ -702,13 +702,13 @@
                             {
                                 if($PAGE_CONTENT['pages_lft'] == 1)
                                 {
-                                    $PHYSICAL_FILE = fopen($BASE_DIR . '/' . 'index.html',"w+");
+                                    $PHYSICAL_FILE = fopen($BASE_DIR . '/' . 'index.php',"w+");
                                     fwrite($PHYSICAL_FILE, $_HTML_CONTENT);
                                     fclose($PHYSICAL_FILE);
                                 }
                                 else
                                 {
-                                    $PHYSICAL_FILE = fopen($ACT_DIR . '/' . 'index.html',"w+");
+                                    $PHYSICAL_FILE = fopen($ACT_DIR . '/' . 'index.php',"w+");
                                     fwrite($PHYSICAL_FILE, $_HTML_CONTENT);
                                     fclose($PHYSICAL_FILE);
                                 }

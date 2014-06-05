@@ -304,8 +304,8 @@
         require_once './Views/admin.php';
         require_once './Views/pages.php';
         require_once './Views/content.php';
+        require_once './Views/config.php';
         require_once './Views/media.php';
-        require_once './Views/image-test.php';
 
         $constructr -> run();
     }

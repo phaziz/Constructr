@@ -26,16 +26,17 @@
                             ':CBR_VALUE' => 1
                         )
                     );
-    
+
                     $RIGHTS_COUNTR = $RIGHT_CHECKER -> rowCount();
-                    
+
                     if($RIGHTS_COUNTR != 1)
                     {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Error ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                         $constructr -> redirect(_BASE_URL . '/constructr/?no-rights=true');
                         die();
                     }
-                    else {
+                    else
+                    {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                     }
                 }
@@ -134,7 +135,8 @@
                         $constructr -> redirect(_BASE_URL . '/constructr/?no-rights=true');
                         die();
                     }
-                    else {
+                    else
+                    {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                     }
                 }
@@ -209,7 +211,8 @@
                         $constructr -> redirect(_BASE_URL . '/constructr/?no-rights=true');
                         die();
                     }
-                    else {
+                    else
+                    {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                     }
                 }
@@ -413,7 +416,8 @@
                         $constructr -> redirect(_BASE_URL . '/constructr/?no-rights=true');
                         die();
                     }
-                    else {
+                    else
+                    {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                     }
                 }
@@ -486,7 +490,8 @@
                         $constructr -> redirect(_BASE_URL . '/constructr/?no-rights=true');
                         die();
                     }
-                    else {
+                    else
+                    {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                     }
                 }
@@ -672,7 +677,8 @@
                         $constructr -> redirect(_BASE_URL . '/constructr/?no-rights=true');
                         die();
                     }
-                    else {
+                    else
+                    {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                     }
                 }
@@ -763,7 +769,8 @@
                         $constructr -> redirect(_BASE_URL . '/constructr/?no-rights=true');
                         die();
                     }
-                    else {
+                    else
+                    {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                     }
                 }
@@ -893,7 +900,8 @@
                         $constructr -> redirect(_BASE_URL . '/constructr/?no-rights=true');
                         die();
                     }
-                    else {
+                    else
+                    {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                     }
                 }
@@ -979,7 +987,8 @@
                         $constructr -> redirect(_BASE_URL . '/constructr/?no-rights=true');
                         die();
                     }
-                    else {
+                    else
+                    {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                     }
                 }
@@ -1008,7 +1017,8 @@
                     $UPDATE_PAGES = $DBCON -> prepare('UPDATE constructr_pages SET pages_active = :PAGE_ACTIVE WHERE pages_id = :PAGE_ID LIMIT 1;');
 
                     $UPDATE_PAGES -> execute(
-                        array(
+                        array
+                        (
                             ':PAGE_ACTIVE' => 0,
                             ':PAGE_ID' => $PAGE_ID
                         )
@@ -1065,7 +1075,8 @@
                         $constructr -> redirect(_BASE_URL . '/constructr/?no-rights=true');
                         die();
                     }
-                    else {
+                    else
+                    {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                     }
                 }
@@ -1254,7 +1265,8 @@
                         $constructr -> redirect(_BASE_URL . '/constructr/?no-rights=true');
                         die();
                     }
-                    else {
+                    else
+                    {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                     }
                 }
@@ -1280,9 +1292,7 @@
             {
                 try
                 {
-                    $CONTENT = $DBCON -> prepare('
-                        SELECT * FROM constructr_content WHERE content_page_id = :PAGE_ID LIMIT 1;
-                    ');
+                    $CONTENT = $DBCON -> prepare('SELECT * FROM constructr_content WHERE content_page_id = :PAGE_ID LIMIT 1;');
 
                     $CONTENT -> execute(
                         array
@@ -1421,7 +1431,8 @@
                         $constructr -> redirect(_BASE_URL . '/constructr/?no-rights=true');
                         die();
                     }
-                    else {
+                    else
+                    {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                     }
                 }

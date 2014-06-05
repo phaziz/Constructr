@@ -37,7 +37,7 @@
                             <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
                             <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
                                 <br>
-                                <p><small><a href="<?php echo _BASE_URL ?>/constructr/">Dashboard</a> <span class="glyphicon glyphicon-chevron-right"></span> <a href="<?php echo _BASE_URL ?>/constructr/pages/">Seitenverwaltung - &Uuml;bersicht</a> <span class="glyphicon glyphicon-chevron-right"></span></small></p>
+                                <p><small><a href="<?php echo _BASE_URL ?>/constructr/">Dashboard</a> <span class="glyphicon glyphicon-chevron-right"></span> <a href="<?php echo _BASE_URL ?>/constructr/config/">Systemkonfiguration</a> <span class="glyphicon glyphicon-chevron-right"></span></small></p>
                             </div><!-- // EOF COL-... -->
                             <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
                         </div><!-- // EOF ROW -->
@@ -45,7 +45,7 @@
                             <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
                             <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
                                 <div class="jumbotron">
-                                    <h1><?php echo $SUBTITLE; ?>: <strong><?php echo $PAGE_NAME['pages_name']; ?></strong></h1>
+                                    <h1><?php echo $SUBTITLE; ?></h1>
                                 </div><!-- // EOF JUMBOTRON -->
                             </div><!-- // EOF COL-... -->
                             <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
@@ -54,37 +54,61 @@
                             <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
                             <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
                                 <div class="jumbotron">
-                                    <h2>Inhalt auf Seite <strong><?php echo $PAGE_NAME['pages_name']; ?></strong> bearbeiten</h2>
+                                    <h2>Seite bearbeiten</h2>
                                     <br><br>
                                     <?php
-                                    
-                                        if($CONTENT)
+                                        if($PAGE)
                                         {
                                             ?>
                                                 <form role="form" name="new_page_form" id="new_page_form" action="<?php echo $FORM_ACTION; ?>" method="<?php echo $FORM_METHOD; ?>" enctype="<?php echo $FORM_ENCTYPE; ?>" class="form-horizontal">
-                                                    <input type="hidden" name="page_id" value="<?php echo $CONTENT['content_page_id']; ?>">
+                                                    <input type="hidden" name="page_id" id="page_id" value="<?php echo $PAGE['pages_id']; ?>" maxlength="100">
                                                     <div class="form-group">
-                                                        <label for="page_name" class="col-sm-2 control-label">Inhalt:</label>
+                                                        <label for="page_name" class="col-sm-2 control-label">Name der Seite:</label>
                                                         <div class="col-sm-10">
-                                                            <textarea class="textarea form-control input-sm" name="content" id="content" placeholder="Bitte Inhalt eingeben!" rows="15"><?php echo $CONTENT['content_content']; ?></textarea>
-                                                            <small><span class="help-block" id="status-page_name">Bitte geben Sie einen Inhalt an!</span></small>
+                                                            <input type="text" class="form-control input-sm" name="page_name" id="page_name" value="<?php echo $PAGE['pages_name']; ?>" placeholder="Name der neuen Seite" maxlength="100">
+                                                            <small><span class="help-block" id="status-page_name">Bitte vergeben Sie einen eindeutigen Seitennamen</span></small>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="page_url" class="col-sm-2 control-label">URL der neuen Seite:</label>
+                                                        <div class="col-sm-10">
+                                                            <input type="text" class="form-control input-sm" name="page_url" id="page_url" value="<?php echo $PAGE['pages_url']; ?>" placeholder="URL der neuen Seite" maxlength="100">
+                                                            <small><span class="help-block" id="status-page_url">Bitte vergeben Sie eine eindeutige URL</span></small>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="page_title" class="col-sm-2 control-label">Seitentitel:</label>
+                                                        <div class="col-sm-10">
+                                                            <input type="text" class="form-control input-sm" name="page_title" id="page_title" value="<?php echo $PAGE['pages_title']; ?>" placeholder="Seitentitel in Metadaten">
+                                                            <small><span class="help-block" id="status-page_title">Diese Information wird f&uuml;r die Metadaten ben&ouml;tigt</span></small>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="page_description" class="col-sm-2 control-label">Beschreibung:</label>
+                                                        <div class="col-sm-10">
+                                                            <input type="text" class="form-control input-sm" name="page_description" id="page_description" value="<?php echo $PAGE['pages_description']; ?>" placeholder="Beschreibung in Metadaten">
+                                                            <small><span class="help-block" id="status-page_description">Diese Information wird f&uuml;r die Metadaten ben&ouml;tigt</span></small>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="page_keywords" class="col-sm-2 control-label">Schlagworte:</label>
+                                                        <div class="col-sm-10">
+                                                            <input type="text" class="form-control input-sm" name="page_keywords" id="page_keywords" value="<?php echo $PAGE['pages_keywords']; ?>" placeholder="Schlagworte in Metadaten">
+                                                            <small><span class="help-block" id="status-page_keywords">Diese Information wird f&uuml;r die Metadaten ben&ouml;tigt</span></small>
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="submitter" class="col-sm-2 control-label">&#160;</label>
                                                         <div class="col-sm-10">
-                                                            <button type="submit" name="submitter" id="submitter" class="btn btn-info btn-sm">Inhalt speichern &#8250;&#8250;</button>
-                                                            <a href="<?php echo _BASE_URL . '/constructr/content/' . $PAGE_ID . '/'; ?>"><button type="button" class="btn btn-danger btn-sm">Abbrechen</button></a>
+                                                            <button type="submit" name="submitter" id="submitter" class="btn btn-info btn-sm">&Auml;nderungen speichern &#8250;&#8250;</button>
+                                                            <a href="<?php echo _BASE_URL . '/constructr/pages/'; ?>"><button type="button" class="btn btn-danger btn-sm">Abbrechen</button></a>
                                                         </div>
                                                     </div>
                                                 </form>
                                             <?php
+                                        } else {
+                                            echo '<p>Fehler bei der Daten&uuml;bergabe!</p>';
                                         }
-                                        else
-                                        {
-                                            echo 'Es ist ein Fehler aufgetreten...';
-                                        }
-                                    
                                     ?>
                                 </div><!-- // EOF JUMBOTRON -->
                             </div><!-- // EOF COL-... -->
@@ -93,7 +117,7 @@
                         <div class="row">
                             <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
                             <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-                                <p><small><a href="<?php echo _BASE_URL ?>/constructr/">Dashboard</a> <span class="glyphicon glyphicon-chevron-right"></span> <a href="<?php echo _BASE_URL ?>/constructr/pages/">Seitenverwaltung - &Uuml;bersicht</a> <span class="glyphicon glyphicon-chevron-right"></span></small></p>
+                                <p><small><a href="<?php echo _BASE_URL ?>/constructr/">Dashboard</a> <span class="glyphicon glyphicon-chevron-right"></span> <a href="<?php echo _BASE_URL ?>/constructr/config/">Systemkonfiguration</a> <span class="glyphicon glyphicon-chevron-right"></span></small></p>
                                 <p><small>Version: <?php echo _VERSION; ?> / <?php echo $TIMER; ?> / <?php echo $MEM; ?> / <a href="http://phaziz.com/" onclick="window.open(this.href);return false;">phaziz.com</a></small></p>
                             </div><!-- // EOF COL-... -->
                             <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
@@ -105,8 +129,6 @@
             <script src="<?php echo _BASE_URL ?>/Assets/jquery-2-1-1.min.js"></script>
             <script src="<?php echo _BASE_URL ?>/Assets/bootstrap/js/bootstrap.min.js"></script>
             <script src="<?php echo _BASE_URL ?>/Assets/vex/js/vex.combined.min.js"></script>
-            <script src="<?php echo _BASE_URL ?>/Assets/ckeditor/ckeditor.js"></script>
-            <script src="<?php echo _BASE_URL ?>/Assets/ckeditor/adapters/jquery.js"></script>
             <script>
                 $(function()
                     {
@@ -117,38 +139,50 @@
                             }
                         );
 
-						$( '#content' ).focus();
-                        $( '#content' ).ckeditor(
-                            {
-                                "customConfig":"",
-                                "extraPlugins":"imagebrowser",
-                                "imageBrowser_listUrl":"<?php echo _BASE_URL . '/constructr/get-image-list/'; ?>",
-                                "allowedContent":true
-                            }
-                        );
+                        $('#page_name').focus();
 
                         $( "#new_page_form" ).bind( "submit", function()
                             {
                                 $("#submitter").attr("disabled", "disabled");
-                                var C = $('#content').val();
 
-                                if(C == '')
+                                var U = $('#page_name').val();
+                                var P = $('#page_url').val();
+
+                                if(U == '' || P == '')
                                 {
-                                    $('#content').focus();
-                                    vex.dialog.alert(
-                                        {
-                                            className: 'vex-theme-flat-attack',
-                                            message: 'Achtung: Bitte Formular komplett ausf&uuml;llen!',
-                                            afterClose: function()
+                                    if(U == '')
+                                    {
+                                        vex.dialog.alert(
                                             {
-                                                $('#content').focus();
-                                                $("#submitter").removeAttr("disabled");
+                                                className: 'vex-theme-flat-attack',
+                                                message: 'Achtung: Bitte Formular komplett ausf&uuml;llen!',
+                                                afterClose: function()
+                                                {
+                                                    $('#page_name').focus();
+                                                    $("#submitter").removeAttr("disabled");
+                                                }
                                             }
-                                        }
-                                    );
-                                    return false;
+                                        );
+                                        return false;
+                                    }
+
+                                    if(P == '')
+                                    {
+                                        vex.dialog.alert(
+                                            {
+                                                className: 'vex-theme-flat-attack',
+                                                message: 'Achtung: Bitte Formular komplett ausf&uuml;llen!',
+                                                afterClose: function()
+                                                {
+                                                    $('#page_url').focus();
+                                                    $("#submitter").removeAttr("disabled");
+                                                }
+                                            }
+                                        );
+                                        return false;
+                                    }
+                                    return true;
                                 }
-                                return true;
                             }
                         );
                     }

@@ -36,7 +36,8 @@
                         $constructr -> redirect(_BASE_URL . '/constructr/?no-rights=true');
                         die();
                     }
-                    else {
+                    else
+                    {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                     }
                 }
@@ -170,7 +171,8 @@
                         $constructr -> redirect(_BASE_URL . '/constructr/?no-rights=true');
                         die();
                     }
-                    else {
+                    else
+                    {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                     }
                 }
@@ -262,7 +264,8 @@
                         $constructr -> redirect(_BASE_URL . '/constructr/?no-rights=true');
                         die();
                     }
-                    else {
+                    else
+                    {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                     }
                 }
@@ -301,116 +304,6 @@
                     $STMT -> bindParam(':PAGE_ID',$PAGE_ID,PDO::PARAM_INT);
                     $STMT -> bindParam(':CONTENT_ACTIVE',$CONTENT_ACTIVE,PDO::PARAM_INT);
                     $STMT -> execute();
-
-                    if(_CREATE_STATIC == true)
-                    {
-                        $PAGE_CONTENT = $DBCON -> prepare('SELECT * FROM constructr_pages WHERE pages_id = :PAGE_ID LIMIT 1;');
-                        $PAGE_CONTENT -> execute(
-                            array
-                            (
-                                ':PAGE_ID' => $PAGE_ID
-                            )
-                        );
-
-                        $PAGE_CONTENT = $PAGE_CONTENT -> fetch();
-                        $TARGET_DIR = $PAGE_CONTENT['pages_url'];
-                        $BASE_DIR = _STATIC_DIR;
-                        $DIRS = explode('/',$TARGET_DIR);
-                        $TMP_DIR = '';
-                        $ACT_DIR = '';
-
-                        if($PAGE_CONTENT['pages_lft'] != 1)
-                        {
-                            foreach($DIRS as $DIR)
-                            {
-                                if($TMP_DIR != '')
-                                {
-                                    $ACT_DIR =  $BASE_DIR . '/' . $TMP_DIR . '/' . $DIR;
-                                    $TMP_DIR = $TMP_DIR .'/'. $DIR;
-    
-                                    if(!is_dir($ACT_DIR))
-                                    {
-                                        mkdir($ACT_DIR,0777,false);
-                                    }
-                                }
-                                else
-                                {
-                                    $ACT_DIR = $BASE_DIR . '/' . $DIR;
-                                    $TMP_DIR = $DIR;
-
-                                    if(!is_dir($ACT_DIR))
-                                    {
-                                        @mkdir($ACT_DIR,0777,false);
-                                    }
-                                }
-                            }                            
-                        }
-
-                        if(count($PAGE_CONTENT) != 0 && count($PAGE_CONTENT != ''))
-                        {
-                            $YEP = false;
-
-                            try
-                            {
-                                $_SERVE_STATIC = $DBCON -> query('SELECT * FROM constructr_config WHERE constructr_config_expression = "_SERVE_STATIC" LIMIT 1;');
-                                $_SERVE_STATIC = $_SERVE_STATIC -> fetch();
-                                $_SERVE_STATIC = $_SERVE_STATIC['constructr_config_value'];
-                            }
-                            catch (PDOException $e)
-                            {
-                                $constructr -> getLog() -> error('ConstructrConfig error: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                                die();
-                            }
-
-                            if($_SERVE_STATIC == "true")
-                            {
-                                $YEP = true;
-                                try
-                                {
-                                    $UPD1 = $DBCON -> prepare('UPDATE constructr_config SET constructr_config_value = "false" WHERE constructr_config_expression = "_SERVE_STATIC" LIMIT 1;');
-                                    $UPD1 -> execute();
-                                }
-                                catch (PDOException $e)
-                                {
-                                    $constructr -> getLog() -> error('ConstructrConfig error: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                                    die();
-                                }
-                            }
-
-                            $_HTML_CONTENT = file_get_contents(_BASE_URL . '/' . $PAGE_CONTENT['pages_url']);
-                            $_HTML_CONTENT = $_HTML_CONTENT . "\n<!-- ConstructrCMS generated static-file " . date('d.m.Y, H:i:s') . " -->";
-
-                            if($YEP == true)
-                            {
-                                try
-                                {
-                                    $UPD1 = $DBCON -> prepare('UPDATE constructr_config SET constructr_config_value = "true" WHERE constructr_config_expression = "_SERVE_STATIC" LIMIT 1;');
-                                    $UPD1 -> execute();
-                                }
-                                catch (PDOException $e)
-                                {
-                                    $constructr -> getLog() -> error('ConstructrConfig error: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                                    die();
-                                }
-                            }
-
-                            if($_HTML_CONTENT != '')
-                            {
-                                if($PAGE_CONTENT['pages_lft'] == 1)
-                                {
-                                    $PHYSICAL_FILE = fopen($BASE_DIR . '/' . 'index.php',"w+");
-                                    fwrite($PHYSICAL_FILE, $_HTML_CONTENT);
-                                    fclose($PHYSICAL_FILE);
-                                }
-                                else
-                                {
-                                    $PHYSICAL_FILE = fopen($ACT_DIR . '/' . 'index.php',"w+");
-                                    fwrite($PHYSICAL_FILE, $_HTML_CONTENT);
-                                    fclose($PHYSICAL_FILE);
-                                }
-                            }
-                        }
-                    }
 
                     $constructr -> redirect(_BASE_URL . '/constructr/content/' . $PAGE_ID . '/?res=create-content-true');
                     die();
@@ -460,7 +353,8 @@
                         $constructr -> redirect(_BASE_URL . '/constructr/?no-rights=true');
                         die();
                     }
-                    else {
+                    else
+                    {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                     }
                 }
@@ -555,16 +449,17 @@
                             ':CBR_VALUE' => 1
                         )
                     );
-    
+
                     $RIGHTS_COUNTR = $RIGHT_CHECKER -> rowCount();
-                    
+
                     if($RIGHTS_COUNTR != 1)
                     {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Error ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                         $constructr -> redirect(_BASE_URL . '/constructr/?no-rights=true');
                         die();
                     }
-                    else {
+                    else
+                    {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                     }
                 }
@@ -605,117 +500,6 @@
                         )
                     );
 
-                    if(_CREATE_STATIC == true)
-                    {
-                        $PAGE_CONTENT = $DBCON -> prepare('SELECT * FROM constructr_pages WHERE pages_id = :PAGE_ID LIMIT 1;');
-                        $PAGE_CONTENT -> execute(
-                            array
-                            (
-                                ':PAGE_ID' => $PAGE_ID
-                            )
-                        );
-
-                        $PAGE_CONTENT = $PAGE_CONTENT -> fetch();
-                        $TARGET_DIR = $PAGE_CONTENT['pages_url'];
-                        $BASE_DIR = _STATIC_DIR;
-                        $DIRS = explode('/',$TARGET_DIR);
-                        $TMP_DIR = '';
-                        $ACT_DIR = '';
-
-                        if($PAGE_CONTENT['pages_lft'] != 1)
-                        {
-                            foreach($DIRS as $DIR)
-                            {
-                                if($TMP_DIR != '')
-                                {
-                                    $ACT_DIR =  $BASE_DIR . '/' . $TMP_DIR . '/' . $DIR;
-                                    $TMP_DIR = $TMP_DIR .'/'. $DIR;
-    
-                                    if(!is_dir($ACT_DIR))
-                                    {
-                                        mkdir($ACT_DIR,0777,false);
-                                    }
-                                }
-                                else
-                                {
-                                    $ACT_DIR = $BASE_DIR . '/' . $DIR;
-                                    $TMP_DIR = $DIR;
-
-                                    if(!is_dir($ACT_DIR))
-                                    {
-                                        @mkdir($ACT_DIR,0777,false);
-                                    }
-                                }
-                            }                            
-                        }
-
-                        if(count($PAGE_CONTENT) != 0 && count($PAGE_CONTENT != ''))
-                        {
-                            $YEP = false;
-
-                            try
-                            {
-                                $_SERVE_STATIC = $DBCON -> query('SELECT * FROM constructr_config WHERE constructr_config_expression = "_SERVE_STATIC" LIMIT 1;');
-                                $_SERVE_STATIC = $_SERVE_STATIC -> fetch();
-                                $_SERVE_STATIC = $_SERVE_STATIC['constructr_config_value'];
-                            }
-                            catch (PDOException $e)
-                            {
-                                $constructr -> getLog() -> error('ConstructrConfig error: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                                die();
-                            }
-
-                            if($_SERVE_STATIC == "true")
-                            {
-                                $YEP = true;
-
-                                try
-                                {
-                                    $UPD1 = $DBCON -> prepare('UPDATE constructr_config SET constructr_config_value = "false" WHERE constructr_config_expression = "_SERVE_STATIC" LIMIT 1;');
-                                    $UPD1 -> execute();
-                                }
-                                catch (PDOException $e)
-                                {
-                                    $constructr -> getLog() -> error('ConstructrConfig error: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                                    die();
-                                }
-                            }
-
-                            $_HTML_CONTENT = file_get_contents(_BASE_URL . '/' . $PAGE_CONTENT['pages_url']);
-                            $_HTML_CONTENT = $_HTML_CONTENT . "\n<!-- ConstructrCMS generated static-file " . date('d.m.Y, H:i:s') . " -->";
-
-                            if($YEP == true)
-                            {
-                                try
-                                {
-                                    $UPD1 = $DBCON -> prepare('UPDATE constructr_config SET constructr_config_value = "true" WHERE constructr_config_expression = "_SERVE_STATIC" LIMIT 1;');
-                                    $UPD1 -> execute();
-                                }
-                                catch (PDOException $e)
-                                {
-                                    $constructr -> getLog() -> error('ConstructrConfig error: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                                    die();
-                                }
-                            }
-
-                            if($_HTML_CONTENT != '')
-                            {
-                                if($PAGE_CONTENT['pages_lft'] == 1)
-                                {
-                                    $PHYSICAL_FILE = fopen($BASE_DIR . '/' . 'index.php',"w+");
-                                    fwrite($PHYSICAL_FILE, $_HTML_CONTENT);
-                                    fclose($PHYSICAL_FILE);
-                                }
-                                else
-                                {
-                                    $PHYSICAL_FILE = fopen($ACT_DIR . '/' . 'index.php',"w+");
-                                    fwrite($PHYSICAL_FILE, $_HTML_CONTENT);
-                                    fclose($PHYSICAL_FILE);
-                                }
-                            }
-                        }
-                    }
-
                     $constructr -> redirect(_BASE_URL . '/constructr/content/' . $PAGE_ID . '/?res=edit-content-true');
                     die();
                 }
@@ -731,7 +515,7 @@
                 $constructr -> redirect(_BASE_URL . '/constructr/content/' . $PAGE_ID . '/?res=edit-content-false');
                 die();
             }
-            
+
             die();
         }
     );
@@ -764,7 +548,8 @@
                         $constructr -> redirect(_BASE_URL . '/constructr/?no-rights=true');
                         die();
                     }
-                    else {
+                    else
+                    {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                     }
                 }
@@ -890,7 +675,8 @@
                         $constructr -> redirect(_BASE_URL . '/constructr/?no-rights=true');
                         die();
                     }
-                    else {
+                    else
+                    {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                     }
                 }
@@ -1016,7 +802,8 @@
                         $constructr -> redirect(_BASE_URL . '/constructr/?no-rights=true');
                         die();
                     }
-                    else {
+                    else
+                    {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                     }
                 }
@@ -1104,7 +891,8 @@
                         $constructr -> redirect(_BASE_URL . '/constructr/?no-rights=true');
                         die();
                     }
-                    else {
+                    else
+                    {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                     }
                 }
@@ -1192,7 +980,8 @@
                         $constructr -> redirect(_BASE_URL . '/constructr/?no-rights=true');
                         die();
                     }
-                    else {
+                    else
+                    {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                     }
                 }

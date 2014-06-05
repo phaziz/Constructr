@@ -25,6 +25,7 @@
                         <li><a class="tt" href="<?php echo _BASE_URL ?>/constructr/media/" title="Medienverwaltung anzeigen" data-toggle="tooltip" data-placement="right">Medien</a></li>
                         <li><a class="tt" href="<?php echo _BASE_URL ?>/constructr/media/trash/" title="M&uuml;lleimer anzeigen" data-toggle="tooltip" data-placement="right">M&uuml;lleimer</a></li>
                         <li><a class="tt" href="<?php echo _BASE_URL ?>/constructr/user/" title="Benutzerverwaltung anzeigen" data-toggle="tooltip" data-placement="right">Benutzer</a></li>
+                        <li><a class="tt" href="<?php echo _BASE_URL ?>/constructr/config/" title="Systemkonfiguration anzeigen" data-toggle="tooltip" data-placement="right">System</a></li>
                         <li><a class="tt" href="<?php echo _BASE_URL ?>/constructr/logout/" title="<?php echo $_SESSION['backend-user-username']; ?> abmelden" data-toggle="tooltip" data-placement="right">abmelden</a></li>
                     </ul>
                 </div>
@@ -47,8 +48,38 @@
                             </div><!-- // EOF COL-... -->
                             <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
                         </div><!-- // EOF ROW -->
-        
+
                         <?php
+
+                            if(isset($_GET['created-static']) && $_GET['created-static'] == true)
+                            {
+                                ?>
+                                    <div class="row response">
+                                        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
+                                        <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                                            <?php
+                                                echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Erfolg!</strong> Die statischen Internetseiten wurden generiert!</div>';
+                                            ?>
+                                        </div><!-- // EOF COL-... -->
+                                        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
+                                    </div><!-- // EOF ROW -->
+                                <?php
+                            }
+                            if(isset($_GET['created-static']) && $_GET['created-static'] == false)
+                            {
+                                ?>
+                                    <div class="row response">
+                                        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
+                                        <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                                            <?php
+                                                echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Fehler!</strong> Es ist ein Fehler beim generieren der statischen Seiten aufgetreten.</div>';
+                                            ?>
+                                        </div><!-- // EOF COL-... -->
+                                        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
+                                    </div><!-- // EOF ROW -->
+                                <?php
+                            }
+
                             if(isset($_GET['optimized']) && $_GET['optimized'] == true)
                             {
                                 ?>
@@ -62,26 +93,47 @@
                                         <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
                                     </div><!-- // EOF ROW -->
                                 <?php
-                            } else if(isset($_GET['no-rights']) && $_GET['no-rights'] == true)
+                            }
+                            else if(isset($_GET['no-rights']) && $_GET['no-rights'] == true)
                             {
                                 ?>
                                     <div class="row response">
                                         <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
                                         <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
                                             <?php
-                                                echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Erfolg!</strong> Es fehlen die Zugriffsrechte f&uuml;r dieses Modul.</div>';
+                                                echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Fehler!</strong> Es fehlen die Zugriffsrechte f&uuml;r dieses Modul.</div>';
                                             ?>
                                         </div><!-- // EOF COL-... -->
                                         <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
                                     </div><!-- // EOF ROW -->
                                 <?php
                             }
+
                         ?>
-        
+
                         <div class="row">
                             <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
                             <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
                                 <div class="jumbotron">
+                                    <?php
+
+                                        if($SERVE_STATIC == 'true')
+                                        {
+                                            ?>
+
+                                                <h2>Generierung statischer Internetseiten:</h2>
+                                                <br>
+                                                <ul class="list-group">
+                                                      <li class="list-group-item">
+                                                            <a href="<?php echo _BASE_URL; ?>/constructr/generate-static/" title="Statische Internetseiten jetzt generieren">Statische Internetseiten jetzt generieren</a>
+                                                      </li>
+                                                </ul>
+                                                <br>
+
+                                            <?php
+                                        }
+
+                                    ?>
                                     <h2>Zu Ihrer Information:</h2>
                                     <?php
                                         if($PAGES_COUNTR || $BACKEND_USER_COUNTR || $UPLOADS_COUNTR)

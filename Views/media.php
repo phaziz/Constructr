@@ -42,7 +42,8 @@
                         $constructr -> redirect(_BASE_URL . '/constructr/?no-rights=true');
                         die();
                     }
-                    else {
+                    else
+                    {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                     }
                 }
@@ -128,7 +129,8 @@
                         $constructr -> redirect(_BASE_URL . '/constructr/?no-rights=true');
                         die();
                     }
-                    else {
+                    else
+                    {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                     }
                 }
@@ -197,7 +199,8 @@
                         $constructr -> redirect(_BASE_URL . '/constructr/?no-rights=true');
                         die();
                     }
-                    else {
+                    else
+                    {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                     }
                 }
@@ -234,16 +237,13 @@
             $ORIGINALNAME = str_replace('&szlig;','ss',$ORIGINALNAME);
             $FILE_TYPE = strrchr($FILEUPLOAD,'.');
             $NEW_UPLOAD = 'Uploads/' . $ORIGINALNAME;
-
             $UPLOAD = copy($_FILES['fileupload']['tmp_name'], $NEW_UPLOAD);
             @chmod($NEW_UPLOAD, 0777);
-
             $MEDIA_EXIF = '';    
 
             if($FILE_TYPE == '.jpg' || $FILE_TYPE == '.jepg' || $FILE_TYPE == '.JPG' || $FILE_TYPE == '.JPEG')
             {
-
-            $jpeg_header_data = get_jpeg_header_data('./' . $DETAILS['media_file']);
+                $jpeg_header_data = get_jpeg_header_data('./' . $DETAILS['media_file']);
 
                 if($jpeg_header_data && $jpeg_header_data != '')
                 {
@@ -326,7 +326,8 @@
                         $constructr -> redirect(_BASE_URL . '/constructr/?no-rights=true');
                         die();
                     }
-                    else {
+                    else
+                    {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                     }
                 }
@@ -419,7 +420,8 @@
                         $constructr -> redirect(_BASE_URL . '/constructr/?no-rights=true');
                         die();
                     }
-                    else {
+                    else
+                    {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                     }
                 }
@@ -517,7 +519,8 @@
                         $constructr -> redirect(_BASE_URL . '/constructr/?no-rights=true');
                         die();
                     }
-                    else {
+                    else
+                    {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                     }
                 }
@@ -625,16 +628,17 @@
                             ':CBR_VALUE' => 1
                         )
                     );
-    
+
                     $RIGHTS_COUNTR = $RIGHT_CHECKER -> rowCount();
-                    
+
                     if($RIGHTS_COUNTR != 1)
                     {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Error ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                         $constructr -> redirect(_BASE_URL . '/constructr/?no-rights=true');
                         die();
                     }
-                    else {
+                    else
+                    {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                     }
                 }

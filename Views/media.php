@@ -1,17 +1,10 @@
 <?php
 
-    require_once './Assets/metadata-toolkit/JPEG.php';
-    require_once './Assets/metadata-toolkit/EXIF.php';
-    require_once './Assets/metadata-toolkit/JFIF.php';
-    require_once './Assets/metadata-toolkit/Photoshop_IRB.php';
-    require_once './Assets/metadata-toolkit/PictureInfo.php';
-    require_once './Assets/metadata-toolkit/XMP.php';
+    if(!defined('CONSTRUCTR_INCLUDR'))
+    {
+        die('Direkter Zugriff nicht erlaubt');
+    }
 
-    /*
-     * 
-     * DER ANFANG ALLEN ÜBELS...
-     * 
-     * */
     $constructr -> get('/constructr/media/', $ADMIN_CHECK, function () use ($constructr,$DBCON)
         {
             $START = microtime(true);
@@ -95,11 +88,6 @@
             die();
         }
     );
-    /*
-     * 
-     * DER ANFANG ALLEN ÜBELS...
-     * 
-     * */
 
     $constructr -> get('/constructr/media/new/', $ADMIN_CHECK, function () use ($constructr,$DBCON)
         {
@@ -153,7 +141,10 @@
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
             }
-    
+
+            $GUID = create_guid();
+            $_SESSION['tmp_form_guid'] = $GUID;
+
             $MEM = 0;
             $MEM = number_format(((memory_get_usage()/1014)/1024),2,',','.') . ' MB';
     
@@ -162,7 +153,8 @@
                 (
                     'MEM' => $MEM,
                     'USERNAME' => $USERNAME,
-                    'FORM_ACTION' => _BASE_URL . '/constructr/media/new/',
+                    'GUID' => $GUID,
+                    'FORM_ACTION' => _BASE_URL . '/constructr/media/new/' . $GUID . '/',
                     'FORM_METHOD' => 'post',
                     'FORM_ENCTYPE' => 'multipart/form-data',
                     'SUBTITLE' => 'Admin-Dashboard / Medienverwaltung - Neuer Upload',
@@ -173,7 +165,7 @@
         }
     );
     
-    $constructr -> post('/constructr/media/new/', $ADMIN_CHECK, function () use ($constructr,$DBCON)
+    $constructr -> post('/constructr/media/new/:GUID/', $ADMIN_CHECK, function ($GUID) use ($constructr,$DBCON)
         {
             $constructr -> view -> setData('BackendUserRight',41);
 
@@ -222,6 +214,14 @@
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
             }
 
+            $USER_FORM_GUID = $constructr -> request() -> post('user_form_guid');
+            if($GUID != $USER_FORM_GUID || $_SESSION['tmp_form_guid'] != $GUID)
+            {
+                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ' - USER_FORM_GUID ERROR: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                $constructr -> redirect(_BASE_URL . '/constructr/logout/');
+                die();
+            }
+
             $DATETIME = date('Y-m-d H:i:s');
             $MEDIA_USER = 0;
             $FILEUPLOAD = $_FILES['fileupload']['name'];
@@ -240,25 +240,6 @@
             $UPLOAD = copy($_FILES['fileupload']['tmp_name'], $NEW_UPLOAD);
             @chmod($NEW_UPLOAD, 0777);
             $MEDIA_EXIF = '';    
-
-            if($FILE_TYPE == '.jpg' || $FILE_TYPE == '.jepg' || $FILE_TYPE == '.JPG' || $FILE_TYPE == '.JPEG')
-            {
-                $jpeg_header_data = get_jpeg_header_data('./' . $DETAILS['media_file']);
-
-                if($jpeg_header_data && $jpeg_header_data != '')
-                {
-                    $METADATA = strip_tags(get_XMP_text($jpeg_header_data));
-                    if($METADATA && $METADATA != '')
-                    {
-                        $METADATA = explode("     ",$METADATA);
-                        $METADATA = array_filter($METADATA, 'strlen');
-                        $MEDIA_EXIF .= '###' . $METADATA[1] . '###';
-                        $MEDIA_EXIF .= '###' . utf8_decode($METADATA[2]) . '###';
-                        $MEDIA_EXIF .= '###' . utf8_decode($METADATA[3]) . '###';
-                        $MEDIA_EXIF .= '###' . utf8_decode($METADATA[4]) . '###';
-                    }                                                
-                }
-            }
 
             if($FILEUPLOAD == true)
             {

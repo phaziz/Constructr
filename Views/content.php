@@ -1,10 +1,10 @@
 <?php
 
-    /*
-     * 
-     * DER ANFANG ALLEN ÜBELS...
-     * 
-     * */
+    if(!defined('CONSTRUCTR_INCLUDR'))
+    {
+        die('Direkter Zugriff nicht erlaubt');
+    }
+
     $constructr -> get('/constructr/content/:PAGE_ID/', $ADMIN_CHECK, function ($PAGE_ID) use ($constructr,$DBCON)
         {
             $START = microtime(true);
@@ -106,11 +106,6 @@
             );
         }
     );
-    /*
-     * 
-     * DER ANFANG ALLEN ÜBELS...
-     * 
-     * */
 
     $constructr -> get('/constructr/get-image-list/', $ADMIN_CHECK, function () use ($constructr)
         {
@@ -213,6 +208,9 @@
                 die();
             }
 
+            $GUID = create_guid();
+            $_SESSION['tmp_form_guid'] = $GUID;
+
             $MEM = 0;
             $MEM = number_format(((memory_get_usage()/1014)/1024),2,',','.') . ' MB';
 
@@ -222,9 +220,10 @@
                     'MEM' => $MEM,
                     'USERNAME' => $USERNAME,
                     'PAGE_NAME' => $PAGE_NAME,
+                    'GUID' => $GUID,
                     'PAGE_ID' => $PAGE_ID,
                     'NEW_CONTENT_ORDER' => $NEW_CONTENT_ORDER,
-                    'FORM_ACTION' => _BASE_URL . '/constructr/content/' . $PAGE_ID . '/new/',
+                    'FORM_ACTION' => _BASE_URL . '/constructr/content/' . $PAGE_ID . '/new/' . $GUID .'/',
                     'FORM_METHOD' => 'post',
                     'FORM_ENCTYPE' => 'application/x-www-form-urlencoded',
                     'SUBTITLE' => 'Admin-Dashboard / Neuen Inhalt erstellen',
@@ -236,7 +235,7 @@
         }
     );
 
-    $constructr -> post('/constructr/content/:PAGE_ID/new/', $ADMIN_CHECK, function ($PAGE_ID) use ($constructr,$DBCON)
+    $constructr -> post('/constructr/content/:PAGE_ID/new/:GUID/', $ADMIN_CHECK, function ($PAGE_ID,$GUID) use ($constructr,$DBCON)
         {
             $USERNAME = $_SESSION['backend-user-username'];
 
@@ -285,6 +284,14 @@
             if(_LOGGING == true)
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
+            }
+
+            $USER_FORM_GUID = $constructr -> request() -> post('user_form_guid');
+            if($GUID != $USER_FORM_GUID || $_SESSION['tmp_form_guid'] != $GUID)
+            {
+                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ' - USER_FORM_GUID ERROR: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                $constructr -> redirect(_BASE_URL . '/constructr/logout/');
+                die();
             }
 
             $CONTENT_DATETIME = date('Y-m-d H:i:s');
@@ -408,6 +415,9 @@
                 die();
             }
 
+            $GUID = create_guid();
+            $_SESSION['tmp_form_guid'] = $GUID;
+
             $MEM = 0;
             $MEM = number_format(((memory_get_usage()/1014)/1024),2,',','.') . ' MB';
 
@@ -416,10 +426,11 @@
                 (
                     'MEM' => $MEM,
                     'USERNAME' => $USERNAME,
+                    'GUID' => $GUID,
                     'CONTENT' => $CONTENT,
                     'PAGE_NAME' => $PAGE_NAME,
                     'PAGE_ID' => $PAGE_ID,
-                    'FORM_ACTION' => _BASE_URL . '/constructr/content/' . $PAGE_ID . '/' . $CONTENT_ID . '/edit/',
+                    'FORM_ACTION' => _BASE_URL . '/constructr/content/' . $PAGE_ID . '/' . $CONTENT_ID . '/edit/' . $GUID . '/',
                     'FORM_METHOD' => 'post',
                     'FORM_ENCTYPE' => 'application/x-www-form-urlencoded',
                     'SUBTITLE' => 'Admin-Dashboard / Inhalt bearbeiten',
@@ -430,7 +441,7 @@
         }
     );
 
-    $constructr -> post('/constructr/content/:PAGE_ID/:CONTENT_ID/edit/', $ADMIN_CHECK, function ($PAGE_ID,$CONTENT_ID) use ($constructr,$DBCON)
+    $constructr -> post('/constructr/content/:PAGE_ID/:CONTENT_ID/edit/:GUID/', $ADMIN_CHECK, function ($PAGE_ID,$CONTENT_ID,$GUID) use ($constructr,$DBCON)
         {
             $USERNAME = $_SESSION['backend-user-username'];
 
@@ -479,6 +490,14 @@
             if(_LOGGING == true)
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
+            }
+
+            $USER_FORM_GUID = $constructr -> request() -> post('user_form_guid');
+            if($GUID != $USER_FORM_GUID || $_SESSION['tmp_form_guid'] != $GUID)
+            {
+                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ' - USER_FORM_GUID ERROR: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                $constructr -> redirect(_BASE_URL . '/constructr/logout/');
+                die();
             }
 
             $CONTENT_DATETIME = date('Y-m-d H:i:s');

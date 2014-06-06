@@ -1,10 +1,10 @@
 <?php
 
-    /*
-     * 
-     * DER ANFANG ALLEN ÜBELS...
-     * 
-     * */
+    if(!defined('CONSTRUCTR_INCLUDR'))
+    {
+        die('Direkter Zugriff nicht erlaubt');
+    }
+
     $constructr -> get('/constructr/', $ADMIN_CHECK, function () use ($constructr,$DBCON)
         {
             $START = microtime(true);
@@ -21,10 +21,13 @@
             {
                 $BACKENDUSER = $DBCON -> query('SELECT beu_id FROM constructr_backenduser;');
                 $BACKEND_USER_COUNTR = $BACKENDUSER -> rowCount();               
+
                 $PAGES = $DBCON -> query('SELECT pages_id FROM constructr_pages;');
                 $PAGES_COUNTR = $PAGES -> rowCount();
+
                 $UPLOADS = $DBCON -> query('SELECT media_id FROM constructr_media;');
                 $UPLOADS_COUNTR = $UPLOADS -> rowCount();
+
                 $_SERVE_STATIC = $DBCON -> query('SELECT * FROM constructr_config WHERE constructr_config_expression = "_SERVE_STATIC" LIMIT 1;');
                 $_SERVE_STATIC = $_SERVE_STATIC -> fetch();
                 $_SERVE_STATIC = $_SERVE_STATIC['constructr_config_value'];
@@ -35,6 +38,8 @@
                 die();
             }
 
+            $GUID = create_guid();
+
             $MEM = 0;
             $MEM = number_format(((memory_get_usage()/1014)/1024),2,',','.') . ' MB';
             $constructr -> render('admin.php',
@@ -42,6 +47,7 @@
                 (
                     'MEM' => $MEM,
                     'USERNAME' => $USERNAME,
+                    'GUID' => $GUID,
                     'BACKEND_USER_COUNTR' => $BACKEND_USER_COUNTR,
                     'PAGES_COUNTR' => $PAGES_COUNTR,
                     'UPLOADS_COUNTR' => $UPLOADS_COUNTR,
@@ -52,14 +58,16 @@
             );
         }
     );
-    /*
-     * 
-     * DER ANFANG ALLEN ÜBELS...
-     * 
-     * */
 
-    $constructr -> get('/constructr/optimization/', $ADMIN_CHECK, function () use ($constructr,$DBCON)
+    $constructr -> get('/constructr/optimization/:GUID/', $ADMIN_CHECK, function ($GUID) use ($constructr,$DBCON)
         {
+            if($GUID == '')
+            {
+                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ' - USER_FORM_GUID ERROR: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                $constructr -> redirect(_BASE_URL . '/constructr/logout/');
+                die();
+            }
+
             try
             {
                 $OPTIMIZER = $DBCON -> query('
@@ -69,8 +77,9 @@
                     OPTIMIZE TABLE constructr_media;
                     OPTIMIZE TABLE constructr_pages;
                 ');
+
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                $constructr -> redirect('../?optimized=true');
+                $constructr -> redirect(_BASE_URL . '/constructr/?optimized=true');
             }
             catch (PDOException $e) 
             {
@@ -80,7 +89,7 @@
         }
     );
 
-    $constructr -> get('/constructr/generate-static/', $ADMIN_CHECK, function () use ($constructr,$DBCON)
+    $constructr -> get('/constructr/generate-static/:GUID/', $ADMIN_CHECK, function ($GUID) use ($constructr,$DBCON)
         {
             $USERNAME = $_SESSION['backend-user-username'];
 
@@ -122,6 +131,13 @@
             else
             {
                 $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': Error User-Rights-Check: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                $constructr -> redirect(_BASE_URL . '/constructr/logout/');
+                die();
+            }
+
+            if($GUID == '')
+            {
+                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ' - USER_FORM_GUID ERROR: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                 $constructr -> redirect(_BASE_URL . '/constructr/logout/');
                 die();
             }

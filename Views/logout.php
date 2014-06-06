@@ -1,8 +1,10 @@
 <?php
 
-    /*
-     * LOGOUT START
-     * */
+    if(!defined('CONSTRUCTR_INCLUDR'))
+    {
+        die('Direkter Zugriff nicht erlaubt');
+    }
+
     $constructr -> get('/constructr/logout/', function () use ($constructr)
         {
             if(_LOGGING == true)
@@ -10,9 +12,12 @@
                 $constructr -> getLog() -> debug('Successful logout ' . $_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
             }
 
+            $_SESSION['constructr_login_attempt'] = '';
+            $_SESSION['constructr_login_blocked'] = '';
             $_SESSION['backend-user-username'] = '';
             $_SESSION['backend-user-password'] = '';
             $_SESSION['backend-user-id'] = '';
+            $_SESSION['tmp_form_guid'] = '';
             $_SESSION = array();
 
             if (ini_get("session.use_cookies"))
@@ -26,6 +31,3 @@
             die();
         }
     );
-    /*
-     * LOGOUT ENDE
-     * */

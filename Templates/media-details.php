@@ -1,3 +1,10 @@
+<?php
+
+    if(!defined('CONSTRUCTR_INCLUDR'))
+    {
+        die('Direkter Zugriff nicht erlaubt');
+    }
+?>
 <!DOCTYPE html>
     <!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
     <!--[if IE 7]><html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
@@ -61,45 +68,6 @@
                                             if($DETAILS)
                                             {
                                                 echo '<center><img src="' . _BASE_URL . '/' . $DETAILS['media_file'] . '" style="max-height:100%;max-width:100%"></center>';
-                                                echo '<br><br>';
-                                                $jpeg_header_data = get_jpeg_header_data('./' . $DETAILS['media_file']);
-
-                                                $FILE_TYPE = strrchr($DETAILS['media_file'],'.');
-
-                                                if($FILE_TYPE == '.jpg' || $FILE_TYPE == '.jepg' || $FILE_TYPE == '.JPG' || $FILE_TYPE == '.JPEG')
-                                                {
-
-                                                    $jpeg_header_data = get_jpeg_header_data('./' . $DETAILS['media_file']);
-
-                                                    if($jpeg_header_data && $jpeg_header_data != '')
-                                                    {
-                                                        $METADATA = strip_tags(get_XMP_text($jpeg_header_data));
-                                                        if($METADATA && $METADATA != '')
-                                                        {
-                                                            $METADATA = explode("     ",$METADATA);
-                                                            $METADATA = array_filter($METADATA, 'strlen');
-                                                            $MEDIA_EXIF .= '###' . $METADATA[1] . '###';
-                                                            $MEDIA_EXIF .= '###' . utf8_decode($METADATA[2]) . '###';
-                                                            $MEDIA_EXIF .= '###' . utf8_decode($METADATA[3]) . '###';
-                                                            $MEDIA_EXIF .= '###' . utf8_decode($METADATA[4]) . '###';
-                                                        }                                                
-                                                    }
-                                                }
-
-                                                if($jpeg_header_data && $jpeg_header_data != '')
-                                                {
-                                                    $METADATA = strip_tags(get_XMP_text($jpeg_header_data));
-                                                    
-                                                    if($METADATA && $METADATA != '')
-                                                    {
-                                                        $METADATA = explode("     ",$METADATA);
-                                                        $METADATA = array_filter($METADATA, 'strlen');
-                                                        echo '<strong>Copyright Inhaber:</strong><br>' . $METADATA[1] . '<br><br>';
-                                                        echo '<strong>Copyright:</strong><br>' . utf8_decode($METADATA[2]) . '<br><br>';
-                                                        echo '<strong>Adresse:</strong><br>' . utf8_decode($METADATA[3]) . '<br><br>';
-                                                        echo '<strong>Keywords:</strong><br>' . utf8_decode($METADATA[4]) . '<br>';
-                                                    }                                                
-                                                }
                                             }
                                         ?>
                                 </div><!-- // EOF JUMBOTRON -->

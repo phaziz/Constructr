@@ -1,8 +1,10 @@
 <?php
 
-    /*
-     * LOGIN START
-     * */
+    if(!defined('CONSTRUCTR_INCLUDR'))
+    {
+        die('Direkter Zugriff nicht erlaubt');
+    }
+
     $constructr -> get('/constructr/login/', function () use ($constructr)
         {
             if(_LOGGING == true)
@@ -11,8 +13,9 @@
             }
 
             $GUID = create_guid();
+            $_SESSION['tmp_form_guid'] = $GUID;
 
-            $constructr -> render('login.php', 
+            $constructr -> render('admin_login.php', 
                 array
                 (
                     '_METHOD' => 'post',
@@ -27,12 +30,19 @@
 
     $constructr -> get('/constructr/login-error/', function () use ($constructr)
         {
+            if(isset($_SESSION['constructr_login_blocked']) && $_SESSION['constructr_login_blocked'] != '')
+            {
+                $constructr -> redirect(_BASE_URL . '/constructr/login/');
+                die();
+            }
+
             if(_LOGGING == true)
             {
                 $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
             }
 
             $GUID = create_guid();
+            $_SESSION['tmp_form_guid'] = $GUID;
 
             $constructr -> render('admin_login_error.php', 
                 array
@@ -49,6 +59,32 @@
 
     $constructr -> post('/constructr/login/:GUID/', function ($GUID) use ($constructr,$DBCON)
         {
+            session_regenerate_id(true); 
+
+            if(isset($_SESSION['constructr_login_blocked']) && $_SESSION['constructr_login_blocked'] != '')
+            {
+                $constructr -> redirect('LOGIN BLOCKED: ' . _BASE_URL . '/constructr/login/');
+                die();
+            }
+
+            if(!isset($_SESSION['constructr_login_attempt']) || $_SESSION['constructr_login_attempt'] == '')
+            {
+                $_SESSION['constructr_login_attempt'] = '1';
+            }
+            else
+            {
+                $ATTEMPT_TRY = $_SESSION['constructr_login_attempt'];
+
+                if($ATTEMPT_TRY >= 5)
+                {
+                    $_SESSION['constructr_login_blocked'] = time();
+                    $constructr -> redirect(_BASE_URL . '/constructr/login/');
+                    die();
+                }
+
+                $_SESSION['constructr_login_attempt'] = ($ATTEMPT_TRY + 1);
+            }
+
             $_ADMIN_USERNAME = $constructr -> request() -> post('_admin_username');
             $_ADMIN_PASSWORD = $constructr -> request() -> post('_admin_password');
             $_ADMIN_PASSWORD = crypt($_ADMIN_PASSWORD,_SALT);
@@ -85,6 +121,8 @@
 
                     if($COUNTR == 1)
                     {
+                        $_SESSION['constructr_login_attempt'] = '';
+                        $_SESSION['constructr_login_blocked'] = '';
                         $_SESSION['backend-user-username'] = $_ADMIN_USERNAME;
                         $_SESSION['backend-user-password'] = $_ADMIN_PASSWORD;
                         $USER_ID = $USER['beu_id'];
@@ -144,6 +182,3 @@
             }
         }
     );
-    /*
-     * LOGIN ENDE
-     * */

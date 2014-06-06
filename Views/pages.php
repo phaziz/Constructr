@@ -1,10 +1,10 @@
 <?php
 
-    /*
-     * 
-     * DER ANFANG ALLEN ÜBELS...
-     * 
-     * */
+    if(!defined('CONSTRUCTR_INCLUDR'))
+    {
+        die('Direkter Zugriff nicht erlaubt');
+    }
+
     $constructr -> get('/constructr/pages/', $ADMIN_CHECK, function () use ($constructr,$DBCON)
         {
             $START = microtime(true);
@@ -101,11 +101,6 @@
             die();
         }
     );
-    /*
-     * 
-     * DER ANFANG ALLEN ÜBELS...
-     * 
-     * */
 
     $constructr -> get('/constructr/pages/new/', $ADMIN_CHECK, function () use ($constructr,$DBCON)
         {
@@ -159,7 +154,10 @@
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
             }
-
+            
+            $GUID = create_guid();
+            $_SESSION['tmp_form_guid'] = $GUID;
+            
             $MEM = 0;
             $MEM = number_format(((memory_get_usage()/1014)/1024),2,',','.') . ' MB';
 
@@ -168,7 +166,8 @@
                 (
                     'MEM' => $MEM,
                     'USERNAME' => $USERNAME,
-                    'FORM_ACTION' => _BASE_URL . '/constructr/pages/new/',
+                    'GUID' => $GUID,
+                    'FORM_ACTION' => _BASE_URL . '/constructr/pages/new/' . $GUID . '/',
                     'FORM_METHOD' => 'post',
                     'FORM_ENCTYPE' => 'application/x-www-form-urlencoded',
                     'SUBTITLE' => 'Admin-Dashboard / Seitenverwaltung - Neue Seite erstellen',
@@ -180,7 +179,7 @@
         }
     );
 
-    $constructr -> post('/constructr/pages/new/', $ADMIN_CHECK, function () use ($constructr,$DBCON)
+    $constructr -> post('/constructr/pages/new/:GUID/', $ADMIN_CHECK, function ($GUID) use ($constructr,$DBCON)
         {
             if(_LOGGING == true)
             {
@@ -229,6 +228,14 @@
                 die();
             }
 
+            $USER_FORM_GUID = $constructr -> request() -> post('user_form_guid');
+            if($GUID != $USER_FORM_GUID || $_SESSION['tmp_form_guid'] != $GUID)
+            {
+                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ' - USER_FORM_GUID ERROR: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                $constructr -> redirect(_BASE_URL . '/constructr/logout/');
+                die();
+            }
+
             $PAGE_DATETIME = date('Y-m-d H:i:s');
             $PAGE_NAME = $constructr -> request() -> post('page_name');
             $PAGE_URL = $constructr -> request() -> post('page_url');            
@@ -261,10 +268,7 @@
 
             try 
             {
-                $URL = $DBCON -> prepare('
-                    SELECT * FROM constructr_pages WHERE pages_url = :PAGE_URL;
-                ');
-
+                $URL = $DBCON -> prepare('SELECT * FROM constructr_pages WHERE pages_url = :PAGE_URL;');
                 $URL -> execute(
                     array
                     (
@@ -442,6 +446,9 @@
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
             }
 
+            $GUID = create_guid();
+            $_SESSION['tmp_form_guid'] = $GUID;
+
             $MEM = 0;
             $MEM = number_format(((memory_get_usage()/1014)/1024),2,',','.') . ' MB';
 
@@ -450,9 +457,10 @@
                 (
                     'MEM' => $MEM,
                     'USERNAME' => $USERNAME,
+                    'GUID' => $GUID,
                     'MOTHER_ID' => $MOTHER_ID,
                     'MOTHER_LFT' => $MOTHER_LFT,
-                    'FORM_ACTION' => _BASE_URL . '/constructr/pages/new/sub/',
+                    'FORM_ACTION' => _BASE_URL . '/constructr/pages/new/sub/' . $GUID .'/',
                     'FORM_METHOD' => 'post',
                     'FORM_ENCTYPE' => 'application/x-www-form-urlencoded',
                     'SUBTITLE' => 'Admin-Dashboard / Seitenverwaltung - Neue Unterseite erstellen',
@@ -464,7 +472,7 @@
         }
     );
 
-    $constructr -> post('/constructr/pages/new/sub/', $ADMIN_CHECK, function () use ($constructr,$DBCON)
+    $constructr -> post('/constructr/pages/new/sub/:GUID/', $ADMIN_CHECK, function ($GUID) use ($constructr,$DBCON)
         {
             $constructr -> view -> setData('BackendUserRight',12);
 
@@ -511,6 +519,14 @@
             if(_LOGGING == true)
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
+            }
+
+            $USER_FORM_GUID = $constructr -> request() -> post('user_form_guid');
+            if($GUID != $USER_FORM_GUID || $_SESSION['tmp_form_guid'] != $GUID)
+            {
+                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ' - USER_FORM_GUID ERROR: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                $constructr -> redirect(_BASE_URL . '/constructr/logout/');
+                die();
             }
 
             $PAGE_TMP_MARKER = '';
@@ -722,6 +738,9 @@
                 die();
             }
 
+            $GUID = create_guid();
+            $_SESSION['tmp_form_guid'] = $GUID;
+
             $MEM = 0;
             $MEM = number_format(((memory_get_usage()/1014)/1024),2,',','.') . ' MB';
 
@@ -730,8 +749,9 @@
                 (
                     'MEM' => $MEM,
                     'USERNAME' => $USERNAME,
+                    'GUID' => $GUID,
                     'PAGE' => $PAGE,
-                    'FORM_ACTION' => _BASE_URL . '/constructr/pages/edit/',
+                    'FORM_ACTION' => _BASE_URL . '/constructr/pages/edit/' . $GUID . '/',
                     'FORM_METHOD' => 'post',
                     'FORM_ENCTYPE' => 'application/x-www-form-urlencoded',
                     'SUBTITLE' => 'Admin-Dashboard / Seitenverwaltung - Seite bearbeiten',
@@ -743,7 +763,7 @@
         }
     );
 
-    $constructr -> post('/constructr/pages/edit/', $ADMIN_CHECK, function () use ($constructr,$DBCON)
+    $constructr -> post('/constructr/pages/edit/:GUID/', $ADMIN_CHECK, function ($GUID) use ($constructr,$DBCON)
         {
             $constructr -> view -> setData('BackendUserRight',13);
 
@@ -790,6 +810,14 @@
             if(_LOGGING == true)
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
+            }
+
+            $USER_FORM_GUID = $constructr -> request() -> post('user_form_guid');
+            if($GUID != $USER_FORM_GUID || $_SESSION['tmp_form_guid'] != $GUID)
+            {
+                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ' - USER_FORM_GUID ERROR: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                $constructr -> redirect(_BASE_URL . '/constructr/logout/');
+                die();
             }
 
             $PAGE_DATETIME = date('Y-m-d H:i:s');

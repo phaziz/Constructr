@@ -2,6 +2,7 @@
 
     /*
     ***************************************************************************
+
         DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
         Version 1, December 2012
         Copyright (C) 2012 Christian Becher | phaziz.com <christian@phaziz.com>
@@ -13,10 +14,15 @@
         0. YOU JUST DO WHAT THE FUCK YOU WANT TO MIT-LICENSE-STYLE!
 
         +++ Visit http://phaziz.com +++
+
     ***************************************************************************
     */
 
-    // Your main config-file - edit for your needs :)
+    define('CONSTRUCTR_INCLUDR',true);
+
+    ini_set('session.cookie_httponly',1);
+    ini_set('session.use_only_cookies',1);
+
     require_once('./Config/constructr.conf.php');
 
     if(!defined("CRYPT_BLOWFISH") && CRYPT_BLOWFISH)

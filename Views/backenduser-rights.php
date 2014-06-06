@@ -1,8 +1,10 @@
 <?php
 
-    /*
-     * BENUTZERVERWALTUNG START
-     * */
+    if(!defined('CONSTRUCTR_INCLUDR'))
+    {
+        die('Direkter Zugriff nicht erlaubt');
+    }
+
     $constructr -> get('/constructr/user/edit-user-rights/:user_id/:user_name/', $ADMIN_CHECK, function ($USER_ID,$USER_NAME) use ($constructr,$DBCON)
         {
             $START = microtime(true);

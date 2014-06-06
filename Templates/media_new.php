@@ -1,3 +1,10 @@
+<?php
+
+    if(!defined('CONSTRUCTR_INCLUDR'))
+    {
+        die('Direkter Zugriff nicht erlaubt');
+    }
+?>
 <!DOCTYPE html>
     <!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
     <!--[if IE 7]><html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
@@ -59,6 +66,7 @@
                                     <h2>Neuer Upload</h2>
                                     <br><br>
                                     <form role="form" name="new_media_form" id="new_media_form" action="<?php echo $FORM_ACTION; ?>" method="<?php echo $FORM_METHOD; ?>" enctype="<?php echo $FORM_ENCTYPE; ?>" class="form-horizontal">
+                                        <input type="hidden" name="user_form_guid" value="<?php echo $GUID; ?>">
                                         <div class="fileinput fileinput-new" data-provides="fileinput">
                                             <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;"></div>
                                             <div>

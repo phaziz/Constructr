@@ -15,8 +15,6 @@
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <link href="<?php echo _BASE_URL;?>/Assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
             <link href="<?php echo _BASE_URL;?>/Assets/css/constructr.css" rel="stylesheet">
-            <link href="<?php echo _BASE_URL;?>/Assets/vex/css/vex.css" rel="stylesheet">
-            <link href="<?php echo _BASE_URL;?>/Assets/vex/css/vex-theme-flat-attack.css" rel="stylesheet">
             <!--[if lt IE 9]>
                 <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
             <![endif]-->
@@ -26,15 +24,8 @@
                 <div class="row">
                     <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
                     <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-                        <div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Login Fehler!!!</strong></div>
-                    </div><!-- // EOF COL-... -->
-                    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
-                </div><!-- // EOF ROW -->
-                <div class="row">
-                    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
-                    <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
                         <div class="jumbotron">
-                            <h1>ConstructrCMS // Anmeldung erforderlich</h1>
+                            <h1>ConstructrCMS // Anmeldung erforderlich:</h1>
                             <br><br>
                             <?php
 
@@ -102,22 +93,12 @@
             </div><!-- // EOF CONTAINER -->
             <script src="<?php echo _BASE_URL ?>/Assets/jquery-2-1-1.min.js"></script>
             <script src="<?php echo _BASE_URL ?>/Assets/bootstrap/js/bootstrap.min.js"></script>
-            <script src="<?php echo _BASE_URL ?>/Assets/vex/js/vex.combined.min.js"></script>
             <script>
-                $(function()
-                    {
-                        vex.dialog.alert(
-                            {
-                                className: 'vex-theme-flat-attack',
-                                message: 'Achtung: Das Login ist fehlgeschlagen.<br>Bitte &uuml;berpr&uuml;fen Sie Ihre Zugangsdaten!',
-                                afterClose: function() 
-                                {
-                                    $('#_admin_username').focus();
-                                }
-                            }
-                        );
-                    }
-                )
-            </script>
+                $(function(){$("#_admin_username").focus()});var _paq=_paq||[];_paq.push(["setDocumentTitle",document.domain+"/"+document.title]);_paq.push(["setCookieDomain","*.constructr.phaziz.com"]);_paq.push(["trackPageView"]);_paq.push(["enableLinkTracking"]);
+                (function(){var c=("https:"==document.location.protocol?"https":"http")+"://piwik.phaziz.com/";_paq.push(["setTrackerUrl",c+"piwik.php"]);_paq.push(["setSiteId","3"]);var a=document,b=a.createElement("script"),a=a.getElementsByTagName("script")[0];b.type="text/javascript";b.defer=!0;b.async=!0;b.src=c+"piwik.js";a.parentNode.insertBefore(b,a)})();
+			</script>
+			<noscript>
+				<img src="http://piwik.phaziz.com/piwik.php?idsite=3&amp;rec=1" style="border:0" alt="" />
+			</noscript>
         </body>
     </html>

@@ -1,8 +1,10 @@
 <?php
 
-    /*
-     * BENUTZERVERWALTUNG START
-     * */
+    if(!defined('CONSTRUCTR_INCLUDR'))
+    {
+        die('Direkter Zugriff nicht erlaubt');
+    }
+    
     $constructr -> get('/constructr/user/', $ADMIN_CHECK, function () use ($constructr,$DBCON)
         {
             $START = microtime(true);
@@ -270,6 +272,9 @@
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
             }
 
+            $GUID = create_guid();
+            $_SESSION['tmp_form_guid'] = $GUID;
+
             $MEM = 0;
             $MEM = number_format(((memory_get_usage()/1014)/1024),2,',','.') . ' MB';
 
@@ -278,8 +283,9 @@
                 (
                     'MEM' => $MEM,
                     'USERNAME' => $USERNAME,
+                    'GUID' => $GUID,
                     'SUBTITLE' => 'Admin-Dashboard / Neuer Benutzer',
-                    'FORM_ACTION' => _BASE_URL . '/constructr/user/new/',
+                    'FORM_ACTION' => _BASE_URL . '/constructr/user/new/' . $GUID . '/',
                     'FORM_METHOD' => 'post',
                     'FORM_ENCTYPE' => 'application/x-www-form-urlencoded',
                     'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.'
@@ -344,7 +350,6 @@
                 try
                 {
                     $BACKENDUSER = $DBCON -> prepare('SELECT * FROM constructr_backenduser WHERE beu_username = :USERNAME LIMIT 1;');
-
                     $BACKENDUSER -> execute(
                         array
                         (
@@ -501,7 +506,7 @@
         }
     );
 
-    $constructr -> post('/constructr/user/new/', $ADMIN_CHECK, function () use ($constructr,$DBCON)
+    $constructr -> post('/constructr/user/new/:GUID/', $ADMIN_CHECK, function ($GUID) use ($constructr,$DBCON)
         {
             if(_LOGGING == true)
             {
@@ -546,6 +551,14 @@
             else
             {
                 $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': Error User-Rights-Check: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                $constructr -> redirect(_BASE_URL . '/constructr/logout/');
+                die();
+            }
+
+            $USER_FORM_GUID = $constructr -> request() -> post('user_form_guid');
+            if($GUID != $USER_FORM_GUID || $GUID != $_SESSION['tmp_form_guid'])
+            {
+                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ' - USER_FORM_GUID ERROR: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                 $constructr -> redirect(_BASE_URL . '/constructr/logout/');
                 die();
             }
@@ -619,7 +632,8 @@
                         (15, 1, :USER_ID, 'Delete single page.'),
                         (16, 1, :USER_ID, 'Delete pages recursive.'),
                         (80, 1, :USER_ID, 'Enter user-rights management.'),
-                        (81, 1, :USER_ID, 'Edit user-rights.');
+                        (81, 1, :USER_ID, 'Edit user-rights.'),
+                        (100, 1, :USER_ID, 'Generate static website.');
                     ");
 
                     $RIGHTS -> execute( 
@@ -734,6 +748,9 @@
                 $constructr -> redirect(_BASE_URL . '/constructr/user/error/');
                 die();
             }
+            
+            $GUID = create_guid();
+            $_SESSION['tmp_form_guid'] = $GUID;
 
             $MEM = 0;
             $MEM = number_format(((memory_get_usage()/1014)/1024),2,',','.') . ' MB';
@@ -746,8 +763,9 @@
                         'MEM' => $MEM,
                         'USERNAME' => $USERNAME,
                         'BACKENDUSER' => $BACKENDUSER,
+                        'GUID' => $GUID,
                         'SUBTITLE' => 'Admin-Dashboard / Benutzer editieren',
-                        'FORM_ACTION' => _BASE_URL . '/constructr/user/edit/' . $USER_ID . '/',
+                        'FORM_ACTION' => _BASE_URL . '/constructr/user/edit/' . $USER_ID . '/' . $GUID . '/',
                         'FORM_METHOD' => 'post',
                         'FORM_ENCTYPE' => 'application/x-www-form-urlencoded',
                         'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.'
@@ -764,7 +782,7 @@
         }
     );
 
-    $constructr -> post('/constructr/user/edit/:USER_ID/', $ADMIN_CHECK, function ($USER_ID) use ($constructr,$DBCON)
+    $constructr -> post('/constructr/user/edit/:USER_ID/:GUID', $ADMIN_CHECK, function ($USER_ID,$GUID) use ($constructr,$DBCON)
         {
             if(_LOGGING == true)
             {
@@ -809,6 +827,14 @@
             else
             {
                 $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': Error User-Rights-Check: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                $constructr -> redirect(_BASE_URL . '/constructr/logout/');
+                die();
+            }
+
+            $USER_FORM_GUID = $constructr -> request() -> post('user_form_guid');
+            if($GUID != $USER_FORM_GUID || $_SESSION['tmp_form_guid'] != $GUID)
+            {
+                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ' - USER_FORM_GUID ERROR: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                 $constructr -> redirect(_BASE_URL . '/constructr/logout/');
                 die();
             }
@@ -1125,6 +1151,3 @@
             }
         }
     );
-    /*
-     * BENUTZERVERWALTUNG ENDE
-     * */

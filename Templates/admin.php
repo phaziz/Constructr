@@ -1,3 +1,10 @@
+<?php
+
+    if(!defined('CONSTRUCTR_INCLUDR'))
+    {
+        die('Direkter Zugriff nicht erlaubt');
+    }
+?>
 <!DOCTYPE html>
     <!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
     <!--[if IE 7]><html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
@@ -51,7 +58,7 @@
 
                         <?php
 
-                            if(isset($_GET['created-static']) && $_GET['created-static'] == true)
+                            if(isset($_GET['created-static']) && $_GET['created-static'] == 'true')
                             {
                                 ?>
                                     <div class="row response">
@@ -65,7 +72,7 @@
                                     </div><!-- // EOF ROW -->
                                 <?php
                             }
-                            if(isset($_GET['created-static']) && $_GET['created-static'] == false)
+                            if(isset($_GET['created-static']) && $_GET['created-static'] == 'false')
                             {
                                 ?>
                                     <div class="row response">
@@ -80,7 +87,7 @@
                                 <?php
                             }
 
-                            if(isset($_GET['optimized']) && $_GET['optimized'] == true)
+                            if(isset($_GET['optimized']) && $_GET['optimized'] == 'true')
                             {
                                 ?>
                                     <div class="row response">
@@ -94,7 +101,7 @@
                                     </div><!-- // EOF ROW -->
                                 <?php
                             }
-                            else if(isset($_GET['no-rights']) && $_GET['no-rights'] == true)
+                            else if(isset($_GET['no-rights']) && $_GET['no-rights'] == 'true')
                             {
                                 ?>
                                     <div class="row response">
@@ -125,7 +132,7 @@
                                                 <br>
                                                 <ul class="list-group">
                                                       <li class="list-group-item">
-                                                            <a href="<?php echo _BASE_URL; ?>/constructr/generate-static/" title="Statische Internetseiten jetzt generieren">Statische Internetseiten jetzt generieren</a>
+                                                            <a href="<?php echo _BASE_URL; ?>/constructr/generate-static/<?php echo $GUID ?>/" title="Statische Internetseiten jetzt generieren">Statische Internetseiten jetzt generieren</a>
                                                       </li>
                                                 </ul>
                                                 <br>
@@ -165,7 +172,7 @@
                                     <br>
                                     <ul class="list-group">
                                           <li class="list-group-item">
-                                                <a href="<?php echo _BASE_URL; ?>/constructr/optimization/" title="Datenbank optimieren">Datenbank optimieren</a>
+                                                <a href="<?php echo _BASE_URL; ?>/constructr/optimization/<?php echo $GUID ?>/" title="Datenbank optimieren">Datenbank optimieren</a>
                                           </li>
                                     </ul>
                                 </div><!-- // EOF JUMBOTRON -->

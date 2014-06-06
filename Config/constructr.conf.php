@@ -1,4 +1,9 @@
-<?php
+<?php 
+
+    if(!defined('CONSTRUCTR_INCLUDR'))
+    {
+        die('Direkter Zugriff nicht erlaubt');
+    }
 
     /*
      * 
@@ -18,7 +23,7 @@
     define('_BASE_URL','http://' . $_SERVER['HTTP_HOST']);
 
     // VERSIONSNUMMER CONSTRUCTR CMS
-    define('_VERSION','20140604');
+    define('_VERSION','20140606');
 
     // VERSCHLÜSSELUNGS SALZ
     define('_SALT','$2y$07$R.gJb2U2N.FmZ4hPp1y2CN$');

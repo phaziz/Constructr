@@ -13,7 +13,6 @@
             }
 
             $GUID = create_guid();
-            $_SESSION['tmp_form_guid'] = $GUID;
 
             $constructr -> render('admin_login.php', 
                 array
@@ -42,7 +41,6 @@
             }
 
             $GUID = create_guid();
-            $_SESSION['tmp_form_guid'] = $GUID;
 
             $constructr -> render('admin_login_error.php', 
                 array

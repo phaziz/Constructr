@@ -200,7 +200,7 @@
                                     @mkdir($ACT_DIR,0777,false);
                                 }
                             }
-                        }                            
+                        }
                     }
 
                     if(count($PAGE_CONTENT) != 0 && count($PAGE_CONTENT != ''))

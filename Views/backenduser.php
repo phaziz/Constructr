@@ -273,8 +273,6 @@
             }
 
             $GUID = create_guid();
-            $_SESSION['tmp_form_guid'] = $GUID;
-
             $MEM = 0;
             $MEM = number_format(((memory_get_usage()/1014)/1024),2,',','.') . ' MB';
 
@@ -556,7 +554,7 @@
             }
 
             $USER_FORM_GUID = $constructr -> request() -> post('user_form_guid');
-            if($GUID != $USER_FORM_GUID || $GUID != $_SESSION['tmp_form_guid'])
+            if($GUID != $USER_FORM_GUID)
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ' - USER_FORM_GUID ERROR: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                 $constructr -> redirect(_BASE_URL . '/constructr/logout/');
@@ -750,7 +748,6 @@
             }
             
             $GUID = create_guid();
-            $_SESSION['tmp_form_guid'] = $GUID;
 
             $MEM = 0;
             $MEM = number_format(((memory_get_usage()/1014)/1024),2,',','.') . ' MB';
@@ -832,7 +829,7 @@
             }
 
             $USER_FORM_GUID = $constructr -> request() -> post('user_form_guid');
-            if($GUID != $USER_FORM_GUID || $_SESSION['tmp_form_guid'] != $GUID)
+            if($GUID != $USER_FORM_GUID)
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ' - USER_FORM_GUID ERROR: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                 $constructr -> redirect(_BASE_URL . '/constructr/logout/');

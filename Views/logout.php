@@ -17,7 +17,6 @@
             $_SESSION['backend-user-username'] = '';
             $_SESSION['backend-user-password'] = '';
             $_SESSION['backend-user-id'] = '';
-            $_SESSION['tmp_form_guid'] = '';
             $_SESSION = array();
 
             if (ini_get("session.use_cookies"))

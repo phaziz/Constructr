@@ -1,0 +1,162 @@
+ERROR // 2014-06-11T15:53:18+02:00: : HelperAdminCheckError 0: constructr.phaziz.com/constructr
+DEBUG // 2014-06-11T15:53:18+02:00: : constructr.phaziz.com/constructr/login/
+DEBUG // 2014-06-11T15:53:23+02:00: phaziz: Successful login phaziz: constructr.phaziz.com/constructr/login/A3D34FE4/
+DEBUG // 2014-06-11T15:53:24+02:00: phaziz: constructr.phaziz.com/constructr/
+ERROR // 2014-06-11T15:53:27+02:00: phaziz User-Rights-Success 10: constructr.phaziz.com/constructr/pages/
+DEBUG // 2014-06-11T15:53:27+02:00: phaziz: constructr.phaziz.com/constructr/pages/
+ERROR // 2014-06-11T15:53:29+02:00: phaziz User-Rights-Success 20: constructr.phaziz.com/constructr/content/91/
+DEBUG // 2014-06-11T15:53:29+02:00: phaziz: constructr.phaziz.com/constructr/content/91/
+ERROR // 2014-06-11T15:53:31+02:00: phaziz User-Rights-Success 22: constructr.phaziz.com/constructr/content/91/76/edit/
+DEBUG // 2014-06-11T15:53:31+02:00: phaziz: constructr.phaziz.com/constructr/content/91/76/edit/
+ERROR // 2014-06-11T15:53:33+02:00: phaziz User-Rights-Success 22: constructr.phaziz.com/constructr/content/91/76/edit/77CDF92D/
+DEBUG // 2014-06-11T15:53:33+02:00: phaziz: constructr.phaziz.com/constructr/content/91/76/edit/77CDF92D/
+DEBUG // 2014-06-11T15:53:33+02:00: phaziz - USER_FORM_GUID ERROR: constructr.phaziz.com/constructr/content/91/76/edit/77CDF92D/
+DEBUG // 2014-06-11T15:53:34+02:00: Successful logout phaziz: constructr.phaziz.com/constructr/logout/
+DEBUG // 2014-06-11T15:53:34+02:00: : constructr.phaziz.com/constructr/login
+DEBUG // 2014-06-11T15:59:07+02:00: : constructr.phaziz.com/constructr/login
+DEBUG // 2014-06-11T15:59:12+02:00: phaziz: Successful login phaziz: constructr.phaziz.com/constructr/login/F83E8984/
+DEBUG // 2014-06-11T15:59:12+02:00: phaziz: constructr.phaziz.com/constructr/
+DEBUG // 2014-06-11T15:59:15+02:00: phaziz: constructr.phaziz.com/constructr/config/
+DEBUG // 2014-06-11T15:59:19+02:00: phaziz: constructr.phaziz.com/constructr/update-config/6B105915/
+DEBUG // 2014-06-11T15:59:19+02:00: phaziz: constructr.phaziz.com/constructr/config/?updated=true
+DEBUG // 2014-06-11T15:59:22+02:00: phaziz: constructr.phaziz.com/constructr/
+DEBUG // 2014-06-11T15:59:23+02:00: phaziz: constructr.phaziz.com/constructr/
+ERROR // 2014-06-11T15:59:24+02:00: phaziz User-Rights-Success 100: constructr.phaziz.com/constructr/generate-static/F1B5971D/
+ERROR // 2014-06-11T15:59:24+02:00: exception 'ErrorException' with message 'file_get_contents(http://constructr.phaziz.com/home) [<a href='function.file-get-contents'>function.file-get-contents</a>]: failed to open stream: HTTP request failed! HTTP/1.1 403 Forbidden
+' in /www/htdocs/v166371/CONSTRUCTR-CMS/Views/admin.php:223
+Stack trace:
+#0 [internal function]: Slim\Slim::handleErrors(2, 'file_get_conten...', '/www/htdocs/v16...', 223, Array)
+#1 /www/htdocs/v166371/CONSTRUCTR-CMS/Views/admin.php(223): file_get_contents('http://construc...')
+#2 [internal function]: {closure}('F1B5971D')
+#3 /www/htdocs/v166371/CONSTRUCTR-CMS/Slim/Route.php(454): call_user_func_array(Object(Closure), Array)
+#4 /www/htdocs/v166371/CONSTRUCTR-CMS/Slim/Slim.php(1315): Slim\Route->dispatch()
+#5 /www/htdocs/v166371/CONSTRUCTR-CMS/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#6 /www/htdocs/v166371/CONSTRUCTR-CMS/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#7 /www/htdocs/v166371/CONSTRUCTR-CMS/Slim/Middleware/SessionCookie.php(110): Slim\Middleware\MethodOverride->call()
+#8 /www/htdocs/v166371/CONSTRUCTR-CMS/Slim/Middleware/PrettyExceptions.php(67): Slim\Middleware\SessionCookie->call()
+#9 /www/htdocs/v166371/CONSTRUCTR-CMS/Slim/Slim.php(1262): Slim\Middleware\PrettyExceptions->call()
+#10 /www/htdocs/v166371/CONSTRUCTR-CMS/index.php(316): Slim\Slim->run()
+#11 {main}
+ERROR // 2014-06-11T16:04:37+02:00: phaziz User-Rights-Success 100: constructr.phaziz.com/constructr/generate-static/F1B5971D/
+ERROR // 2014-06-11T16:04:37+02:00: exception 'ErrorException' with message 'file_get_contents(http://constructr.phaziz.com/home) [<a href='function.file-get-contents'>function.file-get-contents</a>]: failed to open stream: HTTP request failed! HTTP/1.1 403 Forbidden
+' in /www/htdocs/v166371/CONSTRUCTR-CMS/Views/admin.php:223
+Stack trace:
+#0 [internal function]: Slim\Slim::handleErrors(2, 'file_get_conten...', '/www/htdocs/v16...', 223, Array)
+#1 /www/htdocs/v166371/CONSTRUCTR-CMS/Views/admin.php(223): file_get_contents('http://construc...')
+#2 [internal function]: {closure}('F1B5971D')
+#3 /www/htdocs/v166371/CONSTRUCTR-CMS/Slim/Route.php(454): call_user_func_array(Object(Closure), Array)
+#4 /www/htdocs/v166371/CONSTRUCTR-CMS/Slim/Slim.php(1315): Slim\Route->dispatch()
+#5 /www/htdocs/v166371/CONSTRUCTR-CMS/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#6 /www/htdocs/v166371/CONSTRUCTR-CMS/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#7 /www/htdocs/v166371/CONSTRUCTR-CMS/Slim/Middleware/SessionCookie.php(110): Slim\Middleware\MethodOverride->call()
+#8 /www/htdocs/v166371/CONSTRUCTR-CMS/Slim/Middleware/PrettyExceptions.php(67): Slim\Middleware\SessionCookie->call()
+#9 /www/htdocs/v166371/CONSTRUCTR-CMS/Slim/Slim.php(1262): Slim\Middleware\PrettyExceptions->call()
+#10 /www/htdocs/v166371/CONSTRUCTR-CMS/index.php(316): Slim\Slim->run()
+#11 {main}
+ERROR // 2014-06-11T16:04:38+02:00: phaziz User-Rights-Success 100: constructr.phaziz.com/constructr/generate-static/F1B5971D/
+ERROR // 2014-06-11T16:04:38+02:00: exception 'ErrorException' with message 'file_get_contents(http://constructr.phaziz.com/home) [<a href='function.file-get-contents'>function.file-get-contents</a>]: failed to open stream: HTTP request failed! HTTP/1.1 403 Forbidden
+' in /www/htdocs/v166371/CONSTRUCTR-CMS/Views/admin.php:223
+Stack trace:
+#0 [internal function]: Slim\Slim::handleErrors(2, 'file_get_conten...', '/www/htdocs/v16...', 223, Array)
+#1 /www/htdocs/v166371/CONSTRUCTR-CMS/Views/admin.php(223): file_get_contents('http://construc...')
+#2 [internal function]: {closure}('F1B5971D')
+#3 /www/htdocs/v166371/CONSTRUCTR-CMS/Slim/Route.php(454): call_user_func_array(Object(Closure), Array)
+#4 /www/htdocs/v166371/CONSTRUCTR-CMS/Slim/Slim.php(1315): Slim\Route->dispatch()
+#5 /www/htdocs/v166371/CONSTRUCTR-CMS/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#6 /www/htdocs/v166371/CONSTRUCTR-CMS/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#7 /www/htdocs/v166371/CONSTRUCTR-CMS/Slim/Middleware/SessionCookie.php(110): Slim\Middleware\MethodOverride->call()
+#8 /www/htdocs/v166371/CONSTRUCTR-CMS/Slim/Middleware/PrettyExceptions.php(67): Slim\Middleware\SessionCookie->call()
+#9 /www/htdocs/v166371/CONSTRUCTR-CMS/Slim/Slim.php(1262): Slim\Middleware\PrettyExceptions->call()
+#10 /www/htdocs/v166371/CONSTRUCTR-CMS/index.php(316): Slim\Slim->run()
+#11 {main}
+ERROR // 2014-06-11T16:06:13+02:00: phaziz User-Rights-Success 100: constructr.phaziz.com/constructr/generate-static/F1B5971D/
+ERROR // 2014-06-11T16:06:13+02:00: exception 'ErrorException' with message 'file_get_contents(http://constructr.phaziz.com/home) [<a href='function.file-get-contents'>function.file-get-contents</a>]: failed to open stream: HTTP request failed! HTTP/1.1 403 Forbidden
+' in /www/htdocs/v166371/CONSTRUCTR-CMS/Views/admin.php:223
+Stack trace:
+#0 [internal function]: Slim\Slim::handleErrors(2, 'file_get_conten...', '/www/htdocs/v16...', 223, Array)
+#1 /www/htdocs/v166371/CONSTRUCTR-CMS/Views/admin.php(223): file_get_contents('http://construc...')
+#2 [internal function]: {closure}('F1B5971D')
+#3 /www/htdocs/v166371/CONSTRUCTR-CMS/Slim/Route.php(454): call_user_func_array(Object(Closure), Array)
+#4 /www/htdocs/v166371/CONSTRUCTR-CMS/Slim/Slim.php(1315): Slim\Route->dispatch()
+#5 /www/htdocs/v166371/CONSTRUCTR-CMS/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#6 /www/htdocs/v166371/CONSTRUCTR-CMS/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#7 /www/htdocs/v166371/CONSTRUCTR-CMS/Slim/Middleware/SessionCookie.php(110): Slim\Middleware\MethodOverride->call()
+#8 /www/htdocs/v166371/CONSTRUCTR-CMS/Slim/Middleware/PrettyExceptions.php(67): Slim\Middleware\SessionCookie->call()
+#9 /www/htdocs/v166371/CONSTRUCTR-CMS/Slim/Slim.php(1262): Slim\Middleware\PrettyExceptions->call()
+#10 /www/htdocs/v166371/CONSTRUCTR-CMS/index.php(316): Slim\Slim->run()
+#11 {main}
+DEBUG // 2014-06-11T16:06:15+02:00: phaziz: constructr.phaziz.com/constructr/
+DEBUG // 2014-06-11T16:06:15+02:00: phaziz: constructr.phaziz.com/constructr/
+DEBUG // 2014-06-11T16:06:17+02:00: phaziz: constructr.phaziz.com/constructr/
+DEBUG // 2014-06-11T16:06:33+02:00: phaziz: constructr.phaziz.com/constructr/
+ERROR // 2014-06-11T16:06:35+02:00: phaziz User-Rights-Success 100: constructr.phaziz.com/constructr/generate-static/BEF030A4/
+ERROR // 2014-06-11T16:06:35+02:00: exception 'ErrorException' with message 'file_get_contents(http://constructr.phaziz.com/home) [<a href='function.file-get-contents'>function.file-get-contents</a>]: failed to open stream: HTTP request failed! HTTP/1.1 403 Forbidden
+' in /www/htdocs/v166371/CONSTRUCTR-CMS/Views/admin.php:223
+Stack trace:
+#0 [internal function]: Slim\Slim::handleErrors(2, 'file_get_conten...', '/www/htdocs/v16...', 223, Array)
+#1 /www/htdocs/v166371/CONSTRUCTR-CMS/Views/admin.php(223): file_get_contents('http://construc...')
+#2 [internal function]: {closure}('BEF030A4')
+#3 /www/htdocs/v166371/CONSTRUCTR-CMS/Slim/Route.php(454): call_user_func_array(Object(Closure), Array)
+#4 /www/htdocs/v166371/CONSTRUCTR-CMS/Slim/Slim.php(1315): Slim\Route->dispatch()
+#5 /www/htdocs/v166371/CONSTRUCTR-CMS/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#6 /www/htdocs/v166371/CONSTRUCTR-CMS/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#7 /www/htdocs/v166371/CONSTRUCTR-CMS/Slim/Middleware/SessionCookie.php(110): Slim\Middleware\MethodOverride->call()
+#8 /www/htdocs/v166371/CONSTRUCTR-CMS/Slim/Middleware/PrettyExceptions.php(67): Slim\Middleware\SessionCookie->call()
+#9 /www/htdocs/v166371/CONSTRUCTR-CMS/Slim/Slim.php(1262): Slim\Middleware\PrettyExceptions->call()
+#10 /www/htdocs/v166371/CONSTRUCTR-CMS/index.php(316): Slim\Slim->run()
+#11 {main}
+ERROR // 2014-06-11T16:08:40+02:00: phaziz User-Rights-Success 100: constructr.phaziz.com/constructr/generate-static/BEF030A4/
+ERROR // 2014-06-11T16:08:40+02:00: exception 'ErrorException' with message 'file_get_contents(http://constructr.phaziz.com/home) [<a href='function.file-get-contents'>function.file-get-contents</a>]: failed to open stream: HTTP request failed! HTTP/1.1 403 Forbidden
+' in /www/htdocs/v166371/CONSTRUCTR-CMS/Views/admin.php:223
+Stack trace:
+#0 [internal function]: Slim\Slim::handleErrors(2, 'file_get_conten...', '/www/htdocs/v16...', 223, Array)
+#1 /www/htdocs/v166371/CONSTRUCTR-CMS/Views/admin.php(223): file_get_contents('http://construc...')
+#2 [internal function]: {closure}('BEF030A4')
+#3 /www/htdocs/v166371/CONSTRUCTR-CMS/Slim/Route.php(454): call_user_func_array(Object(Closure), Array)
+#4 /www/htdocs/v166371/CONSTRUCTR-CMS/Slim/Slim.php(1315): Slim\Route->dispatch()
+#5 /www/htdocs/v166371/CONSTRUCTR-CMS/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#6 /www/htdocs/v166371/CONSTRUCTR-CMS/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#7 /www/htdocs/v166371/CONSTRUCTR-CMS/Slim/Middleware/SessionCookie.php(110): Slim\Middleware\MethodOverride->call()
+#8 /www/htdocs/v166371/CONSTRUCTR-CMS/Slim/Middleware/PrettyExceptions.php(67): Slim\Middleware\SessionCookie->call()
+#9 /www/htdocs/v166371/CONSTRUCTR-CMS/Slim/Slim.php(1262): Slim\Middleware\PrettyExceptions->call()
+#10 /www/htdocs/v166371/CONSTRUCTR-CMS/index.php(316): Slim\Slim->run()
+#11 {main}
+ERROR // 2014-06-11T16:09:06+02:00: phaziz User-Rights-Success 100: constructr.phaziz.com/constructr/generate-static/BEF030A4/
+ERROR // 2014-06-11T16:09:06+02:00: exception 'ErrorException' with message 'file_get_contents(http://constructr.phaziz.com/home) [<a href='function.file-get-contents'>function.file-get-contents</a>]: failed to open stream: HTTP request failed! HTTP/1.1 403 Forbidden
+' in /www/htdocs/v166371/CONSTRUCTR-CMS/Views/admin.php:223
+Stack trace:
+#0 [internal function]: Slim\Slim::handleErrors(2, 'file_get_conten...', '/www/htdocs/v16...', 223, Array)
+#1 /www/htdocs/v166371/CONSTRUCTR-CMS/Views/admin.php(223): file_get_contents('http://construc...')
+#2 [internal function]: {closure}('BEF030A4')
+#3 /www/htdocs/v166371/CONSTRUCTR-CMS/Slim/Route.php(454): call_user_func_array(Object(Closure), Array)
+#4 /www/htdocs/v166371/CONSTRUCTR-CMS/Slim/Slim.php(1315): Slim\Route->dispatch()
+#5 /www/htdocs/v166371/CONSTRUCTR-CMS/Slim/Middleware/Flash.php(85): Slim\Slim->call()
+#6 /www/htdocs/v166371/CONSTRUCTR-CMS/Slim/Middleware/MethodOverride.php(92): Slim\Middleware\Flash->call()
+#7 /www/htdocs/v166371/CONSTRUCTR-CMS/Slim/Middleware/SessionCookie.php(110): Slim\Middleware\MethodOverride->call()
+#8 /www/htdocs/v166371/CONSTRUCTR-CMS/Slim/Middleware/PrettyExceptions.php(67): Slim\Middleware\SessionCookie->call()
+#9 /www/htdocs/v166371/CONSTRUCTR-CMS/Slim/Slim.php(1262): Slim\Middleware\PrettyExceptions->call()
+#10 /www/htdocs/v166371/CONSTRUCTR-CMS/index.php(316): Slim\Slim->run()
+#11 {main}
+ERROR // 2014-06-11T16:09:32+02:00: phaziz User-Rights-Success 100: constructr.phaziz.com/constructr/generate-static/BEF030A4/
+DEBUG // 2014-06-11T16:09:32+02:00: phaziz: constructr.phaziz.com/constructr/generate-static/BEF030A4/
+DEBUG // 2014-06-11T16:09:32+02:00: phaziz: constructr.phaziz.com/constructr/?created-static=true
+DEBUG // 2014-06-11T16:10:08+02:00: phaziz: constructr.phaziz.com/constructr/?created-static=true
+DEBUG // 2014-06-11T16:10:11+02:00: phaziz: constructr.phaziz.com/constructr/config/
+DEBUG // 2014-06-11T16:10:17+02:00: phaziz: constructr.phaziz.com/constructr/update-config/FEA3E290/
+DEBUG // 2014-06-11T16:10:17+02:00: phaziz: constructr.phaziz.com/constructr/config/?updated=true
+DEBUG // 2014-06-11T16:10:19+02:00: phaziz: constructr.phaziz.com/constructr/
+ERROR // 2014-06-11T16:10:21+02:00: phaziz User-Rights-Success 100: constructr.phaziz.com/constructr/generate-static/2A43737A/
+DEBUG // 2014-06-11T16:10:21+02:00: phaziz: constructr.phaziz.com/constructr/generate-static/2A43737A/
+DEBUG // 2014-06-11T16:10:21+02:00: phaziz: constructr.phaziz.com/constructr/?created-static=true
+DEBUG // 2014-06-11T16:10:24+02:00: phaziz: constructr.phaziz.com/constructr/config/
+INFO // 2014-06-11T16:10:32+02:00: ConstructrCMS serves static 11.06.2014, 16:10:32:constructr.phaziz.com/
+INFO // 2014-06-11T16:10:34+02:00: ConstructrCMS serves static 11.06.2014, 16:10:34:constructr.phaziz.com/
+INFO // 2014-06-11T16:10:35+02:00: ConstructrCMS serves static 11.06.2014, 16:10:35:constructr.phaziz.com/seite-2/
+INFO // 2014-06-11T16:10:36+02:00: ConstructrCMS serves static 11.06.2014, 16:10:36:constructr.phaziz.com/unterseite-2/
+INFO // 2014-06-11T16:10:37+02:00: ConstructrCMS serves static 11.06.2014, 16:10:37:constructr.phaziz.com/unterseite-1/
+INFO // 2014-06-11T16:10:37+02:00: ConstructrCMS serves static 11.06.2014, 16:10:37:constructr.phaziz.com/seite-3/
+INFO // 2014-06-11T16:10:38+02:00: ConstructrCMS serves static 11.06.2014, 16:10:38:constructr.phaziz.com/
+INFO // 2014-06-11T16:10:40+02:00: ConstructrCMS serves static 11.06.2014, 16:10:40:constructr.phaziz.com/
+INFO // 2014-06-11T16:10:56+02:00: ConstructrCMS serves static 11.06.2014, 16:10:56:constructr.phaziz.com/
+DEBUG // 2014-06-11T16:11:32+02:00: Successful logout phaziz: constructr.phaziz.com/constructr/logout/
+DEBUG // 2014-06-11T16:11:33+02:00: : constructr.phaziz.com/constructr/login

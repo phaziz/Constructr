@@ -1,13 +1,8 @@
 <?php
 
-    if(!defined('CONSTRUCTR_INCLUDR'))
-    {
-        die('Direkter Zugriff nicht erlaubt');
-    }
-
-    $constructr -> get('/constructr/logout/', function () use ($constructr)
+    $constructr -> get('/constructr/logout/', function () use ($constructr,$_CONSTRUCTR_CONF)
         {
-            if(_LOGGING == true)
+            if($_CONSTRUCTR_CONF['_LOGGING'] == true)
             {
                 $constructr -> getLog() -> debug('Successful logout ' . $_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
             }
@@ -26,7 +21,7 @@
             }
 
             session_destroy();
-            $constructr -> redirect(_BASE_URL . '/constructr/login');
+            $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/login');
             die();
         }
     );

@@ -1,11 +1,6 @@
 <?php
 
-    if(!defined('CONSTRUCTR_INCLUDR'))
-    {
-        die('Direkter Zugriff nicht erlaubt');
-    }
-
-    $constructr -> get('/constructr/media/', $ADMIN_CHECK, function () use ($constructr,$DBCON)
+    $constructr -> get('/constructr/media/', $ADMIN_CHECK, function () use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
             $START = microtime(true);
             $USERNAME = $_SESSION['backend-user-username'];
@@ -32,7 +27,7 @@
                     if($RIGHTS_COUNTR != 1)
                     {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Error ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                        $constructr -> redirect(_BASE_URL . '/constructr/?no-rights=true');
+                        $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/?no-rights=true');
                         die();
                     }
                     else
@@ -49,11 +44,11 @@
             else
             {
                 $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': Error User-Rights-Check: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                $constructr -> redirect(_BASE_URL . '/constructr/logout/');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/logout/');
                 die();
             }
 
-            if(_LOGGING == true)
+            if($_CONSTRUCTR_CONF['_LOGGING'] == true)
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
             }
@@ -66,7 +61,7 @@
             catch (PDOException $e)
             {
                 $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());   
-                $constructr -> redirect(_BASE_URL . '/constructr/');             
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/');             
                 die();
             }
 
@@ -81,6 +76,7 @@
                     'IMAGES' => $IMAGES,
                     'MEDIA_COUNTER' => $MEDIA_COUNTER,
                     'USERNAME' => $USERNAME,
+                    '_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,
                     'SUBTITLE' => 'Admin-Dashboard / Medienverwaltung',
                     'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.'
                 )
@@ -89,7 +85,7 @@
         }
     );
 
-    $constructr -> get('/constructr/media/new/', $ADMIN_CHECK, function () use ($constructr,$DBCON)
+    $constructr -> get('/constructr/media/new/', $ADMIN_CHECK, function () use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
             $START = microtime(true);
 
@@ -114,7 +110,7 @@
                     if($RIGHTS_COUNTR != 1)
                     {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Error ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                        $constructr -> redirect(_BASE_URL . '/constructr/?no-rights=true');
+                        $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/?no-rights=true');
                         die();
                     }
                     else
@@ -131,13 +127,13 @@
             else
             {
                 $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': Error User-Rights-Check: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                $constructr -> redirect(_BASE_URL . '/constructr/logout/');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/logout/');
                 die();
             }
 
             $USERNAME = $_SESSION['backend-user-username'];
     
-            if(_LOGGING == true)
+            if($_CONSTRUCTR_CONF['_LOGGING'] == true)
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
             }
@@ -152,9 +148,10 @@
                     'MEM' => $MEM,
                     'USERNAME' => $USERNAME,
                     'GUID' => $GUID,
-                    'FORM_ACTION' => _BASE_URL . '/constructr/media/new/' . $GUID . '/',
+                    'FORM_ACTION' => $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/media/new/' . $GUID . '/',
                     'FORM_METHOD' => 'post',
                     'FORM_ENCTYPE' => 'multipart/form-data',
+                    '_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,
                     'SUBTITLE' => 'Admin-Dashboard / Medienverwaltung - Neuer Upload',
                     'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.'
                 )
@@ -163,7 +160,7 @@
         }
     );
     
-    $constructr -> post('/constructr/media/new/:GUID/', $ADMIN_CHECK, function ($GUID) use ($constructr,$DBCON)
+    $constructr -> post('/constructr/media/new/:GUID/', $ADMIN_CHECK, function ($GUID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
             $constructr -> view -> setData('BackendUserRight',41);
 
@@ -186,7 +183,7 @@
                     if($RIGHTS_COUNTR != 1)
                     {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Error ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                        $constructr -> redirect(_BASE_URL . '/constructr/?no-rights=true');
+                        $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/?no-rights=true');
                         die();
                     }
                     else
@@ -203,11 +200,11 @@
             else
             {
                 $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': Error User-Rights-Check: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                $constructr -> redirect(_BASE_URL . '/constructr/logout/');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/logout/');
                 die();
             }
 
-            if(_LOGGING == true)
+            if($_CONSTRUCTR_CONF['_LOGGING'] == true)
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
             }
@@ -216,7 +213,7 @@
             if($GUID != $USER_FORM_GUID)
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ' - USER_FORM_GUID ERROR: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                $constructr -> redirect(_BASE_URL . '/constructr/logout/');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/logout/');
                 die();
             }
 
@@ -254,32 +251,32 @@
                 catch (PDOException $e)
                 {
                     $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                    $constructr -> redirect(_BASE_URL . '/constructr/media/?res=create-media-false');
+                    $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/media/?res=create-media-false');
                     die();
                 }
 
-                if(_LOGGING == true)
+                if($_CONSTRUCTR_CONF['_LOGGING'] == true)
                 {
                     $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
                 }
 
-                $constructr -> redirect(_BASE_URL . '/constructr/media/?res=create-media-true');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/media/?res=create-media-true');
                 die();
             }
             else
             {
-                if(_LOGGING == true)
+                if($_CONSTRUCTR_CONF['_LOGGING'] == true)
                 {
                     $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
                 }
 
-                $constructr -> redirect(_BASE_URL . '/constructr/media/?res=create-media-false');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/media/?res=create-media-false');
                 die();
             }
         }
     );
 
-    $constructr -> get('/constructr/media/delete/:MEDIA_ID/', $ADMIN_CHECK, function ($MEDIA_ID) use ($constructr,$DBCON)
+    $constructr -> get('/constructr/media/delete/:MEDIA_ID/', $ADMIN_CHECK, function ($MEDIA_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
             $constructr -> view -> setData('BackendUserRight',42);
 
@@ -302,7 +299,7 @@
                     if($RIGHTS_COUNTR != 1)
                     {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Error ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                        $constructr -> redirect(_BASE_URL . '/constructr/?no-rights=true');
+                        $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/?no-rights=true');
                         die();
                     }
                     else
@@ -319,11 +316,11 @@
             else
             {
                 $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': Error User-Rights-Check: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                $constructr -> redirect(_BASE_URL . '/constructr/logout/');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/logout/');
                 die();
             }
 
-            if(_LOGGING == true)
+            if($_CONSTRUCTR_CONF['_LOGGING'] == true)
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
             }
@@ -332,12 +329,7 @@
             {
                 try
                 {
-                    $DELETER = $DBCON -> prepare('
-                        DELETE FROM constructr_media
-                        WHERE media_id = :MEDIA_ID
-                        LIMIT 1;
-                    ');
-                    
+                    $DELETER = $DBCON -> prepare('DELETE FROM constructr_media WHERE media_id = :MEDIA_ID LIMIT 1;');
                     $DELETER -> execute(
                         array
                         (
@@ -348,32 +340,32 @@
                 catch (PDOException $e)
                 {
                     $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                    $constructr -> redirect(_BASE_URL . '/constructr/media/?res=del-media-false');
+                    $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/media/?res=del-media-false');
                     die();
                 }
 
-                if(_LOGGING == true)
+                if($_CONSTRUCTR_CONF['_LOGGING'] == true)
                 {
                     $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                 }
 
-                $constructr -> redirect(_BASE_URL . '/constructr/media/?res=del-media-true');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/media/?res=del-media-true');
                 die();
             }
             else
             {
-                if(_LOGGING == true)
+                if($_CONSTRUCTR_CONF['_LOGGING'] == true)
                 {
                     $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                 }
 
-                $constructr -> redirect(_BASE_URL . '/constructr/media/?res=del-media-false');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/media/?res=del-media-false');
                 die();
             }
         }
     );
 
-    $constructr -> get('/constructr/media/details/:MEDIA_ID/', $ADMIN_CHECK, function ($MEDIA_ID) use ($constructr,$DBCON)
+    $constructr -> get('/constructr/media/details/:MEDIA_ID/', $ADMIN_CHECK, function ($MEDIA_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
             $constructr -> view -> setData('BackendUserRight',43);
 
@@ -396,7 +388,7 @@
                     if($RIGHTS_COUNTR != 1)
                     {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Error ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                        $constructr -> redirect(_BASE_URL . '/constructr/?no-rights=true');
+                        $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/?no-rights=true');
                         die();
                     }
                     else
@@ -413,13 +405,13 @@
             else
             {
                 $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': Error User-Rights-Check: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                $constructr -> redirect(_BASE_URL . '/constructr/logout/');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/logout/');
                 die();
             }
 
             $USERNAME = $_SESSION['backend-user-username'];
 
-            if(_LOGGING == true)
+            if($_CONSTRUCTR_CONF['_LOGGING'] == true)
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
             }
@@ -429,7 +421,6 @@
                 try
                 {
                     $DETAILS = $DBCON -> prepare('SELECT * FROM constructr_media WHERE media_id = :MEDIA_ID LIMIT 1;');
-
                     $DETAILS -> execute(
                         array
                         (
@@ -442,7 +433,7 @@
                 catch (PDOException $e)
                 {
                     $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                    $constructr -> redirect(_BASE_URL . '/constructr/media/?res=del-media-false');
+                    $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/media/?res=del-media-false');
                     die();
                 }
                 
@@ -452,6 +443,7 @@
                         'MEM' => $MEM,
                         'DETAILS' => $DETAILS,
                         'USERNAME' => $USERNAME,
+                        '_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,
                         'SUBTITLE' => 'Admin-Dashboard / Medienverwaltung - Detailansicht',
                         'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.'
                     )
@@ -461,18 +453,18 @@
             }
             else
             {
-                if(_LOGGING == true)
+                if($_CONSTRUCTR_CONF['_LOGGING'] == true)
                 {
                     $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                 }
 
-                $constructr -> redirect(_BASE_URL . '/constructr/media/?res=details-media-false');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/media/?res=details-media-false');
                 die();
             }
         }
     );
 
-    $constructr -> get('/constructr/media/trash/', $ADMIN_CHECK, function () use ($constructr,$DBCON)
+    $constructr -> get('/constructr/media/trash/', $ADMIN_CHECK, function () use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
             $constructr -> view -> setData('BackendUserRight',44);
 
@@ -495,7 +487,7 @@
                     if($RIGHTS_COUNTR != 1)
                     {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Error ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                        $constructr -> redirect(_BASE_URL . '/constructr/?no-rights=true');
+                        $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/?no-rights=true');
                         die();
                     }
                     else
@@ -512,7 +504,7 @@
             else
             {
                 $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': Error User-Rights-Check: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                $constructr -> redirect(_BASE_URL . '/constructr/logout/');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/logout/');
                 die();
             }
 
@@ -520,7 +512,7 @@
             $USERNAME = $_SESSION['backend-user-username'];
             $MEDIA_COUNTER = 0;
 
-            if(_LOGGING == true)
+            if($_CONSTRUCTR_CONF['_LOGGING'] == true)
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
             }
@@ -565,7 +557,7 @@
             catch (PDOException $e)
             {
                 $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());   
-                $constructr -> redirect(_BASE_URL . '/constructr/');             
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/');             
                 die();
             }
 
@@ -582,6 +574,7 @@
                     'IMAGES' => $IMAGES,
                     'MEDIA_COUNTER' => $MEDIA_COUNTER,
                     'USERNAME' => $USERNAME,
+                    '_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,
                     'SUBTITLE' => 'Admin-Dashboard / M&uuml;lleimer',
                     'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.'
                 )
@@ -590,7 +583,7 @@
         }
     );
 
-    $constructr -> get('/constructr/media/trash/delete/:MEDIA_FILE/', $ADMIN_CHECK, function ($MEDIA_FILE) use ($constructr,$DBCON)
+    $constructr -> get('/constructr/media/trash/delete/:MEDIA_FILE/', $ADMIN_CHECK, function ($MEDIA_FILE) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
             $constructr -> view -> setData('BackendUserRight',45);
 
@@ -613,7 +606,7 @@
                     if($RIGHTS_COUNTR != 1)
                     {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Error ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                        $constructr -> redirect(_BASE_URL . '/constructr/?no-rights=true');
+                        $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/?no-rights=true');
                         die();
                     }
                     else
@@ -630,11 +623,11 @@
             else
             {
                 $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': Error User-Rights-Check: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                $constructr -> redirect(_BASE_URL . '/constructr/logout/');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/logout/');
                 die();
             }
 
-            if(_LOGGING == true)
+            if($_CONSTRUCTR_CONF['_LOGGING'] == true)
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
             }
@@ -642,17 +635,17 @@
             if($MEDIA_FILE != '')
             {
                 unlink('./' . base64_decode($MEDIA_FILE));
-                $constructr -> redirect(_BASE_URL . '/constructr/media/trash/?res=del-media-true');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/media/trash/?res=del-media-true');
                 die();
             }
             else
             {
-                if(_LOGGING == true)
+                if($_CONSTRUCTR_CONF['_LOGGING'] == true)
                 {
                     $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                 }
 
-                $constructr -> redirect(_BASE_URL . '/constructr/media/trash/?res=del-media-false');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/media/trash/?res=del-media-false');
                 die();
             }
         }

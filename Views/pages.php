@@ -1,11 +1,6 @@
 <?php
 
-    if(!defined('CONSTRUCTR_INCLUDR'))
-    {
-        die('Direkter Zugriff nicht erlaubt');
-    }
-
-    $constructr -> get('/constructr/pages/', $ADMIN_CHECK, function () use ($constructr,$DBCON)
+    $constructr -> get('/constructr/pages/', $ADMIN_CHECK, function () use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
             $START = microtime(true);
             $USERNAME = $_SESSION['backend-user-username'];
@@ -32,7 +27,7 @@
                     if($RIGHTS_COUNTR != 1)
                     {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Error ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                        $constructr -> redirect(_BASE_URL . '/constructr/?no-rights=true');
+                        $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/?no-rights=true');
                         die();
                     }
                     else
@@ -49,36 +44,24 @@
             else
             {
                 $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': Error User-Rights-Check: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                $constructr -> redirect(_BASE_URL . '/constructr/logout/');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/logout/');
                 die();
             }
 
-            if(_LOGGING == true)
+            if($_CONSTRUCTR_CONF['_LOGGING'] == true)
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
             }
 
             try
             {
-               $PAGES = $DBCON -> query('
-                    SELECT n.*,
-                             round((n.pages_rgt-n.pages_lft-1)/2,0) AS pages_subpages_countr,
-                             count(*)-1+(n.pages_lft>1) AS pages_level,
-                             ((min(p.pages_rgt)-n.pages_rgt-(n.pages_lft>1))/2) > 0 AS pages_lower,
-                             (((n.pages_lft-max(p.pages_lft)>1))) AS pages_upper
-                        FROM constructr_pages n,
-                             constructr_pages p
-                       WHERE n.pages_lft BETWEEN p.pages_lft AND p.pages_rgt
-                         AND (p.pages_id != n.pages_id OR n.pages_lft = 1)
-                    GROUP BY n.pages_id
-                    ORDER BY n.pages_lft;
-               ');
+               $PAGES = $DBCON -> query('SELECT n.*, round((n.pages_rgt-n.pages_lft-1)/2,0) AS pages_subpages_countr, count(*)-1+(n.pages_lft>1) AS pages_level, ((min(p.pages_rgt)-n.pages_rgt-(n.pages_lft>1))/2) > 0 AS pages_lower, (((n.pages_lft-max(p.pages_lft)>1))) AS pages_upper FROM constructr_pages n, constructr_pages p WHERE n.pages_lft BETWEEN p.pages_lft AND p.pages_rgt AND (p.pages_id != n.pages_id OR n.pages_lft = 1) GROUP BY n.pages_id ORDER BY n.pages_lft;');
                $PAGES_COUNTR = $PAGES -> rowCount();
             }
             catch (PDOException $e)
             {
                 $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());   
-                $constructr -> redirect(_BASE_URL . '/constructr/');             
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/');             
                 die();
             }
 
@@ -92,6 +75,7 @@
                     'USERNAME' => $USERNAME,
                     'PAGES' => $PAGES,
                     'NEW_PAGES' => $NEW_PAGES,
+                    '_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,
                     'PAGES_COUNTR' => $PAGES_COUNTR,
                     'SUBTITLE' => 'Admin-Dashboard / Seitenverwaltung',
                     'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.'
@@ -102,7 +86,7 @@
         }
     );
 
-    $constructr -> get('/constructr/pages/new/', $ADMIN_CHECK, function () use ($constructr,$DBCON)
+    $constructr -> get('/constructr/pages/new/', $ADMIN_CHECK, function () use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
             $START = microtime(true);
 
@@ -127,7 +111,7 @@
                     if($RIGHTS_COUNTR != 1)
                     {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Error ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                        $constructr -> redirect(_BASE_URL . '/constructr/?no-rights=true');
+                        $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/?no-rights=true');
                         die();
                     }
                     else
@@ -144,13 +128,13 @@
             else
             {
                 $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': Error User-Rights-Check: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                $constructr -> redirect(_BASE_URL . '/constructr/logout/');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/logout/');
                 die();
             }
 
             $USERNAME = $_SESSION['backend-user-username'];
 
-            if(_LOGGING == true)
+            if($_CONSTRUCTR_CONF['_LOGGING'] == true)
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
             }
@@ -165,8 +149,9 @@
                     'MEM' => $MEM,
                     'USERNAME' => $USERNAME,
                     'GUID' => $GUID,
-                    'FORM_ACTION' => _BASE_URL . '/constructr/pages/new/' . $GUID . '/',
+                    'FORM_ACTION' => $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/new/' . $GUID . '/',
                     'FORM_METHOD' => 'post',
+                    '_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,
                     'FORM_ENCTYPE' => 'application/x-www-form-urlencoded',
                     'SUBTITLE' => 'Admin-Dashboard / Seitenverwaltung - Neue Seite erstellen',
                     'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.'
@@ -177,9 +162,9 @@
         }
     );
 
-    $constructr -> post('/constructr/pages/new/:GUID/', $ADMIN_CHECK, function ($GUID) use ($constructr,$DBCON)
+    $constructr -> post('/constructr/pages/new/:GUID/', $ADMIN_CHECK, function ($GUID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            if(_LOGGING == true)
+            if($_CONSTRUCTR_CONF['_LOGGING'] == true)
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
             }
@@ -205,7 +190,7 @@
                     if($RIGHTS_COUNTR != 1)
                     {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Error ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                        $constructr -> redirect(_BASE_URL . '/constructr/?no-rights=true');
+                        $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/?no-rights=true');
                         die();
                     }
                     else
@@ -222,7 +207,7 @@
             else
             {
                 $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': Error User-Rights-Check: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                $constructr -> redirect(_BASE_URL . '/constructr/logout/');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/logout/');
                 die();
             }
 
@@ -230,13 +215,14 @@
             if($GUID != $USER_FORM_GUID)
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ' - USER_FORM_GUID ERROR: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                $constructr -> redirect(_BASE_URL . '/constructr/logout/');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/logout/');
                 die();
             }
 
             $PAGE_DATETIME = date('Y-m-d H:i:s');
             $PAGE_NAME = $constructr -> request() -> post('page_name');
-            $PAGE_URL = $constructr -> request() -> post('page_url');            
+            $PAGE_URL = $constructr -> request() -> post('page_url');
+            $PAGE_TEMPLATE = $constructr -> request() -> post('page_template');
             $PAGE_TITLE = $constructr -> request() -> post('page_title');
             $PAGE_DESCRIPTION = $constructr -> request() -> post('page_description');
             $PAGE_KEYWORDS = $constructr -> request() -> post('page_keywords');
@@ -258,10 +244,15 @@
             $PAGE_ACTIVE = 0;
             $PAGES_COUNTR = 0;
 
-            if($PAGE_URL == 'admin')
+            if($PAGE_URL == 'constructr')
             {
-                $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=create-page-false');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/?res=create-page-false');
                 die();
+            }
+
+            if($PAGE_TEMPLATE == '')
+            {
+                $PAGE_TEMPLATE = 'index.php';                
             }
 
             try 
@@ -279,13 +270,13 @@
             catch (PDOException $e)
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=create-page-false');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/?res=create-page-false');
                 die();
             }
 
             if($URL_COUNTR != 0)
             {
-                $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=url-exists');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/?res=url-exists');
                 die();
             }
 
@@ -297,7 +288,7 @@
             catch (PDOException $e)
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=create-page-false');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/?res=create-page-false');
                 die();
             }
 
@@ -318,7 +309,7 @@
                 catch (PDOException $e)
                 {
                     $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                    $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=create-page-false');
+                    $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/?res=create-page-false');
                     die();
                 }
             }
@@ -327,13 +318,7 @@
             {
                 try
                 {
-                    $UPDATE_PAGES = $DBCON -> prepare('
-                        UPDATE constructr_pages
-                        SET
-                        pages_rgt = pages_rgt + 2 
-                        WHERE pages_rgt >= :PAGE_LFT;
-                    ');
-
+                    $UPDATE_PAGES = $DBCON -> prepare('UPDATE constructr_pages SET pages_rgt = pages_rgt+2  WHERE pages_rgt >= :PAGE_LFT;');
                     $UPDATE_PAGES -> execute(
                         array
                         (
@@ -344,16 +329,17 @@
                 catch (PDOException $e)
                 {
                     $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                    $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=create-page-false');
+                    $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/?res=create-page-false');
                     die();
                 }
 
                 try
                 {
-                    $QUERY = 'INSERT INTO constructr_pages SET pages_datetime = :PAGE_DATETIME,pages_name = :PAGE_NAME,pages_url = :PAGE_URL,pages_title = :PAGE_TITLE,pages_description = :PAGE_DESCRIPTION,pages_keywords = :PAGE_KEYWORDS,pages_lft = :PAGE_LFT,pages_rgt = :PAGE_RGT,pages_active = :PAGE_ACTIVE;';
+                    $QUERY = 'INSERT INTO constructr_pages SET pages_datetime = :PAGE_DATETIME,pages_name = :PAGE_NAME,pages_url = :PAGE_URL,pages_template = :PAGE_TEMPLATE,pages_title = :PAGE_TITLE,pages_description = :PAGE_DESCRIPTION,pages_keywords = :PAGE_KEYWORDS,pages_lft = :PAGE_LFT,pages_rgt = :PAGE_RGT,pages_active = :PAGE_ACTIVE;';
                     $STMT = $DBCON -> prepare($QUERY);
                     $STMT -> bindParam(':PAGE_NAME',$PAGE_NAME,PDO::PARAM_STR);
                     $STMT -> bindParam(':PAGE_URL',$PAGE_URL,PDO::PARAM_STR);
+                    $STMT -> bindParam(':PAGE_TEMPLATE',$PAGE_TEMPLATE,PDO::PARAM_STR);
                     $STMT -> bindParam(':PAGE_TITLE',$PAGE_TITLE,PDO::PARAM_STR);
                     $STMT -> bindParam(':PAGE_DESCRIPTION',$PAGE_DESCRIPTION,PDO::PARAM_STR);
                     $STMT -> bindParam(':PAGE_KEYWORDS',$PAGE_KEYWORDS,PDO::PARAM_STR);
@@ -366,33 +352,33 @@
                 catch (PDOException $e)
                 {
                     $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                    $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=create-page-false');
+                    $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/?res=create-page-false');
                     die();
                 }
 
-                if(_LOGGING == true)
+                if($_CONSTRUCTR_CONF['_LOGGING'] == true)
                 {
                     $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
                 }
 
-                $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=create-page-true');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/?res=create-page-true');
                 die();
             }
             else
             {
-                if(_LOGGING == true)
+                if($_CONSTRUCTR_CONF['_LOGGING'] == true)
                 {
                     $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
                 }
 
-                $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=create-page-false');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/?res=create-page-false');
 
                 die();
             }
         }
     );
 
-    $constructr -> get('/constructr/pages/new/sub/:ID_MOTHER/:MOTHER_LFT/', $ADMIN_CHECK, function ($MOTHER_ID,$MOTHER_LFT) use ($constructr,$DBCON)
+    $constructr -> get('/constructr/pages/new/sub/:ID_MOTHER/:MOTHER_LFT/', $ADMIN_CHECK, function ($MOTHER_ID,$MOTHER_LFT) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
             $constructr -> view -> setData('BackendUserRight',12);
 
@@ -415,7 +401,7 @@
                     if($RIGHTS_COUNTR != 1)
                     {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Error ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                        $constructr -> redirect(_BASE_URL . '/constructr/?no-rights=true');
+                        $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/?no-rights=true');
                         die();
                     }
                     else
@@ -432,14 +418,14 @@
             else
             {
                 $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': Error User-Rights-Check: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                $constructr -> redirect(_BASE_URL . '/constructr/logout/');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/logout/');
                 die();
             }
 
             $START = microtime(true);
             $USERNAME = $_SESSION['backend-user-username'];
 
-            if(_LOGGING == true)
+            if($_CONSTRUCTR_CONF['_LOGGING'] == true)
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
             }
@@ -456,7 +442,8 @@
                     'GUID' => $GUID,
                     'MOTHER_ID' => $MOTHER_ID,
                     'MOTHER_LFT' => $MOTHER_LFT,
-                    'FORM_ACTION' => _BASE_URL . '/constructr/pages/new/sub/' . $GUID .'/',
+                    '_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,
+                    'FORM_ACTION' => $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/new/sub/' . $GUID .'/',
                     'FORM_METHOD' => 'post',
                     'FORM_ENCTYPE' => 'application/x-www-form-urlencoded',
                     'SUBTITLE' => 'Admin-Dashboard / Seitenverwaltung - Neue Unterseite erstellen',
@@ -468,7 +455,7 @@
         }
     );
 
-    $constructr -> post('/constructr/pages/new/sub/:GUID/', $ADMIN_CHECK, function ($GUID) use ($constructr,$DBCON)
+    $constructr -> post('/constructr/pages/new/sub/:GUID/', $ADMIN_CHECK, function ($GUID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
             $constructr -> view -> setData('BackendUserRight',12);
 
@@ -491,7 +478,7 @@
                     if($RIGHTS_COUNTR != 1)
                     {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Error ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                        $constructr -> redirect(_BASE_URL . '/constructr/?no-rights=true');
+                        $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/?no-rights=true');
                         die();
                     }
                     else
@@ -508,11 +495,11 @@
             else
             {
                 $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': Error User-Rights-Check: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                $constructr -> redirect(_BASE_URL . '/constructr/logout/');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/logout/');
                 die();
             }
 
-            if(_LOGGING == true)
+            if($_CONSTRUCTR_CONF['_LOGGING'] == true)
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
             }
@@ -521,7 +508,7 @@
             if($GUID != $USER_FORM_GUID)
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ' - USER_FORM_GUID ERROR: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                $constructr -> redirect(_BASE_URL . '/constructr/logout/');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/logout/');
                 die();
             }
 
@@ -531,6 +518,7 @@
             $PAGE_MOTHER_LFT = $constructr -> request() -> post('mother_lft');
             $PAGE_NAME = $constructr -> request() -> post('page_name');
             $PAGE_URL = $constructr -> request() -> post('page_url');
+            $PAGE_TEMPLATE = $constructr -> request() -> post('page_template');
             $PAGE_TITLE = $constructr -> request() -> post('page_title');
             $PAGE_DESCRIPTION = $constructr -> request() -> post('page_description');
             $PAGE_KEYWORDS = $constructr -> request() -> post('page_keywords');
@@ -542,18 +530,20 @@
             $PAGE_ACTIVE = 0;
             $PAGES_COUNTR = 0;
 
-            if($PAGE_URL == 'admin')
+            if($PAGE_URL == 'constructr')
             {
-                $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=create-page-false');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/?res=create-page-false');
                 die();
+            }
+
+            if($PAGE_TEMPLATE == '')
+            {
+                $PAGE_TEMPLATE = 'index.php';
             }
 
             try
             {
-                $URL = $DBCON -> prepare('
-                    SELECT * FROM constructr_pages WHERE pages_url = :PAGE_URL;
-                ');
-
+                $URL = $DBCON -> prepare('SELECT * FROM constructr_pages WHERE pages_url = :PAGE_URL;');
                 $URL -> execute(
                     array
                     (
@@ -566,13 +556,13 @@
             catch (PDOException $e)
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=create-page-false');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/?res=create-page-false');
                 die();
             }
 
             if($URL_COUNTR != 0)
             {
-                $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=url-exists');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/?res=url-exists');
                 die();
             }
 
@@ -580,13 +570,7 @@
             {
                 try
                 {
-                    $UPDATE_PAGES_LFT = $DBCON -> prepare('
-                        UPDATE constructr_pages
-                        SET
-                        pages_lft = pages_lft+2
-                        WHERE pages_lft >= :PAGE_LFT
-                    ');
-
+                    $UPDATE_PAGES_LFT = $DBCON -> prepare('UPDATE constructr_pages SET pages_lft = pages_lft+2 WHERE pages_lft >= :PAGE_LFT ');
                     $UPDATE_PAGES_LFT -> execute(
                         array
                         (
@@ -594,14 +578,8 @@
                         )
                     );
 
-                    $UPDATE_PAGES_LFT = $DBCON -> prepare('
-                        UPDATE constructr_pages
-                        SET
-                        pages_rgt = pages_rgt+2
-                        WHERE pages_rgt >= :PAGE_LFT
-                    ');
-
-                    $UPDATE_PAGES_LFT -> execute(
+                    $UPDATE_PAGES_RGT = $DBCON -> prepare('UPDATE constructr_pages SET pages_rgt = pages_rgt+2 WHERE pages_rgt >= :PAGE_LFT');
+                    $UPDATE_PAGES_RGT -> execute(
                         array
                         (
                             ':PAGE_LFT' => $PAGE_LFT
@@ -611,17 +589,18 @@
                 catch (PDOException $e)
                 {
                     $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                    $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=create-page-false');
+                    $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/?res=create-page-false');
 
                     die();
                 }
 
                 try
                 {
-                    $QUERY = 'INSERT INTO constructr_pages SET pages_datetime = :PAGE_DATETIME,pages_name = :PAGE_NAME,pages_url = :PAGE_URL,pages_title = :PAGE_TITLE,pages_description = :PAGE_DESCRIPTION,pages_keywords = :PAGE_KEYWORDS,pages_lft = :PAGE_LFT,pages_rgt = :PAGE_RGT,pages_active = :PAGE_ACTIVE;';
+                    $QUERY = 'INSERT INTO constructr_pages SET pages_datetime = :PAGE_DATETIME,pages_name = :PAGE_NAME,pages_url = :PAGE_URL,pages_template = :PAGE_TEMPLATE,pages_title = :PAGE_TITLE,pages_description = :PAGE_DESCRIPTION,pages_keywords = :PAGE_KEYWORDS,pages_lft = :PAGE_LFT,pages_rgt = :PAGE_RGT,pages_active = :PAGE_ACTIVE;';
                     $STMT = $DBCON -> prepare($QUERY);
                     $STMT -> bindParam(':PAGE_NAME',$PAGE_NAME,PDO::PARAM_STR);
                     $STMT -> bindParam(':PAGE_URL',$PAGE_URL,PDO::PARAM_STR);
+                    $STMT -> bindParam(':PAGE_TEMPLATE',$PAGE_TEMPLATE,PDO::PARAM_STR);
                     $STMT -> bindParam(':PAGE_TITLE',$PAGE_TITLE,PDO::PARAM_STR);
                     $STMT -> bindParam(':PAGE_KEYWORDS',$PAGE_KEYWORDS,PDO::PARAM_STR);
                     $STMT -> bindParam(':PAGE_DESCRIPTION',$PAGE_DESCRIPTION,PDO::PARAM_STR);
@@ -634,34 +613,34 @@
                 catch (PDOException $e)
                 {
                     $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                    $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=create-page-false');
+                    $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/?res=create-page-false');
                     die();
                 }
 
-                if(_LOGGING == true)
+                if($_CONSTRUCTR_CONF['_LOGGING'] == true)
                 {
                     $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
                 }
 
-                $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=create-page-true');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/?res=create-page-true');
 
                 die();
             }
             else
             {
-                if(_LOGGING == true)
+                if($_CONSTRUCTR_CONF['_LOGGING'] == true)
                 {
                     $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
                 }
 
-                $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=create-page-false');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/?res=create-page-false');
 
                 die();
             }
         }
     );
 
-    $constructr -> get('/constructr/pages/edit/:PAGE_ID/', $ADMIN_CHECK, function ($PAGE_ID) use ($constructr,$DBCON)
+    $constructr -> get('/constructr/pages/edit/:PAGE_ID/', $ADMIN_CHECK, function ($PAGE_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
             $START = microtime(true);
 
@@ -686,7 +665,7 @@
                     if($RIGHTS_COUNTR != 1)
                     {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Error ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                        $constructr -> redirect(_BASE_URL . '/constructr/?no-rights=true');
+                        $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/?no-rights=true');
                         die();
                     }
                     else
@@ -703,13 +682,13 @@
             else
             {
                 $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': Error User-Rights-Check: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                $constructr -> redirect(_BASE_URL . '/constructr/logout/');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/logout/');
                 die();
             }
 
             $USERNAME = $_SESSION['backend-user-username'];
 
-            if(_LOGGING == true)
+            if($_CONSTRUCTR_CONF['_LOGGING'] == true)
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
             }
@@ -729,7 +708,7 @@
             catch (PDOException $e)
             {
                 $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=edit-page-false');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/?res=edit-page-false');
                 echo 'nep';
                 die();
             }
@@ -745,7 +724,8 @@
                     'USERNAME' => $USERNAME,
                     'GUID' => $GUID,
                     'PAGE' => $PAGE,
-                    'FORM_ACTION' => _BASE_URL . '/constructr/pages/edit/' . $GUID . '/',
+                    '_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,
+                    'FORM_ACTION' => $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/edit/' . $GUID . '/',
                     'FORM_METHOD' => 'post',
                     'FORM_ENCTYPE' => 'application/x-www-form-urlencoded',
                     'SUBTITLE' => 'Admin-Dashboard / Seitenverwaltung - Seite bearbeiten',
@@ -757,7 +737,7 @@
         }
     );
 
-    $constructr -> post('/constructr/pages/edit/:GUID/', $ADMIN_CHECK, function ($GUID) use ($constructr,$DBCON)
+    $constructr -> post('/constructr/pages/edit/:GUID/', $ADMIN_CHECK, function ($GUID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
             $constructr -> view -> setData('BackendUserRight',13);
 
@@ -780,7 +760,7 @@
                     if($RIGHTS_COUNTR != 1)
                     {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Error ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                        $constructr -> redirect(_BASE_URL . '/constructr/?no-rights=true');
+                        $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/?no-rights=true');
                         die();
                     }
                     else
@@ -797,11 +777,11 @@
             else
             {
                 $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': Error User-Rights-Check: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                $constructr -> redirect(_BASE_URL . '/constructr/logout/');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/logout/');
                 die();
             }
 
-            if(_LOGGING == true)
+            if($_CONSTRUCTR_CONF['_LOGGING'] == true)
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
             }
@@ -810,7 +790,7 @@
             if($GUID != $USER_FORM_GUID)
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ' - USER_FORM_GUID ERROR: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                $constructr -> redirect(_BASE_URL . '/constructr/logout/');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/logout/');
                 die();
             }
 
@@ -818,6 +798,7 @@
             $PAGE_ID = $constructr -> request() -> post('page_id');
             $PAGE_NAME = $constructr -> request() -> post('page_name');
             $PAGE_URL = $constructr -> request() -> post('page_url');
+            $PAGE_TEMPLATE = $constructr -> request() -> post('page_template');
             $PAGE_TITLE = $constructr -> request() -> post('page_title');
             $PAGE_DESCRIPTION = $constructr -> request() -> post('page_description');
             $PAGE_KEYWORDS = $constructr -> request() -> post('page_keywords');
@@ -834,38 +815,35 @@
                 }
             }
 
-            if($PAGE_NAME != '' && $PAGE_URL != '' && $PAGE_ID != '')
+            if($PAGE_TEMPLATE == '')
+            {
+                $PAGE_TEMPLATE = 'index.php';
+            }
+
+            if($PAGE_NAME != '' && $PAGE_TEMPLATE != '' && $PAGE_ID != '')
             {
                 try
                 {
-                    $UPDATE_PAGES = $DBCON -> prepare('
-                        UPDATE constructr_pages
-                        SET
-                        pages_name = :PAGE_NAME,
-                        pages_url = :PAGE_URL, 
-                        pages_title = :PAGE_TITLE, 
-                        pages_description = :PAGE_DESCRIPTION, 
-                        pages_keywords = :PAGE_KEYWORDS 
-                        WHERE pages_id >= :PAGE_ID LIMIT 1;
-                    ');
+                    $UPDATE_PAGES = $DBCON -> prepare('UPDATE constructr_pages SET pages_name = :PAGE_NAME, pages_url = :PAGE_URL, pages_template = :PAGE_TEMPLATE, pages_title = :PAGE_TITLE, pages_description = :PAGE_DESCRIPTION, pages_keywords = :PAGE_KEYWORDS WHERE pages_id >= :PAGE_ID LIMIT 1;');
                     $UPDATE_PAGES -> execute(
                         array
                         (
                             ':PAGE_ID' => $PAGE_ID,
                             ':PAGE_NAME' => $PAGE_NAME,
                             ':PAGE_URL' => $PAGE_URL,
+                            ':PAGE_TEMPLATE' => $PAGE_TEMPLATE,
                             ':PAGE_TITLE' => $PAGE_TITLE,
                             ':PAGE_DESCRIPTION' => $PAGE_DESCRIPTION,
                             ':PAGE_KEYWORDS' => $PAGE_KEYWORDS
                         )
                     );
 
-                    if(_LOGGING == true)
+                    if($_CONSTRUCTR_CONF['_LOGGING'] == true)
                     {
                         $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
                     }
 
-                    $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=edit-page-true');
+                    $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/?res=edit-page-true');
 
                     die();
                 }
@@ -873,30 +851,30 @@
                 {
                     $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
 
-                    if(_LOGGING == true)
+                    if($_CONSTRUCTR_CONF['_LOGGING'] == true)
                     {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
                     }
 
-                    $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=edit-page-false');
+                    $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/?res=edit-page-false');
                     die();
                 }
             }
             else
             {
-                if(_LOGGING == true)
+                if($_CONSTRUCTR_CONF['_LOGGING'] == true)
                 {
                     $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
                 }
 
-                $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=edit-page-false');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/?res=edit-page-false');
 
                 die();
             }
         }
     );
 
-    $constructr -> get('/constructr/pages/activate/:PAGE_ID/', $ADMIN_CHECK, function ($PAGE_ID) use ($constructr,$DBCON)
+    $constructr -> get('/constructr/pages/activate/:PAGE_ID/', $ADMIN_CHECK, function ($PAGE_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
             $constructr -> view -> setData('BackendUserRight',14);
 
@@ -919,7 +897,7 @@
                     if($RIGHTS_COUNTR != 1)
                     {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Error ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                        $constructr -> redirect(_BASE_URL . '/constructr/?no-rights=true');
+                        $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/?no-rights=true');
                         die();
                     }
                     else
@@ -936,11 +914,11 @@
             else
             {
                 $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': Error User-Rights-Check: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                $constructr -> redirect(_BASE_URL . '/constructr/logout/');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/logout/');
                 die();
             }
 
-            if(_LOGGING == true)
+            if($_CONSTRUCTR_CONF['_LOGGING'] == true)
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
             }
@@ -950,7 +928,6 @@
                 try
                 {
                     $UPDATE_PAGES = $DBCON -> prepare('UPDATE constructr_pages SET pages_active = :PAGE_ACTIVE WHERE pages_id = :PAGE_ID LIMIT 1;');
-
                     $UPDATE_PAGES -> execute(
                         array(
                             ':PAGE_ACTIVE' => 1,
@@ -961,29 +938,29 @@
                 catch (PDOException $e)
                 {
                     $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                    $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=activate-page-false');
+                    $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/?res=activate-page-false');
                     die();
                 }
                 
-                if(_LOGGING == true)
+                if($_CONSTRUCTR_CONF['_LOGGING'] == true)
                 {
                     $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
                 }
 
-                $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=activate-page-true');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/?res=activate-page-true');
 
                 die();
             }
             else
             {
-                $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=activate-page-false');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/?res=activate-page-false');
 
                 die();
             }
         }
     );
     
-    $constructr -> get('/constructr/pages/deactivate/:PAGE_ID/', $ADMIN_CHECK, function ($PAGE_ID) use ($constructr,$DBCON)
+    $constructr -> get('/constructr/pages/deactivate/:PAGE_ID/', $ADMIN_CHECK, function ($PAGE_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
             $constructr -> view -> setData('BackendUserRight',14);
 
@@ -1006,7 +983,7 @@
                     if($RIGHTS_COUNTR != 1)
                     {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Error ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                        $constructr -> redirect(_BASE_URL . '/constructr/?no-rights=true');
+                        $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/?no-rights=true');
                         die();
                     }
                     else
@@ -1023,11 +1000,11 @@
             else
             {
                 $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': Error User-Rights-Check: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                $constructr -> redirect(_BASE_URL . '/constructr/logout/');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/logout/');
                 die();
             }
 
-            if(_LOGGING == true)
+            if($_CONSTRUCTR_CONF['_LOGGING'] == true)
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
             }
@@ -1037,7 +1014,6 @@
                 try
                 {
                     $UPDATE_PAGES = $DBCON -> prepare('UPDATE constructr_pages SET pages_active = :PAGE_ACTIVE WHERE pages_id = :PAGE_ID LIMIT 1;');
-
                     $UPDATE_PAGES -> execute(
                         array
                         (
@@ -1049,29 +1025,29 @@
                 catch (PDOException $e)
                 {
                     $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                    $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=activate-page-false');
+                    $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/?res=activate-page-false');
 
                     die();
                 }
                 
-                if(_LOGGING == true)
+                if($_CONSTRUCTR_CONF['_LOGGING'] == true)
                 {
                     $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
                 }
 
-                $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=activate-page-true');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/?res=activate-page-true');
 
                 die();
             }
             else
             {
-                $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=activate-page-false');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/?res=activate-page-false');
                 die();
             }
         }
     );
 
-    $constructr -> get('/constructr/pages/delete-single/:PAGE_ID/:PAGE_LFT/:PAGE_RGT/', $ADMIN_CHECK, function ($PAGE_ID,$PAGE_LFT,$PAGE_RGT) use ($constructr,$DBCON)
+    $constructr -> get('/constructr/pages/delete-single/:PAGE_ID/:PAGE_LFT/:PAGE_RGT/', $ADMIN_CHECK, function ($PAGE_ID,$PAGE_LFT,$PAGE_RGT) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
             $constructr -> view -> setData('BackendUserRight',15);
 
@@ -1094,7 +1070,7 @@
                     if($RIGHTS_COUNTR != 1)
                     {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Error ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                        $constructr -> redirect(_BASE_URL . '/constructr/?no-rights=true');
+                        $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/?no-rights=true');
                         die();
                     }
                     else
@@ -1111,11 +1087,11 @@
             else
             {
                 $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': Error User-Rights-Check: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                $constructr -> redirect(_BASE_URL . '/constructr/logout/');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/logout/');
                 die();
             }
 
-            if(_LOGGING == true)
+            if($_CONSTRUCTR_CONF['_LOGGING'] == true)
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
             }
@@ -1124,10 +1100,7 @@
             {
                 try
                 {
-                    $CONTENT = $DBCON -> prepare('
-                        SELECT * FROM constructr_content WHERE content_page_id = :PAGE_ID LIMIT 1;
-                    ');
-
+                    $CONTENT = $DBCON -> prepare('SELECT * FROM constructr_content WHERE content_page_id = :PAGE_ID LIMIT 1;');
                     $CONTENT -> execute(
                         array
                         (
@@ -1140,24 +1113,19 @@
                 catch (PDOException $e)
                 {
                     $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                    $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=del-single-false');
+                    $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/?res=del-single-false');
                     die();
                 }
 
                 if($CONTENT_COUNTR != 0)
                 {
-                    $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=content-not-empty');
+                    $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/?res=content-not-empty');
                     die();
                 }
 
                 try
                 {
-                    $DELETER = $DBCON -> prepare('
-                        DELETE FROM constructr_pages
-                        WHERE pages_id = :PAGE_ID
-                        LIMIT 1;
-                    ');
-
+                    $DELETER = $DBCON -> prepare('DELETE FROM constructr_pages WHERE pages_id = :PAGE_ID LIMIT 1;');
                     $DELETER -> execute(
                         array
                         (
@@ -1168,19 +1136,13 @@
                 catch (PDOException $e)
                 {
                     $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                    $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=del-single-false');
+                    $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/?res=del-single-false');
                     die();
                 }
 
                 try
                 {
-                    $UPDATEER = $DBCON -> prepare('
-                        UPDATE constructr_pages
-                        SET
-                        pages_lft = pages_lft-1, pages_rgt = pages_rgt-1
-                        WHERE pages_lft BETWEEN :PAGE_LFT AND :PAGE_RGT;
-                    ');
-
+                    $UPDATEER = $DBCON -> prepare('UPDATE constructr_pages SET pages_lft = pages_lft-1, pages_rgt = pages_rgt-1 WHERE pages_lft BETWEEN :PAGE_LFT AND :PAGE_RGT;');
                     $UPDATEER -> execute(
                         array
                         (
@@ -1192,18 +1154,13 @@
                 catch (PDOException $e)
                 {
                     $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                    $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=del-single-false');
+                    $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/?res=del-single-false');
                     die();
                 }
 
                 try
                 {
-                    $UPDATEER = $DBCON -> prepare('
-                        UPDATE constructr_pages
-                        SET
-                        pages_lft = pages_lft-2 WHERE pages_lft > :PAGE_RGT;
-                    ');
-
+                    $UPDATEER = $DBCON -> prepare('UPDATE constructr_pages SET pages_lft = pages_lft-2 WHERE pages_lft > :PAGE_RGT;');
                     $UPDATEER -> execute(
                         array
                         (
@@ -1214,18 +1171,13 @@
                 catch (PDOException $e)
                 {
                     $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                    $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=del-single-false');
+                    $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/?res=del-single-false');
                     die();
                 }
 
                 try
                 {
-                    $UPDATEER = $DBCON -> prepare('
-                        UPDATE constructr_pages
-                        SET
-                        pages_rgt = pages_rgt-2 WHERE pages_rgt > :PAGE_RGT;
-                    ');
-
+                    $UPDATEER = $DBCON -> prepare('UPDATE constructr_pages SET pages_rgt = pages_rgt-2 WHERE pages_rgt > :PAGE_RGT;');
                     $UPDATEER -> execute(
                         array
                         (
@@ -1236,32 +1188,32 @@
                 catch (PDOException $e)
                 {
                     $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                    $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=del-single-false');
+                    $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/?res=del-single-false');
                     die();
                 }
 
-                if(_LOGGING == true)
+                if($_CONSTRUCTR_CONF['_LOGGING'] == true)
                 {
                     $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                 }
 
-                $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=del-single-true');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/?res=del-single-true');
                 die();
             }
             else
             {
-                if(_LOGGING == true)
+                if($_CONSTRUCTR_CONF['_LOGGING'] == true)
                 {
                     $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                 }
 
-                $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=del-single-false');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/?res=del-single-false');
                 die();
             }
         }
     );
     
-    $constructr -> get('/constructr/pages/delete-recursive/:PAGE_ID/:PAGE_LFT/:PAGE_RGT/', $ADMIN_CHECK, function ($PAGE_ID,$PAGE_LFT,$PAGE_RGT) use ($constructr,$DBCON)
+    $constructr -> get('/constructr/pages/delete-recursive/:PAGE_ID/:PAGE_LFT/:PAGE_RGT/', $ADMIN_CHECK, function ($PAGE_ID,$PAGE_LFT,$PAGE_RGT) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
             $constructr -> view -> setData('BackendUserRight',16);
 
@@ -1284,7 +1236,7 @@
                     if($RIGHTS_COUNTR != 1)
                     {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Error ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                        $constructr -> redirect(_BASE_URL . '/constructr/?no-rights=true');
+                        $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/?no-rights=true');
                         die();
                     }
                     else
@@ -1301,11 +1253,11 @@
             else
             {
                 $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': Error User-Rights-Check: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                $constructr -> redirect(_BASE_URL . '/constructr/logout/');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/logout/');
                 die();
             }
 
-            if(_LOGGING == true)
+            if($_CONSTRUCTR_CONF['_LOGGING'] == true)
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
             }
@@ -1315,7 +1267,6 @@
                 try
                 {
                     $CONTENT = $DBCON -> prepare('SELECT * FROM constructr_content WHERE content_page_id = :PAGE_ID LIMIT 1;');
-
                     $CONTENT -> execute(
                         array
                         (
@@ -1328,23 +1279,19 @@
                 catch (PDOException $e)
                 {
                     $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                    $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=del-recursive-false');
+                    $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/?res=del-recursive-false');
                     die();
                 }
 
                 if($CONTENT_COUNTR != 0)
                 {
-                    $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=content-not-empty');
+                    $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/?res=content-not-empty');
                     die();
                 }
 
                 try
                 {
-                    $DELETER = $DBCON -> prepare('
-                        DELETE FROM constructr_pages
-                        WHERE pages_lft BETWEEN :PAGE_LFT AND :PAGE_RGT;
-                    ');
-                    
+                    $DELETER = $DBCON -> prepare('DELETE FROM constructr_pages WHERE pages_lft BETWEEN :PAGE_LFT AND :PAGE_RGT;');
                     $DELETER -> execute(
                         array
                         (
@@ -1356,18 +1303,13 @@
                 catch (PDOException $e)
                 {
                     $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                    $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=del-recursive-false');
+                    $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/?res=del-recursive-false');
                     die();
                 }
 
                 try
                 {
-                    $UPDATEER = $DBCON -> prepare('
-                        UPDATE constructr_pages
-                        SET pages_lft = pages_lft - ROUND((:PAGE_RGT-:PAGE_LFT+1))
-                        WHERE pages_lft > :PAGE_RGT;
-                    ');
-
+                    $UPDATEER = $DBCON -> prepare('UPDATE constructr_pages SET pages_lft = pages_lft - ROUND((:PAGE_RGT-:PAGE_LFT+1)) WHERE pages_lft > :PAGE_RGT;');
                     $UPDATEER -> execute(
                         array
                         (
@@ -1379,18 +1321,13 @@
                 catch (PDOException $e)
                 {
                     $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                    $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=del-recursive-false');
+                    $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/?res=del-recursive-false');
                     die();
                 }
 
                 try
                 {
-                    $UPDATEER = $DBCON -> prepare('
-                        UPDATE constructr_pages
-                        SET pages_rgt = pages_rgt - ROUND((:PAGE_RGT-:PAGE_LFT+1))
-                        WHERE pages_rgt > :PAGE_RGT;
-                    ');
-
+                    $UPDATEER = $DBCON -> prepare('UPDATE constructr_pages SET pages_rgt = pages_rgt - ROUND((:PAGE_RGT-:PAGE_LFT+1)) WHERE pages_rgt > :PAGE_RGT;');
                     $UPDATEER -> execute(
                         array
                         (
@@ -1402,32 +1339,32 @@
                 catch (PDOException $e)
                 {
                     $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                    $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=del-recursive-false');
+                    $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/?res=del-recursive-false');
                     die();
                 }
 
-                if(_LOGGING == true)
+                if($_CONSTRUCTR_CONF['_LOGGING'] == true)
                 {
                     $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                 }
 
-                $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=del-recursive-true');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/?res=del-recursive-true');
                 die();
             }
             else
             {
-                if(_LOGGING == true)
+                if($_CONSTRUCTR_CONF['_LOGGING'] == true)
                 {
                     $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                 }
 
-                $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=del-recursive-false');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/?res=del-recursive-false');
                 die();
             }
         }
     );
 
-    $constructr -> get('/constructr/pages/reorder/:METHOD/:PAGE_ID/', $ADMIN_CHECK, function ($METHOD,$PAGE_ID) use ($constructr,$DBCON)
+    $constructr -> get('/constructr/pages/reorder/:METHOD/:PAGE_ID/', $ADMIN_CHECK, function ($METHOD,$PAGE_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
             $constructr -> view -> setData('BackendUserRight',17);
 
@@ -1450,7 +1387,7 @@
                     if($RIGHTS_COUNTR != 1)
                     {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Error ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                        $constructr -> redirect(_BASE_URL . '/constructr/?no-rights=true');
+                        $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/?no-rights=true');
                         die();
                     }
                     else
@@ -1467,11 +1404,11 @@
             else
             {
                 $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': Error User-Rights-Check: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                $constructr -> redirect(_BASE_URL . '/constructr/logout/');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/logout/');
                 die();
             }
 
-            if(_LOGGING == true)
+            if($_CONSTRUCTR_CONF['_LOGGING'] == true)
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
             }
@@ -1480,26 +1417,14 @@
             {
                 try
                 {
-                    $SELEKTOR = $DBCON -> prepare('
-                        SELECT * 
-                        FROM constructr_pages
-                        WHERE pages_id = :PAGE_ID
-                        LIMIT 1;
-                    ');
-
-                    $SELEKTOR -> execute(
-                        array
-                        (
-                            ':PAGE_ID' => $PAGE_ID
-                        )
-                    );
-
+                    $SELEKTOR = $DBCON -> prepare('SELECT * FROM constructr_pages WHERE pages_id = :PAGE_ID LIMIT 1;');
+                    $SELEKTOR -> execute(array(':PAGE_ID' => $PAGE_ID));
                     $SELEKTOR = $SELEKTOR -> fetch();
                 }
                 catch (PDOException $e)
                 {
                     $constructr -> getLog() -> debug('1) ' . $_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                    $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=reorder-error');
+                    $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/?res=reorder-error');
                     die();
                 }
 
@@ -1512,20 +1437,8 @@
                 {
                     try
                     {
-                        $SELECT_TARGET_PAGE = $DBCON -> prepare('
-                            SELECT * 
-                            FROM constructr_pages
-                            WHERE pages_rgt = :TARGET_PAGE
-                            LIMIT 1;
-                        ');
-
-                        $SELECT_TARGET_PAGE -> execute(
-                            array
-                            (
-                                ':TARGET_PAGE' => ($PAGE_LFT - 1)
-                            )
-                        );
-
+                        $SELECT_TARGET_PAGE = $DBCON -> prepare('SELECT * FROM constructr_pages WHERE pages_rgt = :TARGET_PAGE LIMIT 1;');
+                        $SELECT_TARGET_PAGE -> execute(array(':TARGET_PAGE' => ($PAGE_LFT - 1)));
                         $SELECT_TARGET_PAGE = $SELECT_TARGET_PAGE -> fetch();
                         $TARGET_PAGE_ID = $SELECT_TARGET_PAGE['pages_id'];
                         $TARGET_PAGE_LFT = $SELECT_TARGET_PAGE['pages_lft'];
@@ -1535,7 +1448,7 @@
                     catch (PDOException $e)
                     {
                         $constructr -> getLog() -> debug('3) ' . $_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                        $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=reorder-error');
+                        $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/?res=reorder-error');
                         die();
                     }
                 }
@@ -1543,20 +1456,8 @@
                 {
                     try
                     {
-                        $SELECT_TARGET_PAGE = $DBCON -> prepare('
-                            SELECT * 
-                            FROM constructr_pages
-                            WHERE pages_lft = :TARGET_PAGE
-                            LIMIT 1;
-                        ');
-
-                        $SELECT_TARGET_PAGE -> execute(
-                            array
-                            (
-                                ':TARGET_PAGE' => ($PAGE_RGT + 1)
-                            )
-                        );
-
+                        $SELECT_TARGET_PAGE = $DBCON -> prepare('SELECT * FROM constructr_pages WHERE pages_lft = :TARGET_PAGE LIMIT 1;');
+                        $SELECT_TARGET_PAGE -> execute(array(':TARGET_PAGE' => ($PAGE_RGT + 1)));
                         $SELECT_TARGET_PAGE = $SELECT_TARGET_PAGE -> fetch();
                         $TARGET_PAGE_ID = $SELECT_TARGET_PAGE['pages_id'];
                         $TARGET_PAGE_LFT = $SELECT_TARGET_PAGE['pages_lft'];
@@ -1566,7 +1467,7 @@
                     catch (PDOException $e)
                     {
                         $constructr -> getLog() -> debug('3) ' . $_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                        $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=reorder-error');
+                        $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/?res=reorder-error');
                         die();
                     }
                 }
@@ -1576,20 +1477,8 @@
                     try
                     {
                         $UPDATE_PAGES = $DBCON -> prepare('
-                            UPDATE constructr_pages
-                            SET
-                            pages_lft = :TARGET_PAGE_LFT,
-                            pages_rgt = :TARGET_PAGE_RGT
-                            WHERE 
-                            pages_id = :PAGE_ID
-                            LIMIT 1;
-                            UPDATE constructr_pages
-                            SET
-                            pages_lft = :PAGE_LFT,
-                            pages_rgt = :PAGE_RGT
-                            WHERE 
-                            pages_id = :TARGET_PAGE_ID
-                            LIMIT 1;
+                            UPDATE constructr_pages SET pages_lft = :TARGET_PAGE_LFT, pages_rgt = :TARGET_PAGE_RGT WHERE pages_id = :PAGE_ID LIMIT 1;
+                            UPDATE constructr_pages SET pages_lft = :PAGE_LFT, pages_rgt = :PAGE_RGT WHERE pages_id = :TARGET_PAGE_ID LIMIT 1;
                         ');
 
                         $UPDATE_PAGES -> execute(
@@ -1607,11 +1496,11 @@
                     catch (PDOException $e)
                     {
                         $constructr -> getLog() -> debug('5) ' . $_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                        $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=reorder-error');
+                        $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/?res=reorder-error');
                         die();
                     }
 
-                    $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=reorder-success');
+                    $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/?res=reorder-success');
                     die();
                 }
                 else
@@ -1626,32 +1515,10 @@
                         try
                         {
                             $UPDATE_PAGES = $DBCON -> prepare('
-                                UPDATE constructr_pages
-                                SET
-                                pages_temp_marker = :TEMP_MARKER
-                                WHERE 
-                                pages_lft BETWEEN :TARGET_PAGE_LFT AND :TARGET_PAGE_RGT;
-                                UPDATE constructr_pages
-                                SET
-                                pages_lft = (pages_lft - (:TARGET_CHILDREN_COUNTER * 2)),
-                                pages_rgt = (pages_rgt - (:TARGET_CHILDREN_COUNTER * 2))
-                                WHERE
-                                pages_lft BETWEEN :PAGE_LFT AND :PAGE_RGT
-                                AND
-                                pages_temp_marker = :EMPTY_VALUE;
-                                UPDATE constructr_pages
-                                SET
-                                pages_lft = (pages_lft + (:CHILDREN_COUNTER * 2)),
-                                pages_rgt = (pages_rgt + (:CHILDREN_COUNTER * 2))
-                                WHERE
-                                pages_lft BETWEEN :TARGET_PAGE_LFT AND :TARGET_PAGE_RGT
-                                AND
-                                pages_temp_marker = :TEMP_MARKER;
-                                UPDATE constructr_pages
-                                SET
-                                pages_temp_marker = :EMPTY_VALUE
-                                WHERE
-                                pages_temp_marker = :TEMP_MARKER;
+                                UPDATE constructr_pages SET pages_temp_marker = :TEMP_MARKER WHERE pages_lft BETWEEN :TARGET_PAGE_LFT AND :TARGET_PAGE_RGT;
+                                UPDATE constructr_pages SET pages_lft = (pages_lft - (:TARGET_CHILDREN_COUNTER * 2)), pages_rgt = (pages_rgt - (:TARGET_CHILDREN_COUNTER * 2)) WHERE pages_lft BETWEEN :PAGE_LFT AND :PAGE_RGT AND pages_temp_marker = :EMPTY_VALUE;
+                                UPDATE constructr_pages SET pages_lft = (pages_lft + (:CHILDREN_COUNTER * 2)), pages_rgt = (pages_rgt + (:CHILDREN_COUNTER * 2)) WHERE pages_lft BETWEEN :TARGET_PAGE_LFT AND :TARGET_PAGE_RGT AND pages_temp_marker = :TEMP_MARKER;
+                                UPDATE constructr_pages SET pages_temp_marker = :EMPTY_VALUE WHERE pages_temp_marker = :TEMP_MARKER;
                             ');
 
                             $UPDATE_PAGES -> execute(
@@ -1673,11 +1540,11 @@
                         catch (PDOException $e)
                         {
                             $constructr -> getLog() -> debug('5) ' . $_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                            $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=reorder-error');
+                            $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/?res=reorder-error');
                             die();
                         }
 
-                        $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=reorder-success');
+                        $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/?res=reorder-success');
                         die();
                     }
                     else
@@ -1685,32 +1552,10 @@
                         try
                         {
                             $UPDATE_PAGES = $DBCON -> prepare('
-                                UPDATE constructr_pages
-                                SET
-                                pages_temp_marker = :TEMP_MARKER
-                                WHERE 
-                                pages_lft BETWEEN :TARGET_PAGE_LFT AND :TARGET_PAGE_RGT;
-                                UPDATE constructr_pages
-                                SET
-                                pages_lft = (pages_lft + (:TARGET_CHILDREN_COUNTER * 2)),
-                                pages_rgt = (pages_rgt + (:TARGET_CHILDREN_COUNTER * 2))
-                                WHERE
-                                pages_lft BETWEEN :PAGE_LFT AND :PAGE_RGT
-                                AND
-                                pages_temp_marker = :EMPTY_VALUE;
-                                UPDATE constructr_pages
-                                SET
-                                pages_lft = (pages_lft - (:CHILDREN_COUNTER * 2)),
-                                pages_rgt = (pages_rgt - (:CHILDREN_COUNTER * 2))
-                                WHERE
-                                pages_lft BETWEEN :TARGET_PAGE_LFT AND :TARGET_PAGE_RGT
-                                AND
-                                pages_temp_marker = :TEMP_MARKER;
-                                UPDATE constructr_pages
-                                SET
-                                pages_temp_marker = :EMPTY_VALUE
-                                WHERE
-                                pages_temp_marker = :TEMP_MARKER;
+                                UPDATE constructr_pages SET pages_temp_marker = :TEMP_MARKER WHERE pages_lft BETWEEN :TARGET_PAGE_LFT AND :TARGET_PAGE_RGT;
+                                UPDATE constructr_pages SET pages_lft = (pages_lft + (:TARGET_CHILDREN_COUNTER * 2)), pages_rgt = (pages_rgt + (:TARGET_CHILDREN_COUNTER * 2)) WHERE pages_lft BETWEEN :PAGE_LFT AND :PAGE_RGT AND pages_temp_marker = :EMPTY_VALUE;
+                                UPDATE constructr_pages SET pages_lft = (pages_lft - (:CHILDREN_COUNTER * 2)), pages_rgt = (pages_rgt - (:CHILDREN_COUNTER * 2)) WHERE pages_lft BETWEEN :TARGET_PAGE_LFT AND :TARGET_PAGE_RGT AND pages_temp_marker = :TEMP_MARKER;
+                                UPDATE constructr_pages SET pages_temp_marker = :EMPTY_VALUE WHERE pages_temp_marker = :TEMP_MARKER;
                             ');
 
                             $UPDATE_PAGES -> execute(
@@ -1732,11 +1577,11 @@
                         catch (PDOException $e)
                         {
                             $constructr -> getLog() -> debug('5) ' . $_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                            $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=reorder-error');
+                            $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/?res=reorder-error');
                             die();
                         }
 
-                        $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=reorder-success');
+                        $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/?res=reorder-success');
                         die();
                     }
                 }
@@ -1744,7 +1589,7 @@
             }
             else
             {
-                $constructr -> redirect(_BASE_URL . '/constructr/pages/?res=reorder-error');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/?res=reorder-error');
                 die();
             }
         }

@@ -1,11 +1,6 @@
 <?php
 
-    if(!defined('CONSTRUCTR_INCLUDR'))
-    {
-        die('Direkter Zugriff nicht erlaubt');
-    }
-    
-    $constructr -> get('/constructr/user/', $ADMIN_CHECK, function () use ($constructr,$DBCON)
+    $constructr -> get('/constructr/user/', $ADMIN_CHECK, function () use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
             $START = microtime(true);
             $USERNAME = $_SESSION['backend-user-username'];
@@ -32,7 +27,7 @@
                     if($RIGHTS_COUNTR != 1)
                     {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Error ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                        $constructr -> redirect(_BASE_URL . '/constructr/?no-rights=true');
+                        $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/?no-rights=true');
                         die();
                     }
                     else
@@ -49,11 +44,11 @@
             else
             {
                 $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': Error User-Rights-Check: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                $constructr -> redirect(_BASE_URL . '/constructr/logout/');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/logout/');
                 die();
             }
 
-            if(_LOGGING == true)
+            if($_CONSTRUCTR_CONF['_LOGGING'] == true)
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
             }
@@ -79,6 +74,7 @@
                     'USERNAME' => $USERNAME,
                     'BACKENDUSER' => $BACKENDUSER,
                     'COUNTR' => $COUNTR,
+                    '_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,
                     'SUBTITLE' => 'Admin-Dashboard / Benutzerverwaltung',
                     'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.'
                 )
@@ -86,7 +82,7 @@
         }
     );
 
-    $constructr -> get('/constructr/user/success/', $ADMIN_CHECK, function () use ($constructr,$DBCON)
+    $constructr -> get('/constructr/user/success/', $ADMIN_CHECK, function () use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
             $START = microtime(true);
             $USERNAME = $_SESSION['backend-user-username'];
@@ -112,7 +108,7 @@
                     if($RIGHTS_COUNTR != 1)
                     {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Error ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                        $constructr -> redirect(_BASE_URL . '/constructr/?no-rights=true');
+                        $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/?no-rights=true');
                         die();
                     }
                     else
@@ -129,11 +125,11 @@
             else
             {
                 $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': Error User-Rights-Check: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                $constructr -> redirect(_BASE_URL . '/constructr/logout/');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/logout/');
                 die();
             }
 
-            if(_LOGGING == true)
+            if($_CONSTRUCTR_CONF['_LOGGING'] == true)
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
             }
@@ -146,6 +142,7 @@
                 (
                     'MEM' => $MEM,
                     'USERNAME' => $USERNAME,
+                    '_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,
                     'SUBTITLE' => 'Admin-Dashboard / Benutzerverwaltung',
                     'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.'
                 )
@@ -153,7 +150,7 @@
         }
     );
 
-    $constructr -> get('/constructr/user/error/', $ADMIN_CHECK, function () use ($constructr,$DBCON)
+    $constructr -> get('/constructr/user/error/', $ADMIN_CHECK, function () use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
             $START = microtime(true);
             $USERNAME = $_SESSION['backend-user-username'];
@@ -179,7 +176,7 @@
                     if($RIGHTS_COUNTR != 1)
                     {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Error ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                        $constructr -> redirect(_BASE_URL . '/constructr/?no-rights=true');
+                        $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/?no-rights=true');
                         die();
                     }
                     else
@@ -196,11 +193,11 @@
             else
             {
                 $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': Error User-Rights-Check: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                $constructr -> redirect(_BASE_URL . '/constructr/logout/');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/logout/');
                 die();
             }
 
-            if(_LOGGING == true)
+            if($_CONSTRUCTR_CONF['_LOGGING'] == true)
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
             }
@@ -213,6 +210,7 @@
                 (
                     'MEM' => $MEM,
                     'USERNAME' => $USERNAME,
+                    '_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,
                     'SUBTITLE' => 'Admin-Dashboard / Benutzerverwaltung',
                     'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.'
                 )
@@ -220,7 +218,7 @@
         }
     );
 
-    $constructr -> get('/constructr/user/new/', $ADMIN_CHECK, function () use ($constructr,$DBCON)
+    $constructr -> get('/constructr/user/new/', $ADMIN_CHECK, function () use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
             $START = microtime(true);
             $USERNAME = $_SESSION['backend-user-username'];
@@ -246,7 +244,7 @@
                     if($RIGHTS_COUNTR != 1)
                     {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Error ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                        $constructr -> redirect(_BASE_URL . '/constructr/?no-rights=true');
+                        $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/?no-rights=true');
                         die();
                     }
                     else
@@ -263,11 +261,11 @@
             else
             {
                 $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': Error User-Rights-Check: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                $constructr -> redirect(_BASE_URL . '/constructr/logout/');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/logout/');
                 die();
             }
 
-            if(_LOGGING == true)
+            if($_CONSTRUCTR_CONF['_LOGGING'] == true)
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
             }
@@ -282,8 +280,9 @@
                     'MEM' => $MEM,
                     'USERNAME' => $USERNAME,
                     'GUID' => $GUID,
+                    '_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,
                     'SUBTITLE' => 'Admin-Dashboard / Neuer Benutzer',
-                    'FORM_ACTION' => _BASE_URL . '/constructr/user/new/' . $GUID . '/',
+                    'FORM_ACTION' => $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/user/new/' . $GUID . '/',
                     'FORM_METHOD' => 'post',
                     'FORM_ENCTYPE' => 'application/x-www-form-urlencoded',
                     'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.'
@@ -292,9 +291,9 @@
         }
     );
 
-    $constructr -> get('/constructr/user/new/check-username/', $ADMIN_CHECK, function () use ($constructr,$DBCON)
+    $constructr -> get('/constructr/user/new/check-username/', $ADMIN_CHECK, function () use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            if(_LOGGING == true)
+            if($_CONSTRUCTR_CONF['_LOGGING'] == true)
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
             }
@@ -320,7 +319,7 @@
                     if($RIGHTS_COUNTR != 1)
                     {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Error ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                        $constructr -> redirect(_BASE_URL . '/constructr/?no-rights=true');
+                        $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/?no-rights=true');
                         die();
                     }
                     else
@@ -337,7 +336,7 @@
             else
             {
                 $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': Error User-Rights-Check: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                $constructr -> redirect(_BASE_URL . '/constructr/logout/');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/logout/');
                 die();
             }
 
@@ -359,7 +358,7 @@
 
                     if($COUNTR == 0)
                     {
-                        if(_LOGGING == true)
+                        if($_CONSTRUCTR_CONF['_LOGGING'] == true)
                         {
                             $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . '/' . $USERNAME . '/TRUE/');                
                         }
@@ -369,7 +368,7 @@
                     }
                     else
                     {
-                        if(_LOGGING == true)
+                        if($_CONSTRUCTR_CONF['_LOGGING'] == true)
                         {
                             $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . '/' . $USERNAME . '/FALSE/');                
                         }
@@ -387,7 +386,7 @@
             }
             else
             {
-                if(_LOGGING == true)
+                if($_CONSTRUCTR_CONF['_LOGGING'] == true)
                 {
                     $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . '/' . $USERNAME . '/FALSE/');                
                 }
@@ -398,9 +397,9 @@
         }
     );
 
-    $constructr -> get('/constructr/user/edit/:user_id/check-single-username/', $ADMIN_CHECK, function () use ($constructr,$DBCON)
+    $constructr -> get('/constructr/user/edit/:user_id/check-single-username/', $ADMIN_CHECK, function () use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            if(_LOGGING == true)
+            if($_CONSTRUCTR_CONF['_LOGGING'] == true)
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
             }
@@ -426,7 +425,7 @@
                     if($RIGHTS_COUNTR != 1)
                     {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Error ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                        $constructr -> redirect(_BASE_URL . '/constructr/?no-rights=true');
+                        $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/?no-rights=true');
                         die();
                     }
                     else
@@ -443,7 +442,7 @@
             else
             {
                 $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': Error User-Rights-Check: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                $constructr -> redirect(_BASE_URL . '/constructr/logout/');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/logout/');
                 die();
             }
 
@@ -453,7 +452,6 @@
             {
                 try {
                     $BACKENDUSER = $DBCON -> prepare('SELECT * FROM constructr_backenduser WHERE beu_username = :USERNAME LIMIT 1;');
-
                     $BACKENDUSER -> execute(
                         array
                         (
@@ -465,7 +463,7 @@
 
                     if($COUNTR == 1 || $COUNTR == 0)
                     {
-                        if(_LOGGING == true)
+                        if($_CONSTRUCTR_CONF['_LOGGING'] == true)
                         {
                             $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . '/' . $USERNAME . '/TRUE/');                
                         }
@@ -475,7 +473,7 @@
                     }
                     else
                     {
-                        if(_LOGGING == true)
+                        if($_CONSTRUCTR_CONF['_LOGGING'] == true)
                         {
                             $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . '/' . $USERNAME . '/FALSE/');                
                         }
@@ -493,7 +491,7 @@
             }
             else
             {
-                if(_LOGGING == true)
+                if($_CONSTRUCTR_CONF['_LOGGING'] == true)
                 {
                     $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . '/' . $USERNAME . '/FALSE/');                
                 }
@@ -504,9 +502,9 @@
         }
     );
 
-    $constructr -> post('/constructr/user/new/:GUID/', $ADMIN_CHECK, function ($GUID) use ($constructr,$DBCON)
+    $constructr -> post('/constructr/user/new/:GUID/', $ADMIN_CHECK, function ($GUID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            if(_LOGGING == true)
+            if($_CONSTRUCTR_CONF['_LOGGING'] == true)
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
             }
@@ -532,7 +530,7 @@
                     if($RIGHTS_COUNTR != 1)
                     {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Error ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                        $constructr -> redirect(_BASE_URL . '/constructr/?no-rights=true');
+                        $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/?no-rights=true');
                         die();
                     }
                     else
@@ -549,7 +547,7 @@
             else
             {
                 $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': Error User-Rights-Check: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                $constructr -> redirect(_BASE_URL . '/constructr/logout/');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/logout/');
                 die();
             }
 
@@ -557,7 +555,7 @@
             if($GUID != $USER_FORM_GUID)
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ' - USER_FORM_GUID ERROR: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                $constructr -> redirect(_BASE_URL . '/constructr/logout/');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/logout/');
                 die();
             }
 
@@ -570,7 +568,7 @@
 
             if($PASSWORD != $PASSWORD_RT)
             {
-                $constructr -> redirect(_BASE_URL . 'admin/user/error/');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . 'admin/user/error/');
                 die();
             }
 
@@ -588,7 +586,6 @@
                 try
                 {
                     $QUERY = $DBCON -> prepare('INSERT INTO constructr_backenduser SET beu_username = :USERNAME,beu_password = :PASSWORD,beu_email = :EMAIL,beu_art = :ART,beu_last_login  = :LAST_LOGIN,beu_active = :ACTIVE;');
-
                     $QUERY -> execute( 
                         array
                         (
@@ -631,6 +628,7 @@
                         (16, 1, :USER_ID, 'Delete pages recursive.'),
                         (80, 1, :USER_ID, 'Enter user-rights management.'),
                         (81, 1, :USER_ID, 'Edit user-rights.'),
+                        (1000, 1, :USER_ID, 'Update System-Configuration.'),
                         (100, 1, :USER_ID, 'Generate static website.');
                     ");
 
@@ -644,32 +642,32 @@
                 catch (PDOException $e)
                 {
                     $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                    $constructr -> redirect(_BASE_URL . '/constructr/user/error/');
+                    $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/user/error/');
                     die();
                 }
 
-                if(_LOGGING == true)
+                if($_CONSTRUCTR_CONF['_LOGGING'] == true)
                 {
                     $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . '/' . $USERNAME . '/create/success/');                
                 }
 
-                $constructr -> redirect(_BASE_URL . '/constructr/user/success/');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/user/success/');
                 die();
             }
             else
             {
-                if(_LOGGING == true)
+                if($_CONSTRUCTR_CONF['_LOGGING'] == true)
                 {
                     $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . '/' . $USERNAME . '/create/error/');                
                 }
 
-                $constructr -> redirect(_BASE_URL . '/constructr/user/error/');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/user/error/');
                 die();
             }
         }
     );
     
-    $constructr -> get('/constructr/user/edit/:USER_ID/', $ADMIN_CHECK, function ($USER_ID) use ($constructr,$DBCON)
+    $constructr -> get('/constructr/user/edit/:USER_ID/', $ADMIN_CHECK, function ($USER_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
             $START = microtime(true);
             $USERNAME = $_SESSION['backend-user-username'];
@@ -695,7 +693,7 @@
                     if($RIGHTS_COUNTR != 1)
                     {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Error ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                        $constructr -> redirect(_BASE_URL . '/constructr/?no-rights=true');
+                        $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/?no-rights=true');
                         die();
                     }
                     else
@@ -712,11 +710,11 @@
             else
             {
                 $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': Error User-Rights-Check: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                $constructr -> redirect(_BASE_URL . '/constructr/logout/');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/logout/');
                 die();
             }
 
-            if(_LOGGING == true)
+            if($_CONSTRUCTR_CONF['_LOGGING'] == true)
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
             }
@@ -724,7 +722,6 @@
             try
             {
                 $BACKENDUSER = $DBCON -> prepare('SELECT * FROM constructr_backenduser WHERE beu_id = :USER_ID LIMIT 1;');
-
                 $BACKENDUSER -> execute(
                     array
                     (
@@ -735,7 +732,7 @@
                 $COUNTR = $BACKENDUSER -> rowCount();
                 $BACKENDUSER = $BACKENDUSER -> fetch();
 
-                if(_LOGGING == true)
+                if($_CONSTRUCTR_CONF['_LOGGING'] == true)
                 {
                     $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                 }
@@ -743,7 +740,7 @@
             catch (PDOException $e)
             {
                 $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                $constructr -> redirect(_BASE_URL . '/constructr/user/error/');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/user/error/');
                 die();
             }
             
@@ -761,8 +758,9 @@
                         'USERNAME' => $USERNAME,
                         'BACKENDUSER' => $BACKENDUSER,
                         'GUID' => $GUID,
+                        '_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,
                         'SUBTITLE' => 'Admin-Dashboard / Benutzer editieren',
-                        'FORM_ACTION' => _BASE_URL . '/constructr/user/edit/' . $USER_ID . '/' . $GUID . '/',
+                        'FORM_ACTION' => $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/user/edit/' . $USER_ID . '/' . $GUID . '/',
                         'FORM_METHOD' => 'post',
                         'FORM_ENCTYPE' => 'application/x-www-form-urlencoded',
                         'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.'
@@ -773,15 +771,15 @@
             else
             {
                 $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                $constructr -> redirect(_BASE_URL . '/constructr/user/error/');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/user/error/');
                 die();
             }
         }
     );
 
-    $constructr -> post('/constructr/user/edit/:USER_ID/:GUID', $ADMIN_CHECK, function ($USER_ID,$GUID) use ($constructr,$DBCON)
+    $constructr -> post('/constructr/user/edit/:USER_ID/:GUID', $ADMIN_CHECK, function ($USER_ID,$GUID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            if(_LOGGING == true)
+            if($_CONSTRUCTR_CONF['_LOGGING'] == true)
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
             }
@@ -807,7 +805,7 @@
                     if($RIGHTS_COUNTR != 1)
                     {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Error ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                        $constructr -> redirect(_BASE_URL . '/constructr/?no-rights=true');
+                        $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/?no-rights=true');
                         die();
                     }
                     else
@@ -824,7 +822,7 @@
             else
             {
                 $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': Error User-Rights-Check: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                $constructr -> redirect(_BASE_URL . '/constructr/logout/');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/logout/');
                 die();
             }
 
@@ -832,7 +830,7 @@
             if($GUID != $USER_FORM_GUID)
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ' - USER_FORM_GUID ERROR: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                $constructr -> redirect(_BASE_URL . '/constructr/logout/');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/logout/');
                 die();
             }
 
@@ -845,7 +843,7 @@
 
             if($PASSWORD != $PASSWORD_RT)
             {
-                $constructr -> redirect(_BASE_URL . 'admin/user/error/');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . 'admin/user/error/');
             }
 
             if($ART == 'intern')
@@ -874,30 +872,30 @@
                 catch (PDOException $e)
                 {
                     $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                    $constructr -> redirect(_BASE_URL . '/constructr/user/error/');
+                    $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/user/error/');
                     die();
                 }
 
-                if(_LOGGING == true)
+                if($_CONSTRUCTR_CONF['_LOGGING'] == true)
                 {
                     $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . '/' . $USERNAME . '/create/success/');                
                 }
 
-                $constructr -> redirect(_BASE_URL . '/constructr/user/success/');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/user/success/');
             }
             else
             {
-                if(_LOGGING == true)
+                if($_CONSTRUCTR_CONF['_LOGGING'] == true)
                 {
                     $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . '/' . $USERNAME . '/create/error/');                
                 }
 
-                $constructr -> redirect(_BASE_URL . '/constructr/user/error/');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/user/error/');
             }
         }
     );
 
-    $constructr -> get('/constructr/user/set-inactive/:USER_ID/', function ($USER_ID) use ($constructr,$DBCON)
+    $constructr -> get('/constructr/user/set-inactive/:USER_ID/', function ($USER_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
             $constructr -> view -> setData('BackendUserRight',69);
 
@@ -920,7 +918,7 @@
                     if($RIGHTS_COUNTR != 1)
                     {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Error ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                        $constructr -> redirect(_BASE_URL . '/constructr/?no-rights=true');
+                        $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/?no-rights=true');
                         die();
                     }
                     else
@@ -937,7 +935,7 @@
             else
             {
                 $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': Error User-Rights-Check: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                $constructr -> redirect(_BASE_URL . '/constructr/logout/');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/logout/');
                 die();
             }
 
@@ -954,35 +952,35 @@
                         ) 
                     );
 
-                    if(_LOGGING == true)
+                    if($_CONSTRUCTR_CONF['_LOGGING'] == true)
                     {
                         $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                     }
 
-                    $constructr -> redirect(_BASE_URL . '/constructr/user/');
+                    $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/user/');
                     die();
                 }
                 catch (PDOException $e)
                 {
                     $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                    $constructr -> redirect(_BASE_URL . '/constructr/user/error/');
+                    $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/user/error/');
                     die();
                 }
             }
             else
             {
-                if(_LOGGING == true)
+                if($_CONSTRUCTR_CONF['_LOGGING'] == true)
                 {
                     $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . 'Error: No User_id (set-inactive): ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                 }
 
-                $constructr -> redirect(_BASE_URL . '/constructr/user/');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/user/');
                 die();
             }
         }
     );
 
-    $constructr -> get('/constructr/user/set-active/:USER_ID/', function ($USER_ID) use ($constructr,$DBCON)
+    $constructr -> get('/constructr/user/set-active/:USER_ID/', function ($USER_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
             $constructr -> view -> setData('BackendUserRight',69);
 
@@ -1005,7 +1003,7 @@
                     if($RIGHTS_COUNTR != 1)
                     {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Error ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                        $constructr -> redirect(_BASE_URL . '/constructr/?no-rights=true');
+                        $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/?no-rights=true');
                         die();
                     }
                     else
@@ -1022,7 +1020,7 @@
             else
             {
                 $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': Error User-Rights-Check: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                $constructr -> redirect(_BASE_URL . '/constructr/logout/');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/logout/');
                 die();
             }
 
@@ -1031,7 +1029,6 @@
                 try
                 {
                     $QUERY = $DBCON -> prepare('UPDATE constructr_backenduser SET beu_active = :INACTIVE WHERE beu_id = :USER_ID LIMIT 1;');
-
                     $QUERY -> execute( 
                         array
                         (
@@ -1040,35 +1037,35 @@
                         ) 
                     );
 
-                    if(_LOGGING == true)
+                    if($_CONSTRUCTR_CONF['_LOGGING'] == true)
                     {
                         $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                     }
 
-                    $constructr -> redirect(_BASE_URL . '/constructr/user/');
+                    $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/user/');
                     die();
                 }
                 catch (PDOException $e)
                 {
                     $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                    $constructr -> redirect(_BASE_URL . '/constructr/user/error/');
+                    $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/user/error/');
                     die();
                 }
             }
             else
             {
-                if(_LOGGING == true)
+                if($_CONSTRUCTR_CONF['_LOGGING'] == true)
                 {
                     $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . 'Error: No User_id (set-inactive): ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                 }
 
-                $constructr -> redirect(_BASE_URL . '/constructr/user/');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/user/');
                 die();
             }
         }
     );
 
-    $constructr -> get('/constructr/user/delete/:USER_ID/', function ($USER_ID) use ($constructr,$DBCON)
+    $constructr -> get('/constructr/user/delete/:USER_ID/', function ($USER_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
             $constructr -> view -> setData('BackendUserRight',60);
 
@@ -1091,7 +1088,7 @@
                     if($RIGHTS_COUNTR != 1)
                     {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Error ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                        $constructr -> redirect(_BASE_URL . '/constructr/?no-rights=true');
+                        $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/?no-rights=true');
                         die();
                     }
                     else
@@ -1108,7 +1105,7 @@
             else
             {
                 $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': Error User-Rights-Check: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                $constructr -> redirect(_BASE_URL . '/constructr/logout/');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/logout/');
                 die();
             }
 
@@ -1121,29 +1118,29 @@
                     $STMT -> bindParam(':USER_ID', $USER_ID, PDO::PARAM_INT);   
                     $STMT -> execute();
 
-                    if(_LOGGING == true)
+                    if($_CONSTRUCTR_CONF['_LOGGING'] == true)
                     {
                         $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                     }
 
-                    $constructr -> redirect(_BASE_URL . '/constructr/user/');
+                    $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/user/');
                     die();
                 }
                 catch (PDOException $e)
                 {
                     $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                    $constructr -> redirect(_BASE_URL . '/constructr/user/error/');
+                    $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/user/error/');
                     die();
                 }
             }
             else
             {
-                if(_LOGGING == true)
+                if($_CONSTRUCTR_CONF['_LOGGING'] == true)
                 {
                     $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . 'Error: No User_id (set-inactive): ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                 }
 
-                $constructr -> redirect(_BASE_URL . '/constructr/user/');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/user/');
                 die();
             }
         }

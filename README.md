@@ -6,9 +6,11 @@ ConstructrCMS based on Slim-PHP5-Framework, Twitter Bootstrap, PDO (MySQL), jQue
 That's it for now:
 
 	- Frontend
-	- C.R.U.D. + Sorting Pages (Nested Set's).
-	- C.R.U.D. + Sorting Content-Elements per Page.
-	- Media-Library
-	- Media-Details View
-	- User Management
-	- User Rights Management
+	- C.R.U.D. websites
+	- C.R.U.D. content elements
+	- Media library
+	- Media details view
+	- Media trashcan
+	- User management
+	- User rights management
+	- Generating static websites

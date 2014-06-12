@@ -1,11 +1,6 @@
 <?php
 
-    if(!defined('CONSTRUCTR_INCLUDR'))
-    {
-        die('Direkter Zugriff nicht erlaubt');
-    }
-
-    $constructr -> get('/constructr/user/edit-user-rights/:user_id/:user_name/', $ADMIN_CHECK, function ($USER_ID,$USER_NAME) use ($constructr,$DBCON)
+    $constructr -> get('/constructr/user/edit-user-rights/:user_id/:user_name/', $ADMIN_CHECK, function ($USER_ID,$USER_NAME) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
             $START = microtime(true);
             $USERNAME = $_SESSION['backend-user-username'];
@@ -31,7 +26,7 @@
                     if($RIGHTS_COUNTR != 1)
                     {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Error ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                        $constructr -> redirect(_BASE_URL . '/constructr/?no-rights=true');
+                        $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/?no-rights=true');
                         die();
                     }
                     else
@@ -48,11 +43,11 @@
             else
             {
                 $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': Error User-Rights-Check: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                $constructr -> redirect(_BASE_URL . '/constructr/logout/');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/logout/');
                 die();
             }
 
-            if(_LOGGING == true)
+            if($_CONSTRUCTR_CONF['_LOGGING'] == true)
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
             }
@@ -85,6 +80,7 @@
                     'USER_ID' => $USER_ID,
                     'RIGHTS' => $RIGHTS,
                     'COUNTR' => $COUNTR,
+                    '_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,
                     'SUBTITLE' => 'Admin-Dashboard / Benutzerrechte von ' . $USER_NAME . ' anpassen',
                     'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.'
                 )
@@ -92,7 +88,7 @@
         }
     );
 
-    $constructr -> get('/constructr/user/set-user-right/:new_value/:right_id/:user_id/:user_name/', $ADMIN_CHECK, function ($NEW_VALUE,$RIGHT_ID,$USER_ID,$USER_NAME) use ($constructr,$DBCON)
+    $constructr -> get('/constructr/user/set-user-right/:new_value/:right_id/:user_id/:user_name/', $ADMIN_CHECK, function ($NEW_VALUE,$RIGHT_ID,$USER_ID,$USER_NAME) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
             $USERNAME = $_SESSION['backend-user-username'];
 
@@ -117,7 +113,7 @@
                     if($RIGHTS_COUNTR != 1)
                     {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Error ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                        $constructr -> redirect(_BASE_URL . '/constructr/?no-rights=true');
+                        $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/?no-rights=true');
                         die();
                     }
                     else
@@ -134,11 +130,11 @@
             else
             {
                 $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': Error User-Rights-Check: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                $constructr -> redirect(_BASE_URL . '/constructr/logout/');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/logout/');
                 die();
             }
 
-            if(_LOGGING == true)
+            if($_CONSTRUCTR_CONF['_LOGGING'] == true)
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
             }

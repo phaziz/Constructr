@@ -1,25 +1,18 @@
-<?php
-
-    if(!defined('CONSTRUCTR_INCLUDR'))
-    {
-        die('Direkter Zugriff nicht erlaubt');
-    }
-?>
 <!DOCTYPE html>
     <!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
     <!--[if IE 7]><html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
     <!--[if IE 8]><html class="no-js lt-ie9" lang="en"><![endif]-->
     <!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
         <head>
-            <title><?php echo _TITLE . ' - ' . $SUBTITLE; ?></title>
+            <title><?php echo $_CONSTRUCTR_CONF['_TITLE'] . ' - ' . $SUBTITLE; ?></title>
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <link href="<?php echo _BASE_URL;?>/Assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-            <link href="<?php echo _BASE_URL;?>/Assets/css/constructr.css" rel="stylesheet">
-            <link href="<?php echo _BASE_URL;?>/Assets/datatables-bootstrap3/assets/css/datatables.css" rel="stylesheet">
-            <link href="<?php echo _BASE_URL;?>/Assets/vex/css/vex.css" rel="stylesheet">
-            <link href="<?php echo _BASE_URL;?>/Assets/vex/css/vex-theme-flat-attack.css" rel="stylesheet">            
-            <link href="<?php echo _BASE_URL;?>/Assets/ekko-lightbox/ekko-lightbox.min.css" rel="stylesheet">
-            <link href="<?php echo _BASE_URL;?>/Assets/ekko-lightbox/ekko-lightbox-dark.css" rel="stylesheet">
+            <link href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+            <link href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/css/constructr.css" rel="stylesheet">
+            <link href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/datatables-bootstrap3/assets/css/datatables.css" rel="stylesheet">
+            <link href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/vex/css/vex.css" rel="stylesheet">
+            <link href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/vex/css/vex-theme-flat-attack.css" rel="stylesheet">            
+            <link href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/ekko-lightbox/ekko-lightbox.min.css" rel="stylesheet">
+            <link href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/ekko-lightbox/ekko-lightbox-dark.css" rel="stylesheet">
             <!--[if lt IE 9]>
                 <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
             <![endif]-->
@@ -31,14 +24,14 @@
                         <li class="sidebar-brand"><a id="menu-toggle" href="#"><div class="pull-right"><span title="&#8249;&#160;Hauptmen&uuml;&#160;&#160;" data-toggle="tooltip" data-placement="right" class="tt glyphicon glyphicon-align-justify"></span>&#160;&#160;</div></a></li>
                     </ul>
                     <ul class="sidebar-nav" id="sidebar">     
-                        <li><a class="tt" href="<?php echo _BASE_URL ?>" onclick="window.open(this.href);return false;" title="Internetseite anzeigen" data-toggle="tooltip" data-placement="right">Internetseite</a></li>
-                        <li><a class="tt" href="<?php echo _BASE_URL ?>/constructr/" title="Dashboard anzeigen" data-toggle="tooltip" data-placement="right">Dashboard</a></li>
-                        <li><a class="tt" href="<?php echo _BASE_URL ?>/constructr/pages/" title="Seitenverwaltung anzeigen" data-toggle="tooltip" data-placement="right">Seiten</a></li>
-                        <li class="active"><a class="tt" href="<?php echo _BASE_URL ?>/constructr/media/" title="Medienverwaltung anzeigen" data-toggle="tooltip" data-placement="right">Medien</a></li>
-                        <li><a class="tt" href="<?php echo _BASE_URL ?>/constructr/media/trash/" title="M&uuml;lleimer anzeigen" data-toggle="tooltip" data-placement="right">M&uuml;lleimer</a></li>
-                        <li><a class="tt" href="<?php echo _BASE_URL ?>/constructr/user/" title="Benutzerverwaltung anzeigen" data-toggle="tooltip" data-placement="right">Benutzer</a></li>
-                        <li><a class="tt" href="<?php echo _BASE_URL ?>/constructr/config/" title="Systemkonfiguration anzeigen" data-toggle="tooltip" data-placement="right">System</a></li>
-                        <li><a class="tt" href="<?php echo _BASE_URL ?>/constructr/logout/" title="<?php echo $_SESSION['backend-user-username']; ?> abmelden" data-toggle="tooltip" data-placement="right">abmelden</a></li>
+                        <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>" onclick="window.open(this.href);return false;" title="Internetseite anzeigen" data-toggle="tooltip" data-placement="right">Internetseite</a></li>
+                        <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/" title="Dashboard anzeigen" data-toggle="tooltip" data-placement="right">Dashboard</a></li>
+                        <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/pages/" title="Seitenverwaltung anzeigen" data-toggle="tooltip" data-placement="right">Seiten</a></li>
+                        <li class="active"><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/media/" title="Medienverwaltung anzeigen" data-toggle="tooltip" data-placement="right">Medien</a></li>
+                        <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/media/trash/" title="M&uuml;lleimer anzeigen" data-toggle="tooltip" data-placement="right">M&uuml;lleimer</a></li>
+                        <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/user/" title="Benutzerverwaltung anzeigen" data-toggle="tooltip" data-placement="right">Benutzer</a></li>
+                        <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/config/" title="Systemkonfiguration anzeigen" data-toggle="tooltip" data-placement="right">System</a></li>
+                        <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/logout/" title="<?php echo $_SESSION['backend-user-username']; ?> abmelden" data-toggle="tooltip" data-placement="right">abmelden</a></li>
                     </ul>
                 </div>
                 <div id="page-content-wrapper">
@@ -47,7 +40,7 @@
                             <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
                             <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
                                 <br>
-                                <p><small><a href="<?php echo _BASE_URL ?>/constructr/">Dashboard</a> <span class="glyphicon glyphicon-chevron-right"></span> <a href="<?php echo _BASE_URL ?>/constructr/media/">Medienverwaltung - &Uuml;bersicht</a> <span class="glyphicon glyphicon-chevron-right"></span></small></p>
+                                <p><small><a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/">Dashboard</a> <span class="glyphicon glyphicon-chevron-right"></span> <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/media/">Medienverwaltung - &Uuml;bersicht</a> <span class="glyphicon glyphicon-chevron-right"></span></small></p>
                             </div><!-- // EOF COL-... -->
                             <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
                         </div><!-- // EOF ROW -->
@@ -98,7 +91,7 @@
                             <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
                             <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
                                 <div class="jumbotron">
-                                    <h2><?php echo $MEDIA_COUNTER; ?> Vorhandene Medien <a data-toggle="tooltip" data-placement="top" title="Neuer Uplaod" class="tt" href="<?php echo _BASE_URL . '/constructr/media/new/' ?>"><button type="button" class="btn btn-info btn-sm" title="Neuer Upload"><span class="glyphicon glyphicon-plus"></span></button></a></h2>
+                                    <h2><?php echo $MEDIA_COUNTER; ?> Vorhandene Medien <a data-toggle="tooltip" data-placement="top" title="Neuer Uplaod" class="tt" href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/media/new/' ?>"><button type="button" class="btn btn-info btn-sm" title="Neuer Upload"><span class="glyphicon glyphicon-plus"></span></button></a></h2>
                                     <br><br>
                                     <div class="table-responsive">
                                     <table class="datatable table table-bordered table-condensed table-striped table-hover">
@@ -118,18 +111,18 @@
                                                     {
                                                         $FILE_TYPE = strrchr($MEDIA['media_file'],'.');
                                                         echo '<tr>';
-                                                        echo '<td class="center"><a href="' . _BASE_URL . '/' . $MEDIA['media_file'] . '" data-toggle="lightbox" data-title="' . $MEDIA['media_originalname'] . '" data-footer="' . $MEDIA['media_originalname'] . '"><img src="' . _BASE_URL . '/' . $MEDIA['media_file'] . '" alt="' . $MEDIA['media_originalname'] . '" height="10%" width=""></a></td>';
+                                                        echo '<td class="center"><a href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/' . $MEDIA['media_file'] . '" data-toggle="lightbox" data-title="' . $MEDIA['media_originalname'] . '" data-footer="' . $MEDIA['media_originalname'] . '"><img src="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/' . $MEDIA['media_file'] . '" alt="' . $MEDIA['media_originalname'] . '" height="10%" width=""></a></td>';
                                                         echo '<td><small><strong>' . $MEDIA['media_originalname'] . '</small></td>';
-                                                        echo '<td><small>' . _BASE_URL . '/' . $MEDIA['media_file'] . '</small></td>';
+                                                        echo '<td><small>' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/' . $MEDIA['media_file'] . '</small></td>';
                                                         echo '<td class="right"><nobr>';
-                                                        echo '<a href="' . _BASE_URL . '/' . $MEDIA['media_file'] . '" data-toggle="lightbox" data-title="' . $MEDIA['media_originalname'] . '" data-footer="' . $MEDIA['media_originalname'] . '" <button type="button" class="btn btn-warning btn-xs" title="Einfache Vorschau"><span class="glyphicon glyphicon-eye-close"></span></button></a>';
+                                                        echo '<a href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/' . $MEDIA['media_file'] . '" data-toggle="lightbox" data-title="' . $MEDIA['media_originalname'] . '" data-footer="' . $MEDIA['media_originalname'] . '" <button type="button" class="btn btn-warning btn-xs" title="Einfache Vorschau"><span class="glyphicon glyphicon-eye-close"></span></button></a>';
                                                         echo '&#160;';
                                                         if(in_array($FILE_TYPE,$IMAGES))
                                                         {
-                                                            echo '<a data-toggle="tooltip" data-placement="top" title="Detail-Vorschau" class="preview tt" href="' . _BASE_URL . '/constructr/media/details/' . $MEDIA['media_id'] . '/"><button type="button" class="btn btn-info btn-xs" title="Detail-Vorschau"><span class="glyphicon glyphicon-eye-open"></span></button></a>';
+                                                            echo '<a data-toggle="tooltip" data-placement="top" title="Detail-Vorschau" class="preview tt" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/media/details/' . $MEDIA['media_id'] . '/"><button type="button" class="btn btn-info btn-xs" title="Detail-Vorschau"><span class="glyphicon glyphicon-eye-open"></span></button></a>';
                                                             echo '&#160;';
                                                         }
-                                                        echo '<a data-toggle="tooltip" data-placement="top" title="Upload l&ouml;schen" class="deleter tt" href="' . _BASE_URL . '/constructr/media/delete/' . $MEDIA['media_id'] . '/" title="Upload l&ouml;schen"><button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span></button></a>';
+                                                        echo '<a data-toggle="tooltip" data-placement="top" title="Upload l&ouml;schen" class="deleter tt" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/media/delete/' . $MEDIA['media_id'] . '/" title="Upload l&ouml;schen"><button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span></button></a>';
                                                         echo '</nobr></td>';
                                                         echo '</tr>';
                                                     }
@@ -149,8 +142,8 @@
                         <div class="row">
                             <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
                             <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-                                <p><small><a href="<?php echo _BASE_URL ?>/constructr/">Dashboard</a> <span class="glyphicon glyphicon-chevron-right"></span> <a href="<?php echo _BASE_URL ?>/constructr/media/">Medienverwaltung - &Uuml;bersicht</a> <span class="glyphicon glyphicon-chevron-right"></span></small></p>
-                                <p><small>Version: <?php echo _VERSION; ?> / <?php echo $TIMER; ?> / <?php echo $MEM; ?> / <a href="http://phaziz.com/" onclick="window.open(this.href);return false;">phaziz.com</a></small></p>
+                                <p><small><a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/">Dashboard</a> <span class="glyphicon glyphicon-chevron-right"></span> <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/media/">Medienverwaltung - &Uuml;bersicht</a> <span class="glyphicon glyphicon-chevron-right"></span></small></p>
+                                <p><small>Version: <?php echo $_CONSTRUCTR_CONF['_VERSION']; ?> / <?php echo $TIMER; ?> / <?php echo $MEM; ?> / <a href="http://phaziz.com/" onclick="window.open(this.href);return false;">phaziz.com</a></small></p>
                             </div><!-- // EOF COL-... -->
                             <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
                         </div><!-- // EOF ROW -->
@@ -158,12 +151,12 @@
                 </div>
             </div>
 
-            <script src="<?php echo _BASE_URL ?>/Assets/jquery-2-1-1.min.js"></script>
-            <script src="<?php echo _BASE_URL ?>/Assets/bootstrap/js/bootstrap.min.js"></script>
-            <script src="<?php echo _BASE_URL;?>/Assets/datatables/media/js/jquery.dataTables.min.js"></script>
-            <script src="<?php echo _BASE_URL;?>/Assets/datatables-bootstrap3/assets/js/datatables.js"></script>
-            <script src="<?php echo _BASE_URL ?>/Assets/vex/js/vex.combined.min.js"></script>
-            <script src="<?php echo _BASE_URL ?>/Assets/ekko-lightbox/ekko-lightbox.min.js"></script>
+            <script src="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/Assets/jquery-2-1-1.min.js"></script>
+            <script src="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/Assets/bootstrap/js/bootstrap.min.js"></script>
+            <script src="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/datatables/media/js/jquery.dataTables.min.js"></script>
+            <script src="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/datatables-bootstrap3/assets/js/datatables.js"></script>
+            <script src="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/Assets/vex/js/vex.combined.min.js"></script>
+            <script src="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/Assets/ekko-lightbox/ekko-lightbox.min.js"></script>
             <script>
                 $(function()
                     {

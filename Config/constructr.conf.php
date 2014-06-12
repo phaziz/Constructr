@@ -1,50 +1,51 @@
 <?php 
 
-    if(!defined('CONSTRUCTR_INCLUDR'))
-    {
-        die('Direkter Zugriff nicht erlaubt');
-    }
-
     /*
-     * 
-     * This is the main config-file - just edit for your needs
-     * 
-     * Hopefully, you know what to do :)
-     * 
+     * CONSTRUCTR MAIN AND ONLY ONE CONFIGURATION FILE
      */
 
-    // Datenbank Einstellungen    
-    $HOSTNAME = "";
-    $DATABASE = "";
-    $USERNAME = "";
-    $PASSWORD = "";
+    // CONSTRUCTR DATABASE SETTINGS    
+    define('_CONSTRUCTR_DATABASE_HOST','');
+    define('_CONSTRUCTR_DATABASE_NAME','');
+    define('_CONSTRUCTR_DATABASE_USER','');
+    define('_CONSTRUCTR_DATABASE_PASSWORD','');
 
-    // BASE URL DER INSTALLATION
-    define('_BASE_URL','http://' . $_SERVER['HTTP_HOST']);
+    // CONSTRUCTR ENCRYPTION AVAILABLE?
+    if(!defined('CRYPT_BLOWFISH') && CRYPT_BLOWFISH)
+    {
+        echo 'CRYPT_BLOWFISH ist nicht verf&uuml;gbar!';
+        die();
+    }
 
-    // VERSIONSNUMMER CONSTRUCTR CMS
-    define('_VERSION','20140606');
+    // MINIMAL PHP-VERSION 5.3.x AVAILABLE?
+    if (version_compare(phpversion(),'5.3.0','<='))
+    {
+        echo 'PHP ist kleiner als Version 5.3.0';
+        die();
+    }
 
-    // VERSCHLÜSSELUNGS SALZ
-    define('_SALT','$2y$07$R.gJb2U2N.FmZ4hPp1y2CN$');
-
-    // LOGFILES ERSTELLEN?
-    define('_LOGGING',true);
-
-    // DEBUGGING AUSGABE DEFINIEREN (FRONTEND)
-    define('_DEBUGGING',false);
-
-    // CONSTRUCTR BASE TITEL DEFINIEREN
-    define('_TITLE','CONSTRUCTR');
-
-    // FRONTEND BEFINDET SICH WO???
-    define('_EXT_WWW',''); // for example: define('_EXT_WWW','./Web/index.php');
-
-    // HTML_SEITE STATISCH AUSGEBEN ROOT/Static/index.html
-    define('_SERVE_STATIC',false);
-
-    // STATISCHE HTML SEITE GENERIEREN
-    define('_CREATE_STATIC',true);
-
-    // VERZEICHNIS FÜR STATISCHE HTML SEITEN
-    define('_STATIC_DIR','./Static');
+    // MAIN CONFIGURATION ARRAY
+    $_CONSTRUCTR_CONF = array(
+        '_CONSTRUCTR_DATABASE_HOST' => '',
+        '_CONSTRUCTR_DATABASE_NAME' => '',
+        '_CONSTRUCTR_DATABASE_USER' => '',
+        '_CONSTRUCTR_DATABASE_PASSWORD' => '',
+        '_BASE_URL' => 'http://' . $_SERVER['HTTP_HOST'],
+        '_VERSION' => '20140612',
+        '_SALT' => '$2y$07$R.gJb2U2N.FmZ4hPp1y2CN$',
+        '_SECRET' => 'h5/823!65$%4jc/)$3_fè4()480HD3d',
+        '_CONSTRUCTR_COOKIE_LIFETIME' => '8 hours',
+        '_LOGGING' => true,
+        '_TITLE' => 'CONSTRUCTR',
+        '_EXT_WWW' => '',
+        '_SERVE_STATIC' => true,
+        '_CREATE_STATIC' => true,
+        '_STATIC_DIR' => './Static',
+        '_CONSTRUCTR_BACKEND' => './Constructr',
+        '_CONSTRUCTR_LOGFILES_PATH' => './Logfiles',
+        '_CONSTRUCTR_LOG_ENABLED' => true,
+        '_CONSTRUCTR_MODE' => 'development',
+        '_CONSTRUCTR_DEBUG_MODE' => true,
+        '_CONSTRUCTR_SESSION_NAME' => 'constructr-sssession',
+        '_CONSTRUCTR_INCLUDR' => true
+    );

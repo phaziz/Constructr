@@ -18,19 +18,10 @@
     ***************************************************************************
     */
 
-    define('CONSTRUCTR_INCLUDR',true);
-
     ini_set('session.cookie_httponly',1);
     ini_set('session.use_only_cookies',1);
 
-    require_once('./Config/constructr.conf.php');
-
-    if(!defined("CRYPT_BLOWFISH") && CRYPT_BLOWFISH)
-    {
-        echo "CRYPT_BLOWFISH is not available";
-        die();
-    }
-
+    require_once './Config/constructr.conf.php';
     require_once './Slim/Slim.php';
     require_once './Slim/Log/DateTimeFileWriter.php';
 
@@ -38,38 +29,34 @@
 
     try
     {
-        $DBCON = new PDO('mysql:host=' . $HOSTNAME . ';dbname=' . $DATABASE,$USERNAME,$PASSWORD,array(PDO::ATTR_PERSISTENT => true));
-        $DBCON -> setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        
-        $_SERVE_STATIC = $DBCON -> query('SELECT constructr_config_value FROM constructr_config WHERE constructr_config_expression = "_SERVE_STATIC" LIMIT 1;');
-        $_SERVE_STATIC = $_SERVE_STATIC -> fetch();
-        $_SERVE_STATIC = $_SERVE_STATIC['constructr_config_value'];
+        $DBCON = new PDO('mysql:host=' . $_CONSTRUCTR_CONF['_CONSTRUCTR_DATABASE_HOST'] . ';dbname=' . $_CONSTRUCTR_CONF['_CONSTRUCTR_DATABASE_NAME'],$_CONSTRUCTR_CONF['_CONSTRUCTR_DATABASE_USER'],$_CONSTRUCTR_CONF['_CONSTRUCTR_DATABASE_PASSWORD'],array(PDO::ATTR_PERSISTENT => true));
+        $DBCON -> setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
     }
     catch (PDOException $e)
     {
-        echo '<p>Error establishing Database-Connection!</p>';
+        echo '<p>Fehler bei der Datenbankverbindung!</p>';
         die();
     }
 
     $constructr = new \Slim\Slim(
         array
         (
-            'mode' => 'development',
-            'debug' => true,
+            'mode' => $_CONSTRUCTR_CONF['_CONSTRUCTR_MODE'],
+            'debug' => $_CONSTRUCTR_CONF['_CONSTRUCTR_DEBUG_MODE'],
             'http.version' => '1.1',
-            'templates.path' => './Templates',
+            'templates.path' => $_CONSTRUCTR_CONF['_CONSTRUCTR_BACKEND'],
             'session.handler' => null,
             'log.writer' => new \Slim\Extras\Log\DateTimeFileWriter(
                 array
                 (
-                    'path' => './Logfiles',
+                    'path' => $_CONSTRUCTR_CONF['_CONSTRUCTR_LOGFILES_PATH'],
                     'name_format' => 'Ymd',
                     'message_format' => '%label% // %date%: %message%',
-                    'extension' => 'log'
+                    'extension' => 'txt'
                 )
             ),
             'log.level' => \Slim\Log::DEBUG,
-            'log.enabled' => true
+            'log.enabled' => $_CONSTRUCTR_CONF['_CONSTRUCTR_LOG_ENABLED']
         )
     );
 
@@ -77,11 +64,11 @@
         new \Slim\Middleware\SessionCookie(
             array
             (
-                'secret' => 'h5/823!65$%4jc/)$3_fè4()480HD3d',
+                'secret' => $_CONSTRUCTR_CONF['_SECRET'],
                 'cipher' => MCRYPT_RIJNDAEL_256,
                 'cipher_mode' => MCRYPT_MODE_CBC,
-                'name' => 'app-sssession',
-                'expires' => '8 hours',
+                'name' => $_CONSTRUCTR_CONF['_CONSTRUCTR_SESSION_NAME'],
+                'expires' => $_CONSTRUCTR_CONF['_CONSTRUCTR_COOKIE_LIFETIME'],
                 'path' => '/',
                 'domain' => null,
                 'secure' => false,
@@ -90,7 +77,7 @@
         )
     );
 
-    require_once './Views/helper.php';
+    require_once './Views/helper.php';    
 
     $REQUEST = $constructr -> request -> getPath();
     $FINDR = strpos($REQUEST, 'constructr');
@@ -98,11 +85,20 @@
     if($FINDR === false)
     {
         $view = $constructr -> view();
-        $view -> setTemplatesDirectory('./Website-Template');        
+        $view -> setTemplatesDirectory('./Website-Template');
 
-        if($_SERVE_STATIC == "true")
+        if(!isset($_GET['static-generation']) || $_GET['static-generation'] == 'false')
         {
-            $constructr -> get('(:ROUTE+)', function ($ROUTE) use ($constructr)
+            $_SERVE_STATIC = $_CONSTRUCTR_CONF['_SERVE_STATIC'];    
+        }
+        else
+        {
+            $_SERVE_STATIC = false;
+        }
+
+        if($_SERVE_STATIC == true)
+        {
+            $constructr -> get('(:ROUTE+)', function ($ROUTE) use ($constructr,$_CONSTRUCTR_CONF)
                 {
                     $URL = '';
 
@@ -112,9 +108,9 @@
                     }
 
                     $URL = str_replace('//','/',$URL);
-                    $STATIC_DIR = str_replace('./','/',_STATIC_DIR);
-                    $URL = _BASE_URL . $STATIC_DIR . $URL . 'index.php';
-                    $constructr -> getLog() -> info('ConstructrCMS serves static ' . date('d.m.Y, H:i:s') . ':' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                    $STATIC_DIR = str_replace('./','/',$_CONSTRUCTR_CONF['_STATIC_DIR']);
+                    $URL = $_CONSTRUCTR_CONF['_BASE_URL'] . $STATIC_DIR . $URL . 'index.php';                    
+                    $constructr -> getLog() -> info('Constructr serves static ' . date('d.m.Y, H:i:s') . ':' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                     $constructr -> redirect($URL,301);
                 }
             );
@@ -123,11 +119,11 @@
             die();
         }
 
-        if(_EXT_WWW != '')
+        if($_CONSTRUCTR_CONF['_EXT_WWW'] != '')
         {
             $constructr -> get('(:ROUTE+)', function () use ($constructr)
                 {
-                    $constructr -> redirect(_BASE_URL . '/Web/index.php',301);
+                    $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/Web/index.php',301);
                     die();        
                 }
             );
@@ -137,7 +133,7 @@
 
         $START = microtime(true);
         
-        $constructr -> get('(:ROUTE+)', function ($ROUTE) use ($constructr,$DBCON)
+        $constructr -> get('(:ROUTE+)', function ($ROUTE) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
             {
                 $FULL_ROUTE;
                 $PAGES;
@@ -156,22 +152,7 @@
 
                 try
                 {
-                    $PAGES = $DBCON -> query('
-                        SELECT n.*,
-                                 round((n.pages_rgt-n.pages_lft-1)/2,0) AS pages_subpages_countr,
-                                 count(*)-1+(n.pages_lft>1) AS pages_level,
-                                 ((min(p.pages_rgt)-n.pages_rgt-(n.pages_lft>1))/2) > 0 AS pages_lower,
-                                 (((n.pages_lft-max(p.pages_lft)>1))) AS pages_upper
-                            FROM constructr_pages n,
-                                 constructr_pages p
-                           WHERE n.pages_lft BETWEEN p.pages_lft AND p.pages_rgt
-                             AND (p.pages_id != n.pages_id OR n.pages_lft = 1)
-                             AND n.pages_active = 1
-                             AND p.pages_active = 1
-                        GROUP BY n.pages_id
-                        ORDER BY n.pages_lft;
-                    ');
-
+                    $PAGES = $DBCON -> query('SELECT n.*, round((n.pages_rgt-n.pages_lft-1)/2,0) AS pages_subpages_countr, count(*)-1+(n.pages_lft>1) AS pages_level, ((min(p.pages_rgt)-n.pages_rgt-(n.pages_lft>1))/2) > 0 AS pages_lower, (((n.pages_lft-max(p.pages_lft)>1))) AS pages_upper FROM constructr_pages n, constructr_pages p WHERE n.pages_lft BETWEEN p.pages_lft AND p.pages_rgt AND (p.pages_id != n.pages_id OR n.pages_lft = 1) AND n.pages_active = 1 AND p.pages_active = 1 GROUP BY n.pages_id ORDER BY n.pages_lft;');
                     $PAGES = $PAGES -> fetchAll();
                 }
                 catch (PDOException $e)
@@ -188,17 +169,9 @@
                         {
                             try
                             {
-                                $HOMEPAGE = $DBCON -> prepare('
-                                    SELECT * FROM constructr_pages WHERE pages_lft = :NESTED_SETS_INIT AND pages_active = 1 LIMIT 1;
-                                ');
-    
                                 $INIT = 1;
-
-                                $HOMEPAGE -> execute(
-                                    array(
-                                        ':NESTED_SETS_INIT' => $INIT 
-                                    )
-                                );
+                                $HOMEPAGE = $DBCON -> prepare('SELECT * FROM constructr_pages WHERE pages_lft = :NESTED_SETS_INIT AND pages_active = 1 LIMIT 1;');
+                                $HOMEPAGE -> execute(array(':NESTED_SETS_INIT' => $INIT));
                                 $HOMEPAGE = $HOMEPAGE -> fetch();
                                 $PAGE_DATA = $HOMEPAGE;
                             }
@@ -209,18 +182,12 @@
                             }
 
                             $PAGE_ID = $HOMEPAGE['pages_id'];
-                            
+                            $TEMPLATE = $HOMEPAGE['pages_template'];
+
                             try
                             {
-                                $CONTENT = $DBCON -> prepare('
-                                    SELECT * FROM constructr_content WHERE content_page_id = :PAGE_ID AND content_active = 1 ORDER BY content_order ASC;
-                                ');
-
-                                $CONTENT -> execute(
-                                    array(
-                                        ':PAGE_ID' => $PAGE_ID
-                                    )
-                                );
+                                $CONTENT = $DBCON -> prepare('SELECT * FROM constructr_content WHERE content_page_id = :PAGE_ID AND content_active = 1 ORDER BY content_order ASC;');
+                                $CONTENT -> execute(array(':PAGE_ID' => $PAGE_ID));
                             }
                             catch (PDOException $e)
                             {
@@ -234,27 +201,12 @@
                             {
                                 try
                                 {
-                                    $ACT_PAGE = $DBCON -> prepare('
-                                        SELECT * FROM constructr_pages WHERE pages_id = :PAGE_ID AND pages_active = 1 LIMIT 1;
-                                    ');
-
-                                    $ACT_PAGE -> execute(
-                                        array(
-                                            ':PAGE_ID' => $PAGE['pages_id'] 
-                                        )
-                                    );
-
+                                    $ACT_PAGE = $DBCON -> prepare('SELECT * FROM constructr_pages WHERE pages_id = :PAGE_ID AND pages_active = 1 LIMIT 1;');
+                                    $ACT_PAGE -> execute(array(':PAGE_ID' => $PAGE['pages_id']));
                                     $PAGE_DATA = $ACT_PAGE -> fetch();
-
-                                    $CONTENT = $DBCON -> prepare('
-                                        SELECT * FROM constructr_content WHERE content_page_id = :PAGE_ID AND content_active = 1 ORDER BY content_order ASC;
-                                    ');
-    
-                                    $CONTENT -> execute(
-                                        array(
-                                            ':PAGE_ID' => $PAGE['pages_id']
-                                        )
-                                    );
+                                    $TEMPLATE = $PAGE_DATA['pages_template'];
+                                    $CONTENT = $DBCON -> prepare('SELECT * FROM constructr_content WHERE content_page_id = :PAGE_ID AND content_active = 1 ORDER BY content_order ASC;');
+                                    $CONTENT -> execute(array(':PAGE_ID' => $PAGE['pages_id']));
                                 }
                                 catch (PDOException $e)
                                 {
@@ -266,33 +218,7 @@
                     }
                 }
 
-                $constructr -> render('index.php',
-                    array(
-                        'PAGES' => $PAGES,
-                        'PAGE_DATA' => $PAGE_DATA,
-                        'CONTENT' => $CONTENT,
-                    )
-                );
-
-                if(_DEBUGGING == true)
-                {
-                    echo '<div class="debugging"><h2>Debugging</h2>';
-                    echo '<br><h4>Actual Route:</h4>';
-                    echo '<pre>';
-                    var_dump($FULL_ROUTE);
-                    echo '</pre>';
-                    echo '<br><h4>Generation Time:</h4>';
-                    echo '<pre>';
-                    echo 'TIMER: ' . substr(microtime(true) - $START,0,6) . ' Millisec.';
-                    echo '</pre>';
-                    echo '<br><h4>Memory Usage:</h4>';
-                    echo '<pre>';
-                    $MEM = 0;
-                    $MEM = number_format(((memory_get_usage()/1014)/1024),2,',','.') . ' MB';
-                    echo $MEM;
-                    echo '</pre>';
-                    echo '</div>';
-                }
+                $constructr -> render($TEMPLATE,array('PAGES' => $PAGES,'PAGE_DATA' => $PAGE_DATA,'CONTENT' => $CONTENT,'_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF));
 
                 die();
             }
@@ -315,5 +241,5 @@
 
         $constructr -> run();
     }
-    
+
     $DBCON = null;

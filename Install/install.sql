@@ -19,14 +19,6 @@ CREATE TABLE IF NOT EXISTS `constructr_backenduser_rights` (
   UNIQUE KEY `cbr_id` (`cbr_id`)
 ) ENGINE=MyISAM;
 
-CREATE TABLE IF NOT EXISTS `constructr_config` (
-  `constructr_config_id` int(20) NOT NULL AUTO_INCREMENT,
-  `constructr_config_expression` varchar(200) NOT NULL,
-  `constructr_config_value` varchar(200) NOT NULL,
-  PRIMARY KEY (`constructr_config_id`),
-  UNIQUE KEY `constructr_config_id` (`constructr_config_id`)
-) ENGINE=MyISAM;
-
 CREATE TABLE IF NOT EXISTS `constructr_content` (
   `content_id` int(11) NOT NULL AUTO_INCREMENT,
   `content_order` int(11) NOT NULL DEFAULT '0',
@@ -35,6 +27,7 @@ CREATE TABLE IF NOT EXISTS `constructr_content` (
   `content_content` text NOT NULL,
   `content_temp_marker` int(10) NOT NULL DEFAULT '0',
   `content_active` int(11) NOT NULL DEFAULT '1',
+  `content_deleted` int(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`content_id`),
   UNIQUE KEY `content_id` (`content_id`)
 ) ENGINE=MyISAM;

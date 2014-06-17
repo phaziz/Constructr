@@ -140,9 +140,10 @@
             }
             
             $GUID = create_guid();
+            array_diff(scandir($directory), array('..', '.'));
+            $TEMPLATES = array_diff(scandir($_CONSTRUCTR_CONF['_TEMPLATES_DIR']), array('..', '.'));
             $MEM = 0;
             $MEM = number_format(((memory_get_usage()/1014)/1024),2,',','.') . ' MB';
-            $TEMPLATES = scandir($_CONSTRUCTR_CONF['_TEMPLATES_DIR']);
 
             $constructr -> render('pages_new.php',
                 array
@@ -433,9 +434,9 @@
             }
 
             $GUID = create_guid();
+            $TEMPLATES = array_diff(scandir($_CONSTRUCTR_CONF['_TEMPLATES_DIR']), array('..', '.'));
             $MEM = 0;
             $MEM = number_format(((memory_get_usage()/1014)/1024),2,',','.') . ' MB';
-            $TEMPLATES = scandir($_CONSTRUCTR_CONF['_TEMPLATES_DIR']);
 
             $constructr -> render('pages_new_sub.php',
                 array
@@ -718,7 +719,7 @@
             }
 
             $GUID = create_guid();
-            $TEMPLATES = scandir($_CONSTRUCTR_CONF['_TEMPLATES_DIR']);
+            $TEMPLATES = array_diff(scandir($_CONSTRUCTR_CONF['_TEMPLATES_DIR']), array('..', '.'));
             $MEM = 0;
             $MEM = number_format(((memory_get_usage()/1014)/1024),2,',','.') . ' MB';
 

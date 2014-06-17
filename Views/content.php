@@ -293,6 +293,16 @@
                     $STMT -> bindParam(':CONTENT_ACTIVE',$CONTENT_ACTIVE,PDO::PARAM_INT);
                     $STMT -> execute();
 
+                    $LAST_CONTENT_ID = $DBCON -> lastInsertId(); 
+
+                    $QUERY = 'INSERT INTO constructr_content_history SET content_datetime = :CONTENT_DATETIME,content_page_id = :PAGE_ID,content_content = :CONTENT, content_content_id = :LAST_CONTENT_ID;';
+                    $STMT = $DBCON -> prepare($QUERY);
+                    $STMT -> bindParam(':CONTENT',$CONTENT,PDO::PARAM_STR);
+                    $STMT -> bindParam(':CONTENT_DATETIME',$CONTENT_DATETIME,PDO::PARAM_STR);
+                    $STMT -> bindParam(':PAGE_ID',$PAGE_ID,PDO::PARAM_INT);
+                    $STMT -> bindParam(':LAST_CONTENT_ID',$LAST_CONTENT_ID,PDO::PARAM_INT);
+                    $STMT -> execute();
+
                     $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/content/' . $PAGE_ID . '/?res=create-content-true');
                     die();
                 }
@@ -376,6 +386,16 @@
                 );
                 $CONTENT = $CONTENT -> fetch();
 
+                $CONTENT_HISTORY = $DBCON -> prepare('SELECT * FROM constructr_content_history WHERE content_page_id = :PAGE_ID AND content_content_id = :CONTENT_ID ORDER BY content_datetime DESC;');
+                $CONTENT_HISTORY -> execute(
+                    array
+                    (
+                        ':PAGE_ID' => $PAGE_ID,
+                        ':CONTENT_ID' => $CONTENT_ID
+                    )
+                );
+                $CONTENT_HISTORY = $CONTENT_HISTORY -> fetchAll();
+
                 $PAGE_NAME = $DBCON -> prepare('SELECT pages_name FROM constructr_pages WHERE pages_id = :PAGE_ID LIMIT 1;');
                 $PAGE_NAME -> execute(
                     array
@@ -404,6 +424,7 @@
                     'USERNAME' => $USERNAME,
                     'GUID' => $GUID,
                     'CONTENT' => $CONTENT,
+                    'CONTENT_HISTORY' => $CONTENT_HISTORY,
                     'PAGE_NAME' => $PAGE_NAME,
                     'PAGE_ID' => $PAGE_ID,
                     '_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,
@@ -494,6 +515,14 @@
                             ':CONTENT_ID' => $CONTENT_ID
                         )
                     );
+
+                    $QUERY = 'INSERT INTO constructr_content_history SET content_datetime = :CONTENT_DATETIME,content_page_id = :PAGE_ID,content_content = :CONTENT, content_content_id = :LAST_CONTENT_ID;';
+                    $STMT = $DBCON -> prepare($QUERY);
+                    $STMT -> bindParam(':CONTENT',$CONTENT,PDO::PARAM_STR);
+                    $STMT -> bindParam(':CONTENT_DATETIME',$CONTENT_DATETIME,PDO::PARAM_STR);
+                    $STMT -> bindParam(':PAGE_ID',$PAGE_ID,PDO::PARAM_INT);
+                    $STMT -> bindParam(':LAST_CONTENT_ID',$CONTENT_ID,PDO::PARAM_INT);
+                    $STMT -> execute();
 
                     $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/content/' . $PAGE_ID . '/?res=edit-content-true');
                     die();
@@ -1043,6 +1072,18 @@
                         )
                     );
 
+                    $DELETER = $DBCON -> prepare('
+                        DELETE FROM constructr_content_history WHERE content_page_id = :PAGE_ID AND content_content_id = :CONTENT_ID;
+                    ');
+                    $DELETER -> execute(
+                        array
+                        (
+                            ':CONTENT_ID' => $CONTENT_ID,
+                            ':PAGE_ID' => $PAGE_ID
+                        )
+                    );
+
+
                     $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/content/' . $PAGE_ID . '/?res=del-content-true');
                     die();
                 }
@@ -1060,7 +1101,91 @@
             }
         }
     );
+
+    $constructr -> get('/constructr/content/:PAGE_ID/:CONTENT_HISTORY_ID/:CONTENT_ID/delete-history-complete/', $ADMIN_CHECK, function ($PAGE_ID,$CONTENT_HISTORY_ID,$CONTENT_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
+        {
+            $USERNAME = $_SESSION['backend-user-username'];
+
+            $constructr -> view -> setData('BackendUserRight',25);
+
+            if(isset($_SESSION['backend-user-id']) && $_SESSION['backend-user-id'] != '')
+            {
+                try
+                {
+                    $RIGHT_CHECKER = $DBCON -> prepare('SELECT * FROM constructr_backenduser_rights WHERE cbr_right = :RIGHT_ID AND cbr_user_id = :USER_ID AND cbr_value = :CBR_VALUE LIMIT 1;');
+                    $RIGHT_CHECKER -> execute(
+                        array
+                        (
+                            ':USER_ID' => $_SESSION['backend-user-id'],
+                            ':RIGHT_ID' => $constructr -> view -> getData('BackendUserRight'),
+                            ':CBR_VALUE' => 1
+                        )
+                    );
     
+                    $RIGHTS_COUNTR = $RIGHT_CHECKER -> rowCount();
+                    
+                    if($RIGHTS_COUNTR != 1)
+                    {
+                        $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Error ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                        $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/?no-rights=true');
+                        die();
+                    }
+                    else
+                    {
+                        $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                    }
+                }
+                catch (PDOException $e) 
+                {
+                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
+                    die();
+                }
+            }
+            else
+            {
+                $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': Error User-Rights-Check: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/logout/');
+                die();
+            }
+
+            if($_CONSTRUCTR_CONF['_LOGGING'] == true)
+            {
+                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
+            }
+
+            if($PAGE_ID != '' && $CONTENT_ID != '')
+            {
+                try
+                {
+                    $DELETER = $DBCON -> prepare('
+                        DELETE FROM constructr_content_history WHERE content_id = :CONTENT_HISTORY_ID AND content_page_id = :PAGE_ID AND content_content_id = :CONTENT_ID LIMIT 1;
+                    ');
+                    $DELETER -> execute(
+                        array
+                        (
+                            ':CONTENT_HISTORY_ID' => $CONTENT_HISTORY_ID,
+                            ':CONTENT_ID' => $CONTENT_ID,
+                            ':PAGE_ID' => $PAGE_ID
+                        )
+                    );
+                    $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/content/' . $PAGE_ID . '/' . $CONTENT_ID . '/edit/?history=deleted-true');
+                    die();
+                }
+                catch (PDOException $e)
+                {
+                    $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
+                    $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/content/' . $PAGE_ID . '/?res=del-content-false');
+                    die();
+                }
+            }
+            else
+            {
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/content/' . $PAGE_ID . '/?res=del-content-false');
+                die();
+            }
+        }
+    );
+
     $constructr -> get('/constructr/content/:PAGE_ID/:CONTENT_ID/:NEW_ORDER/re-create/', $ADMIN_CHECK, function ($PAGE_ID,$CONTENT_ID,$NEW_ORDER) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
             $USERNAME = $_SESSION['backend-user-username'];

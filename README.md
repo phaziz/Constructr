@@ -9,6 +9,7 @@ That's it for now:
 	- C.R.U.D. websites
 	- C.R.U.D. content elements
 	- Content trashcan and recovery
+	- Content history per element and recovery
 	- Media library
 	- Media details view
 	- Media trashcan and recovery

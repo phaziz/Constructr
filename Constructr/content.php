@@ -192,44 +192,44 @@
 
                         ?>
 
-                            <div class="row">
-                                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
-                                <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-                                    <div class="jumbotron">
-                                        <h2><?php echo $DELETED_CONTENT_COUNTER; ?> <strong>Gel&ouml;schte</strong> Inhalte von <?php echo $PAGE_NAME['pages_name']; ?></h2>
-                                        <br><br>
-                                        <div class="table-responsive">
-                                        <table class="datatable table table-bordered table-condensed table-striped table-hover">
-                                            <thead>
-                                                <tr>
-                                                    <th><small>Gel&ouml;schter Inhalt</small></th>
-                                                    <th class="center"><small>Aktionen</small></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <?php
+                        <div class="row">
+                            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
+                            <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                                <div class="jumbotron">
+                                    <h2><?php echo $DELETED_CONTENT_COUNTER; ?> <strong>Gel&ouml;schte</strong> Inhalte von <?php echo $PAGE_NAME['pages_name']; ?></h2>
+                                    <br><br>
+                                    <div class="table-responsive">
+                                    <table class="datatable table table-bordered table-condensed table-striped table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th><small>Gel&ouml;schter Inhalt</small></th>
+                                                <th class="center"><small>Aktionen</small></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
 
-                                                    foreach ($DELETED_CONTENT as $DELETED_CONTENT)
-                                                    {
-                                                        echo '<tr>';
-                                                        echo '<td><small>';
-                                                        echo '<a href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/content/' . $PAGE_ID . '/' . $DELETED_CONTENT['content_id'] . '/edit/" title="Inhalte bearbeiten">' . htmlentities($DELETED_CONTENT['content_content']) . '</a></small></td>';
-                                                        echo '<td class="right"><nobr>';
-                                                        echo '<a data-toggle="tooltip" data-placement="top" title="Wiederherstellen" class="recreater tt" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/content/' . $PAGE_ID . '/' . $DELETED_CONTENT['content_id'] . '/' . ($CONTENT_COUNTER+1) . '/re-create/"><button type="button" class="btn btn-success btn-xs" title="Wiederherstellen"><span class="glyphicon glyphicon-import"></span></button></a>';
-                                                        echo '&#160;';
-                                                        echo '<a data-toggle="tooltip" data-placement="top" title="Diesen Inhalt endg&uuml;ltig l&ouml;schen" class="deleter tt" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/content/' . $PAGE_ID . '/' . $DELETED_CONTENT['content_id'] . '/delete-complete/" title="Inhalt endg&uuml;ltig l&ouml;schen"><button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span></button></a>';
-                                                        echo '</nobr></td>';
-                                                        echo '</tr>';
-                                                    }
+                                                foreach ($DELETED_CONTENT as $DELETED_CONTENT)
+                                                {
+                                                    echo '<tr>';
+                                                    echo '<td><small>';
+                                                    echo '<a href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/content/' . $PAGE_ID . '/' . $DELETED_CONTENT['content_id'] . '/edit/" title="Inhalte bearbeiten">' . htmlentities($DELETED_CONTENT['content_content']) . '</a></small></td>';
+                                                    echo '<td class="right"><nobr>';
+                                                    echo '<a data-toggle="tooltip" data-placement="top" title="Wiederherstellen" class="recreater tt" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/content/' . $PAGE_ID . '/' . $DELETED_CONTENT['content_id'] . '/' . ($CONTENT_COUNTER+1) . '/re-create/"><button type="button" class="btn btn-success btn-xs" title="Wiederherstellen"><span class="glyphicon glyphicon-import"></span></button></a>';
+                                                    echo '&#160;';
+                                                    echo '<a data-toggle="tooltip" data-placement="top" title="Diesen Inhalt endg&uuml;ltig l&ouml;schen" class="deleter tt" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/content/' . $PAGE_ID . '/' . $DELETED_CONTENT['content_id'] . '/delete-complete/" title="Inhalt endg&uuml;ltig l&ouml;schen"><button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span></button></a>';
+                                                    echo '</nobr></td>';
+                                                    echo '</tr>';
+                                                }
 
-                                                ?>
-                                            </tbody>
-                                        </table>
-                                        </div><!-- EOF TABLE RESPONSIVE-->
-                                    </div><!-- // EOF JUMBOTRON -->
-                                </div><!-- // EOF COL-... -->
-                                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
-                            </div><!-- // EOF ROW -->
+                                            ?>
+                                        </tbody>
+                                    </table>
+                                    </div><!-- EOF TABLE RESPONSIVE-->
+                                </div><!-- // EOF JUMBOTRON -->
+                            </div><!-- // EOF COL-... -->
+                            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
+                        </div><!-- // EOF ROW -->
 
                         <?php
                             }
@@ -239,7 +239,7 @@
                             <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
                             <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
                                 <p><small><a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/">Dashboard</a> <span class="glyphicon glyphicon-chevron-right"></span> <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/pages/">Seitenverwaltung - &Uuml;bersicht</a> <span class="glyphicon glyphicon-chevron-right"></span> <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/content/<?php echo $PAGE_ID; ?>/">Inhalte - &Uuml;bersicht</a></small></p>
-                                <p><small>Version: <?php echo $_CONSTRUCTR_CONF['_VERSION']; ?> / <?php echo $TIMER; ?> / <?php echo $MEM; ?> / <a href="http://phaziz.com/" onclick="window.open(this.href);return false;">phaziz.com</a></small></p>
+                                <p><small>Version: <?php echo $_CONSTRUCTR_CONF['_VERSION']; ?> / <?php echo $TIMER; ?> / <?php echo $MEM; ?> / <a href="http://phaziz.com/" onclick="window.open(this.href);return false;">Constructr CMS von phaziz.com</a></small></p>
                             </div><!-- // EOF COL-... -->
                             <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
                         </div><!-- // EOF ROW -->

@@ -142,6 +142,7 @@
             $GUID = create_guid();
             $MEM = 0;
             $MEM = number_format(((memory_get_usage()/1014)/1024),2,',','.') . ' MB';
+            $TEMPLATES = scandir($_CONSTRUCTR_CONF['_TEMPLATES_DIR']);
 
             $constructr -> render('pages_new.php',
                 array
@@ -149,6 +150,7 @@
                     'MEM' => $MEM,
                     'USERNAME' => $USERNAME,
                     'GUID' => $GUID,
+                    'TEMPLATES' => $TEMPLATES,
                     'FORM_ACTION' => $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/new/' . $GUID . '/',
                     'FORM_METHOD' => 'post',
                     '_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,
@@ -433,6 +435,7 @@
             $GUID = create_guid();
             $MEM = 0;
             $MEM = number_format(((memory_get_usage()/1014)/1024),2,',','.') . ' MB';
+            $TEMPLATES = scandir($_CONSTRUCTR_CONF['_TEMPLATES_DIR']);
 
             $constructr -> render('pages_new_sub.php',
                 array
@@ -440,6 +443,7 @@
                     'MEM' => $MEM,
                     'USERNAME' => $USERNAME,
                     'GUID' => $GUID,
+                    'TEMPLATES' => $TEMPLATES,
                     'MOTHER_ID' => $MOTHER_ID,
                     'MOTHER_LFT' => $MOTHER_LFT,
                     '_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,
@@ -714,6 +718,7 @@
             }
 
             $GUID = create_guid();
+            $TEMPLATES = scandir($_CONSTRUCTR_CONF['_TEMPLATES_DIR']);
             $MEM = 0;
             $MEM = number_format(((memory_get_usage()/1014)/1024),2,',','.') . ' MB';
 
@@ -724,6 +729,7 @@
                     'USERNAME' => $USERNAME,
                     'GUID' => $GUID,
                     'PAGE' => $PAGE,
+                    'TEMPLATES' => $TEMPLATES,
                     '_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,
                     'FORM_ACTION' => $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/edit/' . $GUID . '/',
                     'FORM_METHOD' => 'post',

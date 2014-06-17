@@ -134,7 +134,7 @@
                                         }
 
                                     ?>
-                                    <h2>Zu Ihrer Information:</h2>
+                                    <h2>Seiten, Uploads &amp; Benutzer:</h2>
                                     <?php
                                         if($PAGES_COUNTR || $BACKEND_USER_COUNTR || $UPLOADS_COUNTR)
                                         {
@@ -153,9 +153,6 @@
                                                             <span class="badge"><?php echo $BACKEND_USER_COUNTR; ?></span>
                                                             <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL']; ?>/constructr/user/" title="Benutzer anzeigen">Benutzer</a>:
                                                       </li>
-                                                      <li class="list-group-item">
-                                                            <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL']; ?>/Logfiles/<?php echo date('Ymd'); ?>.txt" title="Logfile anzeigen" onclick="window.open(this.href);return false;">Aktuelles Logfile anzeigen</a>
-                                                      </li>
                                                 </ul>
                                             <?php
                                         }
@@ -167,6 +164,9 @@
                                           <li class="list-group-item">
                                                 <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL']; ?>/constructr/optimization/<?php echo $GUID ?>/" title="Datenbank optimieren">Datenbank optimieren</a>
                                           </li>
+                                          <li class="list-group-item">
+                                                <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL']; ?>/Logfiles/<?php echo date('Ymd'); ?>.txt" title="Logfile anzeigen" onclick="window.open(this.href);return false;">Aktuelles Logfile anzeigen</a>
+                                          </li>
                                     </ul>
                                 </div><!-- // EOF JUMBOTRON -->
                             </div><!-- // EOF COL-... -->
@@ -176,7 +176,7 @@
                             <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
                             <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
                                 <p><small><a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/">Dashboard</a> <span class="glyphicon glyphicon-chevron-right"></span></small></p>
-                                <p><small>Version: <?php echo $_CONSTRUCTR_CONF['_VERSION']; ?> / <?php echo $TIMER; ?> / <?php echo $MEM; ?> / <a href="http://phaziz.com/" onclick="window.open(this.href);return false;">phaziz.com</a></small></p>
+                                <p><small>Version: <?php echo $_CONSTRUCTR_CONF['_VERSION']; ?> / <?php echo $TIMER; ?> / <?php echo $MEM; ?> / <a href="http://phaziz.com/" onclick="window.open(this.href);return false;">Constructr CMS von phaziz.com</a></small></p>
                             </div><!-- // EOF COL-... -->
                             <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
                         </div><!-- // EOF ROW -->

@@ -82,7 +82,7 @@
     if($FINDR === false)
     {
         $view = $constructr -> view();
-        $view -> setTemplatesDirectory('./Website-Template');
+        $view -> setTemplatesDirectory($_CONSTRUCTR_CONF['_TEMPLATES_DIR']);
 
         if(isset($_GET['static-generation']) && $_GET['static-generation'] == $_CONSTRUCTR_CONF['MAGIC_GENERATION_KEY'])
         {

@@ -152,7 +152,7 @@
                                                             }
                                                         }
                                                         echo '<strong><a class="tt" data-toggle="tooltip" data-placement="top" title="Inhalte von Seite ' . $PAGE['pages_name'] . ' bearbeiten" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/content/' . $PAGE['pages_id'] . '/" title="Inhalte von Seite ' . $PAGE['pages_name'] . ' bearbeiten">' . $PAGE['pages_name'] . '</a></strong></td>';
-                                                        echo '<td><small>' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/' . $PAGE['pages_url'] . '</small></td>';
+                                                        echo '<td><small><a class="tt" data-toggle="tooltip" data-placement="top" title="Seite im Browser anzeigen" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/' . $PAGE['pages_url'] . '" onclick="window.open(this.href);return false;">' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/' . $PAGE['pages_url'] . '</a></small></td>';
                                                         echo '<td><small>' . $PAGE['pages_template'] . '</small></td>';
                                                         echo '<td class="right"><nobr>';
                                                         if($PAGE['pages_lft'] != 1 && $PAGE['pages_upper'] != 0)
@@ -204,7 +204,7 @@
                             <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
                             <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
                                 <p><small><a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/">Dashboard</a> <span class="glyphicon glyphicon-chevron-right"></span> <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/pages/">Seitenverwaltung - &Uuml;bersicht</a> <span class="glyphicon glyphicon-chevron-right"></span></small></p>
-                                <p><small>Version: <?php echo $_CONSTRUCTR_CONF['_VERSION']; ?> / <?php echo $TIMER; ?> / <?php echo $MEM; ?> / <a href="http://phaziz.com/" onclick="window.open(this.href);return false;">phaziz.com</a></small></p>
+                                <p><small>Version: <?php echo $_CONSTRUCTR_CONF['_VERSION']; ?> / <?php echo $TIMER; ?> / <?php echo $MEM; ?> / <a href="http://phaziz.com/" onclick="window.open(this.href);return false;">Constructr CMS von phaziz.com</a></small></p>
                             </div><!-- // EOF COL-... -->
                             <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
                         </div><!-- // EOF ROW -->
@@ -240,8 +240,9 @@
                             {
                                 "aaSorting": [],
                                 "aoColumns": [
-                                    { "sWidth": "40%", "bSortable":false},
-                                    { "sWidth": "40%", "bSortable":false},
+                                    { "sWidth": "30%", "bSortable":false},
+                                    { "sWidth": "30%", "bSortable":false},
+                                    { "sWidth": "20%", "bSortable":false},
                                     { "sWidth": "20%", "bSortable":false}
                                 ],
                                 "sPaginationType":"bs_full",

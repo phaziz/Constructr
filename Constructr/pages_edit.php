@@ -78,9 +78,30 @@
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="page_template" class="col-sm-2 control-label">Template der Seite:</label>
+                                                        <label for="page_template" class="col-sm-2 control-label">Template der neuen Seite:</label>
                                                         <div class="col-sm-10">
-                                                            <input type="text" class="form-control input-sm" name="page_template" id="page_template" value="<?php echo $PAGE['pages_template']; ?>" placeholder="Template der neuen Seite" maxlength="100">
+                                                            <select class="form-control input-sm" name="page_template" id="page_template">
+                                                                <option value="">Bitte w&auml;hlen</option>
+                                                                <option value="">- - -</option>
+                                                                <?php
+
+                                                                    foreach($TEMPLATES AS $TEMPLATE)
+                                                                    {
+                                                                        if($TEMPLATE != '' && $TEMPLATE != '.' && $TEMPLATE != '..')
+                                                                        {
+                                                                            if($PAGE['pages_template'] == $TEMPLATE)
+                                                                            {
+                                                                                echo '<option selected="selected" value="' . $TEMPLATE . '">' . $TEMPLATE . '</option>';
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                echo '<option value="' . $TEMPLATE . '">' . $TEMPLATE . '</option>';
+                                                                            }
+                                                                        }
+                                                                    }
+
+                                                                ?>
+                                                            </select>
                                                             <small><span class="help-block" id="status-page_template">Bitte geben Sie dieser Seite ein Template</span></small>
                                                         </div>
                                                     </div>
@@ -126,7 +147,7 @@
                             <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
                             <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
                                 <p><small><a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/">Dashboard</a> <span class="glyphicon glyphicon-chevron-right"></span> <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/pages/">Seitenverwaltung - &Uuml;bersicht</a> <span class="glyphicon glyphicon-chevron-right"></span></small></p>
-                                <p><small>Version: <?php echo $_CONSTRUCTR_CONF['_VERSION']; ?> / <?php echo $TIMER; ?> / <?php echo $MEM; ?> / <a href="http://phaziz.com/" onclick="window.open(this.href);return false;">phaziz.com</a></small></p>
+                                <p><small>Version: <?php echo $_CONSTRUCTR_CONF['_VERSION']; ?> / <?php echo $TIMER; ?> / <?php echo $MEM; ?> / <a href="http://phaziz.com/" onclick="window.open(this.href);return false;">Constructr CMS von phaziz.com</a></small></p>
                             </div><!-- // EOF COL-... -->
                             <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
                         </div><!-- // EOF ROW -->

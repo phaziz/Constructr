@@ -484,6 +484,7 @@
                         'MEM' => $MEM,
                         'DETAILS' => $DETAILS,
                         'USERNAME' => $USERNAME,
+                        'MEDIA_ID' => $MEDIA_ID,
                         '_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,
                         'SUBTITLE' => 'Admin-Dashboard / Medienverwaltung - Detailansicht',
                         'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.'

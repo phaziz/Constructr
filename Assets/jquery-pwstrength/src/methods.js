@@ -1,5 +1,5 @@
 /*jslint browser: true, unparam: true */
-/*global jQuery, ui, rulesEngine, defaultOptions, zxcvbn */
+/*global jQuery, ui, rulesEngine, defaultOptions, zxcvbn, console */
 
 /*
 * jQuery Password Strength plugin for Twitter Bootstrap
@@ -19,15 +19,23 @@ var methods = {};
         var $el = $(event.target),
             options = $el.data("pwstrength-bootstrap"),
             word = $el.val(),
+            username,
             score;
 
         options.instances.errors = [];
         if (options.common.zxcvbn) {
-            score = zxcvbn(word).entropy;
+            username = $(options.common.usernameField).val();
+            if (username && username.length > 0) {
+                score = zxcvbn(word, [username]).entropy;
+            } else {
+                score = zxcvbn(word).entropy;
+            }
         } else {
             score = rulesEngine.executeRules(options, word);
         }
         ui.updateUI(options, $el, score);
+
+        if (options.common.debug) { console.log(score); }
 
         if ($.isFunction(options.common.onKeyUp)) {
             options.common.onKeyUp(event);
@@ -45,7 +53,12 @@ var methods = {};
             localOptions.instances = {};
             $el.data("pwstrength-bootstrap", localOptions);
             $el.on("keyup", onKeyUp);
+
             ui.initUI(localOptions, $el);
+            if ($el.val().trim()) { // Not empty, calculate the strength
+                $el.trigger("keyup");
+            }
+
             if ($.isFunction(localOptions.common.onLoad)) {
                 localOptions.common.onLoad();
             }

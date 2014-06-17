@@ -41,13 +41,16 @@ var ui = {};
             return options.instances.viewports;
         }
 
-        result = {};
         $container = ui.getContainer(options, $el);
+
+        result = {};
         result.$progressbar = ui.findElement($container, options.ui.viewports.progress, "div.progress");
+        if (options.ui.showVerdictsInsideProgressBar) {
+            result.$verdict = result.$progressbar.find("span.password-verdict");
+        }
+
         if (!options.ui.showPopover) {
-            if (options.ui.showVerdictsInsideProgressBar) {
-                result.$verdict = result.$progressbar.find("span.password-verdict");
-            } else {
+            if (!options.ui.showVerdictsInsideProgressBar) {
                 result.$verdict = ui.findElement($container, options.ui.viewports.verdict, "span.password-verdict");
             }
             result.$errors = ui.findElement($container, options.ui.viewports.errors, "ul.error-list");
@@ -96,44 +99,25 @@ var ui = {};
                         options.ui.viewports.errors);
     };
 
-    ui.initPopover = function (options, $el, verdictText) {
-        var placement = "auto top",
-            html = "";
-
-        if (options.ui.bootstrap2) { placement = "top"; }
-
-        if (options.ui.showVerdicts && verdictText.length > 0) {
-            html = "<h5><span class='password-verdict'>" + verdictText +
-                "</span></h5>";
-        }
-        if (options.ui.showErrors) {
-            html += "<div><ul class='error-list'>";
-            $.each(options.instances.errors, function (idx, err) {
-                html += "<li>" + err + "</li>";
-            });
-            html += "</ul></div>";
-        }
-
+    ui.initPopover = function (options, $el) {
         $el.popover("destroy");
         $el.popover({
             html: true,
-            placement: placement,
+            placement: "bottom",
             trigger: "manual",
-            content: html
+            content: " "
         });
-        $el.popover("show");
     };
 
     ui.initUI = function (options, $el) {
-        if (!options.ui.showPopover) {
+        if (options.ui.showPopover) {
+            ui.initPopover(options, $el);
+        } else {
             if (options.ui.showErrors) { ui.initErrorList(options, $el); }
             if (options.ui.showVerdicts && !options.ui.showVerdictsInsideProgressBar) {
                 ui.initVerdict(options, $el);
             }
         }
-        // The popover can't be initialized here, it requires to be destroyed
-        // and recreated every time its content changes, because it calculates
-        // its position based on the size of its content
         if (options.ui.showProgressBar) {
             ui.initProgressBar(options, $el);
         }
@@ -170,6 +154,41 @@ var ui = {};
             html += "<li>" + err + "</li>";
         });
         $errors.html(html);
+    };
+
+    ui.updatePopover = function (options, $el, verdictText) {
+        var popover = $el.data("bs.popover"),
+            html = "",
+            hide = true;
+
+        if (options.ui.showVerdicts && verdictText.length > 0) {
+            html = "<h5><span class='password-verdict'>" + verdictText +
+                "</span></h5>";
+            hide = false;
+        }
+        if (options.ui.showErrors) {
+            html += "<div><ul class='error-list'>";
+            $.each(options.instances.errors, function (idx, err) {
+                html += "<li>" + err + "</li>";
+                hide = false;
+            });
+            html += "</ul></div>";
+        }
+
+        if (hide) {
+            $el.popover("hide");
+            return;
+        }
+
+        if (options.ui.bootstrap2) { popover = $el.data("popover"); }
+
+        if (popover.$arrow && popover.$arrow.parents("body").length > 0) {
+            $el.find("+ .popover .popover-content").html(html);
+        } else {
+            // It's hidden
+            popover.options.content = html;
+            $el.popover("show");
+        }
     };
 
     ui.updateFieldStatus = function (options, $el, cssClass) {
@@ -219,15 +238,19 @@ var ui = {};
         if (options.ui.showProgressBar) {
             barPercentage = ui.percentage(score, options.ui.scores[3]);
             ui.updateProgressBar(options, $el, cssClass, barPercentage);
+            if (options.ui.showVerdictsInsideProgressBar) {
+                ui.updateVerdict(options, $el, verdictText);
+            }
         }
+
         if (options.ui.showStatus) {
             ui.updateFieldStatus(options, $el, cssClass);
         }
+
         if (options.ui.showPopover) {
-            // Popover can't be updated, it has to be recreated
-            ui.initPopover(options, $el, verdictText);
+            ui.updatePopover(options, $el, verdictText);
         } else {
-            if (options.ui.showVerdictsInsideProgressBar || options.ui.showVerdicts) {
+            if (options.ui.showVerdicts && !options.ui.showVerdictsInsideProgressBar) {
                 ui.updateVerdict(options, $el, verdictText);
             }
             if (options.ui.showErrors) {

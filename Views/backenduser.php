@@ -424,8 +424,9 @@
             }
 
             $USERNAME = $constructr -> request() -> post('username');
-            $PASSWORD = crypt($constructr -> request() -> post('password'),_SALT);
-            $PASSWORD_RT = crypt($constructr -> request() -> post('password_retype'),_SALT);
+            $PASSWORD = crypt($constructr -> request() -> post('password'),$_CONSTRUCTR_CONF['_SALT']);
+            $PASSWORD_RT = crypt($constructr -> request() -> post('password_retype'),$_CONSTRUCTR_CONF['_SALT']) or die ('error');
+            
             $EMAIL = $constructr -> request() -> post('email');
             $ART = $constructr -> request() -> post('art');
             $ACTIVE = 1;
@@ -699,8 +700,8 @@
             }
 
             $USERNAME = $constructr -> request() -> post('username');
-            $PASSWORD = crypt($constructr -> request() -> post('password'),_SALT);
-            $PASSWORD_RT = crypt($constructr -> request() -> post('password_retype'),_SALT);
+            $PASSWORD = crypt($constructr -> request() -> post('password'),$_CONSTRUCTR_CONF['_SALT']);
+            $PASSWORD_RT = crypt($constructr -> request() -> post('password_retype'),$_CONSTRUCTR_CONF['_SALT']);
             $EMAIL = $constructr -> request() -> post('email');
             $ART = $constructr -> request() -> post('art');
             $ACTIVE = 1;

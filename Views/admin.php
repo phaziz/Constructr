@@ -39,6 +39,233 @@
                     'MEM' => $MEM,
                     'USERNAME' => $USERNAME,
                     'GUID' => $GUID,
+                    'FORM_ACTION' => $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/searchr/' . $GUID . '/',
+                    'FORM_METHOD' => 'post',
+                    'FORM_ENCTYPE' => 'application/x-www-form-urlencoded',
+                    'BACKEND_USER_COUNTR' => $BACKEND_USER_COUNTR,
+                    'PAGES_COUNTR' => $PAGES_COUNTR,
+                    'UPLOADS_COUNTR' => $UPLOADS_COUNTR,
+                    'SUBTITLE' => 'Admin-Dashboard',
+                    '_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,
+                    '_SERVE_STATIC' => true,
+                    'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.'
+                )
+            );
+        }
+    );
+
+    $constructr -> post('/constructr/searchr/:GUID/', $ADMIN_CHECK, function ($GUID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
+        {
+            $START = microtime(true);
+            $USERNAME = $_SESSION['backend-user-username'];
+            $BACKEND_USER_COUNTR = 0;
+            $PAGES_COUNTR = 0;
+
+            if($_CONSTRUCTR_CONF['_LOGGING'] == true)
+            {
+                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
+            }
+
+            try
+            {
+                $BACKENDUSER = $DBCON -> query('SELECT beu_id FROM constructr_backenduser;');
+                $BACKEND_USER_COUNTR = $BACKENDUSER -> rowCount();               
+
+                $PAGES = $DBCON -> query('SELECT pages_id FROM constructr_pages;');
+                $PAGES_COUNTR = $PAGES -> rowCount();
+
+                $UPLOADS = $DBCON -> query('SELECT media_id FROM constructr_media;');
+                $UPLOADS_COUNTR = $UPLOADS -> rowCount();
+            }
+            catch (PDOException $e) 
+            {
+                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
+                die();
+            }
+
+            $NEEDLES = $constructr -> request() -> post('needles');
+            $USER_FORM_GUID = $constructr -> request() -> post('user_form_guid');
+
+            if($NEEDLES)
+            {
+                if($GUID != $USER_FORM_GUID)
+                {
+                    $constructr -> getLog() -> error('SearchForm GUID Error - ' . $_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                    $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/');
+                    die();
+                }
+
+                $NEEDLES = explode(' ',trim($NEEDLES));
+                $SEARCHR = array();
+
+                foreach($NEEDLES AS $NEEDLE)
+                {
+                    try
+                    {
+                        $SEARCH_QUERY_PAGES = $DBCON -> prepare('SELECT * FROM constructr_pages WHERE pages_name LIKE :NEEDLE OR pages_url LIKE :NEEDLE OR pages_template LIKE :NEEDLE OR pages_title LIKE :NEEDLE OR pages_description LIKE :NEEDLE OR pages_keywords LIKE :NEEDLE;');
+                        $SEARCH_QUERY_PAGES -> execute(
+                            array
+                            (
+                                ':NEEDLE' => '%' . $NEEDLE .'%'
+                            )
+                        );
+                        $SEARCH_QUERY_PAGES = $SEARCH_QUERY_PAGES -> fetchAll();
+                        if($SEARCH_QUERY_PAGES)
+                        {
+                            foreach($SEARCH_QUERY_PAGES AS $SEARCH_QUERY_PAGES)
+                            {
+                                $SEARCHR['pages_' . $SEARCH_QUERY_PAGES['pages_id']] = array
+                                (
+                                    'id' => $SEARCH_QUERY_PAGES['pages_id'],
+                                    'name' => 'Seite "' . $SEARCH_QUERY_PAGES['pages_name'] . '" ansehen &#8250;&#8250;&#8250;',
+                                    'result_link' => $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/edit/' . $SEARCH_QUERY_PAGES['pages_id'] . '/'
+                                );
+                            }
+                        }
+                    }
+                    catch (PDOException $e) 
+                    {
+                        $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
+                        $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/');                
+                        die();
+                    }
+
+                    try
+                    {
+                        $SEARCH_QUERY_CONTENT = $DBCON -> prepare('SELECT * FROM constructr_content WHERE content_content LIKE :NEEDLE;');
+                        $SEARCH_QUERY_CONTENT -> execute(
+                            array
+                            (
+                                ':NEEDLE' => '%' . $NEEDLE .'%'
+                            )
+                        );
+                        $SEARCH_QUERY_CONTENT = $SEARCH_QUERY_CONTENT -> fetchAll();
+                        if($SEARCH_QUERY_CONTENT)
+                        {
+                            foreach($SEARCH_QUERY_CONTENT AS $SEARCH_QUERY_CONTENT)
+                            {
+                                $SEARCHR['content_' . $SEARCH_QUERY_CONTENT['content_id']] = array
+                                (
+                                    'id' => $SEARCH_QUERY_CONTENT['content_id'],
+                                    'name' => 'Inhalt "' . htmlentities($SEARCH_QUERY_CONTENT['content_content']) . '" ansehen &#8250;&#8250;&#8250;',
+                                    'result_link' => $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/content/' .  $SEARCH_QUERY_CONTENT['content_page_id'] . '/' .  $SEARCH_QUERY_CONTENT['content_id'] . '/edit/'
+                                );
+                            }
+                        }
+                    }
+                    catch (PDOException $e) 
+                    {
+                        $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
+                        $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/');                
+                        die();
+                    }
+
+                    try
+                    {
+                        $SEARCH_QUERY_CONTENT = $DBCON -> prepare('SELECT * FROM constructr_content_history WHERE content_content LIKE :NEEDLE;');
+                        $SEARCH_QUERY_CONTENT -> execute(
+                            array
+                            (
+                                ':NEEDLE' => '%' . $NEEDLE .'%'
+                            )
+                        );
+                        $SEARCH_QUERY_CONTENT = $SEARCH_QUERY_CONTENT -> fetchAll();
+                        if($SEARCH_QUERY_CONTENT)
+                        {
+                            foreach($SEARCH_QUERY_CONTENT AS $SEARCH_QUERY_CONTENT)
+                            {
+                                $SEARCHR['content_' . $SEARCH_QUERY_CONTENT['content_id']] = array
+                                (
+                                    'id' => $SEARCH_QUERY_CONTENT['content_id'],
+                                    'name' => 'Inhalts Historie-Eintrag "' . htmlentities($SEARCH_QUERY_CONTENT['content_content']) . '" ansehen &#8250;&#8250;&#8250;',
+                                    'result_link' => $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/content/' .  $SEARCH_QUERY_CONTENT['content_page_id'] . '/' .  $SEARCH_QUERY_CONTENT['content_content_id'] . '/edit/'
+                                );
+                            }
+                        }
+                    }
+                    catch (PDOException $e) 
+                    {
+                        $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
+                        $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/');                
+                        die();
+                    }
+
+                    try
+                    {
+                        $SEARCH_QUERY_MEDIA = $DBCON -> prepare('SELECT * FROM constructr_media WHERE media_file LIKE :NEEDLE OR media_originalname LIKE :NEEDLE;');
+                        $SEARCH_QUERY_MEDIA -> execute(
+                            array
+                            (
+                                ':NEEDLE' => '%' . $NEEDLE .'%'
+                            )
+                        );
+                        $SEARCH_QUERY_MEDIA = $SEARCH_QUERY_MEDIA -> fetchAll();
+                        if($SEARCH_QUERY_MEDIA)
+                        {
+                            foreach($SEARCH_QUERY_MEDIA AS $SEARCH_QUERY_MEDIA)
+                            {
+                                $SEARCHR['files_' . $SEARCH_QUERY_MEDIA['media_id']] = array
+                                (
+                                    'id' => $SEARCH_QUERY_MEDIA['media_id'],
+                                    'name' => 'Datei "' . $SEARCH_QUERY_MEDIA['media_file'] . '" ansehen &#8250;&#8250;&#8250;',
+                                    'result_link' => $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/media/details/' .  $SEARCH_QUERY_MEDIA['media_id'] . '/'
+                                );
+                            }
+                        }
+                    }
+                    catch (PDOException $e) 
+                    {
+                        $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
+                        $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/');                
+                        die();
+                    }
+
+                    try
+                    {
+                        $SEARCH_QUERY_USER = $DBCON -> prepare('SELECT * FROM constructr_backenduser WHERE beu_username LIKE :NEEDLE OR beu_email LIKE :NEEDLE;');
+                        $SEARCH_QUERY_USER -> execute(
+                            array
+                            (
+                                ':NEEDLE' => '%' . $NEEDLE .'%'
+                            )
+                        );
+                        $SEARCH_QUERY_USER = $SEARCH_QUERY_USER -> fetchAll();
+                        if($SEARCH_QUERY_USER)
+                        {
+                            foreach($SEARCH_QUERY_USER AS $SEARCH_QUERY_USER)
+                            {
+                                $SEARCHR['files_' . $SEARCH_QUERY_USER['beu_id']] = array
+                                (
+                                    'id' => $SEARCH_QUERY_USER['beu_id'],
+                                    'name' => 'Benutzer "' . $SEARCH_QUERY_USER['beu_username'] . '" ansehen &#8250;&#8250;&#8250;',
+                                    'result_link' => $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/user/edit/' .  $SEARCH_QUERY_USER['beu_id'] . '/'
+                                );
+                            }
+                        }
+                    }
+                    catch (PDOException $e) 
+                    {
+                        $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
+                        $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/');                
+                        die();
+                    }
+                }
+            }
+
+            $GUID = create_guid();
+            $MEM = 0;
+            $MEM = number_format(((memory_get_usage()/1014)/1024),2,',','.') . ' MB';
+            $constructr -> render('admin.php',
+                array
+                (
+                    'MEM' => $MEM,
+                    'USERNAME' => $USERNAME,
+                    'GUID' => $GUID,
+                    'SEARCHR' => $SEARCHR,
+                    'SEARCHR_COUNTR' => count($SEARCHR),
+                    'FORM_ACTION' => $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/searchr/' . $GUID . '/',
+                    'FORM_METHOD' => 'post',
+                    'FORM_ENCTYPE' => 'application/x-www-form-urlencoded',
                     'BACKEND_USER_COUNTR' => $BACKEND_USER_COUNTR,
                     'PAGES_COUNTR' => $PAGES_COUNTR,
                     'UPLOADS_COUNTR' => $UPLOADS_COUNTR,
@@ -180,11 +407,11 @@
 
                         if($PAGE_CONTENT['pages_lft'] == 1)
                         {
-                            $_HTML_CONTENT = @file_get_contents($_CONSTRUCTR_CONF['_BASE_URL'] . '/?static-generation=' . $_CONSTRUCTR_CONF['_MAGIC_GENERATION_KEY']);    
+                            $_HTML_CONTENT = file_get_contents($_CONSTRUCTR_CONF['_BASE_URL'] . '/?static-generation=' . $_CONSTRUCTR_CONF['_MAGIC_GENERATION_KEY']);    
                         }
                         else
                         {
-                            $_HTML_CONTENT = @file_get_contents($_CONSTRUCTR_CONF['_BASE_URL'] . '/' . $PAGE_CONTENT['pages_url'] . '/?static-generation=' . $_CONSTRUCTR_CONF['_MAGIC_GENERATION_KEY']);
+                            $_HTML_CONTENT = file_get_contents($_CONSTRUCTR_CONF['_BASE_URL'] . '/' . $PAGE_CONTENT['pages_url'] . '/?static-generation=' . $_CONSTRUCTR_CONF['_MAGIC_GENERATION_KEY']);
                         }
 
                         $_HTML_CONTENT = $_HTML_CONTENT . "\n<!-- ConstructrCMS generated static-file " . date('d.m.Y, H:i:s') . " -->";
@@ -193,15 +420,15 @@
                         {
                             if($PAGE_CONTENT['pages_lft'] == 1)
                             {
-                                $PHYSICAL_FILE = @fopen($BASE_DIR . '/' . 'index.php',"w+");
-                                @fwrite($PHYSICAL_FILE, $_HTML_CONTENT);
-                                @fclose($PHYSICAL_FILE);
+                                $PHYSICAL_FILE = fopen($BASE_DIR . '/' . 'index.php',"w+");
+                                fwrite($PHYSICAL_FILE, $_HTML_CONTENT);
+                                fclose($PHYSICAL_FILE);
                             }
                             else
                             {
-                                $PHYSICAL_FILE = @fopen($ACT_DIR . '/' . 'index.php',"w+");
-                                @fwrite($PHYSICAL_FILE, $_HTML_CONTENT);
-                                @fclose($PHYSICAL_FILE);
+                                $PHYSICAL_FILE = fopen($ACT_DIR . '/' . 'index.php',"w+");
+                                fwrite($PHYSICAL_FILE, $_HTML_CONTENT);
+                                fclose($PHYSICAL_FILE);
                             }
                         }
                     }

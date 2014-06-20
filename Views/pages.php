@@ -140,7 +140,6 @@
             }
             
             $GUID = create_guid();
-            array_diff(scandir($directory), array('..', '.'));
             $TEMPLATES = array_diff(scandir($_CONSTRUCTR_CONF['_TEMPLATES_DIR']), array('..', '.'));
             $MEM = 0;
             $MEM = number_format(((memory_get_usage()/1014)/1024),2,',','.') . ' MB';

@@ -81,6 +81,38 @@
 
     if($FINDR === false)
     {
+        try
+        {
+            $URLS = $DBCON -> prepare('SELECT pages_url FROM constructr_pages WHERE pages_active = 1;');
+            $URLS -> execute();
+            $URLS = $URLS -> fetchAll();
+        }
+        catch (PDOException $e)
+        {
+            $constructr -> getLog() -> error($_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
+        }
+    
+        if($URLS)
+        {
+            $URLS_ARRAY = array();
+            $i = 0;
+            foreach($URLS AS $URL)
+            {
+                $URLS_ARRAY[$i] =  '/' . $URL['pages_url'];
+                $i++;
+                $URLS_ARRAY[$i] =  '/' . $URL['pages_url'] . '/';
+                $i++;
+            }
+        }
+    
+        if(!in_array($REQUEST,$URLS_ARRAY) && $REQUEST != '/' && $REQUEST != '')
+        {
+            $constructr -> getLog() -> error('404 - ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+            header("HTTP/1.0 404 Not Found");
+            header("Location: " . $_CONSTRUCTR_CONF["_BASE_URL"] . "/404");
+            die();
+        }
+
         $view = $constructr -> view();
         $view -> setTemplatesDirectory($_CONSTRUCTR_CONF['_TEMPLATES_DIR']);
 
@@ -106,8 +138,7 @@
 
                     $URL = str_replace('//','/',$URL);
                     $STATIC_DIR = str_replace('./','/',$_CONSTRUCTR_CONF['_STATIC_DIR']);
-                    $URL = $_CONSTRUCTR_CONF['_BASE_URL'] . $STATIC_DIR . $URL . 'index.php';                    
-                    $constructr -> getLog() -> info('Constructr serves static ' . date('d.m.Y, H:i:s') . ':' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                    $URL = $_CONSTRUCTR_CONF['_BASE_URL'] . $STATIC_DIR . $URL . 'index.php';
                     $constructr -> redirect($URL,301);
                 }
             );
@@ -154,7 +185,7 @@
                 }
                 catch (PDOException $e)
                 {
-                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
+                    $constructr -> getLog() -> error($_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
                     die();
                 }
 
@@ -174,7 +205,7 @@
                             }
                             catch (PDOException $e)
                             {
-                                $constructr -> getLog() -> error('1 ' . $_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
+                                $constructr -> getLog() -> error($_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
                                 die();
                             }
 
@@ -183,13 +214,14 @@
 
                             try
                             {
+                                $CONTENT_ACTIVE = 1;
                                 $DELETED = 0;
-                                $CONTENT = $DBCON -> prepare('SELECT * FROM constructr_content WHERE content_page_id = :PAGE_ID AND content_deleted = :DELETED ORDER BY content_order ASC;');
-                                $CONTENT -> execute(array(':PAGE_ID' => $PAGE_ID,':DELETED' => $DELETED));
+                                $CONTENT = $DBCON -> prepare('SELECT content_content FROM constructr_content WHERE content_page_id = :PAGE_ID AND content_deleted = :DELETED AND content_active = :CONTENT_ACTIVE ORDER BY content_order ASC;');
+                                $CONTENT -> execute(array(':PAGE_ID' => $PAGE_ID,':DELETED' => $DELETED,':CONTENT_ACTIVE' => $CONTENT_ACTIVE));
                             }
                             catch (PDOException $e)
                             {
-                                $constructr -> getLog() -> error('2 ' . $_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
+                                $constructr -> getLog() -> error($_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
                                 die();
                             }
                         }
@@ -200,16 +232,17 @@
                                 try
                                 {
                                     $DELETED = 0;
+                                    $CONTENT_ACTIVE = 1;
                                     $ACT_PAGE = $DBCON -> prepare('SELECT * FROM constructr_pages WHERE pages_id = :PAGE_ID AND pages_active = 1 LIMIT 1;');
                                     $ACT_PAGE -> execute(array(':PAGE_ID' => $PAGE['pages_id']));
                                     $PAGE_DATA = $ACT_PAGE -> fetch();
                                     $TEMPLATE = $PAGE_DATA['pages_template'];
-                                    $CONTENT = $DBCON -> prepare('SELECT * FROM constructr_content WHERE content_page_id = :PAGE_ID AND content_deleted = :DELETED ORDER BY content_order ASC;');
-                                    $CONTENT -> execute(array(':PAGE_ID' => $PAGE['pages_id'],':DELETED' => $DELETED));
+                                    $CONTENT = $DBCON -> prepare('SELECT content_content FROM constructr_content WHERE content_page_id = :PAGE_ID AND content_deleted = :DELETED AND content_active = :CONTENT_ACTIVE ORDER BY content_order ASC;');
+                                    $CONTENT -> execute(array(':PAGE_ID' => $PAGE['pages_id'],':DELETED' => $DELETED,':CONTENT_ACTIVE' => $CONTENT_ACTIVE));
                                 }
                                 catch (PDOException $e)
                                 {
-                                    $constructr -> getLog() -> error('3 ' . $_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
+                                    $constructr -> getLog() -> error($_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
                                     die();
                                 }
                             }

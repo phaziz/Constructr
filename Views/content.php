@@ -284,6 +284,23 @@
             {
                 try
                 {
+                    $MEDIA = $DBCON -> prepare('SELECT * FROM constructr_media;');
+                    $MEDIA -> execute();
+                    $MEDIA = $MEDIA -> fetchAll();
+                }
+                catch (PDOException $e)
+                {
+                    $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/content/' . $PAGE_ID . '/?res=edit-content-false');
+                    die();
+                }
+
+                foreach($MEDIA as $MEDIA)
+                {                    
+                    $CONTENT = str_replace('<img alt="" src="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/' . $MEDIA['media_file'] . '"','<img alt="' . $MEDIA['media_title'] . '" data-original-title="' . $MEDIA['media_title'] . '" title="' . $MEDIA['media_title'] . '" data-original-copyright="' . $MEDIA['media_copyright'] . '" data-original-description="' . $MEDIA['media_description'] . '" data-keywords="' . $MEDIA['media_keywords'] . '" src="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/' . $MEDIA['media_file'] . '"',$CONTENT);
+                }
+
+                try
+                {
                     $QUERY = 'INSERT INTO constructr_content SET content_datetime = :CONTENT_DATETIME,content_order = :CONTENT_ORDER,content_page_id = :PAGE_ID,content_content = :CONTENT,content_active = :CONTENT_ACTIVE;';
                     $STMT = $DBCON -> prepare($QUERY);
                     $STMT -> bindParam(':CONTENT',$CONTENT,PDO::PARAM_STR);
@@ -503,6 +520,23 @@
 
             if($CONTENT != '' && $CONTENT_ID != '')
             {
+                try
+                {
+                    $MEDIA = $DBCON -> prepare('SELECT * FROM constructr_media;');
+                    $MEDIA -> execute();
+                    $MEDIA = $MEDIA -> fetchAll();
+                }
+                catch (PDOException $e)
+                {
+                    $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/content/' . $PAGE_ID . '/?res=edit-content-false');
+                    die();
+                }
+
+                foreach($MEDIA as $MEDIA)
+                {                    
+                    $CONTENT = str_replace('<img alt="" src="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/' . $MEDIA['media_file'] . '"','<img alt="' . $MEDIA['media_title'] . '" data-original-title="' . $MEDIA['media_title'] . '" title="' . $MEDIA['media_title'] . '" data-original-copyright="' . $MEDIA['media_copyright'] . '" data-original-description="' . $MEDIA['media_description'] . '" data-keywords="' . $MEDIA['media_keywords'] . '" src="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/' . $MEDIA['media_file'] . '"',$CONTENT);
+                }
+
                 try
                 {
                     $UPDATE_PAGES = $DBCON -> prepare('UPDATE constructr_content SET content_content = :CONTENT, content_datetime = :CONTENT_DATETIME WHERE content_id = :CONTENT_ID AND content_page_id = :PAGE_ID LIMIT 1;');

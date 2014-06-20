@@ -32,15 +32,14 @@
         {
             try
             {
-                $QUERY = $DBCON -> prepare('SELECT * FROM constructr_backenduser WHERE beu_username = :USERNAME AND beu_active = :ACTIVE LIMIT 1;');
-                $QUERY -> execute( 
-                    array
-                    (
-                        'USERNAME' => $_SESSION['backend-user-username'],
-                        'ACTIVE' => 1
-                    ) 
-                );
-                $COUNTR = $QUERY -> rowCount();
+                $ACTIVE = 1;
+                $QUERY = 'SELECT * FROM constructr_backenduser WHERE beu_username = :USERNAME AND beu_active = :ACTIVE LIMIT 1;';
+                $STMT = $DBCON -> prepare($QUERY);
+                $STMT -> bindParam(':USERNAME',$_SESSION['backend-user-username'],PDO::PARAM_STR);
+                $STMT -> bindParam(':ACTIVE',$ACTIVE,PDO::PARAM_INT);
+                $STMT -> execute();
+
+                $COUNTR = $STMT -> rowCount();
                 
                 if($COUNTR != 1)
                 {

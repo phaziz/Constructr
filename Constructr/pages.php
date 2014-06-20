@@ -348,32 +348,6 @@
                                 );
                             }
                         );
-
-                        $('.activator').click(function(e)
-                            {
-                                e.preventDefault();
-                                var U = $(this).attr('href');
-                                vex.dialog.buttons.YES.text = 'Ja';
-                                vex.dialog.buttons.NO.text = 'Abbrechen';
-                                vex.dialog.confirm(
-                                    {
-                                        className: 'vex-theme-flat-attack', 
-                                        message: 'Soll die Sichtbarkeit der Seite wirklich angepasst werden?',
-                                        callback: function(value)
-                                        {
-                                            if(value == true)
-                                            {
-                                                window.location = (U);
-                                            }
-                                            else
-                                            {
-                                                return false
-                                            }
-                                        }
-                                    }
-                                );
-                            }
-                        );
                     }
                 );
             </script>

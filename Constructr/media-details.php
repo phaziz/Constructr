@@ -51,6 +51,21 @@
                             </div><!-- // EOF COL-... -->
                             <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
                         </div><!-- // EOF ROW -->
+                        <?php 
+                            if(isset($_GET['details']) && $_GET['details'] == 'updated'){
+                                ?>
+                                    <div class="row response">
+                                        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
+                                        <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                                                <?php
+                                                    echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Erfolg!</strong> Die Detailinformationen wurden aktualisiert.</div>';
+                                                ?>
+                                        </div><!-- // EOF COL-... -->
+                                        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
+                                    </div><!-- // EOF ROW -->
+                                <?php
+                            }
+                        ?>
                         <div class="row">
                             <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
                             <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
@@ -60,7 +75,48 @@
                                         <?php
                                             if($DETAILS)
                                             {
-                                                echo '<center><img src="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/' . $DETAILS['media_file'] . '" style="max-height:100%;max-width:100%"></center>';
+                                                echo '<center><img src="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/' . $DETAILS['media_file'] . '" style="max-height:500px;max-width:100%"></center>';
+                                            ?>
+                                                <br><br>
+                                                <form role="form" name="media_details_form" id="media_details_form" action="<?php echo $FORM_ACTION; ?>" method="<?php echo $FORM_METHOD; ?>" enctype="<?php echo $FORM_ENCTYPE; ?>" class="form-horizontal">
+                                                    <div class="form-group">
+                                                        <label for="title" class="col-sm-2 control-label">Titel:</label>
+                                                        <div class="col-sm-10">
+                                                            <input type="text" class="form-control input-sm" name="title" id="title" value="<?php echo $DETAILS['media_title']; ?>" placeholder="Titel" maxlength="200">
+                                                            <small><span class="help-block">Bitte vergeben Sie einen Titel</span></small>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="copyright" class="col-sm-2 control-label">Copyright:</label>
+                                                        <div class="col-sm-10">
+                                                            <input type="text" class="form-control input-sm" name="copyright" id="copyright" value="<?php echo $DETAILS['media_copyright']; ?>" placeholder="Copyright" maxlength="255">
+                                                            <small><span class="help-block">Bitte geben Sie den Rechteinhaber an</span></small>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="description" class="col-sm-2 control-label">Beschreibung:</label>
+                                                        <div class="col-sm-10">
+                                                            <input type="text" class="form-control input-sm" name="description" id="description" value="<?php echo $DETAILS['media_description']; ?>" placeholder="Beschreibung">
+                                                            <small><span class="help-block">Bitte geben Sie eine Beschreibung ein</span></small>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="keywords" class="col-sm-2 control-label">Keywords:</label>
+                                                        <div class="col-sm-10">
+                                                            <input type="text" class="form-control input-sm" name="keywords" id="keywords" value="<?php echo $DETAILS['media_keywords']; ?>" placeholder="Keywords, kommagetrennte Eingabe">
+                                                            <small><span class="help-block">Bitte geben Sie durch Komma getrennte Keywords an</span></small>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="submitter" class="col-sm-2 control-label">&#160;</label>
+                                                        <div class="col-sm-10">
+                                                            <button type="submit" name="submitter" id="submitter" class="btn btn-info btn-sm">&Auml;nderungen speichern &#8250;&#8250;</button>
+                                                            <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/media/'; ?>"><button type="button" class="btn btn-danger btn-sm">Abbrechen</button></a>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                        <?php
+
                                             }
                                         ?>
                                 </div><!-- // EOF JUMBOTRON -->

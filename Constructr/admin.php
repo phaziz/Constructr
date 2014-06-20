@@ -48,9 +48,7 @@
                             </div><!-- // EOF COL-... -->
                             <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
                         </div><!-- // EOF ROW -->
-
                         <?php
-
                             if(isset($_GET['created-static']) && $_GET['created-static'] == 'true')
                             {
                                 ?>
@@ -79,7 +77,6 @@
                                     </div><!-- // EOF ROW -->
                                 <?php
                             }
-
                             if(isset($_GET['optimized']) && $_GET['optimized'] == 'true')
                             {
                                 ?>
@@ -108,19 +105,49 @@
                                     </div><!-- // EOF ROW -->
                                 <?php
                             }
-
+                            if($SEARCHR)
+                            {
+                                ?>
+                                    <div class="row">
+                                        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
+                                        <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                                            <div class="jumbotron">
+                                                <h2><?php echo $SEARCHR_COUNTR; ?> Suchergebniss(e) wurden gefunden:</h2>
+                                                <br>
+                                                <?php
+                                                    foreach($SEARCHR AS $SEARCHR_KEY => $SEARCHR_VALUE)
+                                                    {
+                                                        echo '<a href="' . $SEARCHR_VALUE['result_link'] . '">' . $SEARCHR_VALUE['name'] . '</a><br><br>';
+                                                    }
+                                                ?>
+                                            </div><!-- // EOF JUMBOTRON... -->
+                                        </div><!-- // EOF COL-... -->
+                                        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
+                                    </div><!-- // EOF ROW -->
+                                <?php
+                            }
                         ?>
-
                         <div class="row">
                             <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
                             <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
                                 <div class="jumbotron">
+                                    <h2>Suche:</h2>
+                                    <br>
+                                    <form class="form-inline" role="form" name="needle_form" id="needle_form" action="<?php echo $FORM_ACTION; ?>" method="<?php echo $FORM_METHOD; ?>" enctype="<?php echo $FORM_ENCTYPE; ?>">
+                                        <input type="hidden" id="user_form_guid" name="user_form_guid" value="<?php echo $GUID; ?>">
+                                        <div class="col-lg-10">
+                                            <input type="text" style="width:100%;" class="form-control input-sm" id="needles" name="needles" placeholder="Suchbegriffe durch Leerstellen getrennt eingeben">
+                                        </div>
+                                        <div class="col-lg-2">
+                                            <button type="submit" id="search-submittr" style="width:100%;" class="btn btn-info btn-sm">Suche starten</button>
+                                        </div>
+                                    </form>
+                                    <br><br>
                                     <?php
-
                                         if($_SERVE_STATIC == true)
                                         {
                                             ?>
-
+                                                <br>
                                                 <h2>Generierung statischer Internetseiten:</h2>
                                                 <br>
                                                 <ul class="list-group">
@@ -129,10 +156,8 @@
                                                       </li>
                                                 </ul>
                                                 <br>
-
                                             <?php
                                         }
-
                                     ?>
                                     <h2>Seiten, Uploads &amp; Benutzer:</h2>
                                     <?php
@@ -190,6 +215,17 @@
                 $(function()
                     {
                         $('.tt').tooltip();
+
+                        $('#needle_form').bind('submit',function()
+                            {
+                                var N = $('#needle').val();
+                                if(N == '')
+                                {
+                                    $('#needle').focus();
+                                    return false;
+                                }
+                            }
+                        );
 
                         $("#menu-toggle").click(function(e)
                             {

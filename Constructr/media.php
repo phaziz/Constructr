@@ -107,7 +107,8 @@
                                             <tr>
                                                 <th class="center"><small>Vorschau</small></th>
                                                 <th><small>Datei</small></th>
-                                                <th><small>Alias</small></th>
+                                                <th><small>Datei-URL</small></th>
+                                                <th><small>Informationen</small></th>
                                                 <th class="center"><small>Aktionen</small></th>
                                             </tr>
                                         </thead>
@@ -119,15 +120,16 @@
                                                     {
                                                         $FILE_TYPE = strrchr($MEDIA['media_file'],'.');
                                                         echo '<tr>';
-                                                        echo '<td class="center"><a href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/' . $MEDIA['media_file'] . '" data-toggle="lightbox" data-title="' . $MEDIA['media_originalname'] . '" data-footer="' . $MEDIA['media_originalname'] . '"><img src="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/' . $MEDIA['media_file'] . '" alt="' . $MEDIA['media_originalname'] . '" height="10%" width=""></a></td>';
+                                                        echo '<td class="center"><a href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/' . $MEDIA['media_file'] . '" data-toggle="lightbox" data-title="' . $MEDIA['media_originalname'] . '" data-footer="' . $MEDIA['media_originalname'] . '"><img src="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/' . $MEDIA['media_file'] . '" alt="' . $MEDIA['media_originalname'] . '" height="50px" width="*"></a></td>';
                                                         echo '<td><small><strong>' . $MEDIA['media_originalname'] . '</small></td>';
                                                         echo '<td><small>' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/' . $MEDIA['media_file'] . '</small></td>';
-                                                        echo '<td class="right"><nobr>';
+                                                        echo '<td><small>' . $MEDIA['media_title'] . ' ' . $MEDIA['media_description'] . ' ' . $MEDIA['media_copyright'] . ' ' . $MEDIA['media_keywords'] . '</small></td>';
+                                                        echo '<td class="center"><nobr>';
                                                         echo '<a href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/' . $MEDIA['media_file'] . '" data-toggle="lightbox" data-title="' . $MEDIA['media_originalname'] . '" data-footer="' . $MEDIA['media_originalname'] . '" <button type="button" class="btn btn-warning btn-xs" title="Einfache Vorschau"><span class="glyphicon glyphicon-eye-close"></span></button></a>';
                                                         echo '&#160;';
                                                         if(in_array($FILE_TYPE,$IMAGES))
                                                         {
-                                                            echo '<a data-toggle="tooltip" data-placement="top" title="Detail-Vorschau" class="preview tt" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/media/details/' . $MEDIA['media_id'] . '/"><button type="button" class="btn btn-info btn-xs" title="Detail-Vorschau"><span class="glyphicon glyphicon-eye-open"></span></button></a>';
+                                                            echo '<a data-toggle="tooltip" data-placement="top" title="Detail-Informationen" class="preview tt" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/media/details/' . $MEDIA['media_id'] . '/"><button type="button" class="btn btn-info btn-xs" title="Detail-Informationen"><span class="glyphicon glyphicon-pencil"></span></button></a>';
                                                             echo '&#160;';
                                                         }
                                                         echo '<a data-toggle="tooltip" data-placement="top" title="Upload l&ouml;schen" class="deleter tt" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/media/delete/' . $MEDIA['media_id'] . '/" title="Upload l&ouml;schen"><button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span></button></a>';
@@ -194,11 +196,13 @@
                         $('.datatable').dataTable(
                             {
                                 "aaSorting": [],
-                                "aoColumns": [
+                                "aoColumns":
+                                [
                                     { "sWidth": "10%", "bSortable":false},
+                                    { "sWidth": "20%", "bSortable":true},
+                                    { "sWidth": "20%", "bSortable":true},
                                     { "sWidth": "30%", "bSortable":true},
-                                    { "sWidth": "45%", "bSortable":true},
-                                    { "sWidth": "15%", "bSortable":false}
+                                    { "sWidth": "20%", "bSortable":false}
                                 ],
                                 "sPaginationType":"bs_full",
                                 "iDisplayLength": -1,

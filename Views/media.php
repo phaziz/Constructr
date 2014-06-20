@@ -231,22 +231,28 @@
             $ORIGINALNAME = str_replace('&auml;','ae',$ORIGINALNAME);
             $ORIGINALNAME = str_replace('&ouml;','oe',$ORIGINALNAME);
             $ORIGINALNAME = str_replace('&szlig;','ss',$ORIGINALNAME);
+            $BASE_TITLE = $_CONSTRUCTR_CONF['_MEDIA_BASE_TITLE'];
+            $BASE_KEYWORDS = $_CONSTRUCTR_CONF['_MEDIA_BASE_KEYWORDS'];
+            $BASE_DESCRIPTION = $_CONSTRUCTR_CONF['_MEDIA_BASE_DESCRIPTION'];
+            $BASE_COPYRIGHT = $_CONSTRUCTR_CONF['_MEDIA_BASE_COPYRIGHT'];
             $FILE_TYPE = strrchr($FILEUPLOAD,'.');
             $NEW_UPLOAD = 'Uploads/' . $ORIGINALNAME;
             $UPLOAD = copy($_FILES['fileupload']['tmp_name'], $NEW_UPLOAD);
-            @chmod($NEW_UPLOAD, 0777);
-            $MEDIA_EXIF = '';    
+            @chmod($NEW_UPLOAD, 0777);    
 
             if($FILEUPLOAD == true)
             {
                 try
                 {
-                    $QUERY = 'INSERT INTO constructr_media SET media_datetime = :DATETIME,media_file = :MEDIA_FILE,media_exif = :MEDIA_EXIF,media_originalname = :ORIGINALNAME;';
+                    $QUERY = 'INSERT INTO constructr_media SET media_datetime = :DATETIME,media_file = :MEDIA_FILE,media_originalname = :ORIGINALNAME ,media_title = :BASE_TITLE,media_description = :BASE_DESCRIPTION,media_copyright = :BASE_COPYRIGHT,media_keywords = :BASE_KEYWORDS;';
                     $STMT = $DBCON -> prepare($QUERY);
                     $STMT -> bindParam(':DATETIME',$DATETIME,PDO::PARAM_STR);
                     $STMT -> bindParam(':MEDIA_FILE',$NEW_UPLOAD,PDO::PARAM_STR);
                     $STMT -> bindParam(':ORIGINALNAME',$ORIGINALNAME,PDO::PARAM_STR);
-                    $STMT -> bindParam(':MEDIA_EXIF',$MEDIA_EXIF,PDO::PARAM_STR);
+                    $STMT -> bindParam(':BASE_TITLE',$BASE_TITLE,PDO::PARAM_STR);
+                    $STMT -> bindParam(':BASE_DESCRIPTION',$BASE_DESCRIPTION,PDO::PARAM_STR);
+                    $STMT -> bindParam(':BASE_COPYRIGHT',$BASE_COPYRIGHT,PDO::PARAM_STR);
+                    $STMT -> bindParam(':BASE_KEYWORDS',$BASE_KEYWORDS,PDO::PARAM_STR);
                     $STMT -> execute();
                 }
                 catch (PDOException $e)
@@ -287,17 +293,15 @@
             $USER_FORM_GUID = $constructr -> request() -> post('user_form_guid');
 
             $DATETIME = date('Y-m-d H:i:s');
-            $MEDIA_EXIF = 'Re-created';
             $MEDIA_FILE = 'Uploads/' . $FILE;
 
             try
             {
-                $QUERY = 'INSERT INTO constructr_media SET media_datetime = :DATETIME,media_file = :MEDIA_FILE,media_exif = :MEDIA_EXIF,media_originalname = :ORIGINALNAME;';
+                $QUERY = 'INSERT INTO constructr_media SET media_datetime = :DATETIME,media_file = :MEDIA_FILE,media_originalname = :ORIGINALNAME;';
                 $STMT = $DBCON -> prepare($QUERY);
                 $STMT -> bindParam(':DATETIME',$DATETIME,PDO::PARAM_STR);
                 $STMT -> bindParam(':MEDIA_FILE',$MEDIA_FILE,PDO::PARAM_STR);
                 $STMT -> bindParam(':ORIGINALNAME',$FILE,PDO::PARAM_STR);
-                $STMT -> bindParam(':MEDIA_EXIF',$MEDIA_EXIF,PDO::PARAM_STR);
                 $STMT -> execute();
             }
             catch (PDOException $e)
@@ -477,7 +481,7 @@
                     $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/media/?res=del-media-false');
                     die();
                 }
-                
+
                 $constructr -> render('media-details.php',
                     array
                     (
@@ -485,6 +489,9 @@
                         'DETAILS' => $DETAILS,
                         'USERNAME' => $USERNAME,
                         'MEDIA_ID' => $MEDIA_ID,
+                        'FORM_ACTION' => $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/media/details/' . $MEDIA_ID . '/',
+                        'FORM_METHOD' => 'post',
+                        'FORM_ENCTYPE' => 'application/x-www-form-urlencoded',
                         '_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,
                         'SUBTITLE' => 'Admin-Dashboard / Medienverwaltung - Detailansicht',
                         'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.'
@@ -492,6 +499,96 @@
                 );
 
                 die();
+            }
+            else
+            {
+                if($_CONSTRUCTR_CONF['_LOGGING'] == true)
+                {
+                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                }
+
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/media/?res=details-media-false');
+                die();
+            }
+        }
+    );
+
+    $constructr -> post('/constructr/media/details/:MEDIA_ID/', $ADMIN_CHECK, function ($MEDIA_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
+        {
+            $constructr -> view -> setData('BackendUserRight',43);
+
+            if(isset($_SESSION['backend-user-id']) && $_SESSION['backend-user-id'] != '')
+            {
+                try
+                {
+                    $RIGHT_CHECKER = $DBCON -> prepare('SELECT * FROM constructr_backenduser_rights WHERE cbr_right = :RIGHT_ID AND cbr_user_id = :USER_ID AND cbr_value = :CBR_VALUE LIMIT 1;');
+                    $RIGHT_CHECKER -> execute(
+                        array
+                        (
+                            ':USER_ID' => $_SESSION['backend-user-id'],
+                            ':RIGHT_ID' => $constructr -> view -> getData('BackendUserRight'),
+                            ':CBR_VALUE' => 1
+                        )
+                    );
+    
+                    $RIGHTS_COUNTR = $RIGHT_CHECKER -> rowCount();
+                    
+                    if($RIGHTS_COUNTR != 1)
+                    {
+                        $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Error ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                        $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/?no-rights=true');
+                        die();
+                    }
+                    else
+                    {
+                        $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                    }
+                }
+                catch (PDOException $e) 
+                {
+                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
+                    die();
+                }
+            }
+            else
+            {
+                $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': Error User-Rights-Check: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/logout/');
+                die();
+            }
+
+            $USERNAME = $_SESSION['backend-user-username'];
+
+            if($_CONSTRUCTR_CONF['_LOGGING'] == true)
+            {
+                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+            }
+
+            $MEDIA_TITLE = $constructr -> request() -> post('title');
+            $MEDIA_DESCRIPTION = $constructr -> request() -> post('description');
+            $MEDIA_COPYRIGHT = $constructr -> request() -> post('copyright');
+            $MEDIA_KEYWORDS = $constructr -> request() -> post('keywords');
+
+            if($MEDIA_ID != '')
+            {
+                try
+                {
+                    $QUERY = 'UPDATE constructr_media SET media_title = :MEDIA_TITLE, media_description = :MEDIA_DESCRIPTION, media_copyright = :MEDIA_COPYRIGHT, media_keywords = :MEDIA_KEYWORDS WHERE media_id = :MEDIA_ID LIMIT 1;';
+                    $STMT = $DBCON -> prepare($QUERY);
+                    $STMT -> bindParam(':MEDIA_ID',$MEDIA_ID,PDO::PARAM_INT);
+                    $STMT -> bindParam(':MEDIA_TITLE',$MEDIA_TITLE,PDO::PARAM_STR);
+                    $STMT -> bindParam(':MEDIA_COPYRIGHT',$MEDIA_COPYRIGHT,PDO::PARAM_STR);
+                    $STMT -> bindParam(':MEDIA_DESCRIPTION',$MEDIA_DESCRIPTION,PDO::PARAM_STR);
+                    $STMT -> bindParam(':MEDIA_KEYWORDS',$MEDIA_KEYWORDS,PDO::PARAM_STR);
+                    $STMT -> execute();
+
+                    $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/media/details/' . $MEDIA_ID . '/?details=updated');
+                    die();
+                }
+                catch (PDOException $e)
+                {
+                    $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
+                }
             }
             else
             {

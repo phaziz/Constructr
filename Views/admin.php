@@ -83,8 +83,8 @@
                 die();
             }
 
-            $NEEDLES = $constructr -> request() -> post('needles');
-            $USER_FORM_GUID = $constructr -> request() -> post('user_form_guid');
+            $NEEDLES = constructr_sanitization($constructr -> request() -> post('needles'),true,true);
+            $USER_FORM_GUID = constructr_sanitization($constructr -> request() -> post('user_form_guid'));
 
             if($NEEDLES)
             {
@@ -110,6 +110,7 @@
                             )
                         );
                         $SEARCH_QUERY_PAGES = $SEARCH_QUERY_PAGES -> fetchAll();
+
                         if($SEARCH_QUERY_PAGES)
                         {
                             foreach($SEARCH_QUERY_PAGES AS $SEARCH_QUERY_PAGES)
@@ -230,6 +231,7 @@
                             )
                         );
                         $SEARCH_QUERY_USER = $SEARCH_QUERY_USER -> fetchAll();
+
                         if($SEARCH_QUERY_USER)
                         {
                             foreach($SEARCH_QUERY_USER AS $SEARCH_QUERY_USER)
@@ -269,7 +271,7 @@
                     'BACKEND_USER_COUNTR' => $BACKEND_USER_COUNTR,
                     'PAGES_COUNTR' => $PAGES_COUNTR,
                     'UPLOADS_COUNTR' => $UPLOADS_COUNTR,
-                    'SUBTITLE' => 'Admin-Dashboard',
+                    'SUBTITLE' => 'Admin-Dashboard / Suchergebnisse',
                     '_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,
                     '_SERVE_STATIC' => true,
                     'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.'
@@ -293,6 +295,7 @@
                     OPTIMIZE TABLE constructr_backenduser;
                     OPTIMIZE TABLE constructr_backenduser_rights;
                     OPTIMIZE TABLE constructr_content;
+                    OPTIMIZE TABLE constructr_content_history;
                     OPTIMIZE TABLE constructr_media;
                     OPTIMIZE TABLE constructr_pages;
                 ');
@@ -369,7 +372,7 @@
                 foreach($PAGE_CONTENT as $PAGE_CONTENT)
                 {
                     $TARGET_DIR = $PAGE_CONTENT['pages_url'];
-                    $BASE_DIR = $_CONSTRUCTR_CONF['_STATIC_DIR'];
+                    $BASE_DIR = constructr_sanitization($_CONSTRUCTR_CONF['_STATIC_DIR']);
                     $DIRS = explode('/',$TARGET_DIR);
                     $TMP_DIR = '';
                     $ACT_DIR = '';
@@ -407,11 +410,11 @@
 
                         if($PAGE_CONTENT['pages_lft'] == 1)
                         {
-                            $_HTML_CONTENT = file_get_contents($_CONSTRUCTR_CONF['_BASE_URL'] . '/?static-generation=' . $_CONSTRUCTR_CONF['_MAGIC_GENERATION_KEY']);    
+                            $_HTML_CONTENT = file_get_contents(constructr_sanitization($_CONSTRUCTR_CONF['_BASE_URL']) . '/?static-generation=' . constructr_sanitization($_CONSTRUCTR_CONF['_MAGIC_GENERATION_KEY']));    
                         }
                         else
                         {
-                            $_HTML_CONTENT = file_get_contents($_CONSTRUCTR_CONF['_BASE_URL'] . '/' . $PAGE_CONTENT['pages_url'] . '/?static-generation=' . $_CONSTRUCTR_CONF['_MAGIC_GENERATION_KEY']);
+                            $_HTML_CONTENT = file_get_contents(constructr_sanitization($_CONSTRUCTR_CONF['_BASE_URL']) . '/' . $PAGE_CONTENT['pages_url'] . '/?static-generation=' . constructr_sanitization($_CONSTRUCTR_CONF['_MAGIC_GENERATION_KEY']));
                         }
 
                         $_HTML_CONTENT = $_HTML_CONTENT . "\n<!-- ConstructrCMS generated static-file " . date('d.m.Y, H:i:s') . " -->";

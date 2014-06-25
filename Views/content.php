@@ -206,7 +206,7 @@
                     'FORM_ACTION' => $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/content/' . $PAGE_ID . '/new/' . $GUID .'/',
                     'FORM_METHOD' => 'post',
                     'FORM_ENCTYPE' => 'application/x-www-form-urlencoded',
-                    'SUBTITLE' => 'Admin-Dashboard / Neuen Inhalt erstellen',
+                    'SUBTITLE' => 'Admin-Dashboard / Neuer Inhalt',
                     'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.'
                 )
             );
@@ -276,8 +276,8 @@
             }
 
             $CONTENT_DATETIME = date('Y-m-d H:i:s');
-            $CONTENT = $constructr -> request() -> post('content');
-            $CONTENT_ORDER = $constructr -> request() -> post('content_order');
+            $CONTENT = constructr_sanitization($constructr -> request() -> post('content'));
+            $CONTENT_ORDER = constructr_sanitization($constructr -> request() -> post('content_order'));
             $CONTENT_ACTIVE = 1;
 
             if($CONTENT != '' && $CONTENT_ORDER != '')
@@ -516,7 +516,7 @@
             }
 
             $CONTENT_DATETIME = date('Y-m-d H:i:s');
-            $CONTENT = $constructr -> request() -> post('content');
+            $CONTENT = constructr_sanitization($constructr -> request() -> post('content'));
 
             if($CONTENT != '' && $CONTENT_ID != '')
             {

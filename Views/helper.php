@@ -2,6 +2,30 @@
 
     function create_guid() {static $guid = '';$uid = uniqid("", true);$data = $_SERVER['REQUEST_TIME'];$data .= $_SERVER['HTTP_USER_AGENT'];$data .= $_SERVER['PHP_SELF'];$data .= $_SERVER['SCRIPT_NAME'];$data .= $_SERVER['REMOTE_ADDR'];$data .= $_SERVER['REMOTE_PORT'];$hash = strtoupper(hash('ripemd128', $uid . $guid . md5($data)));$guid = substr($hash,0,2) . substr($hash,2,2) . substr($hash,4,2) . substr($hash,8,2);return $guid;}
 
+    function mysql_escape_mimic($INPUT)
+    {
+        if(!empty($INPUT) && is_string($INPUT))
+        { 
+            return str_replace(array('\\', "\0", "\n", "\r", "'", '"', "\x1a"), array('\\\\', '\\0', '\\n', '\\r', "\\'", '\\"', '\\Z'), $INPUT);
+        }
+        return $INPUT; 
+    }
+
+    function constructr_sanitization($VAR, $TRIM = true, $STRICT = false)
+    {
+        if($TRIM == true)
+        {
+            $VAR = trim($VAR);
+        }
+
+        if($STRICT == true)
+        {
+            $VAR = mysql_escape_mimic(strip_tags($VAR));
+        }
+
+        return $VAR;
+    }
+
     $constructr -> notFound(function () use ($constructr,$_CONSTRUCTR_CONF) 
         {
             $constructr -> getLog() -> error('404 - Not found: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);

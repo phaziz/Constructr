@@ -42,15 +42,6 @@
                             </div><!-- // EOF COL-... -->
                             <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
                         </div><!-- // EOF ROW -->
-                        <div class="row">
-                            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
-                            <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-                                <div class="jumbotron">
-                                    <h1><?php echo $SUBTITLE; ?></h1>
-                                </div><!-- // EOF JUMBOTRON -->
-                            </div><!-- // EOF COL-... -->
-                            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
-                        </div><!-- // EOF ROW -->
                         <?php 
                             if(isset($_GET['res']) && $_GET['res'] != ''){
                                 ?>
@@ -125,6 +116,7 @@
                             <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
                             <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
                                 <div class="jumbotron">
+                                    <h1><?php echo $SUBTITLE; ?></h1>
                                     <h2><?php echo $PAGES_COUNTR; ?> Angelegte Seiten <a data-toggle="tooltip" data-placement="top" title="Neue Seite erstellen" class="tt" href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/new/' ?>"><button type="button" class="btn btn-info btn-sm" title="Neue Seite"><span class="glyphicon glyphicon-plus"></span></button></a></h2>
                                     <br><br>
                                     <div class="table-responsive">
@@ -148,10 +140,10 @@
                                                         {
                                                             for($i = 1; $i <= $PAGE['pages_level']; $i++)
                                                             {
-                                                                echo '&#160;&#160;&#160;';
+                                                                echo '&#160;&#160;';
                                                             }
                                                         }
-                                                        echo '<strong><a class="tt" data-toggle="tooltip" data-placement="top" title="Inhalte von Seite ' . $PAGE['pages_name'] . ' bearbeiten" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/content/' . $PAGE['pages_id'] . '/" title="Inhalte von Seite ' . $PAGE['pages_name'] . ' bearbeiten">' . $PAGE['pages_name'] . '</a></strong></td>';
+                                                        echo '<a class="tt" data-toggle="tooltip" data-placement="top" title="Inhalte von Seite ' . $PAGE['pages_name'] . ' bearbeiten" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/content/' . $PAGE['pages_id'] . '/" title="Inhalte von Seite ' . $PAGE['pages_name'] . ' bearbeiten">' . $PAGE['pages_name'] . '</a></td>';
                                                         echo '<td><small><a class="tt" data-toggle="tooltip" data-placement="top" title="Seite im Browser anzeigen" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/' . $PAGE['pages_url'] . '" onclick="window.open(this.href);return false;">' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/' . $PAGE['pages_url'] . '</a></small></td>';
                                                         echo '<td><small>' . $PAGE['pages_template'] . '</small></td>';
                                                         echo '<td class="right"><nobr>';

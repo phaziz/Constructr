@@ -39,15 +39,6 @@
                             </div><!-- // EOF COL-... -->
                             <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
                         </div><!-- // EOF ROW -->
-                        <div class="row">
-                            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
-                            <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-                                <div class="jumbotron">
-                                    <h1><?php echo $SUBTITLE; ?></h1>
-                                </div><!-- // EOF JUMBOTRON -->
-                            </div><!-- // EOF COL-... -->
-                            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
-                        </div><!-- // EOF ROW -->
                         <?php
                             if(isset($_GET['created-static']) && $_GET['created-static'] == 'true')
                             {
@@ -112,6 +103,7 @@
                                         <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
                                         <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
                                             <div class="jumbotron">
+                                                <h1><?php echo $SUBTITLE; ?></h1>
                                                 <h2><?php echo $SEARCHR_COUNTR; ?> Suchergebniss(e) wurden gefunden:</h2>
                                                 <br>
                                                 <?php
@@ -131,6 +123,7 @@
                             <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
                             <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
                                 <div class="jumbotron">
+                                    <h1><?php echo $SUBTITLE; ?></h1>
                                     <h2>Suche:</h2>
                                     <br>
                                     <form class="form-inline" role="form" name="needle_form" id="needle_form" action="<?php echo $FORM_ACTION; ?>" method="<?php echo $FORM_METHOD; ?>" enctype="<?php echo $FORM_ENCTYPE; ?>">

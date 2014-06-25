@@ -80,10 +80,10 @@
                 $_SESSION['constructr_login_attempt'] = ($ATTEMPT_TRY + 1);
             }
 
-            $_ADMIN_USERNAME = $constructr -> request() -> post('_admin_username');
-            $_ADMIN_PASSWORD = $constructr -> request() -> post('_admin_password');
+            $_ADMIN_USERNAME = constructr_sanitization($constructr -> request() -> post('_admin_username'),true,true);
+            $_ADMIN_PASSWORD = constructr_sanitization($constructr -> request() -> post('_admin_password'),true,true);
             $_ADMIN_PASSWORD = crypt($_ADMIN_PASSWORD,$_CONSTRUCTR_CONF['_SALT']);
-            $_ADMIN_GUID = $constructr -> request() -> post('_admin_guid');
+            $_ADMIN_GUID = constructr_sanitization($constructr -> request() -> post('_admin_guid'),true,true);
 
             if($_ADMIN_GUID != $GUID)
             {
@@ -100,19 +100,19 @@
             {
                 try 
                 {
-                    $QUERY = $DBCON -> prepare('SELECT * FROM constructr_backenduser WHERE beu_username = :USERNAME AND beu_password = :PASSWORD AND beu_active = :ACTIVE AND beu_art = :ART LIMIT 1;');
-                    $QUERY -> execute( 
-                        array
-                        (
-                            'USERNAME' => $_ADMIN_USERNAME,
-                            'PASSWORD' => $_ADMIN_PASSWORD,
-                            'ACTIVE' => 1,
-                            'ART' => 0
-                        ) 
-                    );
+                    $ACTIVE = 1;
+                    $ART = 0;
 
-                    $COUNTR = $QUERY -> rowCount();
-                    $USER = $QUERY -> fetch();
+                    $QUERY = 'SELECT * FROM constructr_backenduser WHERE beu_username = :USERNAME AND beu_password = :PASSWORD AND beu_active = :ACTIVE AND beu_art = :ART LIMIT 1;';
+                    $STMT = $DBCON -> prepare($QUERY);
+                    $STMT -> bindParam(':USERNAME',$_ADMIN_USERNAME,PDO::PARAM_STR);
+                    $STMT -> bindParam(':PASSWORD',$_ADMIN_PASSWORD,PDO::PARAM_STR);
+                    $STMT -> bindParam(':ART',$ART,PDO::PARAM_INT);
+                    $STMT -> bindParam(':ACTIVE',$ACTIVE,PDO::PARAM_INT);
+                    $STMT -> execute();
+
+                    $COUNTR = $STMT -> rowCount();
+                    $USER = $STMT -> fetch();
 
                     if($COUNTR == 1)
                     {

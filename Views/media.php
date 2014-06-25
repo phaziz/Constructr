@@ -221,7 +221,7 @@
             $DATETIME = date('Y-m-d H:i:s');
             $MEDIA_USER = 0;
             $FILEUPLOAD = $_FILES['fileupload']['name'];
-            $ORIGINALNAME = $FILEUPLOAD;
+            $ORIGINALNAME = constructr_sanitization($FILEUPLOAD);
             $ORIGINALNAME = str_replace(' ','-',$ORIGINALNAME);
             $ORIGINALNAME = htmlentities($ORIGINALNAME);
             $ORIGINALNAME = str_replace('&Uuml;','Ue',$ORIGINALNAME);
@@ -231,10 +231,10 @@
             $ORIGINALNAME = str_replace('&auml;','ae',$ORIGINALNAME);
             $ORIGINALNAME = str_replace('&ouml;','oe',$ORIGINALNAME);
             $ORIGINALNAME = str_replace('&szlig;','ss',$ORIGINALNAME);
-            $BASE_TITLE = $_CONSTRUCTR_CONF['_MEDIA_BASE_TITLE'];
-            $BASE_KEYWORDS = $_CONSTRUCTR_CONF['_MEDIA_BASE_KEYWORDS'];
-            $BASE_DESCRIPTION = $_CONSTRUCTR_CONF['_MEDIA_BASE_DESCRIPTION'];
-            $BASE_COPYRIGHT = $_CONSTRUCTR_CONF['_MEDIA_BASE_COPYRIGHT'];
+            $BASE_TITLE = constructr_sanitization($_CONSTRUCTR_CONF['_MEDIA_BASE_TITLE']);
+            $BASE_KEYWORDS = constructr_sanitization($_CONSTRUCTR_CONF['_MEDIA_BASE_KEYWORDS']);
+            $BASE_DESCRIPTION = constructr_sanitization($_CONSTRUCTR_CONF['_MEDIA_BASE_DESCRIPTION']);
+            $BASE_COPYRIGHT = constructr_sanitization($_CONSTRUCTR_CONF['_MEDIA_BASE_COPYRIGHT']);
             $FILE_TYPE = strrchr($FILEUPLOAD,'.');
             $NEW_UPLOAD = 'Uploads/' . $ORIGINALNAME;
             $UPLOAD = copy($_FILES['fileupload']['tmp_name'], $NEW_UPLOAD);
@@ -564,10 +564,10 @@
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
             }
 
-            $MEDIA_TITLE = $constructr -> request() -> post('title');
-            $MEDIA_DESCRIPTION = $constructr -> request() -> post('description');
-            $MEDIA_COPYRIGHT = $constructr -> request() -> post('copyright');
-            $MEDIA_KEYWORDS = $constructr -> request() -> post('keywords');
+            $MEDIA_TITLE = constructr_sanitization($constructr -> request() -> post('title'));
+            $MEDIA_DESCRIPTION = constructr_sanitization($constructr -> request() -> post('description'));
+            $MEDIA_COPYRIGHT = constructr_sanitization($constructr -> request() -> post('copyright'));
+            $MEDIA_KEYWORDS = constructr_sanitization($constructr -> request() -> post('keywords'));
 
             if($MEDIA_ID != '')
             {

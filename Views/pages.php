@@ -155,7 +155,7 @@
                     'FORM_METHOD' => 'post',
                     '_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,
                     'FORM_ENCTYPE' => 'application/x-www-form-urlencoded',
-                    'SUBTITLE' => 'Admin-Dashboard / Seitenverwaltung - Neue Seite erstellen',
+                    'SUBTITLE' => 'Admin-Dashboard / Seitenverwaltung - Neue Seite',
                     'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.'
                 )
             );
@@ -222,15 +222,14 @@
             }
 
             $PAGE_DATETIME = date('Y-m-d H:i:s');
-            $PAGE_NAME = $constructr -> request() -> post('page_name');
-            $PAGE_URL = $constructr -> request() -> post('page_url');
-            $PAGE_TEMPLATE = $constructr -> request() -> post('page_template');
-            $PAGE_TITLE = $constructr -> request() -> post('page_title');
-            $PAGE_DESCRIPTION = $constructr -> request() -> post('page_description');
-            $PAGE_KEYWORDS = $constructr -> request() -> post('page_keywords');
+            $PAGE_NAME = constructr_sanitization($constructr -> request() -> post('page_name'));
+            $PAGE_URL = constructr_sanitization($constructr -> request() -> post('page_url'));
             $PAGE_URL = preg_replace("[^A-Za-z0-9_-\/]", "", $PAGE_URL);
             $PAGE_URL = strtolower($PAGE_URL);
-
+            $PAGE_TEMPLATE = constructr_sanitization($constructr -> request() -> post('page_template'));
+            $PAGE_TITLE = constructr_sanitization($constructr -> request() -> post('page_title'));
+            $PAGE_DESCRIPTION = constructr_sanitization($constructr -> request() -> post('page_description'));
+            $PAGE_KEYWORDS = constructr_sanitization($constructr -> request() -> post('page_keywords'));
             $SEARCHR = strripos($PAGE_URL, '/');
 
             if ($SEARCHR !== false)
@@ -450,7 +449,7 @@
                     'FORM_ACTION' => $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/new/sub/' . $GUID .'/',
                     'FORM_METHOD' => 'post',
                     'FORM_ENCTYPE' => 'application/x-www-form-urlencoded',
-                    'SUBTITLE' => 'Admin-Dashboard / Seitenverwaltung - Neue Unterseite erstellen',
+                    'SUBTITLE' => 'Admin-Dashboard / Seitenverwaltung - Neue Unterseite',
                     'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.'
                 )
             );
@@ -518,14 +517,14 @@
 
             $PAGE_TMP_MARKER = '';
             $PAGE_DATETIME = date('Y-m-d H:i:s');
-            $PAGE_MOTHER_ID = $constructr -> request() -> post('mother_id');
-            $PAGE_MOTHER_LFT = $constructr -> request() -> post('mother_lft');
-            $PAGE_NAME = $constructr -> request() -> post('page_name');
-            $PAGE_URL = $constructr -> request() -> post('page_url');
-            $PAGE_TEMPLATE = $constructr -> request() -> post('page_template');
-            $PAGE_TITLE = $constructr -> request() -> post('page_title');
-            $PAGE_DESCRIPTION = $constructr -> request() -> post('page_description');
-            $PAGE_KEYWORDS = $constructr -> request() -> post('page_keywords');
+            $PAGE_MOTHER_ID = constructr_sanitization($constructr -> request() -> post('mother_id'));
+            $PAGE_MOTHER_LFT = constructr_sanitization($constructr -> request() -> post('mother_lft'));
+            $PAGE_NAME = $constructr_sanitization($constructr -> request() -> post('page_name'));
+            $PAGE_URL = constructr_sanitization($constructr -> request() -> post('page_url'));
+            $PAGE_TEMPLATE = constructr_sanitization($constructr -> request() -> post('page_template'));
+            $PAGE_TITLE = constructr_sanitization($constructr -> request() -> post('page_title'));
+            $PAGE_DESCRIPTION = constructr_sanitization($constructr -> request() -> post('page_description'));
+            $PAGE_KEYWORDS = constructr_sanitization($constructr -> request() -> post('page_keywords'));
             $PAGE_URL = str_replace('//','/',$PAGE_URL);
             $PAGE_URL = preg_replace("[^A-Za-z0-9_-\/]", "", $PAGE_URL);
             $PAGE_URL = strtolower($PAGE_URL);
@@ -801,13 +800,13 @@
             }
 
             $PAGE_DATETIME = date('Y-m-d H:i:s');
-            $PAGE_ID = $constructr -> request() -> post('page_id');
-            $PAGE_NAME = $constructr -> request() -> post('page_name');
-            $PAGE_URL = $constructr -> request() -> post('page_url');
-            $PAGE_TEMPLATE = $constructr -> request() -> post('page_template');
-            $PAGE_TITLE = $constructr -> request() -> post('page_title');
-            $PAGE_DESCRIPTION = $constructr -> request() -> post('page_description');
-            $PAGE_KEYWORDS = $constructr -> request() -> post('page_keywords');
+            $PAGE_ID = constructr_sanitization($constructr -> request() -> post('page_id'));
+            $PAGE_NAME = constructr_sanitization($constructr -> request() -> post('page_name'));
+            $PAGE_URL = constructr_sanitization($constructr -> request() -> post('page_url'));
+            $PAGE_TEMPLATE = constructr_sanitization($constructr -> request() -> post('page_template'));
+            $PAGE_TITLE = constructr_sanitization($constructr -> request() -> post('page_title'));
+            $PAGE_DESCRIPTION = constructr_sanitization($constructr -> request() -> post('page_description'));
+            $PAGE_KEYWORDS = constructr_sanitization($constructr -> request() -> post('page_keywords'));
             $PAGE_URL = str_replace('//','/',$PAGE_URL);
             $PAGE_URL = preg_replace("[^A-Za-z0-9_-\/]", "", $PAGE_URL);
             $PAGE_URL = strtolower($PAGE_URL);

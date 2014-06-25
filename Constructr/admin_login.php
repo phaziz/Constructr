@@ -13,12 +13,11 @@
             <![endif]-->
         </head>
         <body>
-            <div class="container">
+            <div class="container" style="max-width: 600px;">
                 <div class="row">
-                    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
-                    <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                         <div class="jumbotron">
-                            <h1>ConstructrCMS // Anmeldung erforderlich:</h1>
+                            <h1>ConstructrCMS</h1>
                             <br><br>
                             <?php
 
@@ -81,7 +80,6 @@
                             ?>
                         </div><!-- // EOF JUMBOTRON -->
                     </div><!-- // EOF COL-... -->
-                    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
                 </div><!-- // EOF ROW -->
             </div><!-- // EOF CONTAINER -->
             <script src="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/Assets/jquery-2-1-1.min.js"></script>

@@ -81,7 +81,7 @@
                     'RIGHTS' => $RIGHTS,
                     'COUNTR' => $COUNTR,
                     '_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,
-                    'SUBTITLE' => 'Admin-Dashboard / Benutzerrechte von ' . $USER_NAME . ' anpassen',
+                    'SUBTITLE' => 'Admin-Dashboard / Benutzerrechte von ' . $USER_NAME,
                     'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.'
                 )
             );

@@ -204,8 +204,8 @@
                 die();
             }
 
-            $USERNAME = $constructr -> request() -> get('username');
-            
+            $USERNAME = constructr_sanitization($constructr -> request() -> get('username'));
+
             if($USERNAME != '')
             {
                 try
@@ -310,7 +310,7 @@
                 die();
             }
 
-            $USERNAME = $constructr -> request() -> get('username');
+            $USERNAME = constructr_sanitization($constructr -> request() -> get('username'));
 
             if($USERNAME != '')
             {
@@ -426,14 +426,13 @@
             $USERNAME = $constructr -> request() -> post('username');
             $PASSWORD = crypt($constructr -> request() -> post('password'),$_CONSTRUCTR_CONF['_SALT']);
             $PASSWORD_RT = crypt($constructr -> request() -> post('password_retype'),$_CONSTRUCTR_CONF['_SALT']) or die ('error');
-            
             $EMAIL = $constructr -> request() -> post('email');
             $ART = $constructr -> request() -> post('art');
             $ACTIVE = 1;
 
             if($PASSWORD != $PASSWORD_RT)
             {
-                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . 'admin/user/?create=error');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/user/?create=error');
                 die();
             }
 
@@ -624,7 +623,7 @@
                         'BACKENDUSER' => $BACKENDUSER,
                         'GUID' => $GUID,
                         '_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,
-                        'SUBTITLE' => 'Admin-Dashboard / Benutzer editieren',
+                        'SUBTITLE' => 'Admin-Dashboard / Benutzer bearbeiten',
                         'FORM_ACTION' => $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/user/edit/' . $USER_ID . '/' . $GUID . '/',
                         'FORM_METHOD' => 'post',
                         'FORM_ENCTYPE' => 'application/x-www-form-urlencoded',
@@ -699,16 +698,16 @@
                 die();
             }
 
-            $USERNAME = $constructr -> request() -> post('username');
-            $PASSWORD = crypt($constructr -> request() -> post('password'),$_CONSTRUCTR_CONF['_SALT']);
-            $PASSWORD_RT = crypt($constructr -> request() -> post('password_retype'),$_CONSTRUCTR_CONF['_SALT']);
-            $EMAIL = $constructr -> request() -> post('email');
-            $ART = $constructr -> request() -> post('art');
+            $USERNAME = constructr_sanitization($constructr -> request() -> post('username'));
+            $PASSWORD = crypt(constructr_sanitization($constructr -> request() -> post('password')),$_CONSTRUCTR_CONF['_SALT']);
+            $PASSWORD_RT = crypt(constructr_sanitization($constructr -> request() -> post('password_retype')),$_CONSTRUCTR_CONF['_SALT']);
+            $EMAIL = constructr_sanitization($constructr -> request() -> post('email'));
+            $ART = constructr_sanitization($constructr -> request() -> post('art'));
             $ACTIVE = 1;
 
             if($PASSWORD != $PASSWORD_RT)
             {
-                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . 'admin/user/?edit=error');
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/user/?edit=error');
             }
 
             if($ART == 'intern')

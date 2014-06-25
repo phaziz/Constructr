@@ -42,15 +42,6 @@
                             </div><!-- // EOF COL-... -->
                             <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
                         </div><!-- // EOF ROW -->
-                        <div class="row">
-                            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
-                            <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-                                <div class="jumbotron">
-                                    <h1><?php echo $SUBTITLE; ?></h1>
-                                </div><!-- // EOF JUMBOTRON -->
-                            </div><!-- // EOF COL-... -->
-                            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
-                        </div><!-- // EOF ROW -->
                         <?php 
                             if(isset($_GET['create']) || isset($_GET['edit']) || isset($_GET['delete'])){
                                 ?>
@@ -95,6 +86,7 @@
                             <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
                             <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
                                 <div class="jumbotron">
+                                    <h1><?php echo $SUBTITLE; ?></h1>
                                     <h2><?php echo $COUNTR; ?> Angelegte Benutzer <a data-toggle="tooltip" data-placement="top" title="Neuen Benutzer anlegen" class="tt" href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/user/new/'; ?>"><button type="button" class="btn btn-info btn-sm" title="Neuer Benutzer"><span class="glyphicon glyphicon-plus"></span></button></a></h2>
                                     <br><br>
                                     <div class="table-responsive">
@@ -213,82 +205,6 @@
                             }
                         );
 
-                        $('.status-updater').click(function(e)
-                            {
-                                e.preventDefault();
-                                var U = $(this).attr('href');
-                                vex.dialog.buttons.YES.text = 'Ja';
-                                vex.dialog.buttons.NO.text = 'Abbrechen';
-                                vex.dialog.confirm(
-                                    { 
-                                        className: 'vex-theme-flat-attack', 
-                                        message: 'Soll der Benutzerstatus wirklich ge&auml;ndert werden? Achtung: Diese &Auml;nderung wird sofort wirksam!',
-                                        callback: function(value)
-                                        {
-                                            if(value == true)
-                                            {
-                                                window.location = (U);
-                                            }
-                                            else
-                                            {
-                                                return false
-                                            }
-                                        }
-                                    }
-                                );
-                            }
-                        );
-
-                        $('.user-editer').click(function(e)
-                            {
-                                e.preventDefault();
-                                var U = $(this).attr('href');
-                                vex.dialog.buttons.YES.text = 'Ja';
-                                vex.dialog.buttons.NO.text = 'Abbrechen';
-                                vex.dialog.confirm(
-                                {
-                                    className: 'vex-theme-flat-attack', 
-                                    message: 'Soll der Benutzer wirklich ge&auml;ndert werden?',
-                                        callback: function(value)
-                                        {
-                                            if(value == true)
-                                            {
-                                                window.location = (U);
-                                            }
-                                            else
-                                            {
-                                                return false
-                                            }
-                                        }
-                                    }
-                                );
-                            }
-                        );
-                        $('.user-rights-editer').click(function(e)
-                            {
-                                e.preventDefault();
-                                var U = $(this).attr('href');
-                                vex.dialog.buttons.YES.text = 'Ja';
-                                vex.dialog.buttons.NO.text = 'Abbrechen';
-                                vex.dialog.confirm(
-                                {
-                                    className: 'vex-theme-flat-attack', 
-                                    message: 'Sollen die Benutzerrechte wirklich ge&auml;ndert werden?',
-                                        callback: function(value)
-                                        {
-                                            if(value == true)
-                                            {
-                                                window.location = (U);
-                                            }
-                                            else
-                                            {
-                                                return false
-                                            }
-                                        }
-                                    }
-                                );
-                            }
-                        );
                         $('.user-deleter').click(function(e)
                             {
                                 e.preventDefault();

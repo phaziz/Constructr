@@ -1,10 +1,55 @@
 <?php
 
-    $constructr -> get('/constructr/login/', function () use ($constructr,$_CONSTRUCTR_CONF)
+    $constructr -> get('/constructr/login/', function () use ($constructr,$_CONSTRUCTR_CONF,$DBCON)
         {
             if($_CONSTRUCTR_CONF['_LOGGING'] == true)
             {
                 $constructr -> getLog() -> debug($_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
+            }
+
+            if($_CONSTRUCTR_CONF['_RESET_LOGIN_PASSWORD'] == true)
+            {
+                $constructr -> getLog() -> debug('Constructr resetting User-Passwords...');
+
+                try
+                {
+                    $BACKENDUSER = $DBCON -> query('SELECT * FROM constructr_backenduser');
+                    $BACKENDUSER = $BACKENDUSER -> fetchAll();
+
+                    if($BACKENDUSER)
+                    {
+                        foreach($BACKENDUSER AS $BACKENDUSER)
+                        {
+                            $USER_ID = $BACKENDUSER['beu_id'] . '<br>';
+                            $NEW_PASSWORD = create_guid() . create_guid();
+                            $NEW_PASSWORD_CRYPTED = crypt($NEW_PASSWORD,$_CONSTRUCTR_CONF['_SALT']);
+
+                            try
+                            {
+                                $QUERY = 'UPDATE constructr_backenduser SET beu_password = :NEW_PASSWORD_CRYPTED WHERE beu_id = :USER_ID LIMIT 1;';
+                                $STMT = $DBCON -> prepare($QUERY);
+                                $STMT -> bindParam(':NEW_PASSWORD_CRYPTED',$NEW_PASSWORD_CRYPTED,PDO::PARAM_STR);
+                                $STMT -> bindParam(':USER_ID',$USER_ID,PDO::PARAM_INT);
+                                $STMT -> execute();
+                            }
+                            catch (PDOException $e)
+                            {
+                                $constructr -> getLog() -> error('Error resetting passwords: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
+                                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/user/?edit=error');
+                                die();
+                            }
+
+                            @mail($BACKENDUSER['beu_email'],'Constructr Password-Reset',date('d.m.Y, H:i') . ' Uhr //  New Password for your User: ' . $NEW_PASSWORD . ' - Please update as soon as possible!');
+                        }
+                    }
+                }
+                catch (PDOException $e) 
+                {
+                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
+                    die();
+                }
+
+                $constructr -> getLog() -> debug('Constructr resetting User-Passwords... done!');
             }
 
             $GUID = create_guid();
@@ -70,7 +115,7 @@
             {
                 $ATTEMPT_TRY = $_SESSION['constructr_login_attempt'];
 
-                if($ATTEMPT_TRY >= 5)
+                if($ATTEMPT_TRY >= $_CONSTRUCTR_CONF['_MAX_LOGIN_ATTEMPTS'])
                 {
                     $_SESSION['constructr_login_blocked'] = time();
                     $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/login/');

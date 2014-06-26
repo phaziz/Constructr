@@ -26,7 +26,7 @@
                                     $ACT_TIME = time();
                                     $BLOCKING_TIME = $_SESSION['constructr_login_blocked'];
 
-                                    if($ACT_TIME < ($BLOCKING_TIME + 600))
+                                    if($ACT_TIME < ($BLOCKING_TIME + $_CONSTRUCTR_CONF['_LOGIN_BLOCKED_FOR']))
                                     {
                                         ?>
                                             <div class="alert alert-danger"><strong>Zu viele Anmeldeversuche!</strong> Sie wurden f&uuml;r 10 Minuten gesperrt! Bitte versuchen Sie es danach erneut!</div>
@@ -53,7 +53,7 @@
                                                 <button type="submit" class="btn btn-default">Anmeldung</button>
                                             </form>
 
-                                        <?php    
+                                        <?php
                                     }
                                 }
                                 else

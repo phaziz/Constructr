@@ -388,7 +388,8 @@
 
                                 if(!is_dir($ACT_DIR))
                                 {
-                                    mkdir($ACT_DIR,0777,false);
+                                    @mkdir($ACT_DIR,0777,false);
+                                    @chmod($ACT_DIR,0777);
                                 }
                             }
                             else
@@ -399,6 +400,7 @@
                                 if(!is_dir($ACT_DIR))
                                 {
                                     @mkdir($ACT_DIR,0777,false);
+                                    @chmod($ACT_DIR,0777);
                                 }
                             }
                         }
@@ -426,12 +428,14 @@
                                 $PHYSICAL_FILE = fopen($BASE_DIR . '/' . 'index.php',"w+");
                                 fwrite($PHYSICAL_FILE, $_HTML_CONTENT);
                                 fclose($PHYSICAL_FILE);
+                                @chmod($PHYSICAL_FILE,0777);
                             }
                             else
                             {
                                 $PHYSICAL_FILE = fopen($ACT_DIR . '/' . 'index.php',"w+");
                                 fwrite($PHYSICAL_FILE, $_HTML_CONTENT);
                                 fclose($PHYSICAL_FILE);
+                                @chmod($PHYSICAL_FILE,0777);
                             }
                         }
                     }
@@ -445,6 +449,142 @@
             {
                 $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());   
                 $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/?created-static=false');
+                die();
+            }
+        }
+    );
+    
+    $constructr -> get('/constructr/transfer-static/:GUID/', $ADMIN_CHECK, function ($GUID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
+        {
+            $USERNAME = $_SESSION['backend-user-username'];
+
+            $constructr -> view -> setData('BackendUserRight',100);            
+
+            if(isset($_SESSION['backend-user-id']) && $_SESSION['backend-user-id'] != '')
+            {
+                try
+                {
+                    $RIGHT_CHECKER = $DBCON -> prepare('SELECT * FROM constructr_backenduser_rights WHERE cbr_right = :RIGHT_ID AND cbr_user_id = :USER_ID AND cbr_value = :CBR_VALUE LIMIT 1;');
+                    $RIGHT_CHECKER -> execute(
+                        array
+                        (
+                            ':USER_ID' => $_SESSION['backend-user-id'],
+                            ':RIGHT_ID' => $constructr -> view -> getData('BackendUserRight'),
+                            ':CBR_VALUE' => 1
+                        )
+                    );
+
+                    $RIGHTS_COUNTR = $RIGHT_CHECKER -> rowCount();
+
+                    if($RIGHTS_COUNTR != 1)
+                    {
+                        $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Error ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                        $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/?no-rights=true');
+                        die();
+                    }
+                    else
+                    {
+                        $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                    }
+                }
+                catch (PDOException $e) 
+                {
+                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
+                    die();
+                }
+            }
+            else
+            {
+                $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': Error User-Rights-Check: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/logout/');
+                die();
+            }
+
+            if($GUID == '')
+            {
+                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ' - USER_FORM_GUID ERROR: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/logout/');
+                die();
+            }
+
+            if($_CONSTRUCTR_CONF['_TRANSFER_STATIC'] == 'true' && $_CONSTRUCTR_CONF['_FTP_REMOTE_HOST'] != '' && $_CONSTRUCTR_CONF['_FTP_REMOTE_MODE'] != '' && $_CONSTRUCTR_CONF['_FTP_REMOTE_USERNAME'] != '' && $_CONSTRUCTR_CONF['_FTP_REMOTE_PASSWORD'] != '')
+            {
+                try
+                {
+                    $PAGE_CONTENT = $DBCON -> query('SELECT n.*, round((n.pages_rgt-n.pages_lft-1)/2,0) AS pages_subpages_countr, count(*)-1+(n.pages_lft>1) AS pages_level, ((min(p.pages_rgt)-n.pages_rgt-(n.pages_lft>1))/2) > 0 AS pages_lower, (((n.pages_lft-max(p.pages_lft)>1))) AS pages_upper FROM constructr_pages n, constructr_pages p WHERE n.pages_lft BETWEEN p.pages_lft AND p.pages_rgt AND (p.pages_id != n.pages_id OR n.pages_lft = 1) GROUP BY n.pages_id ORDER BY n.pages_lft;');
+                    $PAGE_CONTENT = $PAGE_CONTENT -> fetchAll();
+
+                    foreach($PAGE_CONTENT as $PAGE_CONTENT)
+                    {
+                        if($PAGE_CONTENT['pages_lft'] != 1)
+                        {
+                            $FTP_CON = ftp_connect($_CONSTRUCTR_CONF['_FTP_REMOTE_HOST'],$_CONSTRUCTR_CONF['_FTP_REMOTE_PORT']);
+                            ftp_login($FTP_CON, $_CONSTRUCTR_CONF['_FTP_REMOTE_USERNAME'], $_CONSTRUCTR_CONF['_FTP_REMOTE_PASSWORD']);
+
+                            $PARTS = array();
+                            $PARTS = explode('/',$PAGE_CONTENT['pages_url']);
+
+                            foreach($PARTS as $PART)
+                            {
+                                if(@ftp_chdir($FTP_CON,$PART))
+                                {
+                                    @ftp_chmod($ftpcon,0777,$PART);
+                                }
+                                else
+                                {
+                                    @ftp_mkdir($FTP_CON,$PART);
+                                    @ftp_chmod($ftpcon,0777,$PART);
+                                    @ftp_chdir($FTP_CON,$PART);
+                                }
+                            }
+
+                            ftp_close($FTP_CON);
+                        }
+
+                        if($PAGE_CONTENT['pages_lft'] == 1)
+                        {
+                            if(is_file($_CONSTRUCTR_CONF['_STATIC_DIR'] . '/index.php'))
+                            {
+                                $FTP_CON = @ftp_connect($_CONSTRUCTR_CONF['_FTP_REMOTE_HOST'],$_CONSTRUCTR_CONF['_FTP_REMOTE_PORT']);
+                                @ftp_login($FTP_CON, $_CONSTRUCTR_CONF['_FTP_REMOTE_USERNAME'], $_CONSTRUCTR_CONF['_FTP_REMOTE_PASSWORD']);
+                                @ftp_chmod($FTP_CON, 0777,'index.php');
+                                @ftp_delete($FTP_CON,'./index.php');
+                                @ftp_put($FTP_CON,'index.php',$_CONSTRUCTR_CONF['_STATIC_DIR'] . '/index.php', $_CONSTRUCTR_CONF['_FTP_REMOTE_MODE']);
+                                @ftp_chmod($FTP_CON, 0777,'index.php');
+                                @ftp_close($FTP_CON);
+                            }
+                        }
+                        else
+                        {
+                            if(is_file($_CONSTRUCTR_CONF['_STATIC_DIR'] . '/'. $PAGE_CONTENT['pages_url'] . '/index.php'))
+                            {
+                                $FTP_CON = @ftp_connect($_CONSTRUCTR_CONF['_FTP_REMOTE_HOST'],$_CONSTRUCTR_CONF['_FTP_REMOTE_PORT']);
+                                @ftp_login($FTP_CON, $_CONSTRUCTR_CONF['_FTP_REMOTE_USERNAME'], $_CONSTRUCTR_CONF['_FTP_REMOTE_PASSWORD']);
+                                @ftp_chdir($FTP_CON,$PAGE_CONTENT['pages_url']);
+                                @ftp_chmod($FTP_CON, 0777,'index.php');
+                                @ftp_delete($FTP_CON,'./index.php');
+                                @ftp_put($FTP_CON,'index.php',$_CONSTRUCTR_CONF['_STATIC_DIR'] . '/'. $PAGE_CONTENT['pages_url'] . '/index.php', $_CONSTRUCTR_CONF['_FTP_REMOTE_MODE']);
+                                @ftp_chmod($FTP_CON, 0777,'index.php');
+                                @ftp_close($FTP_CON);
+                            }
+                        }
+                    }
+                }
+                catch (PDOException $e)
+                {
+                    $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                    $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/?transfered-static=false');
+                    die();
+                }
+
+                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/?transfered-static=true');
+                die();
+            }
+            else
+            {
+                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/?transfered-static=false');
                 die();
             }
         }

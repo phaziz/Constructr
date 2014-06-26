@@ -40,6 +40,34 @@
                             <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
                         </div><!-- // EOF ROW -->
                         <?php
+                            if(isset($_GET['transfered-static']) && $_GET['transfered-static'] == 'true')
+                            {
+                                ?>
+                                    <div class="row response">
+                                        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
+                                        <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                                            <?php
+                                                echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Erfolg!</strong> Die statischen Internetseiten wurden &uuml;bertragen!</div>';
+                                            ?>
+                                        </div><!-- // EOF COL-... -->
+                                        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
+                                    </div><!-- // EOF ROW -->
+                                <?php
+                            }
+                            if(isset($_GET['transfered-static']) && $_GET['transfered-static'] == 'false')
+                            {
+                                ?>
+                                    <div class="row response">
+                                        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
+                                        <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                                            <?php
+                                                echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Fehler!</strong> Es ist ein Fehler beim &uuml;bertragen der statischen Seiten aufgetreten.</div>';
+                                            ?>
+                                        </div><!-- // EOF COL-... -->
+                                        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
+                                    </div><!-- // EOF ROW -->
+                                <?php
+                            }
                             if(isset($_GET['created-static']) && $_GET['created-static'] == 'true')
                             {
                                 ?>
@@ -137,7 +165,7 @@
                                     </form>
                                     <br><br>
                                     <?php
-                                        if($_SERVE_STATIC == true)
+                                        if($_CONSTRUCTR_CONF['_CREATE_STATIC'] == true)
                                         {
                                             ?>
                                                 <br>
@@ -146,6 +174,31 @@
                                                 <ul class="list-group">
                                                       <li class="list-group-item">
                                                             <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL']; ?>/constructr/generate-static/<?php echo $GUID ?>/" title="Statische Internetseiten jetzt generieren">Statische Internetseiten jetzt generieren</a>
+                                                      </li>
+
+                                                <?php 
+                                                
+                                                    if($_CONSTRUCTR_CONF['_TRANSFER_STATIC'] == true)
+                                                    {
+                                                                                                                
+                                                    }
+                                                    else
+                                                    {
+                                                        echo '</ul><br>';
+                                                    }
+                                        }
+                                    ?>
+                                    <?php
+                                        if($_CONSTRUCTR_CONF['_TRANSFER_STATIC'] == true)
+                                        {
+                                            if($_CONSTRUCTR_CONF['_CREATE_STATIC'] == false)
+                                            {
+                                                echo '<br><ul class="list-group">'; 
+                                            }
+
+                                            ?>
+                                                      <li class="list-group-item">
+                                                            <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL']; ?>/constructr/transfer-static/<?php echo $GUID ?>/" title="Statische Internetseiten jetzt &uuml;bertragen">Statische Internetseiten jetzt &uuml;bertragen</a>
                                                       </li>
                                                 </ul>
                                                 <br>

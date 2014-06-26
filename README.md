@@ -32,9 +32,9 @@ That's it for now (2014.06.26):
 
 	Images:
 
-	![constructr-1](https://static.phaziz.com/CONSTRUCTR-CMS/constructr-1.png "Login")
-	![constructr-2](https://static.phaziz.com/CONSTRUCTR-CMS/constructr-2.png "Dashboard")
-	![constructr-3](https://static.phaziz.com/CONSTRUCTR-CMS/constructr-3.png "Pages")
-	![constructr-4](https://static.phaziz.com/CONSTRUCTR-CMS/constructr-4.png "Content Elements")
-	![constructr-5](https://static.phaziz.com/CONSTRUCTR-CMS/constructr-5.png "Editing Content Element including History")
-	![constructr-6](https://static.phaziz.com/CONSTRUCTR-CMS/constructr-6.png "Media-Uploads")
+	http://static.phaziz.com/CONSTRUCTR-CMS/constructr-1.png
+	http://static.phaziz.com/CONSTRUCTR-CMS/constructr-2.png
+	http://static.phaziz.com/CONSTRUCTR-CMS/constructr-3.png
+	http://static.phaziz.com/CONSTRUCTR-CMS/constructr-4.png
+	http://static.phaziz.com/CONSTRUCTR-CMS/constructr-5.png
+	http://static.phaziz.com/CONSTRUCTR-CMS/constructr-6.png

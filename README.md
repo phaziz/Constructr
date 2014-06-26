@@ -32,9 +32,9 @@ That's it for now (2014.06.26):
 
 	Images:
 
-	http://static.phaziz.com/CONSTRUCTR-CMS/constructr-1.png
-	http://static.phaziz.com/CONSTRUCTR-CMS/constructr-2.png
-	http://static.phaziz.com/CONSTRUCTR-CMS/constructr-3.png
-	http://static.phaziz.com/CONSTRUCTR-CMS/constructr-4.png
-	http://static.phaziz.com/CONSTRUCTR-CMS/constructr-5.png
-	http://static.phaziz.com/CONSTRUCTR-CMS/constructr-6.png
+	http://static_files.phaziz.com/CONSTRUCTR-CMS/constructr-1.png
+	http://static_files.phaziz.com/CONSTRUCTR-CMS/constructr-2.png
+	http://static_files.phaziz.com/CONSTRUCTR-CMS/constructr-3.png
+	http://static_files.phaziz.com/CONSTRUCTR-CMS/constructr-4.png
+	http://static_files.phaziz.com/CONSTRUCTR-CMS/constructr-5.png
+	http://static_files.phaziz.com/CONSTRUCTR-CMS/constructr-6.png

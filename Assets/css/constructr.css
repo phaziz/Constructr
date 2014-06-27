@@ -20,7 +20,7 @@ font-size: 1.00em;
 color: rgb(255,255,255) !important;
 }
 .jumbotron{
-background: rgb(253,253,253);
+background: rgb(255,255,255);
 color: rgb(66,66,66);
 border-radius: 0px !important; 
 -moz-border-radius: 0px !important;
@@ -30,13 +30,15 @@ border: 1px solid #dfdfdf;
 .jumbotron h1{
 margin: 0 0 0 0;
 padding: 0 0 0 0;
-font-size: 1.5em;
+font-size: 1.4em;
 font-weight: 200;
+line-height: 1.8em;
+margin-bottom: 25px;
 }
 .jumbotron h2{
 margin: 0 0 0 0;
 padding: 0 0 0 0;
-font-size: 1.2em;
+font-size: 1.0em;
 font-weight: 200;
 }
 label{

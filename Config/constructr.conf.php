@@ -1,23 +1,10 @@
 <?php 
 
     /*
+     * 
      * CONSTRUCTR MAIN CONFIGURATION FILE - HANDLE WITH CARE!!!
+     * 
      */
-
-    // CONSTRUCTR ENCRYPTION AVAILABLE?
-    if(!defined('CRYPT_BLOWFISH') && CRYPT_BLOWFISH)
-    {
-        echo 'Fehler CRYPT_BLOWFISH ist nicht verf&uuml;gbar!';
-        die();
-    }
-
-    // MINIMAL PHP-VERSION 5.3.x AVAILABLE?
-    if (version_compare(phpversion(),'5.3.0','<='))
-    {
-        echo 'PHP ist kleiner als Version 5.3.0';
-        die();
-    }
-
     $_CONSTRUCTR_CONF = array
     (
         '_CONSTRUCTR_DATABASE_HOST' => '', // DATABASE HOST - localhost
@@ -30,9 +17,7 @@
 
         '_BASE_URL' => 'http://' . $_SERVER['HTTP_HOST'], // INSTALLATION BASE_URL FOR FILE REFERENCIES AND ROUTING IN BACKEND  - (char) 'http://' . $_SERVER['HTTP_HOST']
 
-        '_VERSION_DATE' => '20140626', // VERSION DATE OF CONSTRUCTR CMS - PLEASE DONT TOUCH!!!
-
-        '_VERSION' => '1.00.5', // VERSION OF CONSTRUCTR CMS - PLEASE DONT TOUCH!!!
+        '_SESSION_CYPHER_METHOD' => MCRYPT_MODE_CBC, // SESSION CYPHER METHOD - (char) MCRYPT_MODE_CBC
 
         '_SALT' => '', // SECURITY SALT FOR CRYPTING USER PASSWORDS - CREATE YOUR OWN _SALT
 
@@ -42,21 +27,9 @@
 
         '_LOGGING' => true, // CONSTRUCTR LOGGING - (boolean) true|false
 
-        '_TITLE' => 'CONSTRUCTR', // BASE BACKEND TITLE - UPDATE FOR WHITE LABELING - (char) WHATEVER YOU WISH
-
-        '_EXT_WWW' => '', // ROUTING STATIC TO A SPECIAL DOMAIN/FRONTEND - (char) http://domain.tld/...
+        '_TITLE' => 'CONSTRUCTR CMS', // BASE BACKEND TITLE - UPDATE FOR WHITE LABELING - (char) WHATEVER YOU WISH
 
         '_TEMPLATES_DIR' => './Website-Template', // PUBLIC WEBSITE-TEMPLATE DIRECTORY - (char) './Website-Template'
-
-        '_SERVE_STATIC' => false, // OUTPUT ONLY STATIC GENERATED PAGES IN FRONTEND - (boolean) true|false
-
-        '_CREATE_STATIC' => true, // ALLOW GENERATION OF STATIC PAGES - (boolean) true|false
-
-        '_STATIC_DIR' => './Static', // DIRECTORY FOR STATIC OUTPUT - (char) './Static'
-
-        '_CREATE_STATIC_DOMAIN' => '', // SET SPECIFIC DOMAIN FOR CREATION OF STATIC WEBPAGES - (char) http://domain.tld
-
-        '_MAGIC_GENERATION_KEY' => '', // MAGIC KEY FOR READING CONSTRUCTR FRONTEND OUTPUT - STATIC WEBPAGE GENERATION - (char) WHATEVER YOU WISH 
 
         '_CONSTRUCTR_BACKEND' => './Constructr', // WHERE IS THE BACKEND LOCATED - (char) './Constructr'
 
@@ -84,6 +57,18 @@
 
         '_LOGIN_BLOCKED_FOR' => 600, // CONSTRUCTR LOGIN BLOCKING TIME WHEN _MAX_LOGIN_ATTEMPTS IS REACHED - (int) 600
 
+        '_CREATE_STATIC' => true, // ALLOW GENERATION OF STATIC PAGES - (boolean) true|false
+
+        '_STATIC_FILETYPE' => '.html', // PREFERED FILE-TYPE OF STATIC PAGES - (char) .php,.html,...
+
+        '_STATIC_DIR' => './Static', // DIRECTORY FOR STATIC OUTPUT - (char) './Static'
+
+        '_CREATE_STATIC_DOMAIN' => '', // SETS SPECIFIC DOMAIN FOR CREATION OF STATIC WEBPAGES - (char) http://domain.tld
+        
+        '_CREATE_DYNAMIC_DOMAIN' => '', // SETS SPECIFIC DOMAIN FOR CREATION OF DYNAMIC WEBPAGES - (char) http://domain.tld
+
+        '_MAGIC_GENERATION_KEY' => '', // MAGIC KEY FOR READING CONSTRUCTR FRONTEND OUTPUT - STATIC WEBPAGE GENERATION - (char) WHATEVER YOU WISH
+
         '_TRANSFER_STATIC' => true, // ALLOW FTP-TRANSFER OF STATIC PAGES - (boolean) true|false
 
         '_FTP_REMOTE_HOST' => '', // TRANSPORT STATIC WEBSITE-OUTPUT TO DESTINATION SERVER - (char)
@@ -95,6 +80,16 @@
         '_FTP_REMOTE_MODE' => FTP_BINARY, // TRANSPORT METHOD - (char) FTP_BINARY | FTP_ASCII
 
         '_FTP_REMOTE_USERNAME' => '', // FTP USERNAME - (char)
-  
+
         '_FTP_REMOTE_PASSWORD' => '', // FTP PASSWORD - (char)
     );
+
+    if(!defined('CRYPT_BLOWFISH') && CRYPT_BLOWFISH)
+    {
+        die('Fehler CRYPT_BLOWFISH ist nicht verf&uuml;gbar!');
+    }
+
+    if (version_compare(phpversion(),'5.3.0','<='))
+    {
+        die('PHP ist kleiner als Version 5.3.0');
+    }

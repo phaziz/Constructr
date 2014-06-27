@@ -1,18 +1,18 @@
 <!DOCTYPE html>
-    <!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
-    <!--[if IE 7]><html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
-    <!--[if IE 8]><html class="no-js lt-ie9" lang="en"><![endif]-->
-    <!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
+    <html lang="de">
         <head>
+            <meta charset="utf-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
             <title><?php echo $_CONSTRUCTR_CONF['_TITLE'] . ' - ' . $SUBTITLE; ?></title>
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <link href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+            <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
             <link href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/datatables-bootstrap3/assets/css/datatables.css" rel="stylesheet">
             <link href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/css/constructr.css" rel="stylesheet">
             <link href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/vex/css/vex.css" rel="stylesheet">
             <link href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/vex/css/vex-theme-flat-attack.css" rel="stylesheet">
             <!--[if lt IE 9]>
-                <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+                <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+                <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
             <![endif]-->
         </head>
         <body>
@@ -21,8 +21,18 @@
                     <ul id="sidebar_menu" class="sidebar-nav">
                         <li class="sidebar-brand"><a id="menu-toggle" href="#"><div class="pull-right"><span title="&#8249;&#160;Hauptmen&uuml;&#160;&#160;" data-toggle="tooltip" data-placement="right" class="tt glyphicon glyphicon-align-justify"></span>&#160;&#160;</div></a></li>
                     </ul>
-                    <ul class="sidebar-nav" id="sidebar">     
-                        <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>" onclick="window.open(this.href);return false;" title="Internetseite anzeigen" data-toggle="tooltip" data-placement="right">Internetseite</a></li>
+                    <ul class="sidebar-nav" id="sidebar">
+                        <?php 
+
+                            if($_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'] != '')
+                            {
+                                ?>
+                                    <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'] ?>" onclick="window.open(this.href);return false;" title="Statische Internetseiten anzeigen" data-toggle="tooltip" data-placement="right">FTP-Seiten</a></li>        
+                                <?php   
+                            }
+
+                        ?>
+                        <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_CREATE_DYNAMIC_DOMAIN'] ?>" onclick="window.open(this.href);return false;" title="Vorschau dynamische Internetseiten" data-toggle="tooltip" data-placement="right">Vorschau</a></li>
                         <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/" title="Dashboard anzeigen" data-toggle="tooltip" data-placement="right">Dashboard</a></li>
                         <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/pages/" title="Seitenverwaltung anzeigen" data-toggle="tooltip" data-placement="right">Seiten</a></li>
                         <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/media/" title="Medienverwaltung anzeigen" data-toggle="tooltip" data-placement="right">Medien</a></li>
@@ -74,48 +84,40 @@
                                     <h2>Dateien im M&uuml;lleimer</h2>
                                     <br><br>
                                     <div class="table-responsive">
-                                        <?php
-                                            if($DIR_FILES && count($DIR_FILES) != 0)
-                                            {
-                                                ?>
-                                                <table class="datatable table table-bordered table-condensed table-striped table-hover">
-                                                    <thead>
-                                                        <tr>
-                                                            <th><small>Datei</small></th>
-                                                            <th class="center"><small>Aktionen</small></th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <?php
-                                                            if($DIR_FILES)
+                                        <table class="datatable table table-bordered table-condensed table-striped table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th><small>Datei</small></th>
+                                                    <th class="center"><small>Aktionen</small></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php
+                                                    if($DIR_FILES && count($DIR_FILES) != 0)
+                                                    {
+                                                        if($DIR_FILES)
+                                                        {
+                                                            foreach($DIR_FILES as $DIR_FILE)
                                                             {
-                                                                foreach($DIR_FILES as $DIR_FILE)
+                                                                if($MEDIA_FILE['media_file'] != $DIR_FILE)
                                                                 {
-                                                                    if($MEDIA_FILE['media_file'] != $DIR_FILE)
-                                                                    {
-                                                                        echo '<tr><td><a href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/' . $DIR_FILE . '" title="Datei ansehen" onclick="window.open(this.href);return false;">' . $DIR_FILE . '</a></td>';
-                                                                        echo '<td class="center">';
-                                                                        echo '<a onclick="window.open(this.href);return false;" data-toggle="tooltip" data-placement="top" title="Einfache Vorschau" class="preview tt" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/' . $DIR_FILE . '"><button type="button" class="btn btn-warning btn-xs" title="Einfache Vorschau"><span class="glyphicon glyphicon-eye-close"></span></button></a>&#160;';
-                                                                        echo '<a data-toggle="tooltip" data-placement="top" title="Wiederherstellen" class="preview tt" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/media/re-create/' . str_replace('Uploads/','',$DIR_FILE) . '/"><button type="button" class="btn btn-success btn-xs" title="Wiederherstellung"><span class="glyphicon glyphicon-import"></span></button></a>&#160;';
-                                                                        echo '<a data-toggle="tooltip" data-placement="top" title="Datei endg&uuml;ltig l&ouml;schen" class="deleter tt" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/media/trash/delete/' . base64_encode($DIR_FILE) . '/" title="Datei endg&uuml;ltig l&ouml;schen"><button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span></button></a>';
-                                                                        echo '</td></tr>';
-                                                                    }
+                                                                    echo '<tr><td><a href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/' . $DIR_FILE . '" title="Datei ansehen" onclick="window.open(this.href);return false;">' . $DIR_FILE . '</a></td>';
+                                                                    echo '<td class="center">';
+                                                                    echo '<a onclick="window.open(this.href);return false;" data-toggle="tooltip" data-placement="top" title="Einfache Vorschau" class="preview tt" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/' . $DIR_FILE . '"><button type="button" class="btn btn-warning btn-xs" title="Einfache Vorschau"><span class="glyphicon glyphicon-eye-close"></span></button></a>&#160;';
+                                                                    echo '<a data-toggle="tooltip" data-placement="top" title="Wiederherstellen" class="preview tt" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/media/re-create/' . str_replace('Uploads/','',$DIR_FILE) . '/"><button type="button" class="btn btn-success btn-xs" title="Wiederherstellung"><span class="glyphicon glyphicon-import"></span></button></a>&#160;';
+                                                                    echo '<a data-toggle="tooltip" data-placement="top" title="Datei endg&uuml;ltig l&ouml;schen" class="deleter tt" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/media/trash/delete/' . base64_encode($DIR_FILE) . '/" title="Datei endg&uuml;ltig l&ouml;schen"><button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span></button></a>';
+                                                                    echo '</td></tr>';
                                                                 }
                                                             }
-                                                            else
-                                                            {
-                                                                echo '<tr><td colspan="2">Keine Dateien im M&uuml;lleimer gefunden!</td></tr>';
-                                                            };
-                                                        ?>
-                                                    </tbody>
-                                                </table>
-                                                <?php
-                                            }
-                                            else
-                                            {
-                                                echo '<p><small>Keine Dateien im M&uuml;lleimer gefunden!</small></p>';
-                                            }
-                                        ?>
+                                                        }
+                                                        else
+                                                        {
+                                                            echo '<tr><td colspan="2">Keine Dateien im M&uuml;lleimer gefunden!</td></tr>';
+                                                        };
+                                                    }
+                                                ?>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div><!-- // EOF JUMBOTRON -->
                             </div><!-- // EOF COL-... -->
@@ -125,7 +127,7 @@
                             <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
                             <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
                                 <p><small><a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/">Dashboard</a> <span class="glyphicon glyphicon-chevron-right"></span> <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/media/trash/">M&uuml;lleimer</a> <span class="glyphicon glyphicon-chevron-right"></span></small></p>
-                                <p><small>Version: <?php echo $_CONSTRUCTR_CONF['_VERSION']; ?> / <?php echo $TIMER; ?> / <?php echo $MEM; ?> / <a href="http://phaziz.com/" onclick="window.open(this.href);return false;">Constructr CMS von phaziz.com</a></small></p>
+                                <p><small>Version: <?php echo $_CONSTRUCTR_CONF['_VERSION_DATE']; ?> <?php echo $_CONSTRUCTR_CONF['_VERSION']; ?> / <?php echo $TIMER; ?> / <?php echo $MEM; ?> / <a href="http://phaziz.com/" onclick="window.open(this.href);return false;">Constructr CMS von phaziz.com</a></small></p>
                             </div><!-- // EOF COL-... -->
                             <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
                         </div><!-- // EOF ROW -->
@@ -134,7 +136,7 @@
             </div>
 
             <script src="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/Assets/jquery-2-1-1.min.js"></script>
-            <script src="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/Assets/bootstrap/js/bootstrap.min.js"></script>
+            <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
             <script src="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/datatables/media/js/jquery.dataTables.min.js"></script>
             <script src="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/datatables-bootstrap3/assets/js/datatables.js"></script>
             <script src="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/Assets/vex/js/vex.combined.min.js"></script>

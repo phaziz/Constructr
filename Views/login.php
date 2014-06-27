@@ -45,7 +45,7 @@
                 }
                 catch (PDOException $e) 
                 {
-                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
+                    $constructr -> getLog() -> error($_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
                     die();
                 }
 
@@ -134,7 +134,7 @@
             {
                 if($_CONSTRUCTR_CONF['_LOGGING'] == true)
                 {
-                    $constructr -> getLog() -> error($_ADMIN_USERNAME . ': ' . 'Login (GUID) error - ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                    $constructr -> getLog() -> error('Login (GUID) error - ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                 }
 
                 $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/login-error/');
@@ -179,14 +179,14 @@
                         }
                         catch (PDOException $e)
                         {
-                            $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
+                            $constructr -> getLog() -> debug($_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
                             $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/login-error/');
                             die();
                         }
 
                         if($_CONSTRUCTR_CONF['_LOGGING'] == true)
                         {
-                            $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . 'Successful login ' . $_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                            $constructr -> getLog() -> debug('Successful login ' . $_SESSION['backend-user-username']);
                         }
 
                         $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/');
@@ -196,7 +196,7 @@
                     {
                         if($_CONSTRUCTR_CONF['_LOGGING'] == true)
                         {
-                            $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . 'Login error - ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                            $constructr -> getLog() -> error('Login error - ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                         }
 
                         $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/login-error/');
@@ -205,7 +205,7 @@
                 }
                 catch (PDOException $e)
                 {
-                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
+                    $constructr -> getLog() -> error($_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
                     $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/login-error/');
                     die();
                 }
@@ -214,7 +214,7 @@
             {
                 if($_CONSTRUCTR_CONF['_LOGGING'] == true)
                 {
-                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . 'Login error - ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                    $constructr -> getLog() -> error('Login error - ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                 }
 
                 $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/login-error/');

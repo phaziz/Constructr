@@ -19,6 +19,10 @@
     */
 
     require_once './Config/constructr.conf.php';
+    
+    $_CONSTRUCTR_CONF['_VERSION_DATE'] = '20140627';
+    $_CONSTRUCTR_CONF['_VERSION'] = '1.01.1';
+    
     require_once './Slim/Slim.php';
     require_once './Slim/Log/DateTimeFileWriter.php';
 
@@ -31,8 +35,7 @@
     }
     catch (PDOException $e)
     {
-        echo '<p>Fehler bei der Datenbankverbindung!</p>';
-        die();
+        die('<p>Fehler bei der Datenbankverbindung!</p>');
     }
 
     $constructr = new \Slim\Slim(
@@ -63,7 +66,7 @@
             (
                 'secret' => $_CONSTRUCTR_CONF['_SECRET'],
                 'cipher' => MCRYPT_RIJNDAEL_256,
-                'cipher_mode' => MCRYPT_MODE_CBC,
+                'cipher_mode' => $_CONSTRUCTR_CONF['_SESSION_CYPHER_METHOD'],
                 'name' => $_CONSTRUCTR_CONF['_CONSTRUCTR_SESSION_NAME'],
                 'expires' => $_CONSTRUCTR_CONF['_CONSTRUCTR_COOKIE_LIFETIME'],
                 'path' => '/',
@@ -90,6 +93,7 @@
         catch (PDOException $e)
         {
             $constructr -> getLog() -> error($_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
+            die();
         }
     
         if($URLS)
@@ -104,62 +108,21 @@
                 $i++;
             }
         }
+        else
+        {
+            die('Keine Seiten gefunden!');
+        }
     
         if(!in_array($REQUEST,$URLS_ARRAY) && $REQUEST != '/' && $REQUEST != '')
         {
-            $constructr -> getLog() -> error('404 - ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+            $constructr -> getLog() -> error('404 - URL NOT FOUND: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
             header("HTTP/1.0 404 Not Found");
-            header("Location: " . $_CONSTRUCTR_CONF["_BASE_URL"] . "/404");
+            header("Location: " . $_CONSTRUCTR_CONF["_BASE_URL"]);
             die();
         }
 
         $view = $constructr -> view();
         $view -> setTemplatesDirectory($_CONSTRUCTR_CONF['_TEMPLATES_DIR']);
-
-        if(isset($_GET['static-generation']) && $_GET['static-generation'] == $_CONSTRUCTR_CONF['MAGIC_GENERATION_KEY'])
-        {
-            $_SERVE_STATIC = false;
-        }
-        else
-        {
-            $_SERVE_STATIC = $_CONSTRUCTR_CONF['_SERVE_STATIC'];
-        }
-
-        if($_SERVE_STATIC == true)
-        {
-            $constructr -> get('(:ROUTE+)', function ($ROUTE) use ($constructr,$_CONSTRUCTR_CONF)
-                {
-                    $URL = '';
-
-                    foreach($ROUTE as $ROUTE)
-                    {
-                        $URL .= '/' . $ROUTE;
-                    }
-
-                    $URL = str_replace('//','/',$URL);
-                    $STATIC_DIR = str_replace('./','/',$_CONSTRUCTR_CONF['_STATIC_DIR']);
-                    $URL = $_CONSTRUCTR_CONF['_BASE_URL'] . $STATIC_DIR . $URL . 'index.php';
-                    $constructr -> redirect($URL,301);
-                }
-            );
-            
-            $constructr -> run();
-            die();
-        }
-
-        if($_CONSTRUCTR_CONF['_EXT_WWW'] != '')
-        {
-            $constructr -> get('(:ROUTE+)', function () use ($constructr)
-                {
-                    $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/Web/index.php',301);
-                    die();        
-                }
-            );
-            
-            $constructr -> run();
-        }
-
-        $START = microtime(true);
 
         $constructr -> get('(:ROUTE+)', function ($ROUTE) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
             {
@@ -251,7 +214,7 @@
                 }
                 else
                 {
-                    echo '<p>Keine Seiten vorhanden!</p>';
+                    die('<p>Keine Seiten vorhanden!</p>');
                 }
 
                 $constructr -> render($TEMPLATE,array('PAGES' => $PAGES,'PAGE_DATA' => $PAGE_DATA,'CONTENT' => $CONTENT,'_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF));

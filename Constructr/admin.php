@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-    <!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
-    <!--[if IE 7]><html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
-    <!--[if IE 8]><html class="no-js lt-ie9" lang="en"><![endif]-->
-    <!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
+    <html lang="de">
         <head>
+            <meta charset="utf-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
             <title><?php echo $_CONSTRUCTR_CONF['_TITLE'] . ' - ' . $SUBTITLE; ?></title>
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <link href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+            <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
             <link href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/css/constructr.css" rel="stylesheet">
             <!--[if lt IE 9]>
-                <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+                <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+                <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
             <![endif]-->
         </head>
         <body>
@@ -18,8 +18,18 @@
                     <ul id="sidebar_menu" class="sidebar-nav">
                         <li class="sidebar-brand"><a id="menu-toggle" href="#"><div class="pull-right"><span title="&#8249;&#160;Hauptmen&uuml;&#160;&#160;" data-toggle="tooltip" data-placement="right" class="tt glyphicon glyphicon-align-justify"></span>&#160;&#160;</div></a></li>
                     </ul>
-                    <ul class="sidebar-nav" id="sidebar">     
-                        <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>" onclick="window.open(this.href);return false;" title="Internetseite anzeigen" data-toggle="tooltip" data-placement="right">Internetseite</a></li>
+                    <ul class="sidebar-nav" id="sidebar">
+                        <?php 
+
+                            if($_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'] != '')
+                            {
+                                ?>
+                                    <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'] ?>" onclick="window.open(this.href);return false;" title="Statische Internetseiten anzeigen" data-toggle="tooltip" data-placement="right">FTP-Seiten</a></li>        
+                                <?php   
+                            }
+
+                        ?>
+                        <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_CREATE_DYNAMIC_DOMAIN'] ?>" onclick="window.open(this.href);return false;" title="Vorschau dynamische Internetseiten" data-toggle="tooltip" data-placement="right">Vorschau</a></li>
                         <li class="active"><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/" title="Dashboard anzeigen" data-toggle="tooltip" data-placement="right">Dashboard</a></li>
                         <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/pages/" title="Seitenverwaltung anzeigen" data-toggle="tooltip" data-placement="right">Seiten</a></li>
                         <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/media/" title="Medienverwaltung anzeigen" data-toggle="tooltip" data-placement="right">Medien</a></li>
@@ -62,34 +72,6 @@
                                         <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
                                             <?php
                                                 echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Fehler!</strong> Es ist ein Fehler beim &uuml;bertragen der statischen Seiten aufgetreten.</div>';
-                                            ?>
-                                        </div><!-- // EOF COL-... -->
-                                        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
-                                    </div><!-- // EOF ROW -->
-                                <?php
-                            }
-                            if(isset($_GET['created-static']) && $_GET['created-static'] == 'true')
-                            {
-                                ?>
-                                    <div class="row response">
-                                        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
-                                        <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-                                            <?php
-                                                echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Erfolg!</strong> Die statischen Internetseiten wurden generiert!</div>';
-                                            ?>
-                                        </div><!-- // EOF COL-... -->
-                                        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
-                                    </div><!-- // EOF ROW -->
-                                <?php
-                            }
-                            if(isset($_GET['created-static']) && $_GET['created-static'] == 'false')
-                            {
-                                ?>
-                                    <div class="row response">
-                                        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
-                                        <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-                                            <?php
-                                                echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Fehler!</strong> Es ist ein Fehler beim generieren der statischen Seiten aufgetreten.</div>';
                                             ?>
                                         </div><!-- // EOF COL-... -->
                                         <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
@@ -164,37 +146,12 @@
                                         </div>
                                     </form>
                                     <br><br>
+                                    <br><br>
                                     <?php
-                                        if($_CONSTRUCTR_CONF['_CREATE_STATIC'] == true)
-                                        {
-                                            ?>
-                                                <br>
-                                                <h2>Generierung statischer Internetseiten:</h2>
-                                                <br>
-                                                <ul class="list-group">
-                                                      <li class="list-group-item">
-                                                            <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL']; ?>/constructr/generate-static/<?php echo $GUID ?>/" title="Statische Internetseiten jetzt generieren">Statische Internetseiten jetzt generieren</a>
-                                                      </li>
 
-                                                <?php 
-                                                
-                                                    if($_CONSTRUCTR_CONF['_TRANSFER_STATIC'] == true)
-                                                    {
-                                                                                                                
-                                                    }
-                                                    else
-                                                    {
-                                                        echo '</ul><br>';
-                                                    }
-                                        }
-                                    ?>
-                                    <?php
                                         if($_CONSTRUCTR_CONF['_TRANSFER_STATIC'] == true)
                                         {
-                                            if($_CONSTRUCTR_CONF['_CREATE_STATIC'] == false)
-                                            {
-                                                echo '<br><ul class="list-group">'; 
-                                            }
+                                                echo '<h2>Statische Seiten per FTP &uuml;bertragen</h2><br><ul class="list-group">'; 
 
                                             ?>
                                                       <li class="list-group-item">
@@ -247,7 +204,7 @@
                             <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
                             <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
                                 <p><small><a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/">Dashboard</a> <span class="glyphicon glyphicon-chevron-right"></span></small></p>
-                                <p><small>Version: <?php echo $_CONSTRUCTR_CONF['_VERSION']; ?> / <?php echo $TIMER; ?> / <?php echo $MEM; ?> / <a href="http://phaziz.com/" onclick="window.open(this.href);return false;">Constructr CMS von phaziz.com</a></small></p>
+                                <p><small>Version: <?php echo $_CONSTRUCTR_CONF['_VERSION_DATE']; ?> <?php echo $_CONSTRUCTR_CONF['_VERSION']; ?> / <?php echo $TIMER; ?> / <?php echo $MEM; ?> / <a href="http://phaziz.com/" onclick="window.open(this.href);return false;">Constructr CMS von phaziz.com</a></small></p>
                             </div><!-- // EOF COL-... -->
                             <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
                         </div><!-- // EOF ROW -->
@@ -256,7 +213,7 @@
             </div>
 
             <script src="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/Assets/jquery-2-1-1.min.js"></script>
-            <script src="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/Assets/bootstrap/js/bootstrap.min.js"></script>
+            <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
             <script>
                 $(function()
                     {

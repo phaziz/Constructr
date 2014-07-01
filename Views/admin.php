@@ -574,6 +574,14 @@
                             @ftp_delete($FTP_CON,'sitemap.xml');
                             @ftp_put($FTP_CON,'sitemap.xml',$_CONSTRUCTR_CONF['_BASE_URL'] . '/sitemap.xml', $_CONSTRUCTR_CONF['_FTP_REMOTE_MODE']);
                             @ftp_chmod($FTP_CON, 0777,'sitemap.xml');
+                            @ftp_chmod($FTP_CON, 0777,'.htaccess');
+                            @ftp_delete($FTP_CON,'.htaccess');
+                            @ftp_put($FTP_CON,'.htaccess',$_CONSTRUCTR_CONF['_STATIC_DIR'] . '/.htaccess', $_CONSTRUCTR_CONF['_FTP_REMOTE_MODE']);
+                            @ftp_chmod($FTP_CON, 0777,'.htaccess');
+                            @ftp_chmod($FTP_CON, 0777,'robots.txt');
+                            @ftp_delete($FTP_CON,'robots.txt');
+                            @ftp_put($FTP_CON,'robots.txt',$_CONSTRUCTR_CONF['_STATIC_DIR'] . '/robots.txt', $_CONSTRUCTR_CONF['_FTP_REMOTE_MODE']);
+                            @ftp_chmod($FTP_CON, 0777,'robots.txt');
                             @ftp_close($FTP_CON);
                         }
                     }

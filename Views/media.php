@@ -772,7 +772,7 @@
 
             if($MEDIA_FILE != '')
             {
-                unlink('./' . base64_decode($MEDIA_FILE));
+                @unlink('./' . base64_decode($MEDIA_FILE));
                 $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/media/trash/?res=del-media-true');
                 die();
             }

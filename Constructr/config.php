@@ -44,16 +44,13 @@
                 <div id="page-content-wrapper">
                     <div class="page-content inset">
                         <div class="row">
-                            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
-                            <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <br>
                                 <p><small><a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/">Dashboard</a> <span class="glyphicon glyphicon-chevron-right"></span> <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/config/">Systemkonfiguration</a> <span class="glyphicon glyphicon-chevron-right"></span></small></p>
                             </div><!-- // EOF COL-... -->
-                            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
                         </div><!-- // EOF ROW -->
                         <div class="row">
-                            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
-                            <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <div class="jumbotron">
                                     <h1><?php echo $SUBTITLE; ?></h1>
                                     <h2>Aktuelle Systemkonfiguration</h2>
@@ -101,15 +98,12 @@
                                     ?>
                                 </div><!-- // EOF JUMBOTRON -->
                             </div><!-- // EOF COL-... -->
-                            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
                         </div><!-- // EOF ROW -->
                         <div class="row">
-                            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
-                            <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <p><small><a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/">Dashboard</a> <span class="glyphicon glyphicon-chevron-right"></span> <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/config/">Systemkonfiguration</a> <span class="glyphicon glyphicon-chevron-right"></span></small></p>
                                 <p><small>Version: <?php echo $_CONSTRUCTR_CONF['_VERSION_DATE']; ?> <?php echo $_CONSTRUCTR_CONF['_VERSION']; ?> / <?php echo $TIMER; ?> / <?php echo $MEM; ?> / <a href="http://phaziz.com/" onclick="window.open(this.href);return false;">Constructr CMS von phaziz.com</a></small></p>
                             </div><!-- // EOF COL-... -->
-                            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
                         </div><!-- // EOF ROW -->
                     </div>
                 </div>
@@ -121,10 +115,33 @@
             <script>
                 $(function()
                     {
+                        if(localStorage && localStorage.removeItem && localStorage.getItem && localStorage.setItem)
+                        {
+                            MENU_VISIBLE = localStorage.getItem('MENU_VISIBLE');
+                            if(MENU_VISIBLE == 'false')
+                            {
+                                $("#wrapper").removeClass('active');
+                            }
+                        }
+
                         $("#menu-toggle").click(function(e)
                             {
                                 e.preventDefault();
-                                $("#wrapper").toggleClass("active");
+                                $("#wrapper").toggleClass('active');
+
+                                if(localStorage && localStorage.removeItem && localStorage.getItem && localStorage.setItem)
+                                {
+                                    MENU_VISIBLE = localStorage.getItem('MENU_VISIBLE');
+                                    if(MENU_VISIBLE == 'true')
+                                    {
+                                        localStorage.setItem('MENU_VISIBLE','false');
+                                        $("#wrapper").removeClass('active');
+                                    }
+                                    else
+                                    {
+                                        localStorage.setItem('MENU_VISIBLE','true');
+                                    }
+                                }
                             }
                         );
                     }

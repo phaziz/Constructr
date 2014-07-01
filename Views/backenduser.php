@@ -366,7 +366,7 @@
         }
     );
 
-    $constructr -> post('/constructr/user/new/:GUID/', $ADMIN_CHECK, function ($GUID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
+    $constructr -> post('/constructr/user/new/:GUID/', $ADMIN_CHECK, function ($GUID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF,$_CONSTRUCTR_USER_RIGHTS_CONF)
         {
             if($_CONSTRUCTR_CONF['_LOGGING'] == true)
             {
@@ -463,39 +463,21 @@
                     );
                     
                     $LAST_USER_INSERT_ID = $DBCON -> lastInsertId(); 
-                    
-                    $RIGHTS = $DBCON -> prepare("
-                        INSERT INTO constructr_backenduser_rights (cbr_right,cbr_value,cbr_user_id,cbr_info) VALUES
-                        (66, 1, :USER_ID, 'Enter backenduser-accounts management.'),
-                        (60, 1, :USER_ID, 'Delete backenduser-accounts.'),
-                        (69, 1, :USER_ID, 'Activate/Deactivate backenduser-accounts.'),
-                        (68, 1, :USER_ID, 'Edit backenduser-accounts.'),
-                        (67, 1, :USER_ID, 'Create new backenduser-accounts.'),
-                        (20, 1, :USER_ID, 'Enter content-elements management.'),
-                        (21, 1, :USER_ID, 'Create new content-elements.'),
-                        (22, 1, :USER_ID, 'Edit content-elements.'),
-                        (23, 1, :USER_ID, 'Reorder content-elements.'),
-                        (24, 1, :USER_ID, 'Activate/Deactivate content-elements.'),
-                        (25, 1, :USER_ID, 'Delete content-elements.'),
-                        (40, 1, :USER_ID, 'Enter media management.'),
-                        (41, 1, :USER_ID, 'Create new media-file.'),
-                        (42, 1, :USER_ID, 'Delete media-file.'),
-                        (43, 1, :USER_ID, 'Enter media-file details.'),
-                        (44, 1, :USER_ID, 'Enter media-trash management.'),
-                        (45, 1, :USER_ID, 'Delete media-trash.'),
-                        (10, 1, :USER_ID, 'Enter pages-management.'),
-                        (11, 1, :USER_ID, 'Create new page.'),
-                        (12, 1, :USER_ID, 'Create new sub-page.'),
-                        (13, 1, :USER_ID, 'Edit pages.'),
-                        (14, 1, :USER_ID, 'Activate/Deactivate pages.'),
-                        (15, 1, :USER_ID, 'Delete single page.'),
-                        (16, 1, :USER_ID, 'Delete pages recursive.'),
-                        (80, 1, :USER_ID, 'Enter user-rights management.'),
-                        (81, 1, :USER_ID, 'Edit user-rights.'),
-                        (1000, 1, :USER_ID, 'Update System-Configuration.'),
-                        (100, 1, :USER_ID, 'Generate static website.');
-                    ");
 
+                    $QUERY = 'INSERT INTO constructr_backenduser_rights (cbr_right,cbr_value,cbr_user_id,cbr_info) VALUES ';
+
+                    if($_CONSTRUCTR_USER_RIGHTS_CONF)
+                    {
+                        foreach($_CONSTRUCTR_USER_RIGHTS_CONF as $KEY => $WHAT)
+                        {
+                            $QUERY .= '(' . $KEY . ',1, ' . $LAST_USER_INSERT_ID . ',"' . $WHAT . '"),';
+                        }
+                    }
+
+                    $QUERY .= ';';
+                    $QUERY = str_replace(',;',';',$QUERY);
+
+                    $RIGHTS = $DBCON -> prepare($QUERY);
                     $RIGHTS -> execute( 
                         array
                         (

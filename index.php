@@ -19,8 +19,9 @@
     */
 
     require_once './Config/constructr.conf.php';
-    
-    $_CONSTRUCTR_CONF['_VERSION_DATE'] = '20140627';
+    require_once './Config/constructr_user_rights.conf.php';
+
+    $_CONSTRUCTR_CONF['_VERSION_DATE'] = '20140701';
     $_CONSTRUCTR_CONF['_VERSION'] = '1.01.1';
     
     require_once './Slim/Slim.php';
@@ -218,12 +219,8 @@
                 }
 
                 $constructr -> render($TEMPLATE,array('PAGES' => $PAGES,'PAGE_DATA' => $PAGE_DATA,'CONTENT' => $CONTENT,'_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF));
-
-                die();
             }
         );
-
-        $constructr -> run();
     }
     else
     {
@@ -236,8 +233,7 @@
         require_once './Views/content.php';
         require_once './Views/config.php';
         require_once './Views/media.php';
-
-        $constructr -> run();
     }
 
+    $constructr -> run();
     $DBCON = null;

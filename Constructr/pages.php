@@ -45,86 +45,81 @@
                 <div id="page-content-wrapper">
                     <div class="page-content inset">
                         <div class="row">
-                            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
-                            <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <br>
                                 <p><small><a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/">Dashboard</a> <span class="glyphicon glyphicon-chevron-right"></span> <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/pages/">Seitenverwaltung - &Uuml;bersicht</a> <span class="glyphicon glyphicon-chevron-right"></span></small></p>
                             </div><!-- // EOF COL-... -->
-                            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
                         </div><!-- // EOF ROW -->
                         <?php 
                             if(isset($_GET['res']) && $_GET['res'] != ''){
                                 ?>
                                     <div class="row response">
-                                        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
-                                        <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-                                                <?php
-                                                    if($_GET['res'] == 'create-page-true')
-                                                    {
-                                                        echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Erfolg!</strong> Die neue Seite wurde ohne Fehler erstellt.</div>';
-                                                    }
-                                                    else if($_GET['res'] == 'create-page-false')
-                                                    {
-                                                        echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Fehler!</strong> Es ist ein Fehler beim anlegen der Seite aufgetreten.</div>';
-                                                    }
-                                                    if($_GET['res'] == 'activate-page-true')
-                                                    {
-                                                        echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Erfolg!</strong> Seite ist nun im Frontend sichtbar/unsichtbar.</div>';
-                                                    }
-                                                    else if($_GET['res'] == 'create-page-false')
-                                                    {
-                                                        echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Fehler!</strong> Es ist ein Fehler beim aktivieren/deaktivieren der Seite aufgetreten.</div>';
-                                                    }
-                                                    if($_GET['res'] == 'edit-page-true')
-                                                    {
-                                                        echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Erfolg!</strong> Seite wurde erfolgreich bearbeitet.</div>';
-                                                    }
-                                                    else if($_GET['res'] == 'edit-page-false')
-                                                    {
-                                                        echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Fehler!</strong> Es ist ein Fehler beim bearbeiten der Seite aufgetreten.</div>';
-                                                    }
-                                                    if($_GET['res'] == 'del-single-true')
-                                                    {
-                                                        echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Erfolg!</strong> Seite wurde erfolgreich entfernt.</div>';
-                                                    }
-                                                    else if($_GET['res'] == 'del-single-false')
-                                                    {
-                                                        echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Fehler!</strong> Es ist ein Fehler beim l&ouml;schen der Seite aufgetreten.</div>';
-                                                    }
-                                                    if($_GET['res'] == 'del-recursive-true')
-                                                    {
-                                                        echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Erfolg!</strong> Seite(n) wurde erfolgreich rekursiv entfernt.</div>';
-                                                    }
-                                                    else if($_GET['res'] == 'del-recursive-false')
-                                                    {
-                                                        echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Fehler!</strong> Es ist ein Fehler beim rekursiven l&ouml;schen der Seite(n) aufgetreten.</div>';
-                                                    }
-                                                    if($_GET['res'] == 'content-not-empty')
-                                                    {
-                                                        echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Fehler!</strong> Es ist ein Fehler aufgetreten. Es existieren noch Inhalte auf dieser Seite!</div>';
-                                                    }
-                                                    if($_GET['res'] == 'url-exists')
-                                                    {
-                                                        echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Fehler!</strong> Es ist ein Fehler aufgetreten. Gew&uuml;nschte URL existiert bereits!</div>';
-                                                    }
-                                                    if($_GET['res'] == 'reorder-error')
-                                                    {
-                                                        echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Fehler!</strong> Es ist ein Fehler bei der Sortierung aufgetreten. Bitte diese Seite neu laden!</div>';
-                                                    }
-                                                    if($_GET['res'] == 'reorder-success')
-                                                    {
-                                                        echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Erfolg!</strong> Seite wurde erfolgreich verschoben.</div>';
-                                                    }
-                                                ?>
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                            <?php
+                                                if($_GET['res'] == 'create-page-true')
+                                                {
+                                                    echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Erfolg!</strong> Die neue Seite wurde ohne Fehler erstellt.</div>';
+                                                }
+                                                else if($_GET['res'] == 'create-page-false')
+                                                {
+                                                    echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Fehler!</strong> Es ist ein Fehler beim anlegen der Seite aufgetreten.</div>';
+                                                }
+                                                if($_GET['res'] == 'activate-page-true')
+                                                {
+                                                    echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Erfolg!</strong> Seite ist nun im Frontend sichtbar/unsichtbar.</div>';
+                                                }
+                                                else if($_GET['res'] == 'create-page-false')
+                                                {
+                                                    echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Fehler!</strong> Es ist ein Fehler beim aktivieren/deaktivieren der Seite aufgetreten.</div>';
+                                                }
+                                                if($_GET['res'] == 'edit-page-true')
+                                                {
+                                                    echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Erfolg!</strong> Seite wurde erfolgreich bearbeitet.</div>';
+                                                }
+                                                else if($_GET['res'] == 'edit-page-false')
+                                                {
+                                                    echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Fehler!</strong> Es ist ein Fehler beim bearbeiten der Seite aufgetreten.</div>';
+                                                }
+                                                if($_GET['res'] == 'del-single-true')
+                                                {
+                                                    echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Erfolg!</strong> Seite wurde erfolgreich entfernt.</div>';
+                                                }
+                                                else if($_GET['res'] == 'del-single-false')
+                                                {
+                                                    echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Fehler!</strong> Es ist ein Fehler beim l&ouml;schen der Seite aufgetreten.</div>';
+                                                }
+                                                if($_GET['res'] == 'del-recursive-true')
+                                                {
+                                                    echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Erfolg!</strong> Seite(n) wurde erfolgreich rekursiv entfernt.</div>';
+                                                }
+                                                else if($_GET['res'] == 'del-recursive-false')
+                                                {
+                                                    echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Fehler!</strong> Es ist ein Fehler beim rekursiven l&ouml;schen der Seite(n) aufgetreten.</div>';
+                                                }
+                                                if($_GET['res'] == 'content-not-empty')
+                                                {
+                                                    echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Fehler!</strong> Es ist ein Fehler aufgetreten. Es existieren noch Inhalte auf dieser Seite!</div>';
+                                                }
+                                                if($_GET['res'] == 'url-exists')
+                                                {
+                                                    echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Fehler!</strong> Es ist ein Fehler aufgetreten. Gew&uuml;nschte URL existiert bereits!</div>';
+                                                }
+                                                if($_GET['res'] == 'reorder-error')
+                                                {
+                                                    echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Fehler!</strong> Es ist ein Fehler bei der Sortierung aufgetreten. Bitte diese Seite neu laden!</div>';
+                                                }
+                                                if($_GET['res'] == 'reorder-success')
+                                                {
+                                                    echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Erfolg!</strong> Seite wurde erfolgreich verschoben.</div>';
+                                                }
+                                            ?>
                                         </div><!-- // EOF COL-... -->
-                                        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
                                     </div><!-- // EOF ROW -->
                                 <?php
                             }
                         ?>
                         <div class="row">
-                            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
-                            <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <div class="jumbotron">
                                     <h1><?php echo $SUBTITLE; ?></h1>
                                     <h2><?php echo $PAGES_COUNTR; ?> Angelegte Seiten <a data-toggle="tooltip" data-placement="top" title="Neue Seite erstellen" class="tt" href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/new/' ?>"><button type="button" class="btn btn-info btn-sm" title="Neue Seite"><span class="glyphicon glyphicon-plus"></span></button></a></h2>
@@ -135,13 +130,13 @@
                                             <tr>
                                                 <th><small>Name</small></th>
                                                 <th><small>Alias (URL)</small></th>
-                                                <th><small>Template</small></th>
                                                 <th class="center"><small>Aktionen</small></th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php
-                                                if($PAGES){
+                                                if($PAGES)
+                                                {
                                                     foreach ($PAGES as $PAGE)
                                                     {
                                                         echo '<tr>';
@@ -153,9 +148,17 @@
                                                                 echo '&#160;&#160;';
                                                             }
                                                         }
-                                                        echo '<a class="tt" data-toggle="tooltip" data-placement="top" title="Inhalte von Seite ' . $PAGE['pages_name'] . ' bearbeiten" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/content/' . $PAGE['pages_id'] . '/" title="Inhalte von Seite ' . $PAGE['pages_name'] . ' bearbeiten">' . $PAGE['pages_name'] . '</a></td>';
-                                                        echo '<td><small><a class="tt" data-toggle="tooltip" data-placement="top" title="Seite im Browser anzeigen" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/' . $PAGE['pages_url'] . '" onclick="window.open(this.href);return false;">' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/' . $PAGE['pages_url'] . '</a></small></td>';
-                                                        echo '<td><small>' . $PAGE['pages_template'] . '</small></td>';
+                                                        echo '<a class="tt" data-toggle="tooltip" data-placement="top" title="Inhalte von Seite ' . $PAGE['pages_name'] . ' bearbeiten" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/content/' . $PAGE['pages_id'] . '/" title="Inhalte von Seite ' . $PAGE['pages_name'] . ' bearbeiten"><small>' . $PAGE['pages_name'] . '</small></a></td>';
+
+                                                        if($PAGE['pages_url'] == '')
+                                                        {
+                                                            echo '<td><small><a class="tt" data-toggle="tooltip" data-placement="top" title="Seite im Browser anzeigen" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '" onclick="window.open(this.href);return false;">' . $_CONSTRUCTR_CONF['_BASE_URL'] . '</a><br>Template: ' . $PAGE['pages_template'] . '</small></td>';
+                                                        }
+                                                        else
+                                                        {
+                                                            echo '<td><small><a class="tt" data-toggle="tooltip" data-placement="top" title="Seite im Browser anzeigen" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/' . $PAGE['pages_url'] . '" onclick="window.open(this.href);return false;">' . $PAGE['pages_url'] . '</a><br>Template: ' . $PAGE['pages_template'] . '</small></td>';    
+                                                        }
+
                                                         echo '<td class="right"><nobr>';
                                                         if($PAGE['pages_lft'] != 1 && $PAGE['pages_upper'] != 0)
                                                         {
@@ -200,15 +203,12 @@
                                     </div><!-- EOF TABLE RESPONSIVE-->
                                 </div><!-- // EOF JUMBOTRON -->
                             </div><!-- // EOF COL-... -->
-                            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
                         </div><!-- // EOF ROW -->
                         <div class="row">
-                            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
-                            <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <p><small><a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/">Dashboard</a> <span class="glyphicon glyphicon-chevron-right"></span> <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/pages/">Seitenverwaltung - &Uuml;bersicht</a> <span class="glyphicon glyphicon-chevron-right"></span></small></p>
                                 <p><small>Version: <?php echo $_CONSTRUCTR_CONF['_VERSION_DATE']; ?> <?php echo $_CONSTRUCTR_CONF['_VERSION']; ?> / <?php echo $TIMER; ?> / <?php echo $MEM; ?> / <a href="http://phaziz.com/" onclick="window.open(this.href);return false;">Constructr CMS von phaziz.com</a></small></p>
                             </div><!-- // EOF COL-... -->
-                            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
                         </div><!-- // EOF ROW -->
                     </div>
                 </div>
@@ -224,10 +224,33 @@
                     {
                         $('.tt').tooltip();
 
+                        if(localStorage && localStorage.removeItem && localStorage.getItem && localStorage.setItem)
+                        {
+                            MENU_VISIBLE = localStorage.getItem('MENU_VISIBLE');
+                            if(MENU_VISIBLE == 'false')
+                            {
+                                $("#wrapper").removeClass('active');
+                            }
+                        }
+
                         $("#menu-toggle").click(function(e)
                             {
                                 e.preventDefault();
-                                $("#wrapper").toggleClass("active");
+                                $("#wrapper").toggleClass('active');
+
+                                if(localStorage && localStorage.removeItem && localStorage.getItem && localStorage.setItem)
+                                {
+                                    MENU_VISIBLE = localStorage.getItem('MENU_VISIBLE');
+                                    if(MENU_VISIBLE == 'true')
+                                    {
+                                        localStorage.setItem('MENU_VISIBLE','false');
+                                        $("#wrapper").removeClass('active');
+                                    }
+                                    else
+                                    {
+                                        localStorage.setItem('MENU_VISIBLE','true');
+                                    }
+                                }
                             }
                         );
 
@@ -242,9 +265,8 @@
                             {
                                 "aaSorting": [],
                                 "aoColumns": [
-                                    { "sWidth": "30%", "bSortable":false},
-                                    { "sWidth": "30%", "bSortable":false},
-                                    { "sWidth": "20%", "bSortable":false},
+                                    { "sWidth": "40%", "bSortable":false},
+                                    { "sWidth": "40%", "bSortable":false},
                                     { "sWidth": "20%", "bSortable":false}
                                 ],
                                 "sPaginationType":"bs_full",

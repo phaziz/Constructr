@@ -44,16 +44,13 @@
                 <div id="page-content-wrapper">
                     <div class="page-content inset">
                         <div class="row">
-                            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
-                            <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <br>
                                 <p><small><a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/">Dashboard</a> <span class="glyphicon glyphicon-chevron-right"></span> <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/pages/">Seitenverwaltung - &Uuml;bersicht</a> <span class="glyphicon glyphicon-chevron-right"></span></small></p>
                             </div><!-- // EOF COL-... -->
-                            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
                         </div><!-- // EOF ROW -->
                         <div class="row">
-                            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
-                            <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <div class="jumbotron">
                                     <h1><?php echo $SUBTITLE; ?></h1>
                                     <h2>Seite bearbeiten</h2>
@@ -64,6 +61,7 @@
                                             ?>
                                                 <form role="form" name="new_page_form" id="new_page_form" action="<?php echo $FORM_ACTION; ?>" method="<?php echo $FORM_METHOD; ?>" enctype="<?php echo $FORM_ENCTYPE; ?>" class="form-horizontal">
                                                     <input type="hidden" name="user_form_guid" value="<?php echo $GUID; ?>">
+                                                    <input type="hidden" name="pages_lft" value="<?php echo $PAGE['pages_lft']; ?>">
                                                     <input type="hidden" name="page_id" id="page_id" value="<?php echo $PAGE['pages_id']; ?>" maxlength="100">
                                                     <div class="form-group">
                                                         <label for="page_name" class="col-sm-2 control-label">Name der Seite:</label>
@@ -72,13 +70,32 @@
                                                             <small><span class="help-block" id="status-page_name">Bitte vergeben Sie einen eindeutigen Seitennamen</span></small>
                                                         </div>
                                                     </div>
-                                                    <div class="form-group">
-                                                        <label for="page_url" class="col-sm-2 control-label">URL der neuen Seite:</label>
-                                                        <div class="col-sm-10">
-                                                            <input type="text" class="form-control input-sm" name="page_url" id="page_url" value="<?php echo $PAGE['pages_url']; ?>" placeholder="URL der neuen Seite" maxlength="100">
-                                                            <small><span class="help-block" id="status-page_url">Bitte vergeben Sie eine eindeutige URL</span></small>
-                                                        </div>
-                                                    </div>
+                                                    <?php
+                                                        if($PAGE['pages_lft'] == 1)
+                                                        {
+                                                            ?>
+                                                                <div class="form-group">
+                                                                    <label for="page_url" class="col-sm-2 control-label">URL der neuen Seite:</label>
+                                                                    <div class="col-sm-10">
+                                                                        <input type="text" class="form-control input-sm" name="page_url" id="page_url" value="" placeholder="Startseite ohne URL" maxlength="100" readonly="readonly">
+                                                                        <small><span class="help-block" id="status-page_url">Bitte vergeben Sie eine eindeutige URL</span></small>
+                                                                    </div>
+                                                                </div>
+                                                            <?php
+                                                        }
+                                                        else
+                                                        {
+                                                            ?>
+                                                                <div class="form-group">
+                                                                    <label for="page_url" class="col-sm-2 control-label">URL der neuen Seite:</label>
+                                                                    <div class="col-sm-10">
+                                                                        <input type="text" class="form-control input-sm" name="page_url" id="page_url" value="<?php echo $PAGE['pages_url']; ?>" placeholder="URL der neuen Seite" maxlength="100">
+                                                                        <small><span class="help-block" id="status-page_url">Bitte vergeben Sie eine eindeutige URL</span></small>
+                                                                    </div>
+                                                                </div>
+                                                            <?php
+                                                        }
+                                                    ?>
                                                     <div class="form-group">
                                                         <label for="page_template" class="col-sm-2 control-label">Template der neuen Seite:</label>
                                                         <div class="col-sm-10">
@@ -143,15 +160,12 @@
                                     ?>
                                 </div><!-- // EOF JUMBOTRON -->
                             </div><!-- // EOF COL-... -->
-                            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
                         </div><!-- // EOF ROW -->
                         <div class="row">
-                            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
-                            <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <p><small><a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/">Dashboard</a> <span class="glyphicon glyphicon-chevron-right"></span> <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/pages/">Seitenverwaltung - &Uuml;bersicht</a> <span class="glyphicon glyphicon-chevron-right"></span></small></p>
                                 <p><small>Version: <?php echo $_CONSTRUCTR_CONF['_VERSION_DATE']; ?> <?php echo $_CONSTRUCTR_CONF['_VERSION']; ?> / <?php echo $TIMER; ?> / <?php echo $MEM; ?> / <a href="http://phaziz.com/" onclick="window.open(this.href);return false;">Constructr CMS von phaziz.com</a></small></p>
                             </div><!-- // EOF COL-... -->
-                            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
                         </div><!-- // EOF ROW -->
                     </div>
                 </div>
@@ -163,10 +177,33 @@
             <script>
                 $(function()
                     {
+                        if(localStorage && localStorage.removeItem && localStorage.getItem && localStorage.setItem)
+                        {
+                            MENU_VISIBLE = localStorage.getItem('MENU_VISIBLE');
+                            if(MENU_VISIBLE == 'false')
+                            {
+                                $("#wrapper").removeClass('active');
+                            }
+                        }
+
                         $("#menu-toggle").click(function(e)
                             {
                                 e.preventDefault();
-                                $("#wrapper").toggleClass("active");
+                                $("#wrapper").toggleClass('active');
+
+                                if(localStorage && localStorage.removeItem && localStorage.getItem && localStorage.setItem)
+                                {
+                                    MENU_VISIBLE = localStorage.getItem('MENU_VISIBLE');
+                                    if(MENU_VISIBLE == 'true')
+                                    {
+                                        localStorage.setItem('MENU_VISIBLE','false');
+                                        $("#wrapper").removeClass('active');
+                                    }
+                                    else
+                                    {
+                                        localStorage.setItem('MENU_VISIBLE','true');
+                                    }
+                                }
                             }
                         );
 
@@ -180,57 +217,121 @@
                                 var P = $('#page_url').val();
                                 var T = $('#page_template').val();
 
-                                if(U == '' || P == '' || P == 'constructr' || T == '')
-                                {
-                                    if(U == '')
+                                <?php
+                                    if($PAGE['pages_lft'] == 1)
                                     {
-                                        vex.dialog.alert(
+                                        ?>
+                                            if(U == '' || P == 'constructr' || T == '')
                                             {
-                                                className: 'vex-theme-flat-attack',
-                                                message: 'Achtung: Bitte Formular komplett ausf&uuml;llen!',
-                                                afterClose: function()
+                                                if(U == '')
                                                 {
-                                                    $('#page_name').focus();
-                                                    $("#submitter").removeAttr("disabled");
+                                                    vex.dialog.alert(
+                                                        {
+                                                            className: 'vex-theme-flat-attack',
+                                                            message: 'Achtung: Bitte Formular komplett ausf&uuml;llen!',
+                                                            afterClose: function()
+                                                            {
+                                                                $('#page_name').focus();
+                                                                $("#submitter").removeAttr("disabled");
+                                                            }
+                                                        }
+                                                    );
+                                                    return false;
                                                 }
+            
+                                                if(T == '')
+                                                {
+                                                    vex.dialog.alert(
+                                                        {
+                                                            className: 'vex-theme-flat-attack',
+                                                            message: 'Achtung: Bitte Formular komplett ausf&uuml;llen!',
+                                                            afterClose: function()
+                                                            {
+                                                                $('#page_template').focus();
+                                                                $("#submitter").removeAttr("disabled");
+                                                            }
+                                                        }
+                                                    );
+                                                    return false;
+                                                }
+            
+                                                if(P == 'constructr')
+                                                {
+                                                    vex.dialog.alert(
+                                                        {
+                                                            className: 'vex-theme-flat-attack',
+                                                            message: 'Achtung: URL darf nicht "constructr" sein!',
+                                                            afterClose: function()
+                                                            {
+                                                                $('#page_url').focus();
+                                                                $("#submitter").removeAttr("disabled");
+                                                            }
+                                                        }
+                                                    );
+                                                    return false;
+                                                }
+                                                return true;
                                             }
-                                        );
-                                        return false;
+                                        <?php
                                     }
+                                    else
+                                    {
+                                        ?>
+                                            if(U == '' || P == '' || P == 'constructr' || T == '')
+                                            {
+                                                if(U == '')
+                                                {
+                                                    vex.dialog.alert(
+                                                        {
+                                                            className: 'vex-theme-flat-attack',
+                                                            message: 'Achtung: Bitte Formular komplett ausf&uuml;llen!',
+                                                            afterClose: function()
+                                                            {
+                                                                $('#page_name').focus();
+                                                                $("#submitter").removeAttr("disabled");
+                                                            }
+                                                        }
+                                                    );
+                                                    return false;
+                                                }
+            
+                                                if(T == '')
+                                                {
+                                                    vex.dialog.alert(
+                                                        {
+                                                            className: 'vex-theme-flat-attack',
+                                                            message: 'Achtung: Bitte Formular komplett ausf&uuml;llen!',
+                                                            afterClose: function()
+                                                            {
+                                                                $('#page_template').focus();
+                                                                $("#submitter").removeAttr("disabled");
+                                                            }
+                                                        }
+                                                    );
+                                                    return false;
+                                                }
+            
+                                                if(P == '')
+                                                {
+                                                    vex.dialog.alert(
+                                                        {
+                                                            className: 'vex-theme-flat-attack',
+                                                            message: 'Achtung: URL darf nicht leer sein und nicht "constructr"!',
+                                                            afterClose: function()
+                                                            {
+                                                                $('#page_url').focus();
+                                                                $("#submitter").removeAttr("disabled");
+                                                            }
+                                                        }
+                                                    );
+                                                    return false;
+                                                }
+                                                return true;
+                                            }
+                                        <?php
+                                    }
+                                ?>
 
-                                    if(T == '')
-                                    {
-                                        vex.dialog.alert(
-                                            {
-                                                className: 'vex-theme-flat-attack',
-                                                message: 'Achtung: Bitte Formular komplett ausf&uuml;llen!',
-                                                afterClose: function()
-                                                {
-                                                    $('#page_template').focus();
-                                                    $("#submitter").removeAttr("disabled");
-                                                }
-                                            }
-                                        );
-                                        return false;
-                                    }
-
-                                    if(P == '')
-                                    {
-                                        vex.dialog.alert(
-                                            {
-                                                className: 'vex-theme-flat-attack',
-                                                message: 'Achtung: Bitte Formular komplett ausf&uuml;llen!',
-                                                afterClose: function()
-                                                {
-                                                    $('#page_url').focus();
-                                                    $("#submitter").removeAttr("disabled");
-                                                }
-                                            }
-                                        );
-                                        return false;
-                                    }
-                                    return true;
-                                }
                             }
                         );
                     }

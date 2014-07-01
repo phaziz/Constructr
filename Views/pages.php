@@ -138,7 +138,21 @@
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
             }
-            
+
+            $PAGES_COUNTR = 0;
+
+            try
+            {
+               $PAGES = $DBCON -> query('SELECT * FROM constructr_pages;');
+               $PAGES_COUNTR = $PAGES -> rowCount();
+            }
+            catch (PDOException $e)
+            {
+                $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());   
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/');             
+                die();
+            }
+
             $GUID = create_guid();
             $TEMPLATES = array_diff(scandir($_CONSTRUCTR_CONF['_TEMPLATES_DIR']), array('..', '.'));
             $MEM = 0;
@@ -150,6 +164,7 @@
                     'MEM' => $MEM,
                     'USERNAME' => $USERNAME,
                     'GUID' => $GUID,
+                    'PAGES_COUNTR' => $PAGES_COUNTR,
                     'TEMPLATES' => $TEMPLATES,
                     'FORM_ACTION' => $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/new/' . $GUID . '/',
                     'FORM_METHOD' => 'post',

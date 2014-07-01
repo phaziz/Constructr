@@ -92,7 +92,7 @@
             <script>
                 $(function()
                     {
-                        $('#_admin_username').focus();$('#login_form').bind('submit', function(){var A = $('#_admin_username').val();var P = $('#_admin_password').val();if(typeof A === 'undefined' || A == '' || typeof P === 'undefined' ||  P == ''){return false;}});
+                        if(localStorage && localStorage.removeItem && localStorage.getItem && localStorage.setItem){localStorage.setItem('MENU_VISIBLE','true');}$('#_admin_username').focus();$('#login_form').bind('submit', function(){var A = $('#_admin_username').val();var P = $('#_admin_password').val();if(typeof A === 'undefined' || A == '' || typeof P === 'undefined' ||  P == ''){return false;}});
                     }
                 )
             </script>

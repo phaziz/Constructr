@@ -31,9 +31,12 @@
                     echo '<meta name="keywords" content="' . $PAGE_DATA['pages_keywords'] . '">' . "\n";
                 }
             ?>
+            <meta name="generator" content="ConstructrCMS">
             <meta name="robots" content="index,follow">
+            <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
             <meta name="generator" content="ConstructrCMS">
             <meta name="author" content="Christian Becher">
+            <meta name="robots" content="index,follow">
             <meta name="revisit-after" content="30 days">
             <!--[if lt IE 9]>
                 <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -98,5 +101,15 @@
                 }
                 // PAGE CONTENT... END
             ?>
+
+            <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+            <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+            <script type="text/javascript">
+                var _paq=_paq||[];_paq.push(["setDocumentTitle",document.domain+"/"+document.title]);_paq.push(["setCookieDomain","*.constructr.phaziz.com"]);_paq.push(["trackPageView"]);_paq.push(["enableLinkTracking"]);
+                (function(){var c=("https:"==document.location.protocol?"https":"http")+"://piwik.phaziz.com/";_paq.push(["setTrackerUrl",c+"piwik.php"]);_paq.push(["setSiteId","3"]);var a=document,b=a.createElement("script"),a=a.getElementsByTagName("script")[0];b.type="text/javascript";b.defer=!0;b.async=!0;b.src=c+"piwik.js";a.parentNode.insertBefore(b,a)})();
+            </script>
+            <noscript>
+                <img src="http://piwik.phaziz.com/piwik.php?idsite=3&amp;rec=1" style="border:0" alt="piwik" />
+            </noscript>
         </body>
     </html>

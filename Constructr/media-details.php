@@ -42,31 +42,28 @@
                 <div id="page-content-wrapper">
                     <div class="page-content inset">
                         <div class="row">
-                            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
-                            <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <br>
                                 <p><small><a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/">Dashboard</a> <span class="glyphicon glyphicon-chevron-right"></span> <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/media/">Medienverwaltung - &Uuml;bersicht</a> <span class="glyphicon glyphicon-chevron-right"></span> <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/media/details/<?php echo $MEDIA_ID; ?>/">Detailansicht</a> <span class="glyphicon glyphicon-chevron-right"></span></small></p>
                             </div><!-- // EOF COL-... -->
-                            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
                         </div><!-- // EOF ROW -->
                         <?php 
                             if(isset($_GET['details']) && $_GET['details'] == 'updated'){
                                 ?>
                                     <div class="row response">
-                                        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
-                                        <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                                        
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                                 <?php
                                                     echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Erfolg!</strong> Die Detailinformationen wurden aktualisiert.</div>';
                                                 ?>
                                         </div><!-- // EOF COL-... -->
-                                        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
+                                        
                                     </div><!-- // EOF ROW -->
                                 <?php
                             }
                         ?>
                         <div class="row">
-                            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
-                            <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <div class="jumbotron">
                                     <h1><?php echo $SUBTITLE; ?></h1>
                                     <h2>Detailansicht <?php echo $_CONSTRUCTR_CONF['_BASE_URL'] . '/' . $DETAILS['media_file']; ?> | <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/media/' ?>" class="tt" data-toggle="tooltip" data-placement="top" title="Zur&uuml;ck zur &Uuml;bersicht">zur&uuml;ck</a></h2>
@@ -120,15 +117,12 @@
                                         ?>
                                 </div><!-- // EOF JUMBOTRON -->
                             </div><!-- // EOF COL-... -->
-                            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
                         </div><!-- // EOF ROW -->
                         <div class="row">
-                            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
-                            <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <p><small><a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/">Dashboard</a> <span class="glyphicon glyphicon-chevron-right"></span> <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/media/">Medienverwaltung - &Uuml;bersicht</a> <span class="glyphicon glyphicon-chevron-right"></span></small> <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/media/details/<?php echo $MEDIA_ID; ?>/">Detailansicht</a> <span class="glyphicon glyphicon-chevron-right"></span></p>
                                 <p><small>Version: <?php echo $_CONSTRUCTR_CONF['_VERSION_DATE']; ?> <?php echo $_CONSTRUCTR_CONF['_VERSION']; ?> / <?php echo $TIMER; ?> / <?php echo $MEM; ?> / <a href="http://phaziz.com/" onclick="window.open(this.href);return false;">Constructr CMS von phaziz.com</a></small></p>
                             </div><!-- // EOF COL-... -->
-                            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div><!-- // EOF COL-... -->
                         </div><!-- // EOF ROW -->
                     </div>
                 </div>
@@ -139,10 +133,33 @@
             <script>
                 $(function()
                     {
+                        if(localStorage && localStorage.removeItem && localStorage.getItem && localStorage.setItem)
+                        {
+                            MENU_VISIBLE = localStorage.getItem('MENU_VISIBLE');
+                            if(MENU_VISIBLE == 'false')
+                            {
+                                $("#wrapper").removeClass('active');
+                            }
+                        }
+
                         $("#menu-toggle").click(function(e)
                             {
                                 e.preventDefault();
-                                $("#wrapper").toggleClass("active");
+                                $("#wrapper").toggleClass('active');
+
+                                if(localStorage && localStorage.removeItem && localStorage.getItem && localStorage.setItem)
+                                {
+                                    MENU_VISIBLE = localStorage.getItem('MENU_VISIBLE');
+                                    if(MENU_VISIBLE == 'true')
+                                    {
+                                        localStorage.setItem('MENU_VISIBLE','false');
+                                        $("#wrapper").removeClass('active');
+                                    }
+                                    else
+                                    {
+                                        localStorage.setItem('MENU_VISIBLE','true');
+                                    }
+                                }
                             }
                         );
 

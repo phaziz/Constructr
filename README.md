@@ -7,6 +7,7 @@ That's it for now (2014.06.27):
 
 	- Simple example frontend template
 	- C.R.U.D. websites
+	- sitemap.xml generation
 	- C.R.U.D. content elements
 	- Content trashcan and recovery *
 	- Uploads library **

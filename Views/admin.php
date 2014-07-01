@@ -567,6 +567,14 @@
                                     @ftp_close($FTP_CON);
                                 }
                             }
+
+                            $FTP_CON = @ftp_connect($_CONSTRUCTR_CONF['_FTP_REMOTE_HOST'],$_CONSTRUCTR_CONF['_FTP_REMOTE_PORT']);
+                            @ftp_login($FTP_CON, $_CONSTRUCTR_CONF['_FTP_REMOTE_USERNAME'], $_CONSTRUCTR_CONF['_FTP_REMOTE_PASSWORD']);
+                            @ftp_chmod($FTP_CON, 0777,'sitemap.xml');
+                            @ftp_delete($FTP_CON,'sitemap.xml');
+                            @ftp_put($FTP_CON,'sitemap.xml',$_CONSTRUCTR_CONF['_BASE_URL'] . '/sitemap.xml', $_CONSTRUCTR_CONF['_FTP_REMOTE_MODE']);
+                            @ftp_chmod($FTP_CON, 0777,'sitemap.xml');
+                            @ftp_close($FTP_CON);
                         }
                     }
                     catch (PDOException $e)

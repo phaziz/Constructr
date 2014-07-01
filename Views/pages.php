@@ -330,7 +330,7 @@
                 }
             }
 
-            if($PAGE_NAME != '' && $PAGE_URL != '' && $PAGE_LFT != '' && $PAGE_RGT != '' && $PAGE_DATETIME != '' && $PAGE_ACTIVE == 0)
+            if($PAGE_NAME != '' && $PAGE_LFT != '' && $PAGE_RGT != '' && $PAGE_DATETIME != '' && $PAGE_ACTIVE == 0)
             {
                 try
                 {
@@ -376,6 +376,59 @@
                 {
                     $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
                 }
+
+                $NEW_LINE = "\n";
+                $SITEMAP_FILE = './sitemap.xml';
+                $CREATE_SITEMAP = fopen($SITEMAP_FILE,'w+');
+                $SITEMAP_CONTENT = '<?xml version="1.0" encoding="UTF-8"?>' . $NEW_LINE . '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . $NEW_LINE;
+
+                try
+                {
+                    $SITEMAP_PAGES = $DBCON -> query('SELECT * FROM constructr_pages WHERE pages_active = 1 ORDER BY pages_lft ASC;');
+                    $SITEMAP_PAGES = $SITEMAP_PAGES -> fetchAll();
+
+                    $START_PRIORITY = 0.8;
+                    $MIN_PRIORITY = 0.3;
+
+                    if($SITEMAP_PAGES)
+                    {
+                        if($_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'] == '')
+                        {
+                            $_SITEMAP_BASE_URL = $_CONSTRUCTR_CONF['_CREATE_DYNAMIC_DOMAIN'];    
+                        }
+                        else
+                        {
+                            $_SITEMAP_BASE_URL = $_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'];
+                        }
+
+                        $OLD_PRIORITY = ($START_PRIORITY + 0.1);
+
+                        foreach($SITEMAP_PAGES AS $SITEMAP_PAGE)
+                        {
+                            $PRIORITY = ($OLD_PRIORITY - 0.1);
+                            
+                            if($PRIORITY < $MIN_PRIORITY)
+                            {
+                                $PRIORITY = $MIN_PRIORITY;
+                            }
+
+                            $SITEMAP_CONTENT .= '<url>' . $NEW_LINE . '<loc>' . $_SITEMAP_BASE_URL . $SITEMAP_PAGE['pages_url'] . '</loc>' . $NEW_LINE . '<lastmod>' . date('Y-m-d') . '</lastmod>' . $NEW_LINE . '<changefreq>monthly</changefreq>' . $NEW_LINE . '<priority>' . $PRIORITY . '</priority>' . $NEW_LINE . '</url>' . $NEW_LINE;
+
+                            $OLD_PRIORITY = $PRIORITY;
+                        }                        
+                    }
+                }
+                catch (PDOException $e)
+                {
+                    $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
+                    $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/?res=create-page-false');
+                    die();
+                }
+
+                $SITEMAP_CONTENT .= '</urlset>' . $NEW_LINE;
+                @fwrite($CREATE_SITEMAP,$SITEMAP_CONTENT);
+                @fclose($CREATE_SITEMAP);
+                @chmod(0777,$SITEMAP_FILE);
 
                 $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/?res=create-page-true');
                 die();
@@ -862,6 +915,59 @@
                     {
                         $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
                     }
+
+                    $NEW_LINE = "\n";
+                    $SITEMAP_FILE = './sitemap.xml';
+                    $CREATE_SITEMAP = fopen($SITEMAP_FILE,'w+');
+                    $SITEMAP_CONTENT = '<?xml version="1.0" encoding="UTF-8"?>' . $NEW_LINE . '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . $NEW_LINE;
+    
+                    try
+                    {
+                        $SITEMAP_PAGES = $DBCON -> query('SELECT * FROM constructr_pages WHERE pages_active = 1 ORDER BY pages_lft ASC;');
+                        $SITEMAP_PAGES = $SITEMAP_PAGES -> fetchAll();
+    
+                        $START_PRIORITY = 0.8;
+                        $MIN_PRIORITY = 0.3;
+    
+                        if($SITEMAP_PAGES)
+                        {
+                            if($_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'] == '')
+                            {
+                                $_SITEMAP_BASE_URL = $_CONSTRUCTR_CONF['_CREATE_DYNAMIC_DOMAIN'];    
+                            }
+                            else
+                            {
+                                $_SITEMAP_BASE_URL = $_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'];
+                            }
+    
+                            $OLD_PRIORITY = ($START_PRIORITY + 0.1);
+    
+                            foreach($SITEMAP_PAGES AS $SITEMAP_PAGE)
+                            {
+                                $PRIORITY = ($OLD_PRIORITY - 0.1);
+                                
+                                if($PRIORITY < $MIN_PRIORITY)
+                                {
+                                    $PRIORITY = $MIN_PRIORITY;
+                                }
+    
+                                $SITEMAP_CONTENT .= '<url>' . $NEW_LINE . '<loc>' . $_SITEMAP_BASE_URL . $SITEMAP_PAGE['pages_url'] . '</loc>' . $NEW_LINE . '<lastmod>' . date('Y-m-d') . '</lastmod>' . $NEW_LINE . '<changefreq>monthly</changefreq>' . $NEW_LINE . '<priority>' . $PRIORITY . '</priority>' . $NEW_LINE . '</url>' . $NEW_LINE;
+    
+                                $OLD_PRIORITY = $PRIORITY;
+                            }                        
+                        }
+                    }
+                    catch (PDOException $e)
+                    {
+                        $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
+                        $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/?res=create-page-false');
+                        die();
+                    }
+    
+                    $SITEMAP_CONTENT .= '</urlset>' . $NEW_LINE;
+                    @fwrite($CREATE_SITEMAP,$SITEMAP_CONTENT);
+                    @fclose($CREATE_SITEMAP);
+                    @chmod(0777,$SITEMAP_FILE);
 
                     $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/?res=edit-page-true');
 

@@ -182,6 +182,9 @@
                                           <li class="list-group-item">
                                                 <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL']; ?>/Logfiles/<?php echo date('Ymd'); ?>.txt" title="Logfile anzeigen" onclick="window.open(this.href);return false;">Aktuelles Logfile anzeigen</a>
                                           </li>
+                                          <li class="list-group-item">
+                                                <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL']; ?>/sitemap.xml" title="Sitemap anzeigen" onclick="window.open(this.href);return false;">Generierte sitemap.xml anzeigen</a>
+                                          </li>
                                     </ul>
                                 </div><!-- // EOF JUMBOTRON -->
                             </div><!-- // EOF COL-... -->

@@ -1,11 +1,14 @@
 User-agent: *
 Disallow: /Assets
+Disallow: /Config
+Disallow: /Constructr
+Disallow: /Install
 Disallow: /Logfiles
 Disallow: /Slim
-Disallow: /Templates
+Disallow: /Static
 Disallow: /Uploads
 Disallow: /Views
-Disallow: /admin
+Disallow: /Website-Template
 
 User-agent: Googlebot
 Disallow: /*.gif$

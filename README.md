@@ -24,13 +24,13 @@ That's it for now (2014.06.27):
 
 	Images:
 
-	https://static.phaziz.com/CONSTRUCTR-CMS/constructr-cms-1.png
-	https://static.phaziz.com/CONSTRUCTR-CMS/constructr-cms-2.png
-	https://static.phaziz.com/CONSTRUCTR-CMS/constructr-cms-3.png
-	https://static.phaziz.com/CONSTRUCTR-CMS/constructr-cms-4.png
-	https://static.phaziz.com/CONSTRUCTR-CMS/constructr-cms-5.png
-	https://static.phaziz.com/CONSTRUCTR-CMS/constructr-cms-6.png
-	https://static.phaziz.com/CONSTRUCTR-CMS/constructr-cms-7.png
-	https://static.phaziz.com/CONSTRUCTR-CMS/constructr-cms-8.png
-	https://static.phaziz.com/CONSTRUCTR-CMS/constructr-cms-9.png
-	https://static.phaziz.com/CONSTRUCTR-CMS/constructr-cms-10.png
+	http://static.phaziz.com/CONSTRUCTR-CMS/constructr-cms-1.png
+	http://static.phaziz.com/CONSTRUCTR-CMS/constructr-cms-2.png
+	http://static.phaziz.com/CONSTRUCTR-CMS/constructr-cms-3.png
+	http://static.phaziz.com/CONSTRUCTR-CMS/constructr-cms-4.png
+	http://static.phaziz.com/CONSTRUCTR-CMS/constructr-cms-5.png
+	http://static.phaziz.com/CONSTRUCTR-CMS/constructr-cms-6.png
+	http://static.phaziz.com/CONSTRUCTR-CMS/constructr-cms-7.png
+	http://static.phaziz.com/CONSTRUCTR-CMS/constructr-cms-8.png
+	http://static.phaziz.com/CONSTRUCTR-CMS/constructr-cms-9.png
+	http://static.phaziz.com/CONSTRUCTR-CMS/constructr-cms-10.png

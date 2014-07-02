@@ -56,7 +56,7 @@
 
             try 
             {
-                $PAGE_NAME = $DBCON -> prepare('SELECT pages_name FROM constructr_pages WHERE pages_id = :PAGE_ID LIMIT 1;');
+                $PAGE_NAME = $DBCON -> prepare('SELECT * FROM constructr_pages WHERE pages_id = :PAGE_ID LIMIT 1;');
                 $PAGE_NAME -> execute(array(':PAGE_ID' => $PAGE_ID));
                 $PAGE_NAME = $PAGE_NAME -> fetch();
 
@@ -89,7 +89,7 @@
                     'DELETED_CONTENT' => $DELETED_CONTENT,
                     'DELETED_CONTENT_COUNTER' => $DELETED_CONTENT_COUNTER,
                     '_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,
-                    'SUBTITLE' => 'Admin-Dashboard - Seiteninhalte &Uuml;bersicht',
+                    'SUBTITLE' => 'Admin-Dashboard - Seiteninhalte',
                     'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.'
                 )
             );

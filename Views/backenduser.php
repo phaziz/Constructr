@@ -75,7 +75,7 @@
                     'BACKENDUSER' => $BACKENDUSER,
                     'COUNTR' => $COUNTR,
                     '_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,
-                    'SUBTITLE' => 'Admin-Dashboard / Benutzerverwaltung',
+                    'SUBTITLE' => 'Benutzerverwaltung',
                     'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.'
                 )
             );
@@ -145,7 +145,7 @@
                     'USERNAME' => $USERNAME,
                     'GUID' => $GUID,
                     '_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,
-                    'SUBTITLE' => 'Admin-Dashboard / Neuer Benutzer',
+                    'SUBTITLE' => 'Neuer Benutzer',
                     'FORM_ACTION' => $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/user/new/' . $GUID . '/',
                     'FORM_METHOD' => 'post',
                     'FORM_ENCTYPE' => 'application/x-www-form-urlencoded',
@@ -605,7 +605,7 @@
                         'BACKENDUSER' => $BACKENDUSER,
                         'GUID' => $GUID,
                         '_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,
-                        'SUBTITLE' => 'Admin-Dashboard / Benutzer bearbeiten',
+                        'SUBTITLE' => 'Benutzer bearbeiten',
                         'FORM_ACTION' => $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/user/edit/' . $USER_ID . '/' . $GUID . '/',
                         'FORM_METHOD' => 'post',
                         'FORM_ENCTYPE' => 'application/x-www-form-urlencoded',

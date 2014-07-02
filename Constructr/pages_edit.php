@@ -125,6 +125,28 @@
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
+                                                        <label for="page_nav_visible" class="col-sm-2 control-label">Sichtbar in Navigation:</label>
+                                                        <div class="col-sm-10">
+                                                            <select class="form-control input-sm" name="page_nav_visible" id="page_nav_visible">
+                                                                <option value="0">Bitte w&auml;hlen</option>
+                                                                <option value="0">- - -</option>
+                                                                <?php
+                                                                    if($PAGE['pages_nav_visible'] == 1)
+                                                                    {
+                                                                        echo '<option value="1" selected="selected">Sichtbar</option>';
+                                                                        echo '<option value="0">Unsichtbar</option>';        
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        echo '<option value="1">Sichtbar</option>';
+                                                                        echo '<option value="0" selected="selected">Unsichtbar</option>';
+                                                                    }
+                                                                ?>
+                                                            </select>
+                                                            <small><span class="help-block">Soll die Seite in der Navigation sichtbar sein?</span></small>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
                                                         <label for="page_title" class="col-sm-2 control-label">Seitentitel:</label>
                                                         <div class="col-sm-10">
                                                             <input type="text" class="form-control input-sm" name="page_title" id="page_title" value="<?php echo $PAGE['pages_title']; ?>" placeholder="Seitentitel in Metadaten">

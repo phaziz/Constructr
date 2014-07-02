@@ -89,7 +89,7 @@
                     'DELETED_CONTENT' => $DELETED_CONTENT,
                     'DELETED_CONTENT_COUNTER' => $DELETED_CONTENT_COUNTER,
                     '_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,
-                    'SUBTITLE' => 'Admin-Dashboard - Seiteninhalte',
+                    'SUBTITLE' => 'Seiteninhalte',
                     'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.'
                 )
             );
@@ -206,7 +206,7 @@
                     'FORM_ACTION' => $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/content/' . $PAGE_ID . '/new/' . $GUID .'/',
                     'FORM_METHOD' => 'post',
                     'FORM_ENCTYPE' => 'application/x-www-form-urlencoded',
-                    'SUBTITLE' => 'Admin-Dashboard / Neuer Inhalt',
+                    'SUBTITLE' => 'Neuer Inhalt',
                     'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.'
                 )
             );
@@ -448,7 +448,7 @@
                     'FORM_ACTION' => $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/content/' . $PAGE_ID . '/' . $CONTENT_ID . '/edit/' . $GUID . '/',
                     'FORM_METHOD' => 'post',
                     'FORM_ENCTYPE' => 'application/x-www-form-urlencoded',
-                    'SUBTITLE' => 'Admin-Dashboard / Inhalt bearbeiten',
+                    'SUBTITLE' => 'Inhalt bearbeiten',
                     'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.'
                 )
             );

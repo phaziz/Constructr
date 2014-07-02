@@ -77,7 +77,7 @@
                     'MEDIA_COUNTER' => $MEDIA_COUNTER,
                     'USERNAME' => $USERNAME,
                     '_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,
-                    'SUBTITLE' => 'Admin-Dashboard / Medienverwaltung',
+                    'SUBTITLE' => 'Medienverwaltung',
                     'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.'
                 )
             );
@@ -152,7 +152,7 @@
                     'FORM_METHOD' => 'post',
                     'FORM_ENCTYPE' => 'multipart/form-data',
                     '_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,
-                    'SUBTITLE' => 'Admin-Dashboard / Medienverwaltung - Neuer Upload',
+                    'SUBTITLE' => 'Neuer Upload',
                     'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.'
                 )
             );
@@ -493,7 +493,7 @@
                         'FORM_METHOD' => 'post',
                         'FORM_ENCTYPE' => 'application/x-www-form-urlencoded',
                         '_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,
-                        'SUBTITLE' => 'Admin-Dashboard / Medienverwaltung - Detailansicht',
+                        'SUBTITLE' => 'Detailansicht',
                         'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.'
                     )
                 );
@@ -713,7 +713,7 @@
                     'MEDIA_COUNTER' => $MEDIA_COUNTER,
                     'USERNAME' => $USERNAME,
                     '_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,
-                    'SUBTITLE' => 'Admin-Dashboard / M&uuml;lleimer',
+                    'SUBTITLE' => 'M&uuml;lleimer',
                     'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.'
                 )
             );

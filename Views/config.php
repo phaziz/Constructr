@@ -19,7 +19,7 @@
                     'MEM' => $MEM,
                     'USERNAME' => $USERNAME,
                     '_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,
-                    'SUBTITLE' => 'Admin-Dashboard // Systemkonfiguration',
+                    'SUBTITLE' => 'Systemkonfiguration',
                     'FORM_ACTION' => '',
                     'FORM_METHOD' => '',
                     'FORM_ENCTYPE' => '',

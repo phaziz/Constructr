@@ -148,8 +148,14 @@
                                                                 echo '&#160;&#160;';
                                                             }
                                                         }
-                                                        echo '<a class="tt" data-toggle="tooltip" data-placement="top" title="Inhalte von Seite ' . $PAGE['pages_name'] . ' bearbeiten" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/content/' . $PAGE['pages_id'] . '/" title="Inhalte von Seite ' . $PAGE['pages_name'] . ' bearbeiten"><small>' . $PAGE['pages_name'] . '</small></a></td>';
-
+                                                        if($PAGE['pages_nav_visible'] == 0)
+                                                        {
+                                                            echo '<a style="color: #ff0066!important;" class="tt" data-toggle="tooltip" data-placement="top" title="Inhalte von Seite ' . $PAGE['pages_name'] . ' bearbeiten" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/content/' . $PAGE['pages_id'] . '/" title="Inhalte von Seite ' . $PAGE['pages_name'] . ' bearbeiten"><small>' . $PAGE['pages_name'] . '</small></a></td>';
+                                                        }
+                                                        else
+                                                        {
+                                                            echo '<a class="tt" data-toggle="tooltip" data-placement="top" title="Inhalte von Seite ' . $PAGE['pages_name'] . ' bearbeiten" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/content/' . $PAGE['pages_id'] . '/" title="Inhalte von Seite ' . $PAGE['pages_name'] . ' bearbeiten"><small>' . $PAGE['pages_name'] . '</small></a></td>';
+                                                        }
                                                         if($PAGE['pages_url'] == '')
                                                         {
                                                             echo '<td><small><a class="tt" data-toggle="tooltip" data-placement="top" title="Seite im Browser anzeigen" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '" onclick="window.open(this.href);return false;">' . $_CONSTRUCTR_CONF['_BASE_URL'] . '</a><br>Template: ' . $PAGE['pages_template'] . '</small></td>';

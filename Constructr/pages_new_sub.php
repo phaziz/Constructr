@@ -95,6 +95,18 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
+                                            <label for="page_nav_visible" class="col-sm-2 control-label">Sichtbar in Navigation:</label>
+                                            <div class="col-sm-10">
+                                                <select class="form-control input-sm" name="page_nav_visible" id="page_nav_visible">
+                                                    <option value="0">Bitte w&auml;hlen</option>
+                                                    <option value="0">- - -</option>
+                                                    <option value="1" selected="selected">Sichtbar</option>
+                                                    <option value="0">Unsichtbar</option>
+                                                </select>
+                                                <small><span class="help-block">Soll die Seite in der Navigation sichtbar sein?</span></small>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
                                             <label for="page_title" class="col-sm-2 control-label">Seitentitel:</label>
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control input-sm" name="page_title" id="page_title" placeholder="Seitentitel in Metadaten">
@@ -182,7 +194,7 @@
                                 var P = $('#page_url').val();
                                 var T = $('#page_template').val();
 
-                                if(U == '' || P == '' || P = 'constructr' || T == '')
+                                if(U == '' || P == '' || P == 'constructr' || T == '')
                                 {
                                     if(U == '')
                                     {

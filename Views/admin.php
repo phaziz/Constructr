@@ -18,6 +18,8 @@
                 $BACKEND_USER_COUNTR = $BACKENDUSER -> rowCount();
                 $PAGES = $DBCON -> query('SELECT pages_id FROM constructr_pages;');
                 $PAGES_COUNTR = $PAGES -> rowCount();
+                $CONTENT = $DBCON -> query('SELECT content_id FROM constructr_content;');
+                $CONTENT_COUNTR = $CONTENT -> rowCount();
                 $UPLOADS = $DBCON -> query('SELECT media_id FROM constructr_media;');
                 $UPLOADS_COUNTR = $UPLOADS -> rowCount();
             }
@@ -41,8 +43,9 @@
                     'FORM_ENCTYPE' => 'application/x-www-form-urlencoded',
                     'BACKEND_USER_COUNTR' => $BACKEND_USER_COUNTR,
                     'PAGES_COUNTR' => $PAGES_COUNTR,
+                    'CONTENT_COUNTR' => $CONTENT_COUNTR,
                     'UPLOADS_COUNTR' => $UPLOADS_COUNTR,
-                    'SUBTITLE' => 'Admin-Dashboard',
+                    'SUBTITLE' => 'Dashboard',
                     '_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,
                     '_SERVE_STATIC' => true,
                     'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.'
@@ -300,7 +303,7 @@
                     'BACKEND_USER_COUNTR' => $BACKEND_USER_COUNTR,
                     'PAGES_COUNTR' => $PAGES_COUNTR,
                     'UPLOADS_COUNTR' => $UPLOADS_COUNTR,
-                    'SUBTITLE' => 'Admin-Dashboard / Suchergebnisse',
+                    'SUBTITLE' => 'Suchergebnisse',
                     '_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,
                     '_SERVE_STATIC' => true,
                     'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.'
@@ -367,6 +370,73 @@
                 $OPTIMIZER = $DBCON -> query('OPTIMIZE TABLE constructr_backenduser, constructr_backenduser_rights, constructr_content, constructr_content_history, constructr_media, constructr_pages;');
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                 $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/?optimized=true');
+            }
+            catch (PDOException $e) 
+            {
+                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
+                die();
+            }
+        }
+    );
+
+    $constructr -> get('/constructr/content-history/:GUID/', $ADMIN_CHECK, function ($GUID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
+        {
+            $USERNAME = $_SESSION['backend-user-username'];
+
+            $constructr -> view -> setData('BackendUserRight',25);
+
+            if(isset($_SESSION['backend-user-id']) && $_SESSION['backend-user-id'] != '')
+            {
+                try
+                {
+                    $RIGHT_CHECKER = $DBCON -> prepare('SELECT * FROM constructr_backenduser_rights WHERE cbr_right = :RIGHT_ID AND cbr_user_id = :USER_ID AND cbr_value = :CBR_VALUE LIMIT 1;');
+                    $RIGHT_CHECKER -> execute(
+                        array
+                        (
+                            ':USER_ID' => $_SESSION['backend-user-id'],
+                            ':RIGHT_ID' => $constructr -> view -> getData('BackendUserRight'),
+                            ':CBR_VALUE' => 1
+                        )
+                    );
+
+                    $RIGHTS_COUNTR = $RIGHT_CHECKER -> rowCount();
+
+                    if($RIGHTS_COUNTR != 1)
+                    {
+                        $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Error ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                        $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/?no-rights=true');
+                        die();
+                    }
+                    else
+                    {
+                        $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                    }
+                }
+                catch (PDOException $e) 
+                {
+                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
+                    die();
+                }
+            }
+            else
+            {
+                $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': Error User-Rights-Check: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/logout/');
+                die();
+            }
+
+            if($GUID == '')
+            {
+                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ' - USER_FORM_GUID ERROR: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/logout/');
+                die();
+            }
+
+            try
+            {
+                $OPTIMIZER = $DBCON -> query('TRUNCATE TABLE constructr_content_history;');
+                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/?content-history=true');
             }
             catch (PDOException $e) 
             {
@@ -567,23 +637,23 @@
                                     @ftp_close($FTP_CON);
                                 }
                             }
-
-                            $FTP_CON = @ftp_connect($_CONSTRUCTR_CONF['_FTP_REMOTE_HOST'],$_CONSTRUCTR_CONF['_FTP_REMOTE_PORT']);
-                            @ftp_login($FTP_CON, $_CONSTRUCTR_CONF['_FTP_REMOTE_USERNAME'], $_CONSTRUCTR_CONF['_FTP_REMOTE_PASSWORD']);
-                            @ftp_chmod($FTP_CON, 0777,'sitemap.xml');
-                            @ftp_delete($FTP_CON,'sitemap.xml');
-                            @ftp_put($FTP_CON,'sitemap.xml',$_CONSTRUCTR_CONF['_BASE_URL'] . '/sitemap.xml', $_CONSTRUCTR_CONF['_FTP_REMOTE_MODE']);
-                            @ftp_chmod($FTP_CON, 0777,'sitemap.xml');
-                            @ftp_chmod($FTP_CON, 0777,'.htaccess');
-                            @ftp_delete($FTP_CON,'.htaccess');
-                            @ftp_put($FTP_CON,'.htaccess',$_CONSTRUCTR_CONF['_STATIC_DIR'] . '/.htaccess', $_CONSTRUCTR_CONF['_FTP_REMOTE_MODE']);
-                            @ftp_chmod($FTP_CON, 0777,'.htaccess');
-                            @ftp_chmod($FTP_CON, 0777,'robots.txt');
-                            @ftp_delete($FTP_CON,'robots.txt');
-                            @ftp_put($FTP_CON,'robots.txt',$_CONSTRUCTR_CONF['_STATIC_DIR'] . '/robots.txt', $_CONSTRUCTR_CONF['_FTP_REMOTE_MODE']);
-                            @ftp_chmod($FTP_CON, 0777,'robots.txt');
-                            @ftp_close($FTP_CON);
                         }
+
+                        $FTP_CON = @ftp_connect($_CONSTRUCTR_CONF['_FTP_REMOTE_HOST'],$_CONSTRUCTR_CONF['_FTP_REMOTE_PORT']);
+                        @ftp_login($FTP_CON, $_CONSTRUCTR_CONF['_FTP_REMOTE_USERNAME'], $_CONSTRUCTR_CONF['_FTP_REMOTE_PASSWORD']);
+                        @ftp_chmod($FTP_CON, 0777,'sitemap.xml');
+                        @ftp_delete($FTP_CON,'sitemap.xml');
+                        @ftp_put($FTP_CON,'sitemap.xml',$_CONSTRUCTR_CONF['_BASE_URL'] . '/sitemap.xml', $_CONSTRUCTR_CONF['_FTP_REMOTE_MODE']);
+                        @ftp_chmod($FTP_CON, 0777,'sitemap.xml');
+                        @ftp_chmod($FTP_CON, 0777,'.htaccess');
+                        @ftp_delete($FTP_CON,'.htaccess');
+                        @ftp_put($FTP_CON,'.htaccess',$_CONSTRUCTR_CONF['_STATIC_DIR'] . '/.htaccess', $_CONSTRUCTR_CONF['_FTP_REMOTE_MODE']);
+                        @ftp_chmod($FTP_CON, 0777,'.htaccess');
+                        @ftp_chmod($FTP_CON, 0777,'robots.txt');
+                        @ftp_delete($FTP_CON,'robots.txt');
+                        @ftp_put($FTP_CON,'robots.txt',$_CONSTRUCTR_CONF['_STATIC_DIR'] . '/robots.txt', $_CONSTRUCTR_CONF['_FTP_REMOTE_MODE']);
+                        @ftp_chmod($FTP_CON, 0777,'robots.txt');
+                        @ftp_close($FTP_CON);
                     }
                     catch (PDOException $e)
                     {

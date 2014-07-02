@@ -114,11 +114,25 @@
                                                 {
                                                     foreach ($MEDIA as $MEDIA)
                                                     {
-                                                        $FILE_TYPE = strrchr($MEDIA['media_file'],'.');
                                                         echo '<tr>';
-                                                        echo '<td class="center"><a href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/' . $MEDIA['media_file'] . '" data-toggle="lightbox" data-title="' . $MEDIA['media_originalname'] . '" data-footer="' . $MEDIA['media_originalname'] . '"><img src="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/' . $MEDIA['media_file'] . '" alt="' . $MEDIA['media_originalname'] . '" height="50px" width="*"></a></td>';
-                                                        echo '<td><small>' . $MEDIA['media_file'] . '<br><small>' . $MEDIA['media_originalname'] . '</small></td>';
-                                                        echo '<td><small>' . $MEDIA['media_title'] . ' ' . $MEDIA['media_description'] . ' ' . $MEDIA['media_copyright'] . ' ' . $MEDIA['media_keywords'] . '</small></td>';
+                                                        $FILE_TYPE = strrchr($MEDIA['media_file'],'.');
+                                                        if($FILE_TYPE == '.jpg' || $FILE_TYPE == '.JPG' || $FILE_TYPE == '.jpeg' || $FILE_TYPE == '.JPEG' || $FILE_TYPE == '.gif' || $FILE_TYPE == '.GIF' || $FILE_TYPE == '.png' || $FILE_TYPE == '.PNG')
+                                                        {
+                                                            echo '<td class="center"><a href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/' . $MEDIA['media_file'] . '" data-toggle="lightbox" data-title="' . $MEDIA['media_originalname'] . '" data-footer="' . $MEDIA['media_originalname'] . '"><img src="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/' . $MEDIA['media_file'] . '" alt="' . $MEDIA['media_originalname'] . '" height="50px" width="*"></a></td>';    
+                                                        }
+                                                        else
+                                                        {
+                                                            echo '<td class="center">./</td>';
+                                                        }
+                                                        echo '<td><small>' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/' . $MEDIA['media_file'] . '<br><small>' . $MEDIA['media_originalname'] . '</small></td>';
+                                                        if($FILE_TYPE == '.jpg' || $FILE_TYPE == '.JPG' || $FILE_TYPE == '.jpeg' || $FILE_TYPE == '.JPEG' || $FILE_TYPE == '.gif' || $FILE_TYPE == '.GIF' || $FILE_TYPE == '.png' || $FILE_TYPE == '.PNG')
+                                                        {
+                                                            echo '<td><small>' . $MEDIA['media_title'] . ' ' . $MEDIA['media_description'] . ' ' . $MEDIA['media_copyright'] . ' ' . $MEDIA['media_keywords'] . '</small></td>';    
+                                                        }
+                                                        else
+                                                        {
+                                                            echo '<td class="center">./</td>';
+                                                        }
                                                         echo '<td class="center"><nobr>';
                                                         echo '<a href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/' . $MEDIA['media_file'] . '" data-toggle="lightbox" data-title="' . $MEDIA['media_originalname'] . '" data-footer="' . $MEDIA['media_originalname'] . '" <button type="button" class="btn btn-warning btn-xs" title="Einfache Vorschau"><span class="glyphicon glyphicon-eye-close"></span></button></a>';
                                                         echo '&#160;';

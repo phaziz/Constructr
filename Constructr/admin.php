@@ -72,6 +72,18 @@
                                     </div><!-- // EOF ROW -->
                                 <?php
                             }
+                            if(isset($_GET['content-history']) && $_GET['content-history'] == 'true')
+                            {
+                                ?>
+                                    <div class="row response">
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                            <?php
+                                                echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Erfolg!</strong> Die gesamte Content-Historie wurde entfernt.</div>';
+                                            ?>
+                                        </div><!-- // EOF COL-... -->
+                                    </div><!-- // EOF ROW -->
+                                <?php
+                            }
                             if(isset($_GET['optimized']) && $_GET['optimized'] == 'true')
                             {
                                 ?>
@@ -161,6 +173,10 @@
                                                             <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL']; ?>/constructr/pages/" title="Seiten anzeigen">Seiten</a>:
                                                       </li>
                                                       <li class="list-group-item">
+                                                            <span class="badge"><?php echo $CONTENT_COUNTR; ?></span>
+                                                            Inhalte:
+                                                      </li>
+                                                      <li class="list-group-item">
                                                             <span class="badge"><?php echo $UPLOADS_COUNTR; ?></span>
                                                             <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL']; ?>/constructr/media/" title="Uploads anzeigen">Uploads</a>:
                                                       </li>
@@ -178,6 +194,9 @@
                                     <ul class="list-group">
                                           <li class="list-group-item">
                                                 <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL']; ?>/constructr/optimization/<?php echo $GUID ?>/" title="Datenbank optimieren">Datenbank optimieren</a>
+                                          </li>
+                                          <li class="list-group-item">
+                                                <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL']; ?>/constructr/content-history/<?php echo $GUID ?>/" title="Content Historie entfernen">Content Historie entfernen</a>
                                           </li>
                                           <li class="list-group-item">
                                                 <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL']; ?>/Logfiles/<?php echo date('Ymd'); ?>.txt" title="Logfile anzeigen" onclick="window.open(this.href);return false;">Aktuelles Logfile anzeigen</a>

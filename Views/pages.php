@@ -77,7 +77,7 @@
                     'NEW_PAGES' => $NEW_PAGES,
                     '_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,
                     'PAGES_COUNTR' => $PAGES_COUNTR,
-                    'SUBTITLE' => 'Admin-Dashboard / Seitenverwaltung',
+                    'SUBTITLE' => 'Seitenverwaltung',
                     'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.'
                 )
             );
@@ -170,7 +170,7 @@
                     'FORM_METHOD' => 'post',
                     '_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,
                     'FORM_ENCTYPE' => 'application/x-www-form-urlencoded',
-                    'SUBTITLE' => 'Admin-Dashboard / Seitenverwaltung - Neue Seite',
+                    'SUBTITLE' => 'Neue Seite',
                     'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.'
                 )
             );
@@ -245,6 +245,7 @@
             $PAGE_TITLE = constructr_sanitization($constructr -> request() -> post('page_title'));
             $PAGE_DESCRIPTION = constructr_sanitization($constructr -> request() -> post('page_description'));
             $PAGE_KEYWORDS = constructr_sanitization($constructr -> request() -> post('page_keywords'));
+            $PAGE_VISIBILITY = constructr_sanitization($constructr -> request() -> post('page_nav_visible'));
             $SEARCHR = strripos($PAGE_URL, '/');
 
             if ($SEARCHR !== false)
@@ -351,7 +352,7 @@
 
                 try
                 {
-                    $QUERY = 'INSERT INTO constructr_pages SET pages_datetime = :PAGE_DATETIME,pages_name = :PAGE_NAME,pages_url = :PAGE_URL,pages_template = :PAGE_TEMPLATE,pages_title = :PAGE_TITLE,pages_description = :PAGE_DESCRIPTION,pages_keywords = :PAGE_KEYWORDS,pages_lft = :PAGE_LFT,pages_rgt = :PAGE_RGT,pages_active = :PAGE_ACTIVE;';
+                    $QUERY = 'INSERT INTO constructr_pages SET pages_datetime = :PAGE_DATETIME,pages_name = :PAGE_NAME,pages_nav_visible = ::PAGE_VISIBILITY,pages_url = :PAGE_URL,pages_template = :PAGE_TEMPLATE,pages_title = :PAGE_TITLE,pages_description = :PAGE_DESCRIPTION,pages_keywords = :PAGE_KEYWORDS,pages_lft = :PAGE_LFT,pages_rgt = :PAGE_RGT,pages_active = :PAGE_ACTIVE;';
                     $STMT = $DBCON -> prepare($QUERY);
                     $STMT -> bindParam(':PAGE_NAME',$PAGE_NAME,PDO::PARAM_STR);
                     $STMT -> bindParam(':PAGE_URL',$PAGE_URL,PDO::PARAM_STR);
@@ -360,7 +361,8 @@
                     $STMT -> bindParam(':PAGE_DESCRIPTION',$PAGE_DESCRIPTION,PDO::PARAM_STR);
                     $STMT -> bindParam(':PAGE_KEYWORDS',$PAGE_KEYWORDS,PDO::PARAM_STR);
                     $STMT -> bindParam(':PAGE_DATETIME',$PAGE_DATETIME,PDO::PARAM_STR);
-                    $STMT -> bindParam(':PAGE_LFT',$PAGE_LFT,PDO::PARAM_INT);                    
+                    $STMT -> bindParam(':PAGE_VISIBILITY',$PAGE_VISIBILITY,PDO::PARAM_INT);
+                    $STMT -> bindParam(':PAGE_LFT',$PAGE_LFT,PDO::PARAM_INT);
                     $STMT -> bindParam(':PAGE_RGT',$PAGE_RGT,PDO::PARAM_INT);
                     $STMT -> bindParam(':PAGE_ACTIVE',$PAGE_ACTIVE,PDO::PARAM_INT);
                     $STMT -> execute();
@@ -517,7 +519,7 @@
                     'FORM_ACTION' => $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/new/sub/' . $GUID .'/',
                     'FORM_METHOD' => 'post',
                     'FORM_ENCTYPE' => 'application/x-www-form-urlencoded',
-                    'SUBTITLE' => 'Admin-Dashboard / Seitenverwaltung - Neue Unterseite',
+                    'SUBTITLE' => 'Neue Unterseite',
                     'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.'
                 )
             );
@@ -585,14 +587,15 @@
 
             $PAGE_TMP_MARKER = '';
             $PAGE_DATETIME = date('Y-m-d H:i:s');
-            $PAGE_MOTHER_ID = constructr_sanitization($constructr -> request() -> post('mother_id'));
-            $PAGE_MOTHER_LFT = constructr_sanitization($constructr -> request() -> post('mother_lft'));
-            $PAGE_NAME = $constructr_sanitization($constructr -> request() -> post('page_name'));
-            $PAGE_URL = constructr_sanitization($constructr -> request() -> post('page_url'));
-            $PAGE_TEMPLATE = constructr_sanitization($constructr -> request() -> post('page_template'));
-            $PAGE_TITLE = constructr_sanitization($constructr -> request() -> post('page_title'));
-            $PAGE_DESCRIPTION = constructr_sanitization($constructr -> request() -> post('page_description'));
-            $PAGE_KEYWORDS = constructr_sanitization($constructr -> request() -> post('page_keywords'));
+            $PAGE_MOTHER_ID = ($constructr -> request() -> post('mother_id'));
+            $PAGE_MOTHER_LFT = ($constructr -> request() -> post('mother_lft'));
+            $PAGE_NAME = ($constructr -> request() -> post('page_name'));
+            $PAGE_URL = ($constructr -> request() -> post('page_url'));
+            $PAGE_TEMPLATE = ($constructr -> request() -> post('page_template'));
+            $PAGE_TITLE = ($constructr -> request() -> post('page_title'));
+            $PAGE_DESCRIPTION = ($constructr -> request() -> post('page_description'));
+            $PAGE_KEYWORDS = ($constructr -> request() -> post('page_keywords'));
+            $PAGE_VISIBILITY = ($constructr -> request() -> post('page_nav_visible'));
             $PAGE_URL = str_replace('//','/',$PAGE_URL);
             $PAGE_URL = preg_replace("[^A-Za-z0-9_-\/]", "", $PAGE_URL);
             $PAGE_URL = strtolower($PAGE_URL);
@@ -667,7 +670,7 @@
 
                 try
                 {
-                    $QUERY = 'INSERT INTO constructr_pages SET pages_datetime = :PAGE_DATETIME,pages_name = :PAGE_NAME,pages_url = :PAGE_URL,pages_template = :PAGE_TEMPLATE,pages_title = :PAGE_TITLE,pages_description = :PAGE_DESCRIPTION,pages_keywords = :PAGE_KEYWORDS,pages_lft = :PAGE_LFT,pages_rgt = :PAGE_RGT,pages_active = :PAGE_ACTIVE;';
+                    $QUERY = 'INSERT INTO constructr_pages SET pages_datetime = :PAGE_DATETIME,pages_name = :PAGE_NAME,pages_url = :PAGE_URL,pages_nav_visible = :PAGE_VISIBILITY,pages_template = :PAGE_TEMPLATE,pages_title = :PAGE_TITLE,pages_description = :PAGE_DESCRIPTION,pages_keywords = :PAGE_KEYWORDS,pages_lft = :PAGE_LFT,pages_rgt = :PAGE_RGT,pages_active = :PAGE_ACTIVE;';
                     $STMT = $DBCON -> prepare($QUERY);
                     $STMT -> bindParam(':PAGE_NAME',$PAGE_NAME,PDO::PARAM_STR);
                     $STMT -> bindParam(':PAGE_URL',$PAGE_URL,PDO::PARAM_STR);
@@ -678,6 +681,7 @@
                     $STMT -> bindParam(':PAGE_DATETIME',$PAGE_DATETIME,PDO::PARAM_STR);
                     $STMT -> bindParam(':PAGE_LFT',$PAGE_LFT,PDO::PARAM_INT);
                     $STMT -> bindParam(':PAGE_RGT',$PAGE_RGT,PDO::PARAM_INT);
+                    $STMT -> bindParam(':PAGE_VISIBILITY',$PAGE_VISIBILITY,PDO::PARAM_INT);
                     $STMT -> bindParam(':PAGE_ACTIVE',$PAGE_ACTIVE,PDO::PARAM_INT);
                     $STMT -> execute();
                 }
@@ -801,7 +805,7 @@
                     'FORM_ACTION' => $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/edit/' . $GUID . '/',
                     'FORM_METHOD' => 'post',
                     'FORM_ENCTYPE' => 'application/x-www-form-urlencoded',
-                    'SUBTITLE' => 'Admin-Dashboard / Seitenverwaltung - Seite bearbeiten',
+                    'SUBTITLE' => 'Seite bearbeiten',
                     'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.'
                 )
             );
@@ -875,6 +879,7 @@
             $PAGE_TITLE = constructr_sanitization($constructr -> request() -> post('page_title'));
             $PAGE_DESCRIPTION = constructr_sanitization($constructr -> request() -> post('page_description'));
             $PAGE_KEYWORDS = constructr_sanitization($constructr -> request() -> post('page_keywords'));
+            $PAGE_VISIBILITY = constructr_sanitization($constructr -> request() -> post('page_nav_visible'));
             $PAGE_URL = str_replace('//','/',$PAGE_URL);
             $PAGE_URL = preg_replace("[^A-Za-z0-9_-\/]", "", $PAGE_URL);
             $PAGE_URL = strtolower($PAGE_URL);
@@ -897,19 +902,17 @@
             {
                 try
                 {
-                    $UPDATE_PAGES = $DBCON -> prepare('UPDATE constructr_pages SET pages_name = :PAGE_NAME, pages_url = :PAGE_URL, pages_template = :PAGE_TEMPLATE, pages_title = :PAGE_TITLE, pages_description = :PAGE_DESCRIPTION, pages_keywords = :PAGE_KEYWORDS WHERE pages_id >= :PAGE_ID LIMIT 1;');
-                    $UPDATE_PAGES -> execute(
-                        array
-                        (
-                            ':PAGE_ID' => $PAGE_ID,
-                            ':PAGE_NAME' => $PAGE_NAME,
-                            ':PAGE_URL' => $PAGE_URL,
-                            ':PAGE_TEMPLATE' => $PAGE_TEMPLATE,
-                            ':PAGE_TITLE' => $PAGE_TITLE,
-                            ':PAGE_DESCRIPTION' => $PAGE_DESCRIPTION,
-                            ':PAGE_KEYWORDS' => $PAGE_KEYWORDS
-                        )
-                    );
+                    $QUERY = 'UPDATE constructr_pages SET pages_name = :PAGE_NAME, pages_url = :PAGE_URL, pages_nav_visible = :PAGE_VISIBILITY, pages_template = :PAGE_TEMPLATE, pages_title = :PAGE_TITLE, pages_description = :PAGE_DESCRIPTION, pages_keywords = :PAGE_KEYWORDS WHERE pages_id >= :PAGE_ID LIMIT 1;';
+                    $STMT = $DBCON -> prepare($QUERY);
+                    $STMT -> bindParam(':PAGE_ID',$PAGE_ID,PDO::PARAM_INT); - 
+                    $STMT -> bindParam(':PAGE_NAME',$PAGE_NAME,PDO::PARAM_STR); - 
+                    $STMT -> bindParam(':PAGE_URL',$PAGE_URL,PDO::PARAM_STR); - 
+                    $STMT -> bindParam(':PAGE_TEMPLATE',$PAGE_TEMPLATE,PDO::PARAM_STR); - 
+                    $STMT -> bindParam(':PAGE_TITLE',$PAGE_TITLE,PDO::PARAM_STR); - 
+                    $STMT -> bindParam(':PAGE_KEYWORDS',$PAGE_KEYWORDS,PDO::PARAM_STR); - 
+                    $STMT -> bindParam(':PAGE_DESCRIPTION',$PAGE_DESCRIPTION,PDO::PARAM_STR); - 
+                    $STMT -> bindParam(':PAGE_VISIBILITY',$PAGE_VISIBILITY,PDO::PARAM_INT); - 
+                    $STMT -> execute();
 
                     if($_CONSTRUCTR_CONF['_LOGGING'] == true)
                     {

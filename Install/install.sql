@@ -44,7 +44,10 @@ CREATE TABLE IF NOT EXISTS `constructr_media` (
   `media_datetime` datetime NOT NULL,
   `media_file` varchar(255) NOT NULL,
   `media_originalname` varchar(255) NOT NULL,
-  `media_exif` text NOT NULL,
+  `media_description` text NOT NULL,
+  `media_title` varchar(255) NOT NULL,
+  `media_keywords` text NOT NULL,
+  `media_copyright` varchar(255) NOT NULL,
   PRIMARY KEY (`media_id`),
   UNIQUE KEY `media_id` (`media_id`)
 ) ENGINE=MyISAM;

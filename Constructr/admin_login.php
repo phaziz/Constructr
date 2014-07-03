@@ -16,7 +16,7 @@
             <div class="container" style="max-width: 600px;">
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                        <div class="jumbotron">
+                        <div class="jumbotron" style="background:#000;color:#fff;">
                             <h1>ConstructrCMS</h1>
                             <br><br>
                             <?php
@@ -50,7 +50,7 @@
                                                     <input type="password" name="_admin_password" class="form-control" id="_admin_password" placeholder="Passwort">
                                                 </div>
                                                 <br>
-                                                <button type="submit" class="btn btn-default">Anmeldung</button>
+                                                <button type="submit" class="btn btn-info">Anmeldung</button>
                                             </form>
 
                                         <?php
@@ -71,7 +71,7 @@
                                                 <input type="password" name="_admin_password" class="form-control" id="_admin_password" placeholder="Passwort">
                                             </div>
                                             <br>
-                                            <button type="submit" class="btn btn-default">Anmeldung</button>
+                                            <button type="submit" class="btn btn-info">Anmeldung</button>
                                         </form>
 
                                     <?php

@@ -22,6 +22,18 @@
                 $CONTENT_COUNTR = $CONTENT -> rowCount();
                 $UPLOADS = $DBCON -> query('SELECT media_id FROM constructr_media;');
                 $UPLOADS_COUNTR = $UPLOADS -> rowCount();
+                $TEMPLATES_COUNTR = 0;
+                $ALL_FILES = scandir($_CONSTRUCTR_CONF['_TEMPLATES_DIR']);
+                $DIR_FILES = array();
+                foreach($ALL_FILES as $DIR_FILE)
+                {
+                    if($DIR_FILE != '.'  && $DIR_FILE != '..')
+                    {
+                        $DIR_FILES[] = $DIR_FILE;
+                    }
+                }
+                $DIR_FILES = array_unique($DIR_FILES);
+                $TEMPLATES_COUNTR = count($DIR_FILES);
             }
             catch (PDOException $e) 
             {
@@ -45,6 +57,7 @@
                     'PAGES_COUNTR' => $PAGES_COUNTR,
                     'CONTENT_COUNTR' => $CONTENT_COUNTR,
                     'UPLOADS_COUNTR' => $UPLOADS_COUNTR,
+                    'TEMPLATES_COUNTR' => $TEMPLATES_COUNTR,
                     'SUBTITLE' => 'Dashboard',
                     '_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,
                     '_SERVE_STATIC' => true,

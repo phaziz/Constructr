@@ -59,7 +59,7 @@
 
         '_CREATE_STATIC' => true, // ALLOW GENERATION OF STATIC PAGES - (boolean) true|false
 
-        '_STATIC_FILETYPE' => '.html', // PREFERED FILE-TYPE OF STATIC PAGES - (char) .php,.html,...
+        '_STATIC_FILETYPE' => '.php', // PREFERED FILE-TYPE OF STATIC PAGES - (char) .php,.html,...
 
         '_STATIC_DIR' => './Static', // DIRECTORY FOR STATIC OUTPUT - (char) './Static'
 

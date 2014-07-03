@@ -6,8 +6,8 @@
             <meta name="viewport" content="width=device-width, initial-scale=1">
             <title><?php echo $_CONSTRUCTR_CONF['_TITLE'] . ' - ' . $SUBTITLE; ?></title>
             <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
-            <link href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/css/constructr.css" rel="stylesheet">
             <link href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/datatables-bootstrap3/assets/css/datatables.css" rel="stylesheet">
+            <link href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/css/constructr.css" rel="stylesheet">
             <link href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/vex/css/vex.css" rel="stylesheet">
             <link href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/vex/css/vex-theme-flat-attack.css" rel="stylesheet">
             <!--[if lt IE 9]>
@@ -37,8 +37,8 @@
                         <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/pages/" title="Seitenverwaltung anzeigen" data-toggle="tooltip" data-placement="right">Seiten</a></li>
                         <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/media/" title="Medienverwaltung anzeigen" data-toggle="tooltip" data-placement="right">Medien</a></li>
                         <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/media/trash/" title="M&uuml;lleimer anzeigen" data-toggle="tooltip" data-placement="right">M&uuml;lleimer</a></li>
-                        <li class="active"><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/user/" title="Benutzerverwaltung anzeigen" data-toggle="tooltip" data-placement="right">Benutzer</a></li>
-                        <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/templates/" title="Templates anzeigen" data-toggle="tooltip" data-placement="right">Templates</a></li>
+                        <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/user/" title="Benutzerverwaltung anzeigen" data-toggle="tooltip" data-placement="right">Benutzer</a></li>
+                        <li class="active"><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/templates/" title="Templates anzeigen" data-toggle="tooltip" data-placement="right">Templates</a></li>
                         <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/config/" title="Systemkonfiguration anzeigen" data-toggle="tooltip" data-placement="right">System</a></li>
                         <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/logout/" title="<?php echo $_SESSION['backend-user-username']; ?> abmelden" data-toggle="tooltip" data-placement="right">abmelden</a></li>
                     </ul>
@@ -48,78 +48,91 @@
                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <br>
-                                <p><small><a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/">Dashboard</a> <span class="glyphicon glyphicon-chevron-right"></span> <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/user/">Benutzerverwaltung - &Uuml;bersicht</a> <span class="glyphicon glyphicon-chevron-right"></span>  <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/user/edit-user-rights/<?php echo $USER_ID; ?>/<?php echo $USER_NAME; ?>/">Benutzerrechte von <?php echo $USER_NAME ?> anpassen</a> <span class="glyphicon glyphicon-chevron-right"></span></small></p>
+                                <p><small><a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/">Dashboard</a> <span class="glyphicon glyphicon-chevron-right"></span> <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/templates/">Templates</a> <span class="glyphicon glyphicon-chevron-right"></span></small></p>
                             </div><!-- // EOF COL-... -->
                         </div><!-- // EOF ROW -->
-
                         <?php 
-                            if(isset($_GET['edited']) && $_GET['edited'] != ''){
+                            if(isset($_GET['res']) && $_GET['res'] != ''){
                                 ?>
                                     <div class="row response">
                                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                             <?php
-                                                if($_GET['edited'] == 'true')
+
+                                                if($_GET['res'] == 'edit-template-true')
                                                 {
-                                                    echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Erfolg!</strong> Benutzerrechte wurden angepasst.</div>';
+                                                    echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Erfolg!</strong> Das Template wurde erfolgreich bearbeitet.</div>';
                                                 }
-                                                else if($_GET['edited'] == 'false')
+                                                else if($_GET['res'] == 'edit-template-false')
                                                 {
-                                                    echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Fehler!</strong> Es ist ein Fehler beim anpassen der Benutzerrechte aufgetreten.</div>';
+                                                    echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Fehler!</strong> Es ist ein Fehler beim schreiben des Templates aufgetreten.</div>';
                                                 }
+                                                if($_GET['res'] == 'del-template-true')
+                                                {
+                                                    echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Erfolg!</strong> Das Template wurde erfolgreich entfernt.</div>';
+                                                }
+                                                else if($_GET['res'] == 'del-template-false')
+                                                {
+                                                    echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Fehler!</strong> Es ist ein Fehler beim entfernen des Templates aufgetreten.</div>';
+                                                }
+                                                if($_GET['res'] == 'create-template-true')
+                                                {
+                                                    echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Erfolg!</strong> Das Template wurde erfolgreich erstellt.</div>';
+                                                }
+                                                else if($_GET['res'] == 'create-template-false')
+                                                {
+                                                    echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Fehler!</strong> Es ist ein Fehler beim hinzuf&uuml;gen des Templates aufgetreten.</div>';
+                                                }
+
                                             ?>
                                         </div><!-- // EOF COL-... -->
                                     </div><!-- // EOF ROW -->
                                 <?php
                             }
                         ?>
-        
                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <div class="jumbotron">
                                     <h1><?php echo $SUBTITLE; ?></h1>
-                                    <h2>Benutzerrechte von <strong><?php echo $USER_NAME; ?></strong> anpassen | <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/user/">Abbrechen</a></h2>
+                                    <h2><?php echo $COUNTR; ?> vorhandene Templates  <a data-toggle="tooltip" data-placement="top" title="Neuen Inhalt erstellen" class="tt" href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/templates/new/' ?>"><button type="button" class="btn btn-info btn-sm" title="Neues Template erstellen"><span class="glyphicon glyphicon-plus"></span></button></a></h2>
                                     <br><br>
                                     <div class="table-responsive">
-                                    <table class="datatable table table-bordered table-condensed table-striped table-hover">
-                                        <thead>
-                                            <tr>
-                                                <th>Recht</th>
-                                                <th class="center">Rechte ID</th>
-                                                <th class="center">Aktionen</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php
-                                                if($RIGHTS)
-                                                {
-                                                    foreach ($RIGHTS as $RIGHT)
+                                        <table class="datatable table table-bordered table-condensed table-striped table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th><small>Datei</small></th>
+                                                    <th class="center"><small>Aktionen</small></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php
+                                                    if($DIR_FILES && count($DIR_FILES) != 0)
                                                     {
-                                                        echo '<tr>';
-                                                        echo '<td>' . $RIGHT['cbr_info'] . '</td>';
-                                                        echo '<td class="center">' . $RIGHT['cbr_right'] . '</td>';                                                
-                                                        echo '<td class="center">';
-                                                        if($RIGHT['cbr_value'] == 1)
+                                                        if($DIR_FILES)
                                                         {
-                                                            echo '&#160;&#160;<a data-toggle="tooltip" data-placement="top" title="Recht deaktivieren" class="tt rights-updater" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/user/set-user-right/0/' . $RIGHT['cbr_id'] . '/' . $RIGHT['cbr_user_id'] . '/' . $USER_NAME . '/"><button type="button" class="btn btn-danger btn-xs" title="Recht deaktivieren"><span class="glyphicon glyphicon-edit"></span></button></a>';
+                                                            foreach($DIR_FILES as $DIR_FILE)
+                                                            {
+                                                                echo '<tr><td>' . $DIR_FILE . '</td>';
+                                                                echo '<td class="center">';
+                                                                echo '<a data-toggle="tooltip" data-placement="top" title="Template bearbeiten" tt" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/templates/edit/' . base64_encode($DIR_FILE) . '/" title="Template bearbeiten"><button type="button" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-pencil"></span></button></a>&#160;';
+                                                                echo '<a data-toggle="tooltip" data-placement="top" title="Template endg&uuml;ltig l&ouml;schen" class="deleter tt" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/templates/delete/' . base64_encode($DIR_FILE) . '/" title="Template endg&uuml;ltig l&ouml;schen"><button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span></button></a>';
+                                                                echo '</td></tr>';
+                                                            }
                                                         }
                                                         else
                                                         {
-                                                            echo '&#160;&#160;<a data-toggle="tooltip" data-placement="top" title="Recht aktivieren" class="tt rights-updater" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/user/set-user-right/1/' . $RIGHT['cbr_id'] . '/' . $RIGHT['cbr_user_id'] . '/' . $USER_NAME . '/"><button type="button" class="btn btn-success btn-xs" title="Recht aktivieren"><span class="glyphicon glyphicon-edit"></span></button></a>';
-                                                        }
-                                                        echo '</td>';
-                                                        echo '</tr>';
+                                                            echo '<tr><td colspan="2">Keine Templates gefunden!</td></tr>';
+                                                        };
                                                     }
-                                                }
-                                            ?>
-                                        </tbody>
-                                    </table>
-                                    </div><!-- EOF TABLE RESPONSIVE-->
+                                                ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div><!-- // EOF JUMBOTRON -->
                             </div><!-- // EOF COL-... -->
                         </div><!-- // EOF ROW -->
                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                <p><small><a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/">Dashboard</a> <span class="glyphicon glyphicon-chevron-right"></span> <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/user/">Benutzerverwaltung - &Uuml;bersicht</a> <span class="glyphicon glyphicon-chevron-right"></span>  <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/user/edit-user-rights/<?php echo $USER_ID; ?>/<?php echo $USER_NAME; ?>/">Benutzerrechte von <?php echo $USER_NAME ?> anpassen</a> <span class="glyphicon glyphicon-chevron-right"></span></small></p>
+                                <p><small><a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/">Dashboard</a> <span class="glyphicon glyphicon-chevron-right"></span> <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/templates/">Templates</a> <span class="glyphicon glyphicon-chevron-right"></span></small></p>
                                 <p><small>Version: <?php echo $_CONSTRUCTR_CONF['_VERSION_DATE']; ?> <?php echo $_CONSTRUCTR_CONF['_VERSION']; ?> / <?php echo $TIMER; ?> / <?php echo $MEM; ?> / <a href="http://phaziz.com/" onclick="window.open(this.href);return false;">Constructr CMS von phaziz.com</a></small></p>
                             </div><!-- // EOF COL-... -->
                         </div><!-- // EOF ROW -->
@@ -135,8 +148,6 @@
             <script>
                 $(function()
                     {
-                        $('.tt').tooltip();
-
                         if(localStorage && localStorage.removeItem && localStorage.getItem && localStorage.setItem)
                         {
                             MENU_VISIBLE = localStorage.getItem('MENU_VISIBLE');
@@ -167,13 +178,19 @@
                             }
                         );
 
+                        function autoBlinder()
+                        {
+                            $('.response').fadeOut();
+                        }
+
+                        setInterval(autoBlinder,4500);
+
                         $('.datatable').dataTable(
                             {
-                                "aaSorting": [[ 1,"asc"]],
+                                "aaSorting": [],
                                 "aoColumns": [
-                                    { "sWidth": "65%", "bSortable":true},
-                                    { "sWidth": "15%", "bSortable":true},
-                                    { "sWidth": "20%", "bSortable":false}
+                                    { "sWidth": "90%", "bSortable":true},
+                                    { "sWidth": "10%", "bSortable":false}
                                 ],
                                 "sPaginationType":"bs_full",
                                 "iDisplayLength": -1,
@@ -201,16 +218,18 @@
                             }
                         );
 
-                        $('.rights-updater').click(function(e)
+                        $('.tt').tooltip();
+
+                        $('.deleter').click(function(e)
                             {
                                 e.preventDefault();
                                 var U = $(this).attr('href');
                                 vex.dialog.buttons.YES.text = 'Ja';
                                 vex.dialog.buttons.NO.text = 'Abbrechen';
                                 vex.dialog.confirm(
-                                    { 
+                                    {
                                         className: 'vex-theme-flat-attack', 
-                                        message: 'Soll das Benutzerrecht wirklich ge&auml;ndert werden? Achtung: Diese &Auml;nderung wird sofort wirksam!',
+                                        message: 'M&ouml;chten Sie dieses Template wirklich vollst&auml;ndig und endg&uuml;ltig l&ouml;schen?',
                                         callback: function(value)
                                         {
                                             if(value == true)
@@ -227,7 +246,7 @@
                             }
                         );
                     }
-                )
+                );
             </script>
         </body>
     </html>

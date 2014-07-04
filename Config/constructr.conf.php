@@ -29,6 +29,8 @@
 
         '_TITLE' => 'CONSTRUCTR CMS', // BASE BACKEND TITLE - UPDATE FOR WHITE LABELING - (char) WHATEVER YOU WISH
 
+        '_CONSTRUCTR_CONTACT_MAIL' => '', // MAIN CONTACT EMAIL-ADDRESS - Your eMail
+
         '_TEMPLATES_DIR' => './Website-Template', // PUBLIC WEBSITE-TEMPLATE DIRECTORY - (char) './Website-Template'
 
         '_CONSTRUCTR_BACKEND' => './Constructr', // WHERE IS THE BACKEND LOCATED - (char) './Constructr'

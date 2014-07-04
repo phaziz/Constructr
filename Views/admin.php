@@ -20,6 +20,8 @@
                 $PAGES_COUNTR = $PAGES -> rowCount();
                 $CONTENT = $DBCON -> query('SELECT content_id FROM constructr_content;');
                 $CONTENT_COUNTR = $CONTENT -> rowCount();
+                $CONTENT_HISTORY = $DBCON -> query('SELECT content_id FROM constructr_content_history;');
+                $CONTENT_HISTORY_COUNTR = $CONTENT_HISTORY -> rowCount();
                 $UPLOADS = $DBCON -> query('SELECT media_id FROM constructr_media;');
                 $UPLOADS_COUNTR = $UPLOADS -> rowCount();
                 $TEMPLATES_COUNTR = 0;
@@ -56,6 +58,7 @@
                     'BACKEND_USER_COUNTR' => $BACKEND_USER_COUNTR,
                     'PAGES_COUNTR' => $PAGES_COUNTR,
                     'CONTENT_COUNTR' => $CONTENT_COUNTR,
+                    'CONTENT_HISTORY_COUNTR' => $CONTENT_HISTORY_COUNTR,
                     'UPLOADS_COUNTR' => $UPLOADS_COUNTR,
                     'TEMPLATES_COUNTR' => $TEMPLATES_COUNTR,
                     'SUBTITLE' => 'Dashboard',

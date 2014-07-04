@@ -9,10 +9,16 @@
             <link href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/css/constructr.css" rel="stylesheet">
             <link href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/vex/css/vex.css" rel="stylesheet">
             <link href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/vex/css/vex-theme-flat-attack.css" rel="stylesheet">
+            <link href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/codemirror/lib/codemirror.css" rel="stylesheet">
             <!--[if lt IE 9]>
                 <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
                 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
             <![endif]-->
+            <style>
+                .CodeMirror { height: auto; border: 1px solid #ddd; }
+                .CodeMirror-scroll { max-height: 600px; }
+                .CodeMirror pre { padding-left: 7px; line-height: 1.25; }
+            </style>
         </head>
         <body>
             <div id="wrapper" class="active">
@@ -90,7 +96,7 @@
                                                     <div class="form-group">
                                                         <label for="page_name" class="col-sm-2 control-label">Template:</label>
                                                         <div class="col-sm-10">
-                                                            <textarea class="form-control" name="template" id="template" rows="25" cols="100"><?php trim(readfile($TEMPLATE)); ?></textarea>
+                                                            <textarea class="form-control" name="template" id="template" rows="40" cols="100"><?php trim(readfile($TEMPLATE)); ?></textarea>
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
@@ -122,9 +128,19 @@
             <script src="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/Assets/jquery-2-1-1.min.js"></script>
             <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
             <script src="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/Assets/vex/js/vex.combined.min.js"></script>
+            <script src="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/Assets/codemirror/lib/codemirror.js"></script>
             <script>
                 $(function()
                     {
+                        var editor = CodeMirror.fromTextArea(document.getElementById("template"),
+                            {
+                                lineNumbers: true,
+                                matchBrackets: true,
+                                indentUnit: 4,
+                                autofocus: true
+                            }
+                        );
+
                         if(localStorage && localStorage.removeItem && localStorage.getItem && localStorage.setItem)
                         {
                             MENU_VISIBLE = localStorage.getItem('MENU_VISIBLE');

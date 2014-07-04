@@ -74,7 +74,7 @@
             
                         if($PAGE['pages_level'] == $level)
                             $html .= '</li>';
-                            if($PAGE['pages_lft'] == 1)
+                            if($PAGE['pages_lft'] == 1 && $PAGE['pages_nav_visible'] == 1)
                             {
                                 $html .= '<li><a href="' . $_BASE_ROUTE . '">' . $PAGE['pages_name'] . '</a>';    
                             }
@@ -109,7 +109,7 @@
                 (function(){var c=("https:"==document.location.protocol?"https":"http")+"://piwik.phaziz.com/";_paq.push(["setTrackerUrl",c+"piwik.php"]);_paq.push(["setSiteId","3"]);var a=document,b=a.createElement("script"),a=a.getElementsByTagName("script")[0];b.type="text/javascript";b.defer=!0;b.async=!0;b.src=c+"piwik.js";a.parentNode.insertBefore(b,a)})();
             </script>
             <noscript>
-                <img src="http://piwik.phaziz.com/piwik.php?idsite=3&amp;rec=1" style="border:0" alt="piwik" />
+                <img src="http://piwik.phaziz.com/piwik.php?idsite=3&rec=1" style="border:0" alt="piwik" />
             </noscript>
         </body>
     </html>

@@ -3,7 +3,7 @@ Constructr CMS
 
 ConstructrCMS based on Slim-PHP5-Framework, Twitter Bootstrap, PDO (MySQL), jQuery/Javascript and Passion!
 
-That's it for now (2014.07.03):
+That's it for now (2014.07.04):
 
 	- Simple example frontend template
 	- C.R.U.D. websites
@@ -21,4 +21,4 @@ That's it for now (2014.07.03):
 	- Generating domain specific static websites
 	- FTP-Transfer of static sites to frontend-domain
 	- Backend searchengine for pages, content-elements, content-history-elements media-files and backend-users
-	- Template Management (create, edit, delete)
+	- ConstructrPostmaster for contact-form-handling in frontend

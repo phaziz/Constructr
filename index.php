@@ -21,8 +21,8 @@
     require_once './Config/constructr.conf.php';
     require_once './Config/constructr_user_rights.conf.php';
 
-    $_CONSTRUCTR_CONF['_VERSION_DATE'] = '20140703';
-    $_CONSTRUCTR_CONF['_VERSION'] = '1.01.5';
+    $_CONSTRUCTR_CONF['_VERSION_DATE'] = '20140704';
+    $_CONSTRUCTR_CONF['_VERSION'] = '1.01.7';
 
     require_once './Slim/Slim.php';
     require_once './Slim/Log/DateTimeFileWriter.php';
@@ -96,7 +96,7 @@
             $constructr -> getLog() -> error($_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
             die();
         }
-    
+
         if($URLS)
         {
             $URLS_ARRAY = array();
@@ -113,7 +113,7 @@
         {
             die('Keine Seiten gefunden!');
         }
-    
+
         if(!in_array($REQUEST,$URLS_ARRAY) && $REQUEST != '/' && $REQUEST != '')
         {
             $constructr -> getLog() -> error('404 - URL NOT FOUND: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
@@ -125,199 +125,217 @@
         $view = $constructr -> view();
         $view -> setTemplatesDirectory($_CONSTRUCTR_CONF['_TEMPLATES_DIR']);
 
-        $constructr -> get('(:ROUTE+)', function ($ROUTE) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
-            {
-                $FULL_ROUTE;
-                $PAGES;
-                $CONTENT;
-                $PAGE_DATA;
+        $_METHOD = $constructr -> request -> getMethod();
 
-                foreach($ROUTE as $ROUTE)
-                {
-                    $FULL_ROUTE .= $ROUTE . '/';
-                }
+        require_once './Postmaster/constructr_postmaster.php';
 
-                if (strpos($FULL_ROUTE, '//') !== false)
-                {
-                    $FULL_ROUTE = preg_replace("#//+#", "/", $FULL_ROUTE);
-                }
+        switch ($_METHOD)
+        {
+            case 'GET':
 
-                try
-                {
-                    $PAGES = $DBCON -> query('SELECT n.*, round((n.pages_rgt-n.pages_lft-1)/2,0) AS pages_subpages_countr, count(*)-1+(n.pages_lft>1) AS pages_level, ((min(p.pages_rgt)-n.pages_rgt-(n.pages_lft>1))/2) > 0 AS pages_lower, (((n.pages_lft-max(p.pages_lft)>1))) AS pages_upper FROM constructr_pages n, constructr_pages p WHERE n.pages_lft BETWEEN p.pages_lft AND p.pages_rgt AND (p.pages_id != n.pages_id OR n.pages_lft = 1) AND n.pages_active = 1 AND p.pages_active = 1 GROUP BY n.pages_id ORDER BY n.pages_lft;');
-                    $PAGES = $PAGES -> fetchAll();
-                }
-                catch (PDOException $e)
-                {
-                    $constructr -> getLog() -> error($_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                    die();
-                }
-
-                if($PAGES)
-                {
-                    foreach($PAGES as $PAGE)
+                $constructr -> get('(:ROUTE+)', function ($ROUTE) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
                     {
-                        if($FULL_ROUTE == '/')
+                        $FULL_ROUTE;
+                        $PAGES;
+                        $CONTENT;
+                        $PAGE_DATA;
+        
+                        foreach($ROUTE as $ROUTE)
                         {
-                            try
+                            $FULL_ROUTE .= $ROUTE . '/';
+                        }
+        
+                        if (strpos($FULL_ROUTE, '//') !== false)
+                        {
+                            $FULL_ROUTE = preg_replace("#//+#", "/", $FULL_ROUTE);
+                        }
+        
+                        try
+                        {
+                            $PAGES = $DBCON -> query('SELECT n.*, round((n.pages_rgt-n.pages_lft-1)/2,0) AS pages_subpages_countr, count(*)-1+(n.pages_lft>1) AS pages_level, ((min(p.pages_rgt)-n.pages_rgt-(n.pages_lft>1))/2) > 0 AS pages_lower, (((n.pages_lft-max(p.pages_lft)>1))) AS pages_upper FROM constructr_pages n, constructr_pages p WHERE n.pages_lft BETWEEN p.pages_lft AND p.pages_rgt AND (p.pages_id != n.pages_id OR n.pages_lft = 1) AND n.pages_active = 1 AND p.pages_active = 1 GROUP BY n.pages_id ORDER BY n.pages_lft;');
+                            $PAGES = $PAGES -> fetchAll();
+                        }
+                        catch (PDOException $e)
+                        {
+                            $constructr -> getLog() -> error($_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
+                            die();
+                        }
+        
+                        if($PAGES)
+                        {
+                            foreach($PAGES as $PAGE)
                             {
-                                $INIT = 1;
-                                $HOMEPAGE = $DBCON -> prepare('SELECT * FROM constructr_pages WHERE pages_lft = :NESTED_SETS_INIT AND pages_active = 1 LIMIT 1;');
-                                $HOMEPAGE -> execute(array(':NESTED_SETS_INIT' => $INIT));
-                                $HOMEPAGE = $HOMEPAGE -> fetch();
-                                $PAGE_DATA = $HOMEPAGE;
-                            }
-                            catch (PDOException $e)
-                            {
-                                $constructr -> getLog() -> error($_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                                die();
-                            }
-
-                            $PAGE_ID = $HOMEPAGE['pages_id'];
-                            $TEMPLATE = $HOMEPAGE['pages_template'];
-
-                            try
-                            {
-                                $CONTENT_ACTIVE = 1;
-                                $DELETED = 0;
-                                $CONTENT = $DBCON -> prepare('SELECT content_content FROM constructr_content WHERE content_page_id = :PAGE_ID AND content_deleted = :DELETED AND content_active = :CONTENT_ACTIVE ORDER BY content_order ASC;');
-                                $CONTENT -> execute(array(':PAGE_ID' => $PAGE_ID,':DELETED' => $DELETED,':CONTENT_ACTIVE' => $CONTENT_ACTIVE));
-                            }
-                            catch (PDOException $e)
-                            {
-                                $constructr -> getLog() -> error($_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                                die();
+                                if($FULL_ROUTE == '/')
+                                {
+                                    try
+                                    {
+                                        $INIT = 1;
+                                        $HOMEPAGE = $DBCON -> prepare('SELECT * FROM constructr_pages WHERE pages_lft = :NESTED_SETS_INIT AND pages_active = 1 LIMIT 1;');
+                                        $HOMEPAGE -> execute(array(':NESTED_SETS_INIT' => $INIT));
+                                        $HOMEPAGE = $HOMEPAGE -> fetch();
+                                        $PAGE_DATA = $HOMEPAGE;
+                                    }
+                                    catch (PDOException $e)
+                                    {
+                                        $constructr -> getLog() -> error($_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
+                                        die();
+                                    }
+        
+                                    $PAGE_ID = $HOMEPAGE['pages_id'];
+                                    $TEMPLATE = $HOMEPAGE['pages_template'];
+        
+                                    try
+                                    {
+                                        $CONTENT_ACTIVE = 1;
+                                        $DELETED = 0;
+                                        $CONTENT = $DBCON -> prepare('SELECT content_content FROM constructr_content WHERE content_page_id = :PAGE_ID AND content_deleted = :DELETED AND content_active = :CONTENT_ACTIVE ORDER BY content_order ASC;');
+                                        $CONTENT -> execute(array(':PAGE_ID' => $PAGE_ID,':DELETED' => $DELETED,':CONTENT_ACTIVE' => $CONTENT_ACTIVE));
+                                    }
+                                    catch (PDOException $e)
+                                    {
+                                        $constructr -> getLog() -> error($_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
+                                        die();
+                                    }
+                                }
+                                else
+                                {
+                                    if('/' . $PAGE['pages_url'] . '/' == $FULL_ROUTE)
+                                    {
+                                        try
+                                        {
+                                            $DELETED = 0;
+                                            $CONTENT_ACTIVE = 1;
+                                            $ACT_PAGE = $DBCON -> prepare('SELECT * FROM constructr_pages WHERE pages_id = :PAGE_ID AND pages_active = 1 LIMIT 1;');
+                                            $ACT_PAGE -> execute(array(':PAGE_ID' => $PAGE['pages_id']));
+                                            $PAGE_DATA = $ACT_PAGE -> fetch();
+                                            $TEMPLATE = $PAGE_DATA['pages_template'];
+                                            $CONTENT = $DBCON -> prepare('SELECT content_content FROM constructr_content WHERE content_page_id = :PAGE_ID AND content_deleted = :DELETED AND content_active = :CONTENT_ACTIVE ORDER BY content_order ASC;');
+                                            $CONTENT -> execute(array(':PAGE_ID' => $PAGE['pages_id'],':DELETED' => $DELETED,':CONTENT_ACTIVE' => $CONTENT_ACTIVE));
+                                        }
+                                        catch (PDOException $e)
+                                        {
+                                            $constructr -> getLog() -> error($_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
+                                            die();
+                                        }
+                                    }
+                                }
                             }
                         }
                         else
                         {
-                            if('/' . $PAGE['pages_url'] . '/' == $FULL_ROUTE)
-                            {
-                                try
-                                {
-                                    $DELETED = 0;
-                                    $CONTENT_ACTIVE = 1;
-                                    $ACT_PAGE = $DBCON -> prepare('SELECT * FROM constructr_pages WHERE pages_id = :PAGE_ID AND pages_active = 1 LIMIT 1;');
-                                    $ACT_PAGE -> execute(array(':PAGE_ID' => $PAGE['pages_id']));
-                                    $PAGE_DATA = $ACT_PAGE -> fetch();
-                                    $TEMPLATE = $PAGE_DATA['pages_template'];
-                                    $CONTENT = $DBCON -> prepare('SELECT content_content FROM constructr_content WHERE content_page_id = :PAGE_ID AND content_deleted = :DELETED AND content_active = :CONTENT_ACTIVE ORDER BY content_order ASC;');
-                                    $CONTENT -> execute(array(':PAGE_ID' => $PAGE['pages_id'],':DELETED' => $DELETED,':CONTENT_ACTIVE' => $CONTENT_ACTIVE));
-                                }
-                                catch (PDOException $e)
-                                {
-                                    $constructr -> getLog() -> error($_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                                    die();
-                                }
-                            }
+                            die('<p>Keine Seiten vorhanden!</p>');
                         }
+
+                        $POSTMASTER_GUID = create_guid();
+                        $constructr -> render($TEMPLATE,array('PAGES' => $PAGES,'PAGE_DATA' => $PAGE_DATA,'CONTENT' => $CONTENT,'_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,'POSTMASTER_GUID' => $POSTMASTER_GUID));
                     }
-                }
-                else
-                {
-                    die('<p>Keine Seiten vorhanden!</p>');
-                }
+                );
 
-                $constructr -> render($TEMPLATE,array('PAGES' => $PAGES,'PAGE_DATA' => $PAGE_DATA,'CONTENT' => $CONTENT,'_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF));
-            }
-        );
+                break;
+        
+            case 'POST':
 
-        $constructr -> post('(:ROUTE+)', function ($ROUTE) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
-            {
-                $FULL_ROUTE;
-                $PAGES;
-                $CONTENT;
-                $PAGE_DATA;
-
-                foreach($ROUTE as $ROUTE)
-                {
-                    $FULL_ROUTE .= $ROUTE . '/';
-                }
-
-                if (strpos($FULL_ROUTE, '//') !== false)
-                {
-                    $FULL_ROUTE = preg_replace("#//+#", "/", $FULL_ROUTE);
-                }
-
-                try
-                {
-                    $PAGES = $DBCON -> query('SELECT n.*, round((n.pages_rgt-n.pages_lft-1)/2,0) AS pages_subpages_countr, count(*)-1+(n.pages_lft>1) AS pages_level, ((min(p.pages_rgt)-n.pages_rgt-(n.pages_lft>1))/2) > 0 AS pages_lower, (((n.pages_lft-max(p.pages_lft)>1))) AS pages_upper FROM constructr_pages n, constructr_pages p WHERE n.pages_lft BETWEEN p.pages_lft AND p.pages_rgt AND (p.pages_id != n.pages_id OR n.pages_lft = 1) AND n.pages_active = 1 AND p.pages_active = 1 GROUP BY n.pages_id ORDER BY n.pages_lft;');
-                    $PAGES = $PAGES -> fetchAll();
-                }
-                catch (PDOException $e)
-                {
-                    $constructr -> getLog() -> error($_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                    die();
-                }
-
-                if($PAGES)
-                {
-                    foreach($PAGES as $PAGE)
+                $constructr -> post('(:ROUTE+)', function ($ROUTE) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
                     {
-                        if($FULL_ROUTE == '/')
+                        $FULL_ROUTE;
+                        $PAGES;
+                        $CONTENT;
+                        $PAGE_DATA;
+        
+                        foreach($ROUTE as $ROUTE)
                         {
-                            try
+                            $FULL_ROUTE .= $ROUTE . '/';
+                        }
+        
+                        if (strpos($FULL_ROUTE, '//') !== false)
+                        {
+                            $FULL_ROUTE = preg_replace("#//+#", "/", $FULL_ROUTE);
+                        }
+        
+                        try
+                        {
+                            $PAGES = $DBCON -> query('SELECT n.*, round((n.pages_rgt-n.pages_lft-1)/2,0) AS pages_subpages_countr, count(*)-1+(n.pages_lft>1) AS pages_level, ((min(p.pages_rgt)-n.pages_rgt-(n.pages_lft>1))/2) > 0 AS pages_lower, (((n.pages_lft-max(p.pages_lft)>1))) AS pages_upper FROM constructr_pages n, constructr_pages p WHERE n.pages_lft BETWEEN p.pages_lft AND p.pages_rgt AND (p.pages_id != n.pages_id OR n.pages_lft = 1) AND n.pages_active = 1 AND p.pages_active = 1 GROUP BY n.pages_id ORDER BY n.pages_lft;');
+                            $PAGES = $PAGES -> fetchAll();
+                        }
+                        catch (PDOException $e)
+                        {
+                            $constructr -> getLog() -> error($_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
+                            die();
+                        }
+        
+                        if($PAGES)
+                        {
+                            foreach($PAGES as $PAGE)
                             {
-                                $INIT = 1;
-                                $HOMEPAGE = $DBCON -> prepare('SELECT * FROM constructr_pages WHERE pages_lft = :NESTED_SETS_INIT AND pages_active = 1 LIMIT 1;');
-                                $HOMEPAGE -> execute(array(':NESTED_SETS_INIT' => $INIT));
-                                $HOMEPAGE = $HOMEPAGE -> fetch();
-                                $PAGE_DATA = $HOMEPAGE;
-                            }
-                            catch (PDOException $e)
-                            {
-                                $constructr -> getLog() -> error($_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                                die();
-                            }
-
-                            $PAGE_ID = $HOMEPAGE['pages_id'];
-                            $TEMPLATE = $HOMEPAGE['pages_template'];
-
-                            try
-                            {
-                                $CONTENT_ACTIVE = 1;
-                                $DELETED = 0;
-                                $CONTENT = $DBCON -> prepare('SELECT content_content FROM constructr_content WHERE content_page_id = :PAGE_ID AND content_deleted = :DELETED AND content_active = :CONTENT_ACTIVE ORDER BY content_order ASC;');
-                                $CONTENT -> execute(array(':PAGE_ID' => $PAGE_ID,':DELETED' => $DELETED,':CONTENT_ACTIVE' => $CONTENT_ACTIVE));
-                            }
-                            catch (PDOException $e)
-                            {
-                                $constructr -> getLog() -> error($_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                                die();
+                                if($FULL_ROUTE == '/')
+                                {
+                                    try
+                                    {
+                                        $INIT = 1;
+                                        $HOMEPAGE = $DBCON -> prepare('SELECT * FROM constructr_pages WHERE pages_lft = :NESTED_SETS_INIT AND pages_active = 1 LIMIT 1;');
+                                        $HOMEPAGE -> execute(array(':NESTED_SETS_INIT' => $INIT));
+                                        $HOMEPAGE = $HOMEPAGE -> fetch();
+                                        $PAGE_DATA = $HOMEPAGE;
+                                    }
+                                    catch (PDOException $e)
+                                    {
+                                        $constructr -> getLog() -> error($_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
+                                        die();
+                                    }
+        
+                                    $PAGE_ID = $HOMEPAGE['pages_id'];
+                                    $TEMPLATE = $HOMEPAGE['pages_template'];
+        
+                                    try
+                                    {
+                                        $CONTENT_ACTIVE = 1;
+                                        $DELETED = 0;
+                                        $CONTENT = $DBCON -> prepare('SELECT content_content FROM constructr_content WHERE content_page_id = :PAGE_ID AND content_deleted = :DELETED AND content_active = :CONTENT_ACTIVE ORDER BY content_order ASC;');
+                                        $CONTENT -> execute(array(':PAGE_ID' => $PAGE_ID,':DELETED' => $DELETED,':CONTENT_ACTIVE' => $CONTENT_ACTIVE));
+                                    }
+                                    catch (PDOException $e)
+                                    {
+                                        $constructr -> getLog() -> error($_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
+                                        die();
+                                    }
+                                }
+                                else
+                                {
+                                    if('/' . $PAGE['pages_url'] . '/' == $FULL_ROUTE)
+                                    {
+                                        try
+                                        {
+                                            $DELETED = 0;
+                                            $CONTENT_ACTIVE = 1;
+                                            $ACT_PAGE = $DBCON -> prepare('SELECT * FROM constructr_pages WHERE pages_id = :PAGE_ID AND pages_active = 1 LIMIT 1;');
+                                            $ACT_PAGE -> execute(array(':PAGE_ID' => $PAGE['pages_id']));
+                                            $PAGE_DATA = $ACT_PAGE -> fetch();
+                                            $TEMPLATE = $PAGE_DATA['pages_template'];
+                                            $CONTENT = $DBCON -> prepare('SELECT content_content FROM constructr_content WHERE content_page_id = :PAGE_ID AND content_deleted = :DELETED AND content_active = :CONTENT_ACTIVE ORDER BY content_order ASC;');
+                                            $CONTENT -> execute(array(':PAGE_ID' => $PAGE['pages_id'],':DELETED' => $DELETED,':CONTENT_ACTIVE' => $CONTENT_ACTIVE));
+                                        }
+                                        catch (PDOException $e)
+                                        {
+                                            $constructr -> getLog() -> error($_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
+                                            die();
+                                        }
+                                    }
+                                }
                             }
                         }
                         else
                         {
-                            if('/' . $PAGE['pages_url'] . '/' == $FULL_ROUTE)
-                            {
-                                try
-                                {
-                                    $DELETED = 0;
-                                    $CONTENT_ACTIVE = 1;
-                                    $ACT_PAGE = $DBCON -> prepare('SELECT * FROM constructr_pages WHERE pages_id = :PAGE_ID AND pages_active = 1 LIMIT 1;');
-                                    $ACT_PAGE -> execute(array(':PAGE_ID' => $PAGE['pages_id']));
-                                    $PAGE_DATA = $ACT_PAGE -> fetch();
-                                    $TEMPLATE = $PAGE_DATA['pages_template'];
-                                    $CONTENT = $DBCON -> prepare('SELECT content_content FROM constructr_content WHERE content_page_id = :PAGE_ID AND content_deleted = :DELETED AND content_active = :CONTENT_ACTIVE ORDER BY content_order ASC;');
-                                    $CONTENT -> execute(array(':PAGE_ID' => $PAGE['pages_id'],':DELETED' => $DELETED,':CONTENT_ACTIVE' => $CONTENT_ACTIVE));
-                                }
-                                catch (PDOException $e)
-                                {
-                                    $constructr -> getLog() -> error($_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
-                                    die();
-                                }
-                            }
+                            die('<p>Keine Seiten vorhanden!</p>');
                         }
-                    }
-                }
-                else
-                {
-                    die('<p>Keine Seiten vorhanden!</p>');
-                }
 
-                $constructr -> render($TEMPLATE,array('PAGES' => $PAGES,'PAGE_DATA' => $PAGE_DATA,'CONTENT' => $CONTENT,'_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF));
-            }
-        );
+                        $POSTMASTER_GUID = create_guid();
+                        $constructr -> render($TEMPLATE,array('PAGES' => $PAGES,'PAGE_DATA' => $PAGE_DATA,'CONTENT' => $CONTENT,'_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,'POSTMASTER_GUID' => $POSTMASTER_GUID));
+                    }
+                );
+
+                break;
+        }
+
     }
     else
     {

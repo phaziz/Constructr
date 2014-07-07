@@ -352,7 +352,7 @@
 
                 try
                 {
-                    $QUERY = 'INSERT INTO constructr_pages SET pages_datetime = :PAGE_DATETIME,pages_name = :PAGE_NAME,pages_nav_visible = ::PAGE_VISIBILITY,pages_url = :PAGE_URL,pages_template = :PAGE_TEMPLATE,pages_title = :PAGE_TITLE,pages_description = :PAGE_DESCRIPTION,pages_keywords = :PAGE_KEYWORDS,pages_lft = :PAGE_LFT,pages_rgt = :PAGE_RGT,pages_active = :PAGE_ACTIVE;';
+                    $QUERY = 'INSERT INTO constructr_pages SET pages_datetime = :PAGE_DATETIME,pages_name = :PAGE_NAME,pages_nav_visible = :PAGE_VISIBILITY,pages_url = :PAGE_URL,pages_template = :PAGE_TEMPLATE,pages_title = :PAGE_TITLE,pages_description = :PAGE_DESCRIPTION,pages_keywords = :PAGE_KEYWORDS,pages_lft = :PAGE_LFT,pages_rgt = :PAGE_RGT,pages_active = :PAGE_ACTIVE;';
                     $STMT = $DBCON -> prepare($QUERY);
                     $STMT -> bindParam(':PAGE_NAME',$PAGE_NAME,PDO::PARAM_STR);
                     $STMT -> bindParam(':PAGE_URL',$PAGE_URL,PDO::PARAM_STR);

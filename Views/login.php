@@ -32,7 +32,7 @@
                                 $STMT -> bindParam(':USER_ID',$USER_ID,PDO::PARAM_INT);
                                 $STMT -> execute();
                             }
-                            catch (PDOException $e)
+                            catch(PDOException $e)
                             {
                                 $constructr -> getLog() -> error('Error resetting passwords: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
                                 $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/user/?edit=error');
@@ -43,7 +43,7 @@
                         }
                     }
                 }
-                catch (PDOException $e) 
+                catch(PDOException $e) 
                 {
                     $constructr -> getLog() -> error($_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
                     die();
@@ -155,7 +155,6 @@
                     $STMT -> bindParam(':ART',$ART,PDO::PARAM_INT);
                     $STMT -> bindParam(':ACTIVE',$ACTIVE,PDO::PARAM_INT);
                     $STMT -> execute();
-
                     $COUNTR = $STMT -> rowCount();
                     $USER = $STMT -> fetch();
 
@@ -177,7 +176,7 @@
                             $STMT -> bindParam(':USER_ID',$USER_ID,PDO::PARAM_INT);
                             $STMT -> execute();
                         }
-                        catch (PDOException $e)
+                        catch(PDOException $e)
                         {
                             $constructr -> getLog() -> debug($_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
                             $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/login-error/');
@@ -203,7 +202,7 @@
                         die();
                     }
                 }
-                catch (PDOException $e)
+                catch(PDOException $e)
                 {
                     $constructr -> getLog() -> error($_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
                     $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/login-error/');

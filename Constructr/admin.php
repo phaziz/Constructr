@@ -192,6 +192,20 @@
                                                 </ul>
                                             <?php
                                         }
+
+                                        if($_CONSTRUCTR_CONF['_ENABLE_USER_TRACKING'] == true)
+                                        {
+                                    ?>
+                                        <br>
+                                        <h2>Constructr Analytics:</h2>
+                                        <br>
+                                        <ul class="list-group">
+                                            <li class="list-group-item">
+                                                <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL']; ?>/constructr/dashboard/analytics/" title="Constructr Analytics anzeigen">Constructr Analytics anzeigen</a>
+                                            </li>
+                                        </ul>
+                                    <?php
+                                        }
                                     ?>
                                     <br>
                                     <h2>Wartung:</h2>

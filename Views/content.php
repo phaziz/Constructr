@@ -36,7 +36,7 @@
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                     }
                 }
-                catch (PDOException $e) 
+                catch(PDOException $e) 
                 {
                     $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
                     die();
@@ -68,7 +68,7 @@
                 $DELETED_CONTENT -> execute(array(':PAGE_ID' => $PAGE_ID));
                 $DELETED_CONTENT_COUNTER = $DELETED_CONTENT -> rowCount();
             }
-            catch (PDOException $e)
+            catch(PDOException $e)
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
                 die();
@@ -76,7 +76,7 @@
 
             $MEM = 0;
             $MEM = number_format(((memory_get_usage()/1014)/1024),2,',','.') . ' MB';
-            
+
             $constructr -> render('content.php',
                 array
                 (
@@ -106,7 +106,7 @@
             $IMAGE_LIST .= '[';
             $EXTENSIONS = array("jpg","JPG", "bmp", "BMP", "gif", "GIF", "jpeg","JPEG", "png","PNG");
 
-            if ($HANDLE = opendir('./Uploads/'))
+            if($HANDLE = @opendir('./Uploads/'))
             {
                 while (false !== ($IMAGE = readdir($HANDLE)))
                 {
@@ -115,7 +115,7 @@
                         $IMAGE_LIST .=  '{"image":"' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/Uploads/' . $IMAGE . '","thumb": "' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/Uploads/' . $IMAGE . '","folder": "Uploads"},';
                     }
                 }
-                closedir($HANDLE);
+                @closedir($HANDLE);
             }
 
             $IMAGE_LIST .= ']';
@@ -131,7 +131,7 @@
             $USERNAME = $_SESSION['backend-user-username'];
 
             $constructr -> view -> setData('BackendUserRight',21);
-            
+
             if(isset($_SESSION['backend-user-id']) && $_SESSION['backend-user-id'] != '')
             {
                 try
@@ -145,9 +145,9 @@
                             ':CBR_VALUE' => 1
                         )
                     );
-    
+
                     $RIGHTS_COUNTR = $RIGHT_CHECKER -> rowCount();
-                    
+
                     if($RIGHTS_COUNTR != 1)
                     {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Error ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
@@ -159,7 +159,7 @@
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                     }
                 }
-                catch (PDOException $e) 
+                catch(PDOException $e) 
                 {
                     $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
                     die();
@@ -183,7 +183,7 @@
                 $PAGE_NAME -> execute(array(':PAGE_ID' => $PAGE_ID));
                 $PAGE_NAME = $PAGE_NAME -> fetch();
             }
-            catch (PDOException $e)
+            catch(PDOException $e)
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
                 die();
@@ -210,8 +210,6 @@
                     'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.'
                 )
             );
-
-            die();
         }
     );
 
@@ -234,9 +232,9 @@
                             ':CBR_VALUE' => 1
                         )
                     );
-    
+
                     $RIGHTS_COUNTR = $RIGHT_CHECKER -> rowCount();
-                    
+
                     if($RIGHTS_COUNTR != 1)
                     {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Error ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
@@ -248,7 +246,7 @@
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                     }
                 }
-                catch (PDOException $e) 
+                catch(PDOException $e) 
                 {
                     $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
                     die();
@@ -288,7 +286,7 @@
                     $MEDIA -> execute();
                     $MEDIA = $MEDIA -> fetchAll();
                 }
-                catch (PDOException $e)
+                catch(PDOException $e)
                 {
                     $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/content/' . $PAGE_ID . '/?res=edit-content-false');
                     die();
@@ -323,7 +321,7 @@
                     $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/content/' . $PAGE_ID . '/?res=create-content-true');
                     die();
                 }
-                catch (PDOException $e)
+                catch(PDOException $e)
                 {
                     $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
                     $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/content/' . $PAGE_ID . '/?res=create-content-false');
@@ -335,7 +333,6 @@
                 $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/content/' . $PAGE_ID . '/?res=create-content-false');
                 die();
             }
-            die();
         }
     );
 
@@ -359,9 +356,9 @@
                             ':CBR_VALUE' => 1
                         )
                     );
-    
+
                     $RIGHTS_COUNTR = $RIGHT_CHECKER -> rowCount();
-                    
+
                     if($RIGHTS_COUNTR != 1)
                     {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Error ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
@@ -373,7 +370,7 @@
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                     }
                 }
-                catch (PDOException $e) 
+                catch(PDOException $e) 
                 {
                     $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
                     die();
@@ -390,7 +387,7 @@
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
             }
-            
+
             try
             {
                 $CONTENT = $DBCON -> prepare('SELECT * FROM constructr_content WHERE content_page_id = :PAGE_ID AND content_id = :CONTENT_ID LIMIT 1;');
@@ -422,7 +419,7 @@
                 );
                 $PAGE_NAME = $PAGE_NAME -> fetch();
             }
-            catch (PDOException $e)
+            catch(PDOException $e)
             {
                 $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
                 $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/content/' . $PAGE_ID . '/?res=edit-content-false');
@@ -452,7 +449,6 @@
                     'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.'
                 )
             );
-            die();
         }
     );
 
@@ -489,7 +485,7 @@
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                     }
                 }
-                catch (PDOException $e) 
+                catch(PDOException $e) 
                 {
                     $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
                     die();
@@ -508,6 +504,7 @@
             }
 
             $USER_FORM_GUID = $constructr -> request() -> post('user_form_guid');
+
             if($GUID != $USER_FORM_GUID)
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ' - USER_FORM_GUID ERROR: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
@@ -526,7 +523,7 @@
                     $MEDIA -> execute();
                     $MEDIA = $MEDIA -> fetchAll();
                 }
-                catch (PDOException $e)
+                catch(PDOException $e)
                 {
                     $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/content/' . $PAGE_ID . '/?res=edit-content-false');
                     die();
@@ -561,7 +558,7 @@
                     $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/content/' . $PAGE_ID . '/?res=edit-content-true');
                     die();
                 }
-                catch (PDOException $e)
+                catch(PDOException $e)
                 {
                     $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
                     $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/content/' . $PAGE_ID . '/?res=edit-content-false');
@@ -573,8 +570,6 @@
                 $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/content/' . $PAGE_ID . '/?res=edit-content-false');
                 die();
             }
-
-            die();
         }
     );
 
@@ -597,9 +592,9 @@
                             ':CBR_VALUE' => 1
                         )
                     );
-    
+
                     $RIGHTS_COUNTR = $RIGHT_CHECKER -> rowCount();
-                    
+
                     if($RIGHTS_COUNTR != 1)
                     {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Error ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
@@ -611,7 +606,7 @@
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                     }
                 }
-                catch (PDOException $e) 
+                catch(PDOException $e) 
                 {
                     $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
                     die();
@@ -655,7 +650,7 @@
                         )
                     );
                 }
-                catch (PDOException $e)
+                catch(PDOException $e)
                 {
                     $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
                     $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/content/' . $PAGE_ID . '/?res=activate-content-false');
@@ -697,9 +692,9 @@
                             ':CBR_VALUE' => 1
                         )
                     );
-    
+
                     $RIGHTS_COUNTR = $RIGHT_CHECKER -> rowCount();
-                    
+
                     if($RIGHTS_COUNTR != 1)
                     {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Error ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
@@ -711,7 +706,7 @@
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                     }
                 }
-                catch (PDOException $e) 
+                catch(PDOException $e) 
                 {
                     $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
                     die();
@@ -755,13 +750,13 @@
                         )
                     );
                 }
-                catch (PDOException $e)
+                catch(PDOException $e)
                 {
                     $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
                     $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/content/' . $PAGE_ID . '/?res=activate-content-false');
                     die();
                 }
-                
+
                 if($_CONSTRUCTR_CONF['_LOGGING'] == true)
                 {
                     $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
@@ -797,9 +792,9 @@
                             ':CBR_VALUE' => 1
                         )
                     );
-    
+
                     $RIGHTS_COUNTR = $RIGHT_CHECKER -> rowCount();
-                    
+
                     if($RIGHTS_COUNTR != 1)
                     {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Error ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
@@ -811,7 +806,7 @@
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                     }
                 }
-                catch (PDOException $e) 
+                catch(PDOException $e) 
                 {
                     $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
                     die();
@@ -843,7 +838,7 @@
                         )
                     );
                 }
-                catch (PDOException $e)
+                catch(PDOException $e)
                 {
                     $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
                     $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/content/' . $PAGE_ID . '/?res=activate-content-false');
@@ -885,9 +880,9 @@
                             ':CBR_VALUE' => 1
                         )
                     );
-    
+
                     $RIGHTS_COUNTR = $RIGHT_CHECKER -> rowCount();
-                    
+
                     if($RIGHTS_COUNTR != 1)
                     {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Error ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
@@ -899,7 +894,7 @@
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                     }
                 }
-                catch (PDOException $e) 
+                catch(PDOException $e) 
                 {
                     $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
                     die();
@@ -931,7 +926,7 @@
                         )
                     );
                 }
-                catch (PDOException $e)
+                catch(PDOException $e)
                 {
                     $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
                     $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/content/' . $PAGE_ID . '/?res=deactivate-content-false');
@@ -973,9 +968,9 @@
                             ':CBR_VALUE' => 1
                         )
                     );
-    
+
                     $RIGHTS_COUNTR = $RIGHT_CHECKER -> rowCount();
-                    
+
                     if($RIGHTS_COUNTR != 1)
                     {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Error ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
@@ -987,7 +982,7 @@
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                     }
                 }
-                catch (PDOException $e) 
+                catch(PDOException $e) 
                 {
                     $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
                     die();
@@ -1025,7 +1020,7 @@
                     $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/content/' . $PAGE_ID . '/?res=del-content-true');
                     die();
                 }
-                catch (PDOException $e)
+                catch(PDOException $e)
                 {
                     $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
                     $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/content/' . $PAGE_ID . '/?res=del-content-false');
@@ -1039,7 +1034,7 @@
             }
         }
     );
-    
+
     $constructr -> get('/constructr/content/:PAGE_ID/:CONTENT_ID/delete-complete/', $ADMIN_CHECK, function ($PAGE_ID,$CONTENT_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
             $USERNAME = $_SESSION['backend-user-username'];
@@ -1059,9 +1054,9 @@
                             ':CBR_VALUE' => 1
                         )
                     );
-    
+
                     $RIGHTS_COUNTR = $RIGHT_CHECKER -> rowCount();
-                    
+
                     if($RIGHTS_COUNTR != 1)
                     {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Error ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
@@ -1073,7 +1068,7 @@
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                     }
                 }
-                catch (PDOException $e) 
+                catch(PDOException $e) 
                 {
                     $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
                     die();
@@ -1095,9 +1090,7 @@
             {
                 try
                 {
-                    $DELETER = $DBCON -> prepare('
-                        DELETE FROM constructr_content WHERE content_id = :CONTENT_ID AND content_page_id = :PAGE_ID LIMIT 1;
-                    ');
+                    $DELETER = $DBCON -> prepare('DELETE FROM constructr_content WHERE content_id = :CONTENT_ID AND content_page_id = :PAGE_ID LIMIT 1;');
                     $DELETER -> execute(
                         array
                         (
@@ -1106,9 +1099,7 @@
                         )
                     );
 
-                    $DELETER = $DBCON -> prepare('
-                        DELETE FROM constructr_content_history WHERE content_page_id = :PAGE_ID AND content_content_id = :CONTENT_ID;
-                    ');
+                    $DELETER = $DBCON -> prepare('DELETE FROM constructr_content_history WHERE content_page_id = :PAGE_ID AND content_content_id = :CONTENT_ID;');
                     $DELETER -> execute(
                         array
                         (
@@ -1116,12 +1107,11 @@
                             ':PAGE_ID' => $PAGE_ID
                         )
                     );
-
 
                     $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/content/' . $PAGE_ID . '/?res=del-content-true');
                     die();
                 }
-                catch (PDOException $e)
+                catch(PDOException $e)
                 {
                     $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
                     $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/content/' . $PAGE_ID . '/?res=del-content-false');
@@ -1155,9 +1145,9 @@
                             ':CBR_VALUE' => 1
                         )
                     );
-    
+
                     $RIGHTS_COUNTR = $RIGHT_CHECKER -> rowCount();
-                    
+
                     if($RIGHTS_COUNTR != 1)
                     {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Error ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
@@ -1169,7 +1159,7 @@
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                     }
                 }
-                catch (PDOException $e) 
+                catch(PDOException $e) 
                 {
                     $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
                     die();
@@ -1191,9 +1181,7 @@
             {
                 try
                 {
-                    $DELETER = $DBCON -> prepare('
-                        DELETE FROM constructr_content_history WHERE content_id = :CONTENT_HISTORY_ID AND content_page_id = :PAGE_ID AND content_content_id = :CONTENT_ID LIMIT 1;
-                    ');
+                    $DELETER = $DBCON -> prepare('DELETE FROM constructr_content_history WHERE content_id = :CONTENT_HISTORY_ID AND content_page_id = :PAGE_ID AND content_content_id = :CONTENT_ID LIMIT 1;');
                     $DELETER -> execute(
                         array
                         (
@@ -1202,10 +1190,11 @@
                             ':PAGE_ID' => $PAGE_ID
                         )
                     );
+
                     $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/content/' . $PAGE_ID . '/' . $CONTENT_ID . '/edit/?history=deleted-true');
                     die();
                 }
-                catch (PDOException $e)
+                catch(PDOException $e)
                 {
                     $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
                     $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/content/' . $PAGE_ID . '/?res=del-content-false');
@@ -1239,9 +1228,9 @@
                             ':CBR_VALUE' => 1
                         )
                     );
-    
+
                     $RIGHTS_COUNTR = $RIGHT_CHECKER -> rowCount();
-                    
+
                     if($RIGHTS_COUNTR != 1)
                     {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Error ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
@@ -1253,7 +1242,7 @@
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                     }
                 }
-                catch (PDOException $e) 
+                catch(PDOException $e) 
                 {
                     $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
                     die();
@@ -1290,7 +1279,7 @@
                     $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/content/' . $PAGE_ID . '/?res=recreated-true');
                     die();
                 }
-                catch (PDOException $e)
+                catch(PDOException $e)
                 {
                     $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
                     $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/content/' . $PAGE_ID . '/?res=del-content-false');

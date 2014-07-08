@@ -21,9 +21,9 @@
                             ':CBR_VALUE' => 1
                         )
                     );
-    
+
                     $RIGHTS_COUNTR = $RIGHT_CHECKER -> rowCount();
-                    
+
                     if($RIGHTS_COUNTR != 1)
                     {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Error ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
@@ -35,7 +35,7 @@
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                     }
                 }
-                catch (PDOException $e) 
+                catch(PDOException $e) 
                 {
                     $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
                     die();
@@ -67,9 +67,9 @@
 
             $DIR_FILES = array_unique($DIR_FILES);
             $COUNTR = count($DIR_FILES);
-
             $MEM = 0;
             $MEM = number_format(((memory_get_usage()/1014)/1024),2,',','.') . ' MB';
+
             $constructr -> render('templates.php',
                 array
                 (
@@ -82,7 +82,6 @@
                     'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.'
                 )
             );
-            die();
         }
     );
 
@@ -107,9 +106,9 @@
                             ':CBR_VALUE' => 1
                         )
                     );
-    
+
                     $RIGHTS_COUNTR = $RIGHT_CHECKER -> rowCount();
-                    
+
                     if($RIGHTS_COUNTR != 1)
                     {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Error ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
@@ -121,7 +120,7 @@
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                     }
                 }
-                catch (PDOException $e) 
+                catch(PDOException $e) 
                 {
                     $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
                     die();
@@ -145,6 +144,7 @@
             $TEMPLATE = $_CONSTRUCTR_CONF['_TEMPLATES_DIR'] . '/' . $TEMPLATE;
             $MEM = 0;
             $MEM = number_format(((memory_get_usage()/1014)/1024),2,',','.') . ' MB';
+
             $constructr -> render('templates-edit.php',
                 array
                 (
@@ -161,7 +161,6 @@
                     'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.'
                 )
             );
-            die();
         }
     );
 
@@ -198,7 +197,7 @@
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                     }
                 }
-                catch (PDOException $e) 
+                catch(PDOException $e) 
                 {
                     $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
                     die();
@@ -231,6 +230,7 @@
             {
                 $PHYSICAL_FILE = $_CONSTRUCTR_CONF['_TEMPLATES_DIR'] . '/' . base64_decode($TEMPLATE_FILE);
                 $PHYSICAL_FILE = fopen($PHYSICAL_FILE,"w+");
+
                 @fwrite($PHYSICAL_FILE, $TEMPLATE);
                 @fclose($PHYSICAL_FILE);
                 @chmod($PHYSICAL_FILE,0777);
@@ -243,8 +243,6 @@
                 $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/templates/?res=edit-template-false');
                 die();
             }
-
-            die();
         }
     );
 
@@ -279,7 +277,7 @@
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                     }
                 }
-                catch (PDOException $e) 
+                catch(PDOException $e) 
                 {
                     $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
                     die();
@@ -323,7 +321,7 @@
             $USERNAME = $_SESSION['backend-user-username'];
 
             $constructr -> view -> setData('BackendUserRight',53);
-            
+
             if(isset($_SESSION['backend-user-id']) && $_SESSION['backend-user-id'] != '')
             {
                 try
@@ -337,9 +335,9 @@
                             ':CBR_VALUE' => 1
                         )
                     );
-    
+
                     $RIGHTS_COUNTR = $RIGHT_CHECKER -> rowCount();
-                    
+
                     if($RIGHTS_COUNTR != 1)
                     {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Error ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
@@ -351,7 +349,7 @@
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                     }
                 }
-                catch (PDOException $e) 
+                catch(PDOException $e) 
                 {
                     $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
                     die();
@@ -388,11 +386,9 @@
                     'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.'
                 )
             );
-
-            die();
         }
     );
-    
+
     $constructr -> post('/constructr/templates/new/:GUID/', $ADMIN_CHECK, function ($GUID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
             $USERNAME = $_SESSION['backend-user-username'];
@@ -412,9 +408,9 @@
                             ':CBR_VALUE' => 1
                         )
                     );
-    
+
                     $RIGHTS_COUNTR = $RIGHT_CHECKER -> rowCount();
-                    
+
                     if($RIGHTS_COUNTR != 1)
                     {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Error ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
@@ -426,7 +422,7 @@
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                     }
                 }
-                catch (PDOException $e) 
+                catch(PDOException $e) 
                 {
                     $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
                     die();
@@ -465,9 +461,11 @@
 
                 $PHYSICAL_FILE = $_CONSTRUCTR_CONF['_TEMPLATES_DIR'] . '/' . trim($TEMPLATE_NAME);
                 $PHYSICAL_FILE = fopen($PHYSICAL_FILE,"w+");
+
                 @fwrite($PHYSICAL_FILE,'<!-- Template-Datei: ' . $TEMPLATE_NAME . ' erstellt am: ' . date('d.m.Y, H:i:s') . ' Uhr -->');
                 @fclose($PHYSICAL_FILE);
                 @chmod($PHYSICAL_FILE,0777);
+
                 $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/templates/?res=create-template-true');
                 die();
             }
@@ -476,6 +474,5 @@
                 $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/templates/?res=create-template-false');
                 die();
             }
-            die();
         }
     );

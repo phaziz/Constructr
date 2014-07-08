@@ -65,15 +65,17 @@
                                                 {
                                                     echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Fehler!</strong> Es ist ein Fehler beim anlegen der Seite aufgetreten.</div>';
                                                 }
-                                                if($_GET['res'] == 'activate-page-true')
+
+	                                            if($_GET['res'] == 'activate-page-true')
                                                 {
                                                     echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Erfolg!</strong> Seite ist nun im Frontend sichtbar/unsichtbar.</div>';
                                                 }
-                                                else if($_GET['res'] == 'create-page-false')
+                                                else if($_GET['res'] == 'activate-page-false')
                                                 {
                                                     echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Fehler!</strong> Es ist ein Fehler beim aktivieren/deaktivieren der Seite aufgetreten.</div>';
                                                 }
-                                                if($_GET['res'] == 'edit-page-true')
+
+	                                            if($_GET['res'] == 'edit-page-true')
                                                 {
                                                     echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Erfolg!</strong> Seite wurde erfolgreich bearbeitet.</div>';
                                                 }
@@ -159,13 +161,12 @@
                                                         }
                                                         if($PAGE['pages_url'] == '')
                                                         {
-                                                            echo '<td><small><a class="tt" data-toggle="tooltip" data-placement="top" title="Seite im Browser anzeigen" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '" onclick="window.open(this.href);return false;">' . $_CONSTRUCTR_CONF['_BASE_URL'] . '</a><br>Template: ' . $PAGE['pages_template'] . '</small></td>';
+                                                            echo '<td><small><a class="tt" data-toggle="tooltip" data-placement="top" title="Seite im Browser anzeigen" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '" onclick="window.open(this.href);return false;">' . $_CONSTRUCTR_CONF['_BASE_URL'] . '</a><br>Template: ' . $PAGE['pages_template'] . '</small> | <small>' . $PAGE['pages_lft'] . ':' . $PAGE['pages_rgt'] . '</small></td>';
                                                         }
                                                         else
                                                         {
-                                                            echo '<td><small><a class="tt" data-toggle="tooltip" data-placement="top" title="Seite im Browser anzeigen" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/' . $PAGE['pages_url'] . '" onclick="window.open(this.href);return false;">' . $PAGE['pages_url'] . '</a><br>Template: ' . $PAGE['pages_template'] . '</small></td>';    
+                                                            echo '<td><small><a class="tt" data-toggle="tooltip" data-placement="top" title="Seite im Browser anzeigen" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/' . $PAGE['pages_url'] . '" onclick="window.open(this.href);return false;">' . $PAGE['pages_url'] . '</a><br>Template: ' . $PAGE['pages_template'] . '</small> | <small>' . $PAGE['pages_lft'] . ':' . $PAGE['pages_rgt'] . '</small></td>';    
                                                         }
-
                                                         echo '<td class="right"><nobr>';
                                                         if($PAGE['pages_lft'] != 1 && $PAGE['pages_upper'] != 0)
                                                         {
@@ -302,30 +303,11 @@
                             }
                         );
 
-                        $('.reorder').click(function(e)
+                        $( ".reorder" ).dblclick(function(e)
                             {
-                                e.preventDefault();
-                                var U = $(this).attr('href');
-                                vex.dialog.buttons.YES.text = 'Ja';
-                                vex.dialog.buttons.NO.text = 'Abbrechen';
-                                vex.dialog.confirm(
-                                    {
-                                        className: 'vex-theme-flat-attack', 
-                                        message: 'Seite wirklich verschieben?',
-                                        callback: function(value)
-                                        {
-                                            if(value == true)
-                                            {
-                                                window.location = (U);
-                                            }
-                                            else
-                                            {
-                                                return false
-                                            }
-                                        }
-                                    }
-                                );
-                           }
+                              e.preventDefault();
+                              return false;
+                            }
                         );
 
                         $('.deleter-single').click(function(e)

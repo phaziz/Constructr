@@ -14,7 +14,6 @@
         14 => 'Seiten aktivieren / deaktivieren',
         15 => 'Einzelseite entfernen',
         16 => 'Seiten rekursiv entfernen',
-        16 => 'Seiten verschieben',
         20 => 'Inhaltselemente anzeigen',
         21 => 'Inhaltselemente erstellen',
         22 => 'Inhaltselemente bearbeiten',

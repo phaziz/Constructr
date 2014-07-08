@@ -27,6 +27,7 @@
                 $TEMPLATES_COUNTR = 0;
                 $ALL_FILES = scandir($_CONSTRUCTR_CONF['_TEMPLATES_DIR']);
                 $DIR_FILES = array();
+
                 foreach($ALL_FILES as $DIR_FILE)
                 {
                     if($DIR_FILE != '.'  && $DIR_FILE != '..')
@@ -34,10 +35,11 @@
                         $DIR_FILES[] = $DIR_FILE;
                     }
                 }
+
                 $DIR_FILES = array_unique($DIR_FILES);
                 $TEMPLATES_COUNTR = count($DIR_FILES);
             }
-            catch (PDOException $e) 
+            catch(PDOException $e) 
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
                 die();
@@ -46,6 +48,7 @@
             $GUID = create_guid();
             $MEM = 0;
             $MEM = number_format(((memory_get_usage()/1014)/1024),2,',','.') . ' MB';
+
             $constructr -> render('admin.php',
                 array
                 (
@@ -74,7 +77,7 @@
         {
             $START = microtime(true);
             $USERNAME = $_SESSION['backend-user-username'];
-            
+
             $constructr -> view -> setData('BackendUserRight',30);
 
             if(isset($_SESSION['backend-user-id']) && $_SESSION['backend-user-id'] != '')
@@ -104,7 +107,7 @@
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                     }
                 }
-                catch (PDOException $e) 
+                catch(PDOException $e) 
                 {
                     $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
                     die();
@@ -134,7 +137,7 @@
                 $UPLOADS = $DBCON -> query('SELECT media_id FROM constructr_media;');
                 $UPLOADS_COUNTR = $UPLOADS -> rowCount();
             }
-            catch (PDOException $e) 
+            catch(PDOException $e) 
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
                 die();
@@ -180,7 +183,7 @@
                             }
                         }
                     }
-                    catch (PDOException $e) 
+                    catch(PDOException $e) 
                     {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
                         $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/');                
@@ -189,7 +192,6 @@
 
                     try
                     {
-                        
                         $SEARCH_QUERY_CONTENT = 'SELECT * FROM constructr_content WHERE content_content LIKE :NEEDLE;';
                         $STMT = $DBCON -> prepare($SEARCH_QUERY_CONTENT);
                         $STMT -> bindParam(':NEEDLE',$NEEDLE,PDO::PARAM_STR);
@@ -209,7 +211,7 @@
                             }
                         }
                     }
-                    catch (PDOException $e) 
+                    catch(PDOException $e) 
                     {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
                         $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/');                
@@ -237,7 +239,7 @@
                             }
                         }
                     }
-                    catch (PDOException $e) 
+                    catch(PDOException $e) 
                     {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
                         $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/');                
@@ -265,7 +267,7 @@
                             }
                         }
                     }
-                    catch (PDOException $e) 
+                    catch(PDOException $e) 
                     {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
                         $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/');                
@@ -293,7 +295,7 @@
                             }
                         }
                     }
-                    catch (PDOException $e) 
+                    catch(PDOException $e) 
                     {
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
                         $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/');                
@@ -305,6 +307,7 @@
             $GUID = create_guid();
             $MEM = 0;
             $MEM = number_format(((memory_get_usage()/1014)/1024),2,',','.') . ' MB';
+
             $constructr -> render('admin.php',
                 array
                 (
@@ -361,7 +364,7 @@
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                     }
                 }
-                catch (PDOException $e) 
+                catch(PDOException $e) 
                 {
                     $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
                     die();
@@ -387,7 +390,7 @@
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                 $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/?optimized=true');
             }
-            catch (PDOException $e) 
+            catch(PDOException $e) 
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
                 die();
@@ -428,7 +431,7 @@
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                     }
                 }
-                catch (PDOException $e) 
+                catch(PDOException $e) 
                 {
                     $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
                     die();
@@ -454,7 +457,7 @@
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                 $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/?content-history=true');
             }
-            catch (PDOException $e) 
+            catch(PDOException $e) 
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
                 die();
@@ -495,7 +498,7 @@
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                     }
                 }
-                catch (PDOException $e) 
+                catch(PDOException $e) 
                 {
                     $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
                     die();
@@ -547,7 +550,7 @@
                             {
                                 $ACT_DIR = $BASE_DIR . '/' . $DIR;
                                 $TMP_DIR = $DIR;
-            
+
                                 if(!is_dir($ACT_DIR))
                                 {
                                     @mkdir($ACT_DIR,0777,false);
@@ -576,16 +579,16 @@
                         {
                             if($PAGE_CONTENT['pages_lft'] == 1)
                             {
-                                $PHYSICAL_FILE = fopen($BASE_DIR . '/' . 'index' . $_CONSTRUCTR_CONF['_STATIC_FILETYPE'],"w+");
-                                fwrite($PHYSICAL_FILE, $_HTML_CONTENT);
-                                fclose($PHYSICAL_FILE);
+                                $PHYSICAL_FILE = @fopen($BASE_DIR . '/' . 'index' . $_CONSTRUCTR_CONF['_STATIC_FILETYPE'],"w+");
+                                @fwrite($PHYSICAL_FILE, $_HTML_CONTENT);
+                                @fclose($PHYSICAL_FILE);
                                 @chmod($PHYSICAL_FILE,0777);
                             }
                             else
                             {
-                                $PHYSICAL_FILE = fopen($ACT_DIR . '/' . 'index' . $_CONSTRUCTR_CONF['_STATIC_FILETYPE'],"w+");
-                                fwrite($PHYSICAL_FILE, $_HTML_CONTENT);
-                                fclose($PHYSICAL_FILE);
+                                $PHYSICAL_FILE = @fopen($ACT_DIR . '/' . 'index' . $_CONSTRUCTR_CONF['_STATIC_FILETYPE'],"w+");
+                                @fwrite($PHYSICAL_FILE, $_HTML_CONTENT);
+                                @fclose($PHYSICAL_FILE);
                                 @chmod($PHYSICAL_FILE,0777);
                             }
                         }
@@ -598,17 +601,17 @@
                     {
                         $PAGE_CONTENT = $DBCON -> query('SELECT * FROM constructr_pages WHERE pages_active = 1 ORDER BY pages_lft;');
                         $PAGE_CONTENT = $PAGE_CONTENT -> fetchAll();
-    
+
                         foreach($PAGE_CONTENT as $PAGE_CONTENT)
                         {
                             if($PAGE_CONTENT['pages_lft'] != 1)
                             {
-                                $FTP_CON = ftp_connect($_CONSTRUCTR_CONF['_FTP_REMOTE_HOST'],$_CONSTRUCTR_CONF['_FTP_REMOTE_PORT']);
-                                ftp_login($FTP_CON, $_CONSTRUCTR_CONF['_FTP_REMOTE_USERNAME'], $_CONSTRUCTR_CONF['_FTP_REMOTE_PASSWORD']);
-    
+                                $FTP_CON = @ftp_connect($_CONSTRUCTR_CONF['_FTP_REMOTE_HOST'],$_CONSTRUCTR_CONF['_FTP_REMOTE_PORT']);
+                                @ftp_login($FTP_CON, $_CONSTRUCTR_CONF['_FTP_REMOTE_USERNAME'], $_CONSTRUCTR_CONF['_FTP_REMOTE_PASSWORD']);
+
                                 $PARTS = array();
                                 $PARTS = explode('/',$PAGE_CONTENT['pages_url']);
-    
+
                                 foreach($PARTS as $PART)
                                 {
                                     if(@ftp_chdir($FTP_CON,$PART))
@@ -622,8 +625,8 @@
                                         @ftp_chdir($FTP_CON,$PART);
                                     }
                                 }
-    
-                                ftp_close($FTP_CON);
+
+                                @ftp_close($FTP_CON);
                             }
     
                             if($PAGE_CONTENT['pages_lft'] == 1)
@@ -671,13 +674,13 @@
                         @ftp_chmod($FTP_CON, 0777,'robots.txt');
                         @ftp_close($FTP_CON);
                     }
-                    catch (PDOException $e)
+                    catch(PDOException $e)
                     {
                         $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                         $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/?transfered-static=false');
                         die();
                     }
-    
+
                     $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                     $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/?transfered-static=true');
                     die();
@@ -693,7 +696,7 @@
                 $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/?transfered-static=true');
                 die();                
             }
-            catch (PDOException $e)
+            catch(PDOException $e)
             {
                 $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());   
                 $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/?transfered-static=false');

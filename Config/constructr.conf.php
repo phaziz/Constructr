@@ -84,6 +84,8 @@
         '_FTP_REMOTE_USERNAME' => '', // FTP USERNAME - (char)
 
         '_FTP_REMOTE_PASSWORD' => '', // FTP PASSWORD - (char)
+        
+        '_ENABLE_USER_TRACKING' => true, // Use Constructr Analytics - (boolean) true | false
     );
 
     if(!defined('CRYPT_BLOWFISH') && CRYPT_BLOWFISH)

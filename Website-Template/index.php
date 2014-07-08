@@ -111,5 +111,13 @@
             <noscript>
                 <img src="http://piwik.phaziz.com/piwik.php?idsite=3&rec=1" style="border:0" alt="piwik" />
             </noscript>
+
+            <!-- // CONSTRUCTR_ANALYTICS // -->
+            <script src="http://constructr.phaziz.com/Analytics/constructr_analytics.js"></script>
+            <script>
+                constructr_analytics('http://<?php echo $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']; ?>','<?php echo time(); ?>');
+            </script>
+            <!-- // CONSTRUCTR_ANALYTICS // -->
+
         </body>
     </html>

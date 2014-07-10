@@ -1,5 +1,25 @@
 <?php
 
+    /*
+    ***************************************************************************
+
+        DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+        Version 1, December 2012
+        Copyright (C) 2012 Christian Becher | phaziz.com <christian@phaziz.com>
+        Everyone is permitted to copy and distribute verbatim or modified
+        copies of this license document, and changing it is allowed as long
+        as the name is changed.
+
+        DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+        TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+        0. YOU JUST DO WHAT THE FUCK YOU WANT TO!
+
+        +++ Visit http://phaziz.com +++
+
+    ***************************************************************************
+    */
+
+
     $constructr -> get('/constructr/content/:PAGE_ID/', $ADMIN_CHECK, function ($PAGE_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
             $START = microtime(true);
@@ -74,6 +94,7 @@
                 die();
             }
 
+            $GUID = create_guid();
             $MEM = 0;
             $MEM = number_format(((memory_get_usage()/1014)/1024),2,',','.') . ' MB';
 
@@ -85,6 +106,7 @@
                     'PAGE_ID' => $PAGE_ID,
                     'PAGE_NAME' => $PAGE_NAME,
                     'CONTENT' => $CONTENT,
+                    'GUID' => $GUID,
                     'CONTENT_COUNTER' => $CONTENT_COUNTER,
                     'DELETED_CONTENT' => $DELETED_CONTENT,
                     'DELETED_CONTENT_COUNTER' => $DELETED_CONTENT_COUNTER,
@@ -179,7 +201,7 @@
 
             try
             {
-                $PAGE_NAME = $DBCON -> prepare('SELECT pages_name FROM constructr_pages WHERE pages_id = :PAGE_ID LIMIT 1;');
+                $PAGE_NAME = $DBCON -> prepare('SELECT pages_name,pages_url FROM constructr_pages WHERE pages_id = :PAGE_ID LIMIT 1;');
                 $PAGE_NAME -> execute(array(':PAGE_ID' => $PAGE_ID));
                 $PAGE_NAME = $PAGE_NAME -> fetch();
             }
@@ -308,16 +330,6 @@
                     $STMT -> bindParam(':CONTENT_ACTIVE',$CONTENT_ACTIVE,PDO::PARAM_INT);
                     $STMT -> execute();
 
-                    $LAST_CONTENT_ID = $DBCON -> lastInsertId(); 
-
-                    $QUERY = 'INSERT INTO constructr_content_history SET content_datetime = :CONTENT_DATETIME,content_page_id = :PAGE_ID,content_content = :CONTENT, content_content_id = :LAST_CONTENT_ID;';
-                    $STMT = $DBCON -> prepare($QUERY);
-                    $STMT -> bindParam(':CONTENT',$CONTENT,PDO::PARAM_STR);
-                    $STMT -> bindParam(':CONTENT_DATETIME',$CONTENT_DATETIME,PDO::PARAM_STR);
-                    $STMT -> bindParam(':PAGE_ID',$PAGE_ID,PDO::PARAM_INT);
-                    $STMT -> bindParam(':LAST_CONTENT_ID',$LAST_CONTENT_ID,PDO::PARAM_INT);
-                    $STMT -> execute();
-
                     $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/content/' . $PAGE_ID . '/?res=create-content-true');
                     die();
                 }
@@ -410,7 +422,7 @@
                 );
                 $CONTENT_HISTORY = $CONTENT_HISTORY -> fetchAll();
 
-                $PAGE_NAME = $DBCON -> prepare('SELECT pages_name FROM constructr_pages WHERE pages_id = :PAGE_ID LIMIT 1;');
+                $PAGE_NAME = $DBCON -> prepare('SELECT pages_name,pages_url FROM constructr_pages WHERE pages_id = :PAGE_ID LIMIT 1;');
                 $PAGE_NAME -> execute(
                     array
                     (
@@ -1016,9 +1028,6 @@
                             ':ACT_ORDER' => $ACT_ORDER
                         )
                     );
-
-                    $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/content/' . $PAGE_ID . '/?res=del-content-true');
-                    die();
                 }
                 catch(PDOException $e)
                 {

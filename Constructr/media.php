@@ -1,3 +1,25 @@
+<?php
+
+    /*
+    ***************************************************************************
+
+        DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+        Version 1, December 2012
+        Copyright (C) 2012 Christian Becher | phaziz.com <christian@phaziz.com>
+        Everyone is permitted to copy and distribute verbatim or modified
+        copies of this license document, and changing it is allowed as long
+        as the name is changed.
+
+        DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+        TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+        0. YOU JUST DO WHAT THE FUCK YOU WANT TO!
+
+        +++ Visit http://phaziz.com +++
+
+    ***************************************************************************
+    */
+
+?>
 <!DOCTYPE html>
     <html lang="de">
         <head>
@@ -9,7 +31,7 @@
             <link href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/css/constructr.css" rel="stylesheet">
             <link href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/datatables-bootstrap3/assets/css/datatables.css" rel="stylesheet">
             <link href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/vex/css/vex.css" rel="stylesheet">
-            <link href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/vex/css/vex-theme-flat-attack.css" rel="stylesheet">            
+            <link href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/vex/css/vex-theme-flat-attack.css" rel="stylesheet">
             <link href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/ekko-lightbox/ekko-lightbox.min.css" rel="stylesheet">
             <link href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/ekko-lightbox/ekko-lightbox-dark.css" rel="stylesheet">
             <!--[if lt IE 9]>
@@ -24,13 +46,13 @@
                         <li class="sidebar-brand"><a id="menu-toggle" href="#"><div class="pull-right"><span title="&#8249;&#160;Hauptmen&uuml;&#160;&#160;" data-toggle="tooltip" data-placement="right" class="tt glyphicon glyphicon-align-justify"></span>&#160;&#160;</div></a></li>
                     </ul>
                     <ul class="sidebar-nav" id="sidebar">
-                        <?php 
+                        <?php
 
                             if($_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'] != '')
                             {
                                 ?>
-                                    <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'] ?>" onclick="window.open(this.href);return false;" title="Statische Internetseiten anzeigen" data-toggle="tooltip" data-placement="right">FTP-Seiten</a></li>        
-                                <?php   
+                                    <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'] ?>" onclick="window.open(this.href);return false;" title="Statische Internetseiten anzeigen" data-toggle="tooltip" data-placement="right">FTP-Seiten</a></li>
+                                <?php
                             }
 
                         ?>
@@ -53,7 +75,7 @@
                                 <p><small><a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/">Dashboard</a> <span class="glyphicon glyphicon-chevron-right"></span> <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/media/">Medienverwaltung - &Uuml;bersicht</a> <span class="glyphicon glyphicon-chevron-right"></span></small></p>
                             </div><!-- // EOF COL-... -->
                         </div><!-- // EOF ROW -->
-                        <?php 
+                        <?php
                             if(isset($_GET['res']) && $_GET['res'] != ''){
                                 ?>
                                     <div class="row response">
@@ -119,7 +141,7 @@
                                                         $FILE_TYPE = strrchr($MEDIA['media_file'],'.');
                                                         if($FILE_TYPE == '.jpg' || $FILE_TYPE == '.JPG' || $FILE_TYPE == '.jpeg' || $FILE_TYPE == '.JPEG' || $FILE_TYPE == '.gif' || $FILE_TYPE == '.GIF' || $FILE_TYPE == '.png' || $FILE_TYPE == '.PNG')
                                                         {
-                                                            echo '<td class="center"><a href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/' . $MEDIA['media_file'] . '" data-toggle="lightbox" data-title="' . $MEDIA['media_originalname'] . '" data-footer="' . $MEDIA['media_originalname'] . '"><img src="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/' . $MEDIA['media_file'] . '" alt="' . $MEDIA['media_originalname'] . '" height="50px" width="*"></a></td>';    
+                                                            echo '<td class="center"><a href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/' . $MEDIA['media_file'] . '" data-toggle="lightbox" data-title="' . $MEDIA['media_originalname'] . '" data-footer="' . $MEDIA['media_originalname'] . '"><img src="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/' . $MEDIA['media_file'] . '" alt="' . $MEDIA['media_originalname'] . '" height="50px" width="*"></a></td>';
                                                         }
                                                         else
                                                         {
@@ -128,7 +150,7 @@
                                                         echo '<td><small>' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/' . $MEDIA['media_file'] . '<br><small>' . $MEDIA['media_originalname'] . '</small></td>';
                                                         if($FILE_TYPE == '.jpg' || $FILE_TYPE == '.JPG' || $FILE_TYPE == '.jpeg' || $FILE_TYPE == '.JPEG' || $FILE_TYPE == '.gif' || $FILE_TYPE == '.GIF' || $FILE_TYPE == '.png' || $FILE_TYPE == '.PNG')
                                                         {
-                                                            echo '<td><small>' . $MEDIA['media_title'] . ' ' . $MEDIA['media_description'] . ' ' . $MEDIA['media_copyright'] . ' ' . $MEDIA['media_keywords'] . '</small></td>';    
+                                                            echo '<td><small>' . $MEDIA['media_title'] . ' ' . $MEDIA['media_description'] . ' ' . $MEDIA['media_copyright'] . ' ' . $MEDIA['media_keywords'] . '</small></td>';
                                                         }
                                                         else
                                                         {
@@ -271,7 +293,7 @@
                                 vex.dialog.buttons.NO.text = 'Abbrechen';
                                 vex.dialog.confirm(
                                     {
-                                        className: 'vex-theme-flat-attack', 
+                                        className: 'vex-theme-flat-attack',
                                         message: 'M&ouml;chten Sie diesen Upload wirklich vollst&auml;ndig l&ouml;schen?',
                                         callback: function(value)
                                         {

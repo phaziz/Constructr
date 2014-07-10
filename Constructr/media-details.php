@@ -1,3 +1,25 @@
+<?php
+
+    /*
+    ***************************************************************************
+
+        DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+        Version 1, December 2012
+        Copyright (C) 2012 Christian Becher | phaziz.com <christian@phaziz.com>
+        Everyone is permitted to copy and distribute verbatim or modified
+        copies of this license document, and changing it is allowed as long
+        as the name is changed.
+
+        DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+        TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+        0. YOU JUST DO WHAT THE FUCK YOU WANT TO!
+
+        +++ Visit http://phaziz.com +++
+
+    ***************************************************************************
+    */
+
+?>
 <!DOCTYPE html>
     <html lang="de">
         <head>
@@ -19,13 +41,13 @@
                         <li class="sidebar-brand"><a id="menu-toggle" href="#"><div class="pull-right"><span title="&#8249;&#160;Hauptmen&uuml;&#160;&#160;" data-toggle="tooltip" data-placement="right" class="tt glyphicon glyphicon-align-justify"></span>&#160;&#160;</div></a></li>
                     </ul>
                     <ul class="sidebar-nav" id="sidebar">
-                        <?php 
+                        <?php
 
                             if($_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'] != '')
                             {
                                 ?>
-                                    <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'] ?>" onclick="window.open(this.href);return false;" title="Statische Internetseiten anzeigen" data-toggle="tooltip" data-placement="right">FTP-Seiten</a></li>        
-                                <?php   
+                                    <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'] ?>" onclick="window.open(this.href);return false;" title="Statische Internetseiten anzeigen" data-toggle="tooltip" data-placement="right">FTP-Seiten</a></li>
+                                <?php
                             }
 
                         ?>
@@ -48,17 +70,17 @@
                                 <p><small><a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/">Dashboard</a> <span class="glyphicon glyphicon-chevron-right"></span> <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/media/">Medienverwaltung - &Uuml;bersicht</a> <span class="glyphicon glyphicon-chevron-right"></span> <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/media/details/<?php echo $MEDIA_ID; ?>/">Detailansicht</a> <span class="glyphicon glyphicon-chevron-right"></span></small></p>
                             </div><!-- // EOF COL-... -->
                         </div><!-- // EOF ROW -->
-                        <?php 
+                        <?php
                             if(isset($_GET['details']) && $_GET['details'] == 'updated'){
                                 ?>
                                     <div class="row response">
-                                        
+
                                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                                 <?php
                                                     echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Erfolg!</strong> Die Detailinformationen wurden aktualisiert.</div>';
                                                 ?>
                                         </div><!-- // EOF COL-... -->
-                                        
+
                                     </div><!-- // EOF ROW -->
                                 <?php
                             }

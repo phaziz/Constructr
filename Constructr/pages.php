@@ -1,3 +1,25 @@
+<?php
+
+    /*
+    ***************************************************************************
+
+        DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+        Version 1, December 2012
+        Copyright (C) 2012 Christian Becher | phaziz.com <christian@phaziz.com>
+        Everyone is permitted to copy and distribute verbatim or modified
+        copies of this license document, and changing it is allowed as long
+        as the name is changed.
+
+        DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+        TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+        0. YOU JUST DO WHAT THE FUCK YOU WANT TO!
+
+        +++ Visit http://phaziz.com +++
+
+    ***************************************************************************
+    */
+
+?>
 <!DOCTYPE html>
     <html lang="de">
         <head>
@@ -22,13 +44,13 @@
                         <li class="sidebar-brand"><a id="menu-toggle" href="#"><div class="pull-right"><span title="&#8249;&#160;Hauptmen&uuml;&#160;&#160;" data-toggle="tooltip" data-placement="right" class="tt glyphicon glyphicon-align-justify"></span>&#160;&#160;</div></a></li>
                     </ul>
                     <ul class="sidebar-nav" id="sidebar">
-                        <?php 
+                        <?php
 
                             if($_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'] != '')
                             {
                                 ?>
-                                    <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'] ?>" onclick="window.open(this.href);return false;" title="Statische Internetseiten anzeigen" data-toggle="tooltip" data-placement="right">FTP-Seiten</a></li>        
-                                <?php   
+                                    <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'] ?>" onclick="window.open(this.href);return false;" title="Statische Internetseiten anzeigen" data-toggle="tooltip" data-placement="right">FTP-Seiten</a></li>
+                                <?php
                             }
 
                         ?>
@@ -51,7 +73,7 @@
                                 <p><small><a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/">Dashboard</a> <span class="glyphicon glyphicon-chevron-right"></span> <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/pages/">Seitenverwaltung - &Uuml;bersicht</a> <span class="glyphicon glyphicon-chevron-right"></span></small></p>
                             </div><!-- // EOF COL-... -->
                         </div><!-- // EOF ROW -->
-                        <?php 
+                        <?php
                             if(isset($_GET['res']) && $_GET['res'] != ''){
                                 ?>
                                     <div class="row response">
@@ -66,7 +88,7 @@
                                                     echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Fehler!</strong> Es ist ein Fehler beim anlegen der Seite aufgetreten.</div>';
                                                 }
 
-	                                            if($_GET['res'] == 'activate-page-true')
+                                                if($_GET['res'] == 'activate-page-true')
                                                 {
                                                     echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Erfolg!</strong> Seite ist nun im Frontend sichtbar/unsichtbar.</div>';
                                                 }
@@ -75,7 +97,7 @@
                                                     echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Fehler!</strong> Es ist ein Fehler beim aktivieren/deaktivieren der Seite aufgetreten.</div>';
                                                 }
 
-	                                            if($_GET['res'] == 'edit-page-true')
+                                                if($_GET['res'] == 'edit-page-true')
                                                 {
                                                     echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Erfolg!</strong> Seite wurde erfolgreich bearbeitet.</div>';
                                                 }
@@ -161,17 +183,17 @@
                                                         }
                                                         if($PAGE['pages_url'] == '')
                                                         {
-                                                            echo '<td><small><a class="tt" data-toggle="tooltip" data-placement="top" title="Seite im Browser anzeigen" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '" onclick="window.open(this.href);return false;">' . $_CONSTRUCTR_CONF['_BASE_URL'] . '</a><br>Template: ' . $PAGE['pages_template'] . '</small> | <small>' . $PAGE['pages_lft'] . ':' . $PAGE['pages_rgt'] . '</small></td>';
+                                                            echo '<td><small><a class="tt" data-toggle="tooltip" data-placement="top" title="Seite im Browser anzeigen" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '" onclick="window.open(this.href);return false;">' . $_CONSTRUCTR_CONF['_BASE_URL'] . '</a><br>Template: ' . $PAGE['pages_template'] . '</small> | <small>Lft: ' . $PAGE['pages_lft'] . ', Rgt: ' . $PAGE['pages_rgt'] . '</small></td>';
                                                         }
                                                         else
                                                         {
-                                                            echo '<td><small><a class="tt" data-toggle="tooltip" data-placement="top" title="Seite im Browser anzeigen" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/' . $PAGE['pages_url'] . '" onclick="window.open(this.href);return false;">' . $PAGE['pages_url'] . '</a><br>Template: ' . $PAGE['pages_template'] . '</small> | <small>' . $PAGE['pages_lft'] . ':' . $PAGE['pages_rgt'] . '</small></td>';    
+                                                            echo '<td><small><a class="tt" data-toggle="tooltip" data-placement="top" title="Seite im Browser anzeigen" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/' . $PAGE['pages_url'] . '" onclick="window.open(this.href);return false;">' . $PAGE['pages_url'] . '</a><br>Template: ' . $PAGE['pages_template'] . '</small> | <small>Lft: ' . $PAGE['pages_lft'] . ', Rgt: ' . $PAGE['pages_rgt'] . '</small></td>';
                                                         }
                                                         echo '<td class="right"><nobr>';
                                                         if($PAGE['pages_lft'] != 1 && $PAGE['pages_upper'] != 0)
                                                         {
                                                             echo '<a data-toggle="tooltip" data-placement="top" title="Seite nach oben verschieben" class="reorder tt" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/reorder/up/' . $PAGE['pages_id'] . '/"><button type="button" class="btn btn-primary btn-xs" title="Seite nach oben verschieben"><span class="glyphicon glyphicon-arrow-up"></span></button></a>';
-                                                            echo '&#160;';                                                    
+                                                            echo '&#160;';
                                                         }
                                                         if($PAGE['pages_lower'] != 0)
                                                         {
@@ -318,7 +340,7 @@
                                 vex.dialog.buttons.NO.text = 'Abbrechen';
                                 vex.dialog.confirm(
                                     {
-                                        className: 'vex-theme-flat-attack', 
+                                        className: 'vex-theme-flat-attack',
                                         message: 'M&ouml;chten Sie wirklich diese Seite l&ouml;schen?',
                                         callback: function(value)
                                         {
@@ -344,7 +366,7 @@
                                 vex.dialog.buttons.NO.text = 'Abbrechen';
                                 vex.dialog.confirm(
                                     {
-                                        className: 'vex-theme-flat-attack', 
+                                        className: 'vex-theme-flat-attack',
                                         message: 'M&ouml;chten Sie wirklich diese Seite inklusive der Unterseiten l&ouml;schen?',
                                         callback: function(value)
                                         {

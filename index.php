@@ -9,9 +9,10 @@
         Everyone is permitted to copy and distribute verbatim or modified
         copies of this license document, and changing it is allowed as long
         as the name is changed.
+
         DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
         TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
-        0. YOU JUST DO WHAT THE FUCK YOU WANT TO MIT-LICENSE-STYLE!
+        0. YOU JUST DO WHAT THE FUCK YOU WANT TO!
 
         +++ Visit http://phaziz.com +++
 
@@ -21,8 +22,8 @@
     require_once './Config/constructr.conf.php';
     require_once './Config/constructr_user_rights.conf.php';
 
-    $_CONSTRUCTR_CONF['_VERSION_DATE'] = '20140708';
-    $_CONSTRUCTR_CONF['_VERSION'] = '1.01.8';
+    $_CONSTRUCTR_CONF['_VERSION_DATE'] = '20140710';
+    $_CONSTRUCTR_CONF['_VERSION'] = '1.02.1';
 
     require_once './Slim/Slim.php';
     require_once './Slim/Log/DateTimeFileWriter.php';
@@ -135,21 +136,33 @@
 
                 $constructr -> get('(:ROUTE+)', function ($ROUTE) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
                     {
+                        if($_CONSTRUCTR_CONF['_CONSTRUCTR_WEBSITE_CACHE'] == true)
+                        {
+                            $C_FILE = $_CONSTRUCTR_CONF['_CONSTRUCTR_WEBSITE_CACHE_DIR'] . base64_encode($_SERVER['REQUEST_URI']) . '.php';
+                            $C_TIME = 18000;
+                            if (file_exists($C_FILE) && time() - $C_TIME < filemtime($C_FILE))
+                            {
+                                include($C_FILE);
+                                exit();
+                            }
+                            ob_start();
+                        }
+
                         $FULL_ROUTE;
                         $PAGES;
                         $CONTENT;
                         $PAGE_DATA;
-        
+
                         foreach($ROUTE as $ROUTE)
                         {
                             $FULL_ROUTE .= $ROUTE . '/';
                         }
-        
-                        if (strpos($FULL_ROUTE, '//') !== false)
+
+                        if(strpos($FULL_ROUTE, '//') !== false)
                         {
                             $FULL_ROUTE = preg_replace("#//+#", "/", $FULL_ROUTE);
                         }
-        
+
                         try
                         {
                             $PAGES = $DBCON -> query('SELECT n.*, round((n.pages_rgt-n.pages_lft-1)/2,0) AS pages_subpages_countr, count(*)-1+(n.pages_lft>1) AS pages_level, ((min(p.pages_rgt)-n.pages_rgt-(n.pages_lft>1))/2) > 0 AS pages_lower, (((n.pages_lft-max(p.pages_lft)>1))) AS pages_upper FROM constructr_pages n, constructr_pages p WHERE n.pages_lft BETWEEN p.pages_lft AND p.pages_rgt AND (p.pages_id != n.pages_id OR n.pages_lft = 1) AND n.pages_active = 1 AND p.pages_active = 1 GROUP BY n.pages_id ORDER BY n.pages_lft;');
@@ -160,7 +173,7 @@
                             $constructr -> getLog() -> error($_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
                             die();
                         }
-        
+
                         if($PAGES)
                         {
                             foreach($PAGES as $PAGE)
@@ -180,10 +193,10 @@
                                         $constructr -> getLog() -> error($_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
                                         die();
                                     }
-        
+
                                     $PAGE_ID = $HOMEPAGE['pages_id'];
                                     $TEMPLATE = $HOMEPAGE['pages_template'];
-        
+
                                     try
                                     {
                                         $CONTENT_ACTIVE = 1;
@@ -228,11 +241,20 @@
 
                         $POSTMASTER_GUID = create_guid();
                         $constructr -> render($TEMPLATE,array('PAGES' => $PAGES,'PAGE_DATA' => $PAGE_DATA,'CONTENT' => $CONTENT,'_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,'POSTMASTER_GUID' => $POSTMASTER_GUID));
+
+                        if($_CONSTRUCTR_CONF['_CONSTRUCTR_WEBSITE_CACHE'] == true)
+                        {
+                            $fp = @fopen($C_FILE, 'w');
+                            @fwrite($fp,ob_get_contents());
+                            @fwrite($fp,'<!-- CONSTRUCTR CACHE ' . date('Y-m-d H:i:s') . '-->');
+                            @fclose($fp);
+                            ob_end_flush();
+                        }
                     }
                 );
 
                 break;
-        
+
             case 'POST':
 
                 $constructr -> post('(:ROUTE+)', function ($ROUTE) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
@@ -241,17 +263,17 @@
                         $PAGES;
                         $CONTENT;
                         $PAGE_DATA;
-        
+
                         foreach($ROUTE as $ROUTE)
                         {
                             $FULL_ROUTE .= $ROUTE . '/';
                         }
-        
+
                         if (strpos($FULL_ROUTE, '//') !== false)
                         {
                             $FULL_ROUTE = preg_replace("#//+#", "/", $FULL_ROUTE);
                         }
-        
+
                         try
                         {
                             $PAGES = $DBCON -> query('SELECT n.*, round((n.pages_rgt-n.pages_lft-1)/2,0) AS pages_subpages_countr, count(*)-1+(n.pages_lft>1) AS pages_level, ((min(p.pages_rgt)-n.pages_rgt-(n.pages_lft>1))/2) > 0 AS pages_lower, (((n.pages_lft-max(p.pages_lft)>1))) AS pages_upper FROM constructr_pages n, constructr_pages p WHERE n.pages_lft BETWEEN p.pages_lft AND p.pages_rgt AND (p.pages_id != n.pages_id OR n.pages_lft = 1) AND n.pages_active = 1 AND p.pages_active = 1 GROUP BY n.pages_id ORDER BY n.pages_lft;');
@@ -262,7 +284,7 @@
                             $constructr -> getLog() -> error($_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
                             die();
                         }
-        
+
                         if($PAGES)
                         {
                             foreach($PAGES as $PAGE)
@@ -282,10 +304,10 @@
                                         $constructr -> getLog() -> error($_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
                                         die();
                                     }
-        
+
                                     $PAGE_ID = $HOMEPAGE['pages_id'];
                                     $TEMPLATE = $HOMEPAGE['pages_template'];
-        
+
                                     try
                                     {
                                         $CONTENT_ACTIVE = 1;

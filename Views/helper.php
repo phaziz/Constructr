@@ -1,5 +1,24 @@
 <?php
 
+    /*
+    ***************************************************************************
+
+        DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+        Version 1, December 2012
+        Copyright (C) 2012 Christian Becher | phaziz.com <christian@phaziz.com>
+        Everyone is permitted to copy and distribute verbatim or modified
+        copies of this license document, and changing it is allowed as long
+        as the name is changed.
+
+        DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+        TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+        0. YOU JUST DO WHAT THE FUCK YOU WANT TO!
+
+        +++ Visit http://phaziz.com +++
+
+    ***************************************************************************
+    */
+
     function create_guid() {static $guid = '';$uid = uniqid("", true);$data = $_SERVER['REQUEST_TIME'];$data .= $_SERVER['HTTP_USER_AGENT'];$data .= $_SERVER['PHP_SELF'];$data .= $_SERVER['SCRIPT_NAME'];$data .= $_SERVER['REMOTE_ADDR'];$data .= $_SERVER['REMOTE_PORT'];$hash = strtoupper(hash('ripemd128', $uid . $guid . md5($data)));$guid = substr($hash,0,2) . substr($hash,2,2) . substr($hash,4,2) . substr($hash,8,2);return $guid;}
     function mysql_escape_mimic($INPUT){if(!empty($INPUT) && is_string($INPUT)){return str_replace(array('\\', "\0", "\n", "\r", "'", '"', "\x1a"),array('\\\\', '\\0', '\\n', '\\r', "\\'", '\\"', '\\Z'),$INPUT);}return $INPUT;}
     function constructr_sanitization($VAR,$TRIM=true,$STRICT=false){if($TRIM == true){$VAR = trim($VAR);}if($STRICT == true){$VAR = mysql_escape_mimic(strip_tags($VAR));}return $VAR;}

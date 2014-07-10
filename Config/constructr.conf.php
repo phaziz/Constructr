@@ -1,9 +1,28 @@
-<?php 
+<?php
 
     /*
-     * 
+    ***************************************************************************
+
+        DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+        Version 1, December 2012
+        Copyright (C) 2012 Christian Becher | phaziz.com <christian@phaziz.com>
+        Everyone is permitted to copy and distribute verbatim or modified
+        copies of this license document, and changing it is allowed as long
+        as the name is changed.
+
+        DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+        TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+        0. YOU JUST DO WHAT THE FUCK YOU WANT TO!
+
+        +++ Visit http://phaziz.com +++
+
+    ***************************************************************************
+    */
+
+    /*
+     *
      * CONSTRUCTR MAIN CONFIGURATION FILE - HANDLE WITH CARE!!!
-     * 
+     *
      */
     $_CONSTRUCTR_CONF = array
     (
@@ -66,7 +85,7 @@
         '_STATIC_DIR' => './Static', // DIRECTORY FOR STATIC OUTPUT - (char) './Static'
 
         '_CREATE_STATIC_DOMAIN' => '', // SETS SPECIFIC DOMAIN FOR CREATION OF STATIC WEBPAGES - (char) http://domain.tld
-        
+
         '_CREATE_DYNAMIC_DOMAIN' => '', // SETS SPECIFIC DOMAIN FOR CREATION OF DYNAMIC WEBPAGES - (char) http://domain.tld
 
         '_MAGIC_GENERATION_KEY' => '', // MAGIC KEY FOR READING CONSTRUCTR FRONTEND OUTPUT - STATIC WEBPAGE GENERATION - (char) WHATEVER YOU WISH
@@ -84,8 +103,12 @@
         '_FTP_REMOTE_USERNAME' => '', // FTP USERNAME - (char)
 
         '_FTP_REMOTE_PASSWORD' => '', // FTP PASSWORD - (char)
-        
+
         '_ENABLE_USER_TRACKING' => true, // Use Constructr Analytics - (boolean) true | false
+        
+        '_CONSTRUCTR_WEBSITE_CACHE' => true, // Use ConstructrWebsiteCache mechanism - (boolean) true | false
+        
+        '_CONSTRUCTR_WEBSITE_CACHE_DIR' => './Website-Cache/', // DESTINATION DIRECTORY FOR CACHED FILES - (char) - './Website-Cache/'
     );
 
     if(!defined('CRYPT_BLOWFISH') && CRYPT_BLOWFISH)

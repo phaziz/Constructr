@@ -34,7 +34,7 @@
                                  die();
                             }
 
-                            $_MAILTEXT .= $_GETTER_KEY . ': ' . $_GETTER_VALUE . "\n";                        
+                            $_MAILTEXT .= $_GETTER_KEY . ': ' . $_GETTER_VALUE . "\n";
                         }
 
                         @mail($_CONSTRUCTR_CONF['_CONSTRUCTR_CONTACT_MAIL'],'eMail ' . $_CONSTRUCTR_CONF['_BASE_URL'],$_MAILTEXT);
@@ -77,7 +77,7 @@
                                  die();
                             }
 
-                            $_MAILTEXT .= $_POSTER_KEY . ': ' . $_POSTER_VALUE . "\n";                        
+                            $_MAILTEXT .= $_POSTER_KEY . ': ' . $_POSTER_VALUE . "\n";
                         }
 
                         @mail($_CONSTRUCTR_CONF['_CONSTRUCTR_CONTACT_MAIL'],'eMail ' . $_CONSTRUCTR_CONF['_BASE_URL'],$_MAILTEXT);

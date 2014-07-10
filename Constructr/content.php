@@ -1,3 +1,25 @@
+<?php
+
+    /*
+    ***************************************************************************
+
+        DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+        Version 1, December 2012
+        Copyright (C) 2012 Christian Becher | phaziz.com <christian@phaziz.com>
+        Everyone is permitted to copy and distribute verbatim or modified
+        copies of this license document, and changing it is allowed as long
+        as the name is changed.
+
+        DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+        TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+        0. YOU JUST DO WHAT THE FUCK YOU WANT TO!
+
+        +++ Visit http://phaziz.com +++
+
+    ***************************************************************************
+    */
+
+?>
 <!DOCTYPE html>
     <html lang="de">
         <head>
@@ -22,12 +44,12 @@
                         <li class="sidebar-brand"><a id="menu-toggle" href="#"><div class="pull-right"><span title="&#8249;&#160;Hauptmen&uuml;&#160;&#160;" data-toggle="tooltip" data-placement="right" class="tt glyphicon glyphicon-align-justify"></span>&#160;&#160;</div></a></li>
                     </ul>
                     <ul class="sidebar-nav" id="sidebar">
-                        <?php 
+                        <?php
                             if($_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'] != '')
                             {
                                 ?>
-                                    <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'] ?>" onclick="window.open(this.href);return false;" title="Statische Internetseiten anzeigen" data-toggle="tooltip" data-placement="right">FTP-Seiten</a></li>        
-                                <?php   
+                                    <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'] ?>" onclick="window.open(this.href);return false;" title="Statische Internetseiten anzeigen" data-toggle="tooltip" data-placement="right">FTP-Seiten</a></li>
+                                <?php
                             }
                         ?>
                         <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_CREATE_DYNAMIC_DOMAIN'] ?>" onclick="window.open(this.href);return false;" title="Vorschau dynamische Internetseiten" data-toggle="tooltip" data-placement="right">Vorschau</a></li>
@@ -49,7 +71,7 @@
                                 <p><small><a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/">Dashboard</a> <span class="glyphicon glyphicon-chevron-right"></span> <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/pages/">Seitenverwaltung - &Uuml;bersicht</a> <span class="glyphicon glyphicon-chevron-right"></span> <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/content/<?php echo $PAGE_ID; ?>/">Seiteninhalte</a></small></p>
                             </div><!-- // EOF COL-... -->
                         </div><!-- // EOF ROW -->
-                        <?php 
+                        <?php
                             if(isset($_GET['res']) && $_GET['res'] != ''){
                                 ?>
                                     <div class="row response">
@@ -111,9 +133,17 @@
                                                     {
                                                         echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Erfolg!</strong> Inhalt wurde erfolgreich wiederhergestellt.</div>';
                                                     }
+                                                    if($_GET['res'] == 'cleared-page-cache-false')
+                                                    {
+                                                        echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Fehler!</strong> Fehler beim entfernen des Caches dieser Seite!</div>';
+                                                    }
+                                                    else if($_GET['res'] == 'cleared-page-cache-true')
+                                                    {
+                                                        echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Erfolg!</strong> Cache dieser Seite wurde erfolgreich gel&ouml;scht.</div>';
+                                                    }
                                                 ?>
                                         </div><!-- // EOF COL-... -->
-                                        
+
                                     </div><!-- // EOF ROW -->
                                 <?php
                             }
@@ -121,7 +151,7 @@
                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <div class="jumbotron">
-                                    <h1><?php echo $SUBTITLE; ?>: <a data-toggle="tooltip" data-placement="top" title="Seite anzeigen" class="tt" onclick="window.open(this.href);return false;" href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] .'/'. $PAGE_NAME['pages_url']; ?>"><strong><?php echo $PAGE_NAME['pages_name']; ?></strong></a></h1>
+                                    <h1><?php echo $SUBTITLE; ?>: <a data-toggle="tooltip" data-placement="top" title="Seite anzeigen" class="tt" onclick="window.open(this.href);return false;" href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] .'/'. $PAGE_NAME['pages_url']; ?>"><strong><?php echo $PAGE_NAME['pages_name']; ?></strong></a> | <a data-toggle="tooltip" data-placement="top" title=Cache dieser Seite l&ouml;schen" class="tt" href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] .'/constructr/clear-cache-page/'. $GUID . '/' . $PAGE_NAME['pages_id'] . '/'; ?>"><strong>Cache l&ouml;schen</strong></a></h1>
                                     <h2><?php echo $CONTENT_COUNTER; ?> Angelegte Inhalte von <strong><?php echo $PAGE_NAME['pages_name']; ?></strong> <a data-toggle="tooltip" data-placement="top" title="Neuen Inhalt erstellen" class="tt" href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/content/' . $PAGE_ID . '/' . ($CONTENT_COUNTER + 1) . '/new/' ?>"><button type="button" class="btn btn-info btn-sm" title="Neuen Inhalt erstellen"><span class="glyphicon glyphicon-plus"></span></button></a></h2>
                                     <br><br>
                                     <div class="table-responsive">
@@ -148,7 +178,7 @@
                                                             echo '&#160;';
                                                         }
                                                         if($CONTENT['content_order'] < $CONTENT_COUNTER)
-                                                        {                                                    
+                                                        {
                                                             echo '<a data-toggle="tooltip" data-placement="top" title="Inhalt nach unten verschieben" class="reorder tt" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/content/' . $PAGE_ID . '/' . $CONTENT['content_id'] . '/' . $CONTENT['content_order'] . '/down/"><button type="button" class="btn btn-primary btn-xs" title="Seite nach unten verschieben"><span class="glyphicon glyphicon-arrow-down"></span></button></a>';
                                                             echo '&#160;';
                                                         }
@@ -220,7 +250,7 @@
                                     </table>
                                     </div><!-- EOF TABLE RESPONSIVE-->
                                 </div><!-- // EOF JUMBOTRON -->
-                            </div><!-- // EOF COL-... -->                            
+                            </div><!-- // EOF COL-... -->
                         </div><!-- // EOF ROW -->
                         <?php
                             }
@@ -323,7 +353,7 @@
                                 vex.dialog.buttons.NO.text = 'Abbrechen';
                                 vex.dialog.confirm(
                                     {
-                                        className: 'vex-theme-flat-attack', 
+                                        className: 'vex-theme-flat-attack',
                                         message: 'Inhalt wirklich verschieben?',
                                         callback: function(value)
                                         {
@@ -349,7 +379,7 @@
                                 vex.dialog.buttons.NO.text = 'Abbrechen';
                                 vex.dialog.confirm(
                                     {
-                                        className: 'vex-theme-flat-attack', 
+                                        className: 'vex-theme-flat-attack',
                                         message: 'M&ouml;chten Sie diesen Inhalt wiederherstellen?',
                                         callback: function(value)
                                         {
@@ -375,7 +405,7 @@
                                 vex.dialog.buttons.NO.text = 'Abbrechen';
                                 vex.dialog.confirm(
                                     {
-                                        className: 'vex-theme-flat-attack', 
+                                        className: 'vex-theme-flat-attack',
                                         message: 'M&ouml;chten Sie wirklich diesen Inhalt l&ouml;schen?',
                                         callback: function(value)
                                         {
@@ -401,7 +431,7 @@
                                 vex.dialog.buttons.NO.text = 'Abbrechen';
                                 vex.dialog.confirm(
                                     {
-                                        className: 'vex-theme-flat-attack', 
+                                        className: 'vex-theme-flat-attack',
                                         message: 'Soll die Sichtbarkeit des Inhalts wirklich angepasst werden?',
                                         callback: function(value)
                                         {

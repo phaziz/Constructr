@@ -1,3 +1,25 @@
+<?php
+
+    /*
+    ***************************************************************************
+
+        DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+        Version 1, December 2012
+        Copyright (C) 2012 Christian Becher | phaziz.com <christian@phaziz.com>
+        Everyone is permitted to copy and distribute verbatim or modified
+        copies of this license document, and changing it is allowed as long
+        as the name is changed.
+
+        DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+        TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+        0. YOU JUST DO WHAT THE FUCK YOU WANT TO!
+
+        +++ Visit http://phaziz.com +++
+
+    ***************************************************************************
+    */
+
+?>
 <!DOCTYPE html>
     <html lang="de">
         <head>
@@ -21,13 +43,13 @@
                         <li class="sidebar-brand"><a id="menu-toggle" href="#"><div class="pull-right"><span title="&#8249;&#160;Hauptmen&uuml;&#160;&#160;" data-toggle="tooltip" data-placement="right" class="tt glyphicon glyphicon-align-justify"></span>&#160;&#160;</div></a></li>
                     </ul>
                     <ul class="sidebar-nav" id="sidebar">
-                        <?php 
+                        <?php
 
                             if($_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'] != '')
                             {
                                 ?>
-                                    <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'] ?>" onclick="window.open(this.href);return false;" title="Statische Internetseiten anzeigen" data-toggle="tooltip" data-placement="right">FTP-Seiten</a></li>        
-                                <?php   
+                                    <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'] ?>" onclick="window.open(this.href);return false;" title="Statische Internetseiten anzeigen" data-toggle="tooltip" data-placement="right">FTP-Seiten</a></li>
+                                <?php
                             }
 
                         ?>
@@ -162,7 +184,7 @@
                                                     {
                                                         className: 'vex-theme-flat-attack',
                                                         message: 'Achtung: Bitte w&auml;hlen Sie einen anderen Benutzernamen, der gew&uuml;nschte Benutzername ist bereits vergeben!',
-                                                        afterClose: function() 
+                                                        afterClose: function()
                                                         {
                                                             $('#username').focus();
                                                             $('#status-username').html('<span style="color:#ff0030">Der Benutzername ist bereits vergeben!</span>');
@@ -205,7 +227,7 @@
 
                         $(':password').pwstrength(options);
 
-                        $( "#new_user_form" ).bind( "submit", function() 
+                        $( "#new_user_form" ).bind( "submit", function()
                             {
                                 $("#submitter").attr("disabled", "disabled");
 
@@ -223,7 +245,7 @@
                                         {
                                             className: 'vex-theme-flat-attack',
                                             message: 'Achtung: Das gew&uuml;nschte Passwort ist zu kurz (Mindestens 8 Zeichen)!',
-                                            afterClose: function() 
+                                            afterClose: function()
                                             {
                                                 $('#password').focus();
                                                 $("#submitter").removeAttr("disabled");
@@ -239,7 +261,7 @@
                                         {
                                             className: 'vex-theme-flat-attack',
                                             message: 'Achtung: Das Passwort muss Ziffern enthalten (Mindestens 2 Ziffern)!',
-                                            afterClose: function() 
+                                            afterClose: function()
                                             {
                                                 $('#password').focus();
                                                 $("#submitter").removeAttr("disabled");
@@ -248,14 +270,14 @@
                                     );
                                     return false;
                                 }
-                                
+
                                 if(A == 'false')
                                 {
                                     vex.dialog.alert(
                                         {
                                             className: 'vex-theme-flat-attack',
                                             message: 'Achtung: Bitte Formular komplett ausf&uuml;llen!',
-                                            afterClose: function() 
+                                            afterClose: function()
                                             {
                                                 $('#art').focus();
                                                 $("#submitter").removeAttr("disabled");
@@ -273,7 +295,7 @@
                                             {
                                                 className: 'vex-theme-flat-attack',
                                                 message: 'Achtung: Bitte Formular komplett ausf&uuml;llen!',
-                                                afterClose: function() 
+                                                afterClose: function()
                                                 {
                                                     $('#username').focus();
                                                     $("#submitter").removeAttr("disabled");
@@ -289,7 +311,7 @@
                                             {
                                                 className: 'vex-theme-flat-attack',
                                                 message: 'Achtung: Bitte Formular komplett ausf&uuml;llen!',
-                                                afterClose: function() 
+                                                afterClose: function()
                                                 {
                                                     $('#password').focus();
                                                     $("#submitter").removeAttr("disabled");
@@ -305,7 +327,7 @@
                                             {
                                                 className: 'vex-theme-flat-attack',
                                                 message: 'Achtung: Bitte Formular komplett ausf&uuml;llen!',
-                                                afterClose: function() 
+                                                afterClose: function()
                                                 {
                                                     $('#password_retype').focus();
                                                     $("#submitter").removeAttr("disabled");
@@ -321,7 +343,7 @@
                                             {
                                                 className: 'vex-theme-flat-attack',
                                                 message: 'Achtung: Bitte Formular komplett ausf&uuml;llen!',
-                                                afterClose: function() 
+                                                afterClose: function()
                                                 {
                                                     $('#email').focus();
                                                     $("#submitter").removeAttr("disabled");
@@ -337,7 +359,7 @@
                                             {
                                                 className: 'vex-theme-flat-attack',
                                                 message: 'Achtung: Bitte Formular komplett ausf&uuml;llen!',
-                                                afterClose: function() 
+                                                afterClose: function()
                                                 {
                                                     $('#art').focus();
                                                     $("#submitter").removeAttr("disabled");
@@ -355,7 +377,7 @@
                                             {
                                                 className: 'vex-theme-flat-attack',
                                                 message: 'Achtung: Ihre Eingabe im Feld Passwort stimmt nicht mit der Eingabe im Feld Passwort Wiederholung &uuml;berein!',
-                                                afterClose: function() 
+                                                afterClose: function()
                                                 {
                                                     $('#password').focus();
                                                     $("#submitter").removeAttr("disabled");

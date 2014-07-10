@@ -1,3 +1,25 @@
+<?php
+
+    /*
+    ***************************************************************************
+
+        DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+        Version 1, December 2012
+        Copyright (C) 2012 Christian Becher | phaziz.com <christian@phaziz.com>
+        Everyone is permitted to copy and distribute verbatim or modified
+        copies of this license document, and changing it is allowed as long
+        as the name is changed.
+
+        DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+        TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+        0. YOU JUST DO WHAT THE FUCK YOU WANT TO!
+
+        +++ Visit http://phaziz.com +++
+
+    ***************************************************************************
+    */
+
+?>
 <!DOCTYPE html>
     <html lang="de">
         <head>
@@ -21,13 +43,13 @@
                         <li class="sidebar-brand"><a id="menu-toggle" href="#"><div class="pull-right"><span title="&#8249;&#160;Hauptmen&uuml;&#160;&#160;" data-toggle="tooltip" data-placement="right" class="tt glyphicon glyphicon-align-justify"></span>&#160;&#160;</div></a></li>
                     </ul>
                     <ul class="sidebar-nav" id="sidebar">
-                        <?php 
+                        <?php
 
                             if($_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'] != '')
                             {
                                 ?>
-                                    <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'] ?>" onclick="window.open(this.href);return false;" title="Statische Internetseiten anzeigen" data-toggle="tooltip" data-placement="right">FTP-Seiten</a></li>        
-                                <?php   
+                                    <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'] ?>" onclick="window.open(this.href);return false;" title="Statische Internetseiten anzeigen" data-toggle="tooltip" data-placement="right">FTP-Seiten</a></li>
+                                <?php
                             }
 
                         ?>
@@ -135,7 +157,7 @@
                                                                     if($PAGE['pages_nav_visible'] == 1)
                                                                     {
                                                                         echo '<option value="1" selected="selected">Sichtbar</option>';
-                                                                        echo '<option value="0">Unsichtbar</option>';        
+                                                                        echo '<option value="0">Unsichtbar</option>';
                                                                     }
                                                                     else
                                                                     {
@@ -261,7 +283,7 @@
                                                     );
                                                     return false;
                                                 }
-            
+
                                                 if(T == '')
                                                 {
                                                     vex.dialog.alert(
@@ -277,7 +299,7 @@
                                                     );
                                                     return false;
                                                 }
-            
+
                                                 if(P == 'constructr')
                                                 {
                                                     vex.dialog.alert(
@@ -317,7 +339,7 @@
                                                     );
                                                     return false;
                                                 }
-            
+
                                                 if(T == '')
                                                 {
                                                     vex.dialog.alert(
@@ -333,7 +355,7 @@
                                                     );
                                                     return false;
                                                 }
-            
+
                                                 if(P == '')
                                                 {
                                                     vex.dialog.alert(

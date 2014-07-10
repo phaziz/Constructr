@@ -1,5 +1,24 @@
 <?php
 
+    /*
+    ***************************************************************************
+
+        DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+        Version 1, December 2012
+        Copyright (C) 2012 Christian Becher | phaziz.com <christian@phaziz.com>
+        Everyone is permitted to copy and distribute verbatim or modified
+        copies of this license document, and changing it is allowed as long
+        as the name is changed.
+
+        DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+        TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+        0. YOU JUST DO WHAT THE FUCK YOU WANT TO!
+
+        +++ Visit http://phaziz.com +++
+
+    ***************************************************************************
+    */
+
     $constructr -> get('/constructr/pages/', $ADMIN_CHECK, function () use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
             $START = microtime(true);
@@ -35,9 +54,9 @@
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                     }
                 }
-                catch(PDOException $e) 
+                catch(PDOException $e)
                 {
-                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
+                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
                     die();
                 }
             }
@@ -60,7 +79,7 @@
             }
             catch(PDOException $e)
             {
-                $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());   
+                $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
                 $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/');
                 die();
             }
@@ -87,7 +106,7 @@
     $constructr -> get('/constructr/pages/new/', $ADMIN_CHECK, function () use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
             $START = microtime(true);
-			$USERNAME = $_SESSION['backend-user-username'];
+            $USERNAME = $_SESSION['backend-user-username'];
 
             $constructr -> view -> setData('BackendUserRight',11);
 
@@ -118,9 +137,9 @@
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                     }
                 }
-                catch(PDOException $e) 
+                catch(PDOException $e)
                 {
-                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
+                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
                     die();
                 }
             }
@@ -145,7 +164,7 @@
             }
             catch(PDOException $e)
             {
-                $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());   
+                $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
                 $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/');
                 die();
             }
@@ -210,9 +229,9 @@
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                     }
                 }
-                catch(PDOException $e) 
+                catch(PDOException $e)
                 {
-                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
+                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
                     die();
                 }
             }
@@ -235,7 +254,15 @@
             $PAGE_DATETIME = date('Y-m-d H:i:s');
             $PAGE_NAME = constructr_sanitization($constructr -> request() -> post('page_name'));
             $PAGE_URL = constructr_sanitization($constructr -> request() -> post('page_url'));
-            $PAGE_URL = preg_replace("[^A-Za-z0-9_-\/]", "", $PAGE_URL);
+            $PAGE_URL = str_replace(" ","-", $PAGE_URL);
+            $PAGE_URL = str_replace("//","/", $PAGE_URL);
+            $PAGE_URL = str_replace("ü","ue", $PAGE_URL);
+            $PAGE_URL = str_replace("Ü","ue", $PAGE_URL);
+            $PAGE_URL = str_replace("ä","ae", $PAGE_URL);
+            $PAGE_URL = str_replace("Ä","ae", $PAGE_URL);
+            $PAGE_URL = str_replace("ö","oe", $PAGE_URL);
+            $PAGE_URL = str_replace("Ö","oe", $PAGE_URL);
+            $PAGE_URL = str_replace("ß","ss", $PAGE_URL);
             $PAGE_URL = strtolower($PAGE_URL);
             $PAGE_TEMPLATE = constructr_sanitization($constructr -> request() -> post('page_template'));
             $PAGE_TITLE = constructr_sanitization($constructr -> request() -> post('page_title'));
@@ -268,7 +295,7 @@
                 $PAGE_TEMPLATE = 'index.php';
             }
 
-            try 
+            try
             {
                 $URL = $DBCON -> prepare('SELECT * FROM constructr_pages WHERE pages_url = :PAGE_URL;');
                 $URL -> execute(
@@ -293,7 +320,7 @@
                 die();
             }
 
-            try 
+            try
             {
                 $PAGES = $DBCON -> query('SELECT pages_id FROM constructr_pages;');
                 $PAGES_COUNTR = $PAGES -> rowCount();
@@ -305,7 +332,7 @@
                 die();
             }
 
-            if($PAGES_COUNTR == 0) 
+            if($PAGES_COUNTR == 0)
             {
                 $PAGE_LFT = 1;
                 $PAGE_RGT = 2;
@@ -413,7 +440,7 @@
                             $SITEMAP_CONTENT .= '<url>' . $NEW_LINE . '<loc>' . $_SITEMAP_BASE_URL . $SITEMAP_PAGE['pages_url'] . '</loc>' . $NEW_LINE . '<lastmod>' . date('Y-m-d') . '</lastmod>' . $NEW_LINE . '<changefreq>monthly</changefreq>' . $NEW_LINE . '<priority>' . $PRIORITY . '</priority>' . $NEW_LINE . '</url>' . $NEW_LINE;
 
                             $OLD_PRIORITY = $PRIORITY;
-                        }                        
+                        }
                     }
                 }
                 catch(PDOException $e)
@@ -476,9 +503,9 @@
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                     }
                 }
-                catch(PDOException $e) 
+                catch(PDOException $e)
                 {
-                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
+                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
                     die();
                 }
             }
@@ -553,9 +580,9 @@
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                     }
                 }
-                catch(PDOException $e) 
+                catch(PDOException $e)
                 {
-                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
+                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
                     die();
                 }
             }
@@ -591,9 +618,26 @@
             $PAGE_DESCRIPTION = ($constructr -> request() -> post('page_description'));
             $PAGE_KEYWORDS = ($constructr -> request() -> post('page_keywords'));
             $PAGE_VISIBILITY = ($constructr -> request() -> post('page_nav_visible'));
-            $PAGE_URL = str_replace('//','/',$PAGE_URL);
-            $PAGE_URL = preg_replace("[^A-Za-z0-9_-\/]", "", $PAGE_URL);
+            $PAGE_URL = str_replace(" ","-", $PAGE_URL);
+            $PAGE_URL = str_replace("//","/", $PAGE_URL);
+            $PAGE_URL = str_replace("ü","ue", $PAGE_URL);
+            $PAGE_URL = str_replace("Ü","ue", $PAGE_URL);
+            $PAGE_URL = str_replace("ä","ae", $PAGE_URL);
+            $PAGE_URL = str_replace("Ä","ae", $PAGE_URL);
+            $PAGE_URL = str_replace("ö","oe", $PAGE_URL);
+            $PAGE_URL = str_replace("Ö","oe", $PAGE_URL);
+            $PAGE_URL = str_replace("ß","ss", $PAGE_URL);
             $PAGE_URL = strtolower($PAGE_URL);
+            $SEARCHR = strripos($PAGE_URL, '/');
+
+            if ($SEARCHR !== false)
+            {
+                if($SEARCHR == (strlen($PAGE_URL) - 1))
+                {
+                    $PAGE_URL = substr($PAGE_URL,0,($SEARCH - 1));
+                }
+            }
+
             $PAGE_LFT = ($PAGE_MOTHER_LFT + 1);
             $PAGE_RGT = ($PAGE_LFT + 1);
             $PAGE_ACTIVE = 1;
@@ -742,9 +786,9 @@
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                     }
                 }
-                catch(PDOException $e) 
+                catch(PDOException $e)
                 {
-                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
+                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
                     die();
                 }
             }
@@ -836,9 +880,9 @@
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                     }
                 }
-                catch(PDOException $e) 
+                catch(PDOException $e)
                 {
-                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
+                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
                     die();
                 }
             }
@@ -896,13 +940,13 @@
                 {
                     $QUERY = 'UPDATE constructr_pages SET pages_name = :PAGE_NAME, pages_url = :PAGE_URL, pages_nav_visible = :PAGE_VISIBILITY, pages_template = :PAGE_TEMPLATE, pages_title = :PAGE_TITLE, pages_description = :PAGE_DESCRIPTION, pages_keywords = :PAGE_KEYWORDS WHERE pages_id >= :PAGE_ID LIMIT 1;';
                     $STMT = $DBCON -> prepare($QUERY);
-                    $STMT -> bindParam(':PAGE_ID',$PAGE_ID,PDO::PARAM_INT); 
-                    $STMT -> bindParam(':PAGE_NAME',$PAGE_NAME,PDO::PARAM_STR); 
+                    $STMT -> bindParam(':PAGE_ID',$PAGE_ID,PDO::PARAM_INT);
+                    $STMT -> bindParam(':PAGE_NAME',$PAGE_NAME,PDO::PARAM_STR);
                     $STMT -> bindParam(':PAGE_URL',$PAGE_URL,PDO::PARAM_STR);
-                    $STMT -> bindParam(':PAGE_TEMPLATE',$PAGE_TEMPLATE,PDO::PARAM_STR); 
+                    $STMT -> bindParam(':PAGE_TEMPLATE',$PAGE_TEMPLATE,PDO::PARAM_STR);
                     $STMT -> bindParam(':PAGE_TITLE',$PAGE_TITLE,PDO::PARAM_STR);
-                    $STMT -> bindParam(':PAGE_KEYWORDS',$PAGE_KEYWORDS,PDO::PARAM_STR); 
-                    $STMT -> bindParam(':PAGE_DESCRIPTION',$PAGE_DESCRIPTION,PDO::PARAM_STR); 
+                    $STMT -> bindParam(':PAGE_KEYWORDS',$PAGE_KEYWORDS,PDO::PARAM_STR);
+                    $STMT -> bindParam(':PAGE_DESCRIPTION',$PAGE_DESCRIPTION,PDO::PARAM_STR);
                     $STMT -> bindParam(':PAGE_VISIBILITY',$PAGE_VISIBILITY,PDO::PARAM_INT);
                     $STMT -> execute();
 
@@ -949,7 +993,7 @@
                                 $SITEMAP_CONTENT .= '<url>' . $NEW_LINE . '<loc>' . $_SITEMAP_BASE_URL . $SITEMAP_PAGE['pages_url'] . '</loc>' . $NEW_LINE . '<lastmod>' . date('Y-m-d') . '</lastmod>' . $NEW_LINE . '<changefreq>monthly</changefreq>' . $NEW_LINE . '<priority>' . $PRIORITY . '</priority>' . $NEW_LINE . '</url>' . $NEW_LINE;
 
                                 $OLD_PRIORITY = $PRIORITY;
-                            }                        
+                            }
                         }
                     }
                     catch(PDOException $e)
@@ -1026,9 +1070,9 @@
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                     }
                 }
-                catch(PDOException $e) 
+                catch(PDOException $e)
                 {
-                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
+                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
                     die();
                 }
             }
@@ -1110,9 +1154,9 @@
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                     }
                 }
-                catch(PDOException $e) 
+                catch(PDOException $e)
                 {
-                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
+                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
                     die();
                 }
             }
@@ -1147,7 +1191,7 @@
                     $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/?res=activate-page-false');
                     die();
                 }
-                
+
                 if($_CONSTRUCTR_CONF['_LOGGING'] == true)
                 {
                     $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
@@ -1195,9 +1239,9 @@
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                     }
                 }
-                catch(PDOException $e) 
+                catch(PDOException $e)
                 {
-                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
+                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
                     die();
                 }
             }
@@ -1361,9 +1405,9 @@
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                     }
                 }
-                catch(PDOException $e) 
+                catch(PDOException $e)
                 {
-                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
+                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
                     die();
                 }
             }
@@ -1512,9 +1556,9 @@
                         $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                     }
                 }
-                catch(PDOException $e) 
+                catch(PDOException $e)
                 {
-                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
+                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
                     die();
                 }
             }
@@ -1623,38 +1667,38 @@
                 else
                 {
                     if($METHOD == 'up')
-                    {                   	
-	                    $CHILDREN_COUNTER = $CHILDREN_COUNTER + 1;
-	                    $TARGET_CHILDREN_COUNTER = $TARGET_CHILDREN_COUNTER + 1;
-	                    $TEMP_MARKER = 1;
-	                    $EMPTY_VALUE = 0;
+                    {
+                        $CHILDREN_COUNTER = $CHILDREN_COUNTER + 1;
+                        $TARGET_CHILDREN_COUNTER = $TARGET_CHILDREN_COUNTER + 1;
+                        $TEMP_MARKER = 1;
+                        $EMPTY_VALUE = 0;
 
                         try
                         {
                             $UPDATE_PAGES = $DBCON -> prepare('
-                                UPDATE constructr_pages 
-                                SET 
-                                pages_temp_marker = :TEMP_MARKER 
-                                WHERE pages_lft BETWEEN :TARGET_PAGE_LFT 
+                                UPDATE constructr_pages
+                                SET
+                                pages_temp_marker = :TEMP_MARKER
+                                WHERE pages_lft BETWEEN :TARGET_PAGE_LFT
                                 AND :TARGET_PAGE_RGT;
 
-                                UPDATE constructr_pages 
-                                SET 
-                                pages_lft = (pages_lft - (:TARGET_CHILDREN_COUNTER * 2)), 
-                                pages_rgt = (pages_rgt - (:TARGET_CHILDREN_COUNTER * 2)) 
-                                WHERE pages_lft BETWEEN :PAGE_LFT 
+                                UPDATE constructr_pages
+                                SET
+                                pages_lft = (pages_lft - (:TARGET_CHILDREN_COUNTER * 2)),
+                                pages_rgt = (pages_rgt - (:TARGET_CHILDREN_COUNTER * 2))
+                                WHERE pages_lft BETWEEN :PAGE_LFT
                                 AND :PAGE_RGT AND pages_temp_marker = :EMPTY_VALUE;
 
-                                UPDATE constructr_pages 
-                                SET 
-                                pages_lft = (pages_lft + (:CHILDREN_COUNTER * 2)), 
-                                pages_rgt = (pages_rgt + (:CHILDREN_COUNTER * 2)) 
-                                WHERE pages_lft BETWEEN :TARGET_PAGE_LFT AND :TARGET_PAGE_RGT 
+                                UPDATE constructr_pages
+                                SET
+                                pages_lft = (pages_lft + (:CHILDREN_COUNTER * 2)),
+                                pages_rgt = (pages_rgt + (:CHILDREN_COUNTER * 2))
+                                WHERE pages_lft BETWEEN :TARGET_PAGE_LFT AND :TARGET_PAGE_RGT
                                 AND pages_temp_marker = :TEMP_MARKER;
 
-                                UPDATE constructr_pages 
-                                SET 
-                                pages_temp_marker = :EMPTY_VALUE 
+                                UPDATE constructr_pages
+                                SET
+                                pages_temp_marker = :EMPTY_VALUE
                                 WHERE pages_temp_marker = :TEMP_MARKER;
                             ');
 
@@ -1686,37 +1730,37 @@
                     }
                     else if($METHOD == 'down')
                     {
-	                    $CHILDREN_COUNTER = $CHILDREN_COUNTER + 1;
-	                    $TARGET_CHILDREN_COUNTER = $TARGET_CHILDREN_COUNTER + 1;
-	                    $TEMP_MARKER = 1;
-	                    $EMPTY_VALUE = 0;
+                        $CHILDREN_COUNTER = $CHILDREN_COUNTER + 1;
+                        $TARGET_CHILDREN_COUNTER = $TARGET_CHILDREN_COUNTER + 1;
+                        $TEMP_MARKER = 1;
+                        $EMPTY_VALUE = 0;
                         try
                         {
                             $UPDATE_PAGES = $DBCON -> prepare('
-                                UPDATE constructr_pages 
-                                SET 
-                                pages_temp_marker = :TEMP_MARKER 
+                                UPDATE constructr_pages
+                                SET
+                                pages_temp_marker = :TEMP_MARKER
                                 WHERE pages_lft BETWEEN :TARGET_PAGE_LFT AND :TARGET_PAGE_RGT;
 
-                                UPDATE constructr_pages 
-                                SET 
-                                pages_lft = (pages_lft + (:TARGET_CHILDREN_COUNTER * 2)), 
-                                pages_rgt = (pages_rgt + (:TARGET_CHILDREN_COUNTER * 2)) 
-                                WHERE pages_lft BETWEEN :PAGE_LFT 
-                                AND :PAGE_RGT 
+                                UPDATE constructr_pages
+                                SET
+                                pages_lft = (pages_lft + (:TARGET_CHILDREN_COUNTER * 2)),
+                                pages_rgt = (pages_rgt + (:TARGET_CHILDREN_COUNTER * 2))
+                                WHERE pages_lft BETWEEN :PAGE_LFT
+                                AND :PAGE_RGT
                                 AND pages_temp_marker = :EMPTY_VALUE;
 
-                                UPDATE constructr_pages 
-                                SET 
-                                pages_lft = (pages_lft - (:CHILDREN_COUNTER * 2)), 
-                                pages_rgt = (pages_rgt - (:CHILDREN_COUNTER * 2)) 
-                                WHERE pages_lft BETWEEN :TARGET_PAGE_LFT 
-                                AND :TARGET_PAGE_RGT 
+                                UPDATE constructr_pages
+                                SET
+                                pages_lft = (pages_lft - (:CHILDREN_COUNTER * 2)),
+                                pages_rgt = (pages_rgt - (:CHILDREN_COUNTER * 2))
+                                WHERE pages_lft BETWEEN :TARGET_PAGE_LFT
+                                AND :TARGET_PAGE_RGT
                                 AND pages_temp_marker = :TEMP_MARKER;
 
-                                UPDATE constructr_pages 
-                                SET 
-                                pages_temp_marker = :EMPTY_VALUE 
+                                UPDATE constructr_pages
+                                SET
+                                pages_temp_marker = :EMPTY_VALUE
                                 WHERE pages_temp_marker = :TEMP_MARKER;
                             ');
 

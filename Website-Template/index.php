@@ -1,5 +1,24 @@
 <?php
 
+    /*
+    ***************************************************************************
+
+        DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+        Version 1, December 2012
+        Copyright (C) 2012 Christian Becher | phaziz.com <christian@phaziz.com>
+        Everyone is permitted to copy and distribute verbatim or modified
+        copies of this license document, and changing it is allowed as long
+        as the name is changed.
+
+        DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+        TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+        0. YOU JUST DO WHAT THE FUCK YOU WANT TO!
+
+        +++ Visit http://phaziz.com +++
+
+    ***************************************************************************
+    */
+
     if(isset($_GET['key']) && $_GET['key'] == $_CONSTRUCTR_CONF['_MAGIC_GENERATION_KEY'])
     {
         $_BASE_ROUTE = $_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'];
@@ -8,7 +27,7 @@
     {
         if($_CONSTRUCTR_CONF['_CREATE_DYNAMIC_DOMAIN'] == '')
         {
-            $_BASE_ROUTE = $_CONSTRUCTR_CONF['_BASE_URL'];    
+            $_BASE_ROUTE = $_CONSTRUCTR_CONF['_BASE_URL'];
         }
         else
         {
@@ -71,12 +90,12 @@
                         {
                             $html .= '<ul>';
                         }
-            
+
                         if($PAGE['pages_level'] == $level)
                             $html .= '</li>';
                             if($PAGE['pages_lft'] == 1 && $PAGE['pages_nav_visible'] == 1)
                             {
-                                $html .= '<li><a href="' . $_BASE_ROUTE . '">' . $PAGE['pages_name'] . '</a>';    
+                                $html .= '<li><a href="' . $_BASE_ROUTE . '">' . $PAGE['pages_name'] . '</a>';
                             }
                             else
                             {
@@ -84,9 +103,9 @@
                             }
                             $level = $PAGE['pages_level'];
                     }
-            
+
                     if ($level >= 0) $html .= str_repeat('</li></ul>', $level);
-            
+
                     echo $html;
                 }
                 // NAVIGATION UL...LI... ENDE
@@ -96,7 +115,7 @@
                 {
                     foreach($CONTENT as $CONTENT)
                     {
-                        echo $CONTENT['content_content'];   
+                        echo $CONTENT['content_content'];
                     }
                 }
                 // PAGE CONTENT... END

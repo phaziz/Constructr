@@ -1,3 +1,25 @@
+<?php
+
+    /*
+    ***************************************************************************
+
+        DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+        Version 1, December 2012
+        Copyright (C) 2012 Christian Becher | phaziz.com <christian@phaziz.com>
+        Everyone is permitted to copy and distribute verbatim or modified
+        copies of this license document, and changing it is allowed as long
+        as the name is changed.
+
+        DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+        TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+        0. YOU JUST DO WHAT THE FUCK YOU WANT TO!
+
+        +++ Visit http://phaziz.com +++
+
+    ***************************************************************************
+    */
+
+?>
 <!DOCTYPE html>
     <html lang="de">
         <head>
@@ -21,13 +43,13 @@
                         <li class="sidebar-brand"><a id="menu-toggle" href="#"><div class="pull-right"><span title="&#8249;&#160;Hauptmen&uuml;&#160;&#160;" data-toggle="tooltip" data-placement="right" class="tt glyphicon glyphicon-align-justify"></span>&#160;&#160;</div></a></li>
                     </ul>
                     <ul class="sidebar-nav" id="sidebar">
-                        <?php 
+                        <?php
 
                             if($_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'] != '')
                             {
                                 ?>
-                                    <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'] ?>" onclick="window.open(this.href);return false;" title="Statische Internetseiten anzeigen" data-toggle="tooltip" data-placement="right">FTP-Seiten</a></li>        
-                                <?php   
+                                    <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'] ?>" onclick="window.open(this.href);return false;" title="Statische Internetseiten anzeigen" data-toggle="tooltip" data-placement="right">FTP-Seiten</a></li>
+                                <?php
                             }
 
                         ?>
@@ -50,7 +72,7 @@
                                 <p><small><a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/">Dashboard</a> <span class="glyphicon glyphicon-chevron-right"></span> <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/pages/">Seitenverwaltung - &Uuml;bersicht</a> <span class="glyphicon glyphicon-chevron-right"></span></small></p>
                             </div><!-- // EOF COL-... -->
                         </div><!-- // EOF ROW -->
-                        <?php 
+                        <?php
                             if(isset($_GET['history']) && $_GET['history'] != ''){
                                 ?>
                                     <div class="row response">
@@ -73,11 +95,11 @@
                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <div class="jumbotron">
-                                    <h1><?php echo $SUBTITLE; ?>: <strong><?php echo $PAGE_NAME['pages_name']; ?></strong></h1>
+                                    <h1><?php echo $SUBTITLE; ?>: <a data-toggle="tooltip" data-placement="top" title="Seite anzeigen" class="tt" onclick="window.open(this.href);return false;" href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] .'/'. $PAGE_NAME['pages_url']; ?>"><strong><?php echo $PAGE_NAME['pages_name']; ?></strong></a></h1>
                                     <h2>Inhalt auf Seite <strong><?php echo $PAGE_NAME['pages_name']; ?></strong> bearbeiten</h2>
                                     <br><br>
                                     <?php
-                                    
+
                                         if($CONTENT)
                                         {
 
@@ -108,7 +130,7 @@
                                         {
                                             echo 'Es ist ein Fehler aufgetreten...';
                                         }
-                                    
+
                                     ?>
                                 </div><!-- // EOF JUMBOTRON -->
                             </div><!-- // EOF COL-... -->
@@ -199,7 +221,7 @@
                                 vex.dialog.buttons.NO.text = 'Abbrechen';
                                 vex.dialog.confirm(
                                     {
-                                        className: 'vex-theme-flat-attack', 
+                                        className: 'vex-theme-flat-attack',
                                         message: 'M&ouml;chten Sie diesen Historien-Eintrag wiederherstellen?',
                                         callback: function(value)
                                         {
@@ -289,7 +311,7 @@
                                 vex.dialog.buttons.NO.text = 'Abbrechen';
                                 vex.dialog.confirm(
                                     {
-                                        className: 'vex-theme-flat-attack', 
+                                        className: 'vex-theme-flat-attack',
                                         message: 'M&ouml;chten Sie wirklich diesen Historien-Eintrag l&ouml;schen?',
                                         callback: function(value)
                                         {

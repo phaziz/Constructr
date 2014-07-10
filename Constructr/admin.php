@@ -1,3 +1,25 @@
+<?php
+
+    /*
+    ***************************************************************************
+
+        DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+        Version 1, December 2012
+        Copyright (C) 2012 Christian Becher | phaziz.com <christian@phaziz.com>
+        Everyone is permitted to copy and distribute verbatim or modified
+        copies of this license document, and changing it is allowed as long
+        as the name is changed.
+
+        DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+        TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+        0. YOU JUST DO WHAT THE FUCK YOU WANT TO!
+
+        +++ Visit http://phaziz.com +++
+
+    ***************************************************************************
+    */
+
+?>
 <!DOCTYPE html>
     <html lang="de">
         <head>
@@ -19,13 +41,13 @@
                         <li class="sidebar-brand"><a id="menu-toggle" href="#"><div class="pull-right"><span title="&#8249;&#160;Hauptmen&uuml;&#160;&#160;" data-toggle="tooltip" data-placement="right" class="tt glyphicon glyphicon-align-justify"></span>&#160;&#160;</div></a></li>
                     </ul>
                     <ul class="sidebar-nav" id="sidebar">
-                        <?php 
+                        <?php
 
                             if($_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'] != '')
                             {
                                 ?>
-                                    <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'] ?>" onclick="window.open(this.href);return false;" title="Statische Internetseiten anzeigen" data-toggle="tooltip" data-placement="right">FTP-Seiten</a></li>        
-                                <?php   
+                                    <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'] ?>" onclick="window.open(this.href);return false;" title="Statische Internetseiten anzeigen" data-toggle="tooltip" data-placement="right">FTP-Seiten</a></li>
+                                <?php
                             }
 
                         ?>
@@ -109,6 +131,18 @@
                                     </div><!-- // EOF ROW -->
                                 <?php
                             }
+                            if(isset($_GET['cleared-cache']) && $_GET['cleared-cache'] == 'true')
+                            {
+                                ?>
+                                    <div class="row response">
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                            <?php
+                                                echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Erfolg!</strong> Die gecachten Dateien wurden entfernt.</div>';
+                                            ?>
+                                        </div><!-- // EOF COL-... -->
+                                    </div><!-- // EOF ROW -->
+                                <?php
+                            }
                             if($SEARCHR)
                             {
                                 ?>
@@ -151,7 +185,7 @@
 
                                         if($_CONSTRUCTR_CONF['_TRANSFER_STATIC'] == true)
                                         {
-                                                echo '<h2>Statische Seiten per FTP &uuml;bertragen</h2><br><ul class="list-group">'; 
+                                                echo '<h2>Statische Seiten per FTP &uuml;bertragen</h2><br><ul class="list-group">';
 
                                             ?>
                                                       <li class="list-group-item">
@@ -217,6 +251,10 @@
                                         <li class="list-group-item">
                                             <span class="badge"><?php echo $CONTENT_HISTORY_COUNTR; ?></span>
                                             <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL']; ?>/constructr/content-history/<?php echo $GUID ?>/" title="Content Historie entfernen">Content Historie entfernen</a>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <span class="badge"><?php echo $C_FILE_COUNTR; ?></span>
+                                            <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL']; ?>/constructr/clear-cache/<?php echo $GUID ?>/" title="Website Cache entfernen">Website Cache entfernen</a>
                                         </li>
                                         <li class="list-group-item">
                                             <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL']; ?>/Logfiles/<?php echo date('Ymd'); ?>.txt" title="Logfile anzeigen" onclick="window.open(this.href);return false;">Aktuelles Logfile anzeigen</a>

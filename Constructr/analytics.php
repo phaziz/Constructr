@@ -1,3 +1,25 @@
+<?php
+
+    /*
+    ***************************************************************************
+
+        DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+        Version 1, December 2012
+        Copyright (C) 2012 Christian Becher | phaziz.com <christian@phaziz.com>
+        Everyone is permitted to copy and distribute verbatim or modified
+        copies of this license document, and changing it is allowed as long
+        as the name is changed.
+
+        DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+        TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+        0. YOU JUST DO WHAT THE FUCK YOU WANT TO!
+
+        +++ Visit http://phaziz.com +++
+
+    ***************************************************************************
+    */
+
+?>
 <!DOCTYPE html>
     <html lang="de">
         <head>
@@ -7,6 +29,7 @@
             <title><?php echo $_CONSTRUCTR_CONF['_TITLE'] . ' - ' . $SUBTITLE; ?></title>
             <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
             <link href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/css/constructr.css" rel="stylesheet">
+            <link href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/datatables-bootstrap3/assets/css/datatables.css" rel="stylesheet">
             <!--[if lt IE 9]>
                 <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
                 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -19,13 +42,13 @@
                         <li class="sidebar-brand"><a id="menu-toggle" href="#"><div class="pull-right"><span title="&#8249;&#160;Hauptmen&uuml;&#160;&#160;" data-toggle="tooltip" data-placement="right" class="tt glyphicon glyphicon-align-justify"></span>&#160;&#160;</div></a></li>
                     </ul>
                     <ul class="sidebar-nav" id="sidebar">
-                        <?php 
+                        <?php
 
                             if($_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'] != '')
                             {
                                 ?>
-                                    <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'] ?>" onclick="window.open(this.href);return false;" title="Statische Internetseiten anzeigen" data-toggle="tooltip" data-placement="right">FTP-Seiten</a></li>        
-                                <?php   
+                                    <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'] ?>" onclick="window.open(this.href);return false;" title="Statische Internetseiten anzeigen" data-toggle="tooltip" data-placement="right">FTP-Seiten</a></li>
+                                <?php
                             }
 
                         ?>
@@ -51,86 +74,53 @@
                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <div class="jumbotron">
-                                    <h1><?php echo $SUBTITLE; ?></h1>
-
-                                    <!-- // ANALYTICS // -->
+                                    <h1><?php echo $ANALYTICS_COUNTR . ' ' . $SUBTITLE; ?></h1>
                                     <?php
 
-                                        $LOGS_DIR = $_CONSTRUCTR_CONF['_CONSTRUCTR_LOGFILES_PATH'];
-                                        $ALL_LOGS = getFilesFromDir($LOGS_DIR);
-                                        $ANALYTICS_ARRAY = array();
-
-                                        if($ALL_LOGS)
+                                        if($ANALYTICS_ARRAY)
                                         {
-                                            foreach($ALL_LOGS as $ALL_LOGS_KEY => $ALL_LOGS_VALUE)
-                                            {
-                                                $LOGS_CONTENT = file_get_contents($ALL_LOGS_VALUE);
-                                                $LOGS_LINES_ARRAY = explode("\n",$LOGS_CONTENT);
-
-                                                foreach($LOGS_LINES_ARRAY as $KEY => $VALUE)
-                                                {
-                                                    $pos = strpos($VALUE,'###CONSTRUCTR_ANALYTICS###');
-
-                                                    if ($pos !== false)
-                                                    {
-                                                        $VALUE = explode('###CONSTRUCTR_ANALYTICS###',$VALUE);                                                        
-                                                        $DATA = explode(':::',$VALUE[1]);
-
-                                                        $URI = $DATA[0];
-                                                        $TIMESTAMP = $DATA[0];
-                                                        $UUID = $DATA[0];
-                                                        $BROWSER = $DATA[0];
-                                                        $BROWSER_NICKNAME = $DATA[0];
-                                                        $BROWSER_VERSION = $DATA[0];
-                                                        $BROWSER_HTTP_STRING = $DATA[0];
-                                                        $BROWSER_PLATTFORM = $DATA[0];
-                                                        $BROWSER_LANGUAGE = $DATA[0];
-                                                        $SCREEN_PIXELDEPTH = $DATA[0];
-                                                        $SCREEN_COLORDEPTH = $DATA[0];
-                                                        $SCREEN_AVAIL_HEIGHT = $DATA[0];
-                                                        $SCREEN_AVAIL_WIDTH = $DATA[0];
-                                                        $SCREEN_HEIGHT = $DATA[0];
-                                                        $SCREEN_WIDTH = $DATA[0];
-
-                                                        $ANALYTICS_ARRAY[$KEY] = array
-                                                        (
-                                                            'uri' => $DATA[0],
-                                                            'referrer' => $DATA[15],
-                                                            'timestamp' => $DATA[1],
-                                                            'date_day' => $datum = date("d",$DATA[1]),
-                                                            'date_month' => $datum = date("m",$DATA[1]),
-                                                            'date_year' => $datum = date("Y",$DATA[1]),
-                                                            'date_hour' => $datum = date("H",$DATA[1]),
-                                                            'date_minutes' => $datum = date("m",$DATA[1]),
-                                                            'date_seconds' => $datum = date("s",$DATA[1]),
-                                                            'uuid' => $DATA[2],
-                                                            'browser' => $DATA[3],
-                                                            'browser_nickname' => $DATA[4],
-                                                            'browser_version' => $DATA[5],
-                                                            'browser_http_string' => $DATA[6],
-                                                            'plattform' => $DATA[7],
-                                                            'language' => $DATA[8],
-                                                            'pixeldepth' => $DATA[9],
-                                                            'colordepth' => $DATA[10],
-                                                            'avail_height' => $DATA[11],
-                                                            'avail_width' => $DATA[12],
-                                                            'screen_height' => $DATA[13],
-                                                            'screen_width' => $DATA[14]
-                                                        );
-                                                    }
-                                                }
-
-                                                if($ANALYTICS_ARRAY)
-                                                {
-                                                    echo '<pre>';
-                                                    var_dump($ANALYTICS_ARRAY);
-                                                    echo '</pre>';
-                                                }
-                                            }
+                                            ?>
+                                            <br><br>
+                                            <div class="table-responsive">
+                                            <table class="datatable table table-bordered table-condensed table-striped table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="center"><small>Datum</small></th>
+                                                        <th><small>Aufzeichnung</small></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php
+                                                        foreach($ANALYTICS_ARRAY as $ENTRY)
+                                                        {
+                                                            ?>
+                                                                <tr>
+                                                                    <td class="center">
+                                                                        <small><?php echo $ENTRY['date_day'] ?>.<?php echo $ENTRY['date_month'] ?>.<?php echo $ENTRY['date_year'] ?></small>
+                                                                    </td>
+                                                                    <td>
+                                                                        <small>
+                                                                            URL: <?php echo $ENTRY['uri'] ?><br>
+                                                                            Referrer: <?php echo $ENTRY['referrer'] ?><br>
+                                                                            UUID: <?php echo $ENTRY['uuid'] ?><br>
+                                                                            Browser: <?php echo $ENTRY['browser'] ?> / <?php echo $ENTRY['browser_nickname'] ?> (<?php echo $ENTRY['browser_version'] ?> / <?php echo $ENTRY['plattform'] ?> / <?php echo $ENTRY['language'] ?>)<br>
+                                                                            Pixeltiefe: <?php echo $ENTRY['pixeldepth'] ?> / Farbtiefe: <?php echo $ENTRY['colordepth'] ?> / H&ouml;he: <?php echo $ENTRY['screen_height'] ?>px (<?php echo $ENTRY['avail_height'] ?>px) / Breite: <?php echo $ENTRY['screen_width'] ?>px (<?php echo $ENTRY['avail_width'] ?>px)
+                                                                        </small>
+                                                                    </td>
+                                                                </tr>
+                                                            <?php
+                                                        }
+                                                    ?>
+                                                </tbody>
+                                            </table>
+                                            <?php
+                                        }
+                                        else
+                                        {
+                                            echo '<p><small>Es liegen keine Daten vor!</small></p>';
                                         }
 
                                     ?>
-                                    <!-- // ANALYTICS // -->
 
                                 </div><!-- // EOF JUMBOTRON -->
                             </div><!-- // EOF COL-... -->
@@ -147,10 +137,46 @@
 
             <script src="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/Assets/jquery-2-1-1.min.js"></script>
             <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+            <script src="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/datatables/media/js/jquery.dataTables.min.js"></script>
+            <script src="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/datatables-bootstrap3/assets/js/datatables.js"></script>
             <script>
                 $(function()
                     {
                         $('.tt').tooltip();
+
+                        $('.datatable').dataTable(
+                            {
+                                "aaSorting": [],
+                                "aoColumns":
+                                [
+                                    { "sWidth": "10%", "bSortable":true},
+                                    { "sWidth": "90%", "bSortable":false}
+                                ],
+                                "sPaginationType":"bs_full",
+                                "iDisplayLength": 5,
+                                "oLanguage": {
+                                    "sLengthMenu": '<small>Zeige <select class="form-control input-sm">'+
+                                    '<option value="10">10</option>'+
+                                    '<option value="20">20</option>'+
+                                    '<option value="25">25</option>'+
+                                    '<option value="50">50</option>'+
+                                    '<option value="100">100</option>'+
+                                    '<option value="-1">Alle</option>'+
+                                    '</select> Ergebnisse je Seite</small>'
+                                }
+                            }
+                        );
+
+                        $('.datatable').each(function()
+                            {
+                                var datatable = $(this);
+                                var search_input = datatable.closest('.dataTables_wrapper').find('div[id$=_filter] input');
+                                search_input.attr('placeholder', 'Suche');
+                                search_input.addClass('form-control input-sm');
+                                var length_sel = datatable.closest('.dataTables_wrapper').find('div[id$=_length] select');
+                                length_sel.addClass('form-control input-sm');
+                            }
+                        );
 
                         if(localStorage && localStorage.removeItem && localStorage.getItem && localStorage.setItem)
                         {

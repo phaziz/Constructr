@@ -21,7 +21,10 @@
 
 ?>
 <!DOCTYPE html>
-    <html lang="de">
+    <!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+    <!--[if IE 7]><html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+    <!--[if IE 8]><html class="no-js lt-ie9" lang="en"><![endif]-->
+    <!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
         <head>
             <meta charset="utf-8">
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -151,7 +154,7 @@
                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <div class="jumbotron">
-                                    <h1><?php echo $SUBTITLE; ?>: <a data-toggle="tooltip" data-placement="top" title="Seite anzeigen" class="tt" onclick="window.open(this.href);return false;" href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] .'/'. $PAGE_NAME['pages_url']; ?>"><strong><?php echo $PAGE_NAME['pages_name']; ?></strong></a> | <a data-toggle="tooltip" data-placement="top" title=Cache dieser Seite l&ouml;schen" class="tt" href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] .'/constructr/clear-cache-page/'. $GUID . '/' . $PAGE_NAME['pages_id'] . '/'; ?>"><strong>Cache l&ouml;schen</strong></a></h1>
+                                    <h1><?php echo $SUBTITLE; ?>: <a data-toggle="tooltip" data-placement="top" title="Seite anzeigen" class="tt" onclick="window.open(this.href);return false;" href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] .'/'. $PAGE_NAME['pages_url']; ?>"><strong><?php echo $PAGE_NAME['pages_name']; ?></strong></a> | <a data-toggle="tooltip" data-placement="top" title="Cache dieser Seite l&ouml;schen" class="tt" href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] .'/constructr/clear-cache-page/'. $GUID . '/' . $PAGE_NAME['pages_id'] . '/'; ?>"><strong>Cache l&ouml;schen</strong></a></h1>
                                     <h2><?php echo $CONTENT_COUNTER; ?> Angelegte Inhalte von <strong><?php echo $PAGE_NAME['pages_name']; ?></strong> <a data-toggle="tooltip" data-placement="top" title="Neuen Inhalt erstellen" class="tt" href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/content/' . $PAGE_ID . '/' . ($CONTENT_COUNTER + 1) . '/new/' ?>"><button type="button" class="btn btn-info btn-sm" title="Neuen Inhalt erstellen"><span class="glyphicon glyphicon-plus"></span></button></a></h2>
                                     <br><br>
                                     <div class="table-responsive">
@@ -265,7 +268,7 @@
                 </div>
             </div>
 
-            <script src="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/Assets/jquery-2-1-1.min.js"></script>
+            <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
             <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
             <script src="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/datatables/media/js/jquery.dataTables.min.js"></script>
             <script src="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/datatables-bootstrap3/assets/js/datatables.js"></script>

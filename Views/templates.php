@@ -161,9 +161,10 @@
             $ORIGIN_TEMPLATE = $TEMPLATE;
             $TEMPLATE = base64_decode($TEMPLATE);
             $TEMPLATE = $_CONSTRUCTR_CONF['_TEMPLATES_DIR'] . '/' . $TEMPLATE;
+            $TEMPLATE = file_get_contents($TEMPLATE);
+            $TEMPLATE = htmlspecialchars($TEMPLATE);
             $MEM = 0;
             $MEM = number_format(((memory_get_usage()/1014)/1024),2,',','.') . ' MB';
-
             $constructr -> render('templates-edit.php',
                 array
                 (

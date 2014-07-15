@@ -21,7 +21,10 @@
 
 ?>
 <!DOCTYPE html>
-    <html lang="de">
+    <!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+    <!--[if IE 7]><html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+    <!--[if IE 8]><html class="no-js lt-ie9" lang="en"><![endif]-->
+    <!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
         <head>
             <meta charset="utf-8">
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -132,7 +135,7 @@
                 </div>
             </div>
 
-            <script src="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/Assets/jquery-2-1-1.min.js"></script>
+            <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
             <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
             <script src="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/Assets/jquery-pwstrength/dist/pwstrength-bootstrap-1.1.0.min.js"></script>
             <script src="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/Assets/vex/js/vex.combined.min.js"></script>

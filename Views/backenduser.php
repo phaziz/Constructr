@@ -21,7 +21,6 @@
 
     $constructr -> get('/constructr/user/', $ADMIN_CHECK, function () use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $START = microtime(true);
             $USERNAME = $_SESSION['backend-user-username'];
             $COUNTR = 0;
 
@@ -83,19 +82,14 @@
                 die();
             }
 
-            $MEM = 0;
-            $MEM = number_format(((memory_get_usage()/1014)/1024),2,',','.') . ' MB';
-
             $constructr -> render('user.php',
                 array
                 (
-                    'MEM' => $MEM,
                     'USERNAME' => $USERNAME,
                     'BACKENDUSER' => $BACKENDUSER,
                     'COUNTR' => $COUNTR,
                     '_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,
-                    'SUBTITLE' => 'Benutzerverwaltung',
-                    'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.'
+                    'SUBTITLE' => 'Benutzerverwaltung'
                 )
             );
         }
@@ -103,7 +97,6 @@
 
     $constructr -> get('/constructr/user/new/', $ADMIN_CHECK, function () use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $START = microtime(true);
             $USERNAME = $_SESSION['backend-user-username'];
 
             $constructr -> view -> setData('BackendUserRight',67);
@@ -154,21 +147,17 @@
             }
 
             $GUID = create_guid();
-            $MEM = 0;
-            $MEM = number_format(((memory_get_usage()/1014)/1024),2,',','.') . ' MB';
 
             $constructr -> render('user_new.php',
                 array
                 (
-                    'MEM' => $MEM,
                     'USERNAME' => $USERNAME,
                     'GUID' => $GUID,
                     '_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,
                     'SUBTITLE' => 'Neuer Benutzer',
                     'FORM_ACTION' => $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/user/new/' . $GUID . '/',
                     'FORM_METHOD' => 'post',
-                    'FORM_ENCTYPE' => 'application/x-www-form-urlencoded',
-                    'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.'
+                    'FORM_ENCTYPE' => 'application/x-www-form-urlencoded'
                 )
             );
         }
@@ -536,7 +525,6 @@
 
     $constructr -> get('/constructr/user/edit/:USER_ID/', $ADMIN_CHECK, function ($USER_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $START = microtime(true);
             $USERNAME = $_SESSION['backend-user-username'];
 
             $constructr -> view -> setData('BackendUserRight',68);
@@ -612,15 +600,12 @@
             }
 
             $GUID = create_guid();
-            $MEM = 0;
-            $MEM = number_format(((memory_get_usage()/1014)/1024),2,',','.') . ' MB';
 
             if($COUNTR == 1)
             {
                 $constructr -> render('user_edit.php',
                     array
                     (
-                        'MEM' => $MEM,
                         'USERNAME' => $USERNAME,
                         'BACKENDUSER' => $BACKENDUSER,
                         'GUID' => $GUID,
@@ -628,8 +613,7 @@
                         'SUBTITLE' => 'Benutzer bearbeiten',
                         'FORM_ACTION' => $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/user/edit/' . $USER_ID . '/' . $GUID . '/',
                         'FORM_METHOD' => 'post',
-                        'FORM_ENCTYPE' => 'application/x-www-form-urlencoded',
-                        'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.'
+                        'FORM_ENCTYPE' => 'application/x-www-form-urlencoded'
                     )
                 );
             }

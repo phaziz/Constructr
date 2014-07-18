@@ -21,7 +21,6 @@
 
     $constructr -> get('/constructr/', $ADMIN_CHECK, function () use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $START = microtime(true);
             $USERNAME = $_SESSION['backend-user-username'];
             $BACKEND_USER_COUNTR = 0;
             $PAGES_COUNTR = 0;
@@ -74,13 +73,10 @@
             }
 
             $GUID = create_guid();
-            $MEM = 0;
-            $MEM = number_format(((memory_get_usage()/1014)/1024),2,',','.') . ' MB';
 
             $constructr -> render('admin.php',
                 array
                 (
-                    'MEM' => $MEM,
                     'USERNAME' => $USERNAME,
                     'GUID' => $GUID,
                     'FORM_ACTION' => $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/searchr/' . $GUID . '/',
@@ -95,8 +91,7 @@
                     'C_FILE_COUNTR' => $C_FILE_COUNTR,
                     'SUBTITLE' => 'Dashboard',
                     '_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,
-                    '_SERVE_STATIC' => true,
-                    'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.'
+                    '_SERVE_STATIC' => true
                 )
             );
         }
@@ -104,7 +99,6 @@
 
     $constructr -> post('/constructr/searchr/:GUID/', $ADMIN_CHECK, function ($GUID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $START = microtime(true);
             $USERNAME = $_SESSION['backend-user-username'];
 
             $constructr -> view -> setData('BackendUserRight',30);
@@ -334,13 +328,10 @@
             }
 
             $GUID = create_guid();
-            $MEM = 0;
-            $MEM = number_format(((memory_get_usage()/1014)/1024),2,',','.') . ' MB';
 
             $constructr -> render('admin.php',
                 array
                 (
-                    'MEM' => $MEM,
                     'USERNAME' => $USERNAME,
                     'GUID' => $GUID,
                     'SEARCHR' => $SEARCHR,
@@ -353,8 +344,7 @@
                     'UPLOADS_COUNTR' => $UPLOADS_COUNTR,
                     'SUBTITLE' => 'Suchergebnisse',
                     '_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,
-                    '_SERVE_STATIC' => true,
-                    'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.'
+                    '_SERVE_STATIC' => true
                 )
             );
         }

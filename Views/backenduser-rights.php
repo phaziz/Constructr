@@ -21,7 +21,6 @@
 
     $constructr -> get('/constructr/user/edit-user-rights/:user_id/:user_name/', $ADMIN_CHECK, function ($USER_ID,$USER_NAME) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $START = microtime(true);
             $USERNAME = $_SESSION['backend-user-username'];
 
             $constructr -> view -> setData('BackendUserRight',80);
@@ -87,13 +86,9 @@
                 die();
             }
 
-            $MEM = 0;
-            $MEM = number_format(((memory_get_usage()/1014)/1024),2,',','.') . ' MB';
-
             $constructr -> render('user-rights.php',
                 array
                 (
-                    'MEM' => $MEM,
                     'USERNAME' => $USERNAME,
                     'USER_NAME' => $USER_NAME,
                     'USER_ID' => $USER_ID,
@@ -101,7 +96,6 @@
                     'COUNTR' => $COUNTR,
                     '_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,
                     'SUBTITLE' => 'Benutzerrechte von ' . $USER_NAME,
-                    'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.'
                 )
             );
         }

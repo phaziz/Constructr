@@ -85,7 +85,7 @@
                                         if($_CONSTRUCTR_CONF)
                                         {
                                             ?>
-                                                <form role="form" name="config_form" id="config_form" action="" method="" enctype="" class="form-horizontal">
+                                                <form role="form" name="config_form" id="config_form" class="form-horizontal">
                                                     <?php
                                                         foreach($_CONSTRUCTR_CONF as $KEY => $VALUE)
                                                         {
@@ -128,7 +128,7 @@
                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <p><small><a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/">Dashboard</a> <span class="glyphicon glyphicon-chevron-right"></span> <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/config/">Systemkonfiguration</a> <span class="glyphicon glyphicon-chevron-right"></span></small></p>
-                                <p><small>Version: <?php echo $_CONSTRUCTR_CONF['_VERSION_DATE']; ?> <?php echo $_CONSTRUCTR_CONF['_VERSION']; ?> / <?php echo $TIMER; ?> / <?php echo $MEM; ?> / <a href="http://phaziz.com/" onclick="window.open(this.href);return false;">Constructr CMS von phaziz.com</a></small></p>
+                                <p><small>Version: <?php echo $_CONSTRUCTR_CONF['_VERSION_DATE']; ?> <?php echo $_CONSTRUCTR_CONF['_VERSION']; ?> / <a href="http://phaziz.com/" onclick="window.open(this.href);return false;">Constructr CMS von phaziz.com</a></small></p>
                             </div><!-- // EOF COL-... -->
                         </div><!-- // EOF ROW -->
                     </div>

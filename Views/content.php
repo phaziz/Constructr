@@ -22,7 +22,6 @@
 
     $constructr -> get('/constructr/content/:PAGE_ID/', $ADMIN_CHECK, function ($PAGE_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $START = microtime(true);
             $USERNAME = $_SESSION['backend-user-username'];
             $CONTENT_COUNTER = 0;
             $CONTENT = '';
@@ -95,13 +94,10 @@
             }
 
             $GUID = create_guid();
-            $MEM = 0;
-            $MEM = number_format(((memory_get_usage()/1014)/1024),2,',','.') . ' MB';
 
             $constructr -> render('content.php',
                 array
                 (
-                    'MEM' => $MEM,
                     'USERNAME' => $USERNAME,
                     'PAGE_ID' => $PAGE_ID,
                     'PAGE_NAME' => $PAGE_NAME,
@@ -111,8 +107,7 @@
                     'DELETED_CONTENT' => $DELETED_CONTENT,
                     'DELETED_CONTENT_COUNTER' => $DELETED_CONTENT_COUNTER,
                     '_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,
-                    'SUBTITLE' => 'Seiteninhalte',
-                    'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.'
+                    'SUBTITLE' => 'Seiteninhalte'
                 )
             );
         }
@@ -149,7 +144,6 @@
 
     $constructr -> get('/constructr/content/:PAGE_ID/:NEW_CONTENT_ORDER/new/', $ADMIN_CHECK, function ($PAGE_ID,$NEW_CONTENT_ORDER) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $START = microtime(true);
             $USERNAME = $_SESSION['backend-user-username'];
 
             $constructr -> view -> setData('BackendUserRight',21);
@@ -212,13 +206,10 @@
             }
 
             $GUID = create_guid();
-            $MEM = 0;
-            $MEM = number_format(((memory_get_usage()/1014)/1024),2,',','.') . ' MB';
 
             $constructr -> render('content_new.php',
                 array
                 (
-                    'MEM' => $MEM,
                     'USERNAME' => $USERNAME,
                     'PAGE_NAME' => $PAGE_NAME,
                     'GUID' => $GUID,
@@ -228,8 +219,7 @@
                     'FORM_ACTION' => $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/content/' . $PAGE_ID . '/new/' . $GUID .'/',
                     'FORM_METHOD' => 'post',
                     'FORM_ENCTYPE' => 'application/x-www-form-urlencoded',
-                    'SUBTITLE' => 'Neuer Inhalt',
-                    'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.'
+                    'SUBTITLE' => 'Neuer Inhalt'
                 )
             );
         }
@@ -350,7 +340,6 @@
 
     $constructr -> get('/constructr/content/:PAGE_ID/:CONTENT_ID/edit/', $ADMIN_CHECK, function ($PAGE_ID,$CONTENT_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $START = microtime(true);
             $USERNAME = $_SESSION['backend-user-username'];
 
             $constructr -> view -> setData('BackendUserRight',22);
@@ -440,13 +429,10 @@
             }
 
             $GUID = create_guid();
-            $MEM = 0;
-            $MEM = number_format(((memory_get_usage()/1014)/1024),2,',','.') . ' MB';
 
             $constructr -> render('content_edit.php',
                 array
                 (
-                    'MEM' => $MEM,
                     'USERNAME' => $USERNAME,
                     'GUID' => $GUID,
                     'CONTENT' => $CONTENT,
@@ -457,8 +443,7 @@
                     'FORM_ACTION' => $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/content/' . $PAGE_ID . '/' . $CONTENT_ID . '/edit/' . $GUID . '/',
                     'FORM_METHOD' => 'post',
                     'FORM_ENCTYPE' => 'application/x-www-form-urlencoded',
-                    'SUBTITLE' => 'Inhalt bearbeiten',
-                    'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.'
+                    'SUBTITLE' => 'Inhalt bearbeiten'
                 )
             );
         }
@@ -587,8 +572,6 @@
 
     $constructr -> get('/constructr/content/:PAGE_ID/:CONTENT_ID/:ACT_ORDER/up/', $ADMIN_CHECK, function ($PAGE_ID,$CONTENT_ID,$ACT_ORDER) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $START = microtime(true);
-
             $constructr -> view -> setData('BackendUserRight',23);
 
             if(isset($_SESSION['backend-user-id']) && $_SESSION['backend-user-id'] != '')
@@ -687,8 +670,6 @@
 
     $constructr -> get('/constructr/content/:PAGE_ID/:CONTENT_ID/:ACT_ORDER/down/', $ADMIN_CHECK, function ($PAGE_ID,$CONTENT_ID,$ACT_ORDER) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $START = microtime(true);
-
             $constructr -> view -> setData('BackendUserRight',23);
 
             if(isset($_SESSION['backend-user-id']) && $_SESSION['backend-user-id'] != '')

@@ -21,7 +21,6 @@
 
     $constructr -> get('/constructr/pages/', $ADMIN_CHECK, function () use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $START = microtime(true);
             $USERNAME = $_SESSION['backend-user-username'];
             $PAGES_COUNTR = 0;
 
@@ -84,20 +83,15 @@
                 die();
             }
 
-            $MEM = 0;
-            $MEM = number_format(((memory_get_usage()/1014)/1024),2,',','.') . ' MB';
-
             $constructr -> render('pages.php',
                 array
                 (
-                    'MEM' => $MEM,
                     'USERNAME' => $USERNAME,
                     'PAGES' => $PAGES,
                     'NEW_PAGES' => $NEW_PAGES,
                     '_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,
                     'PAGES_COUNTR' => $PAGES_COUNTR,
-                    'SUBTITLE' => 'Seitenverwaltung',
-                    'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.'
+                    'SUBTITLE' => 'Seitenverwaltung'
                 )
             );
         }
@@ -105,7 +99,6 @@
 
     $constructr -> get('/constructr/pages/new/', $ADMIN_CHECK, function () use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $START = microtime(true);
             $USERNAME = $_SESSION['backend-user-username'];
 
             $constructr -> view -> setData('BackendUserRight',11);
@@ -171,13 +164,10 @@
 
             $GUID = create_guid();
             $TEMPLATES = array_diff(scandir($_CONSTRUCTR_CONF['_TEMPLATES_DIR']), array('..', '.'));
-            $MEM = 0;
-            $MEM = number_format(((memory_get_usage()/1014)/1024),2,',','.') . ' MB';
 
             $constructr -> render('pages_new.php',
                 array
                 (
-                    'MEM' => $MEM,
                     'USERNAME' => $USERNAME,
                     'GUID' => $GUID,
                     'PAGES_COUNTR' => $PAGES_COUNTR,
@@ -186,8 +176,7 @@
                     'FORM_METHOD' => 'post',
                     '_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,
                     'FORM_ENCTYPE' => 'application/x-www-form-urlencoded',
-                    'SUBTITLE' => 'Neue Seite',
-                    'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.'
+                    'SUBTITLE' => 'Neue Seite'
                 )
             );
         }
@@ -526,13 +515,10 @@
 
             $GUID = create_guid();
             $TEMPLATES = array_diff(scandir($_CONSTRUCTR_CONF['_TEMPLATES_DIR']), array('..', '.'));
-            $MEM = 0;
-            $MEM = number_format(((memory_get_usage()/1014)/1024),2,',','.') . ' MB';
 
             $constructr -> render('pages_new_sub.php',
                 array
                 (
-                    'MEM' => $MEM,
                     'USERNAME' => $USERNAME,
                     'GUID' => $GUID,
                     'TEMPLATES' => $TEMPLATES,
@@ -542,8 +528,7 @@
                     'FORM_ACTION' => $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/new/sub/' . $GUID .'/',
                     'FORM_METHOD' => 'post',
                     'FORM_ENCTYPE' => 'application/x-www-form-urlencoded',
-                    'SUBTITLE' => 'Neue Unterseite',
-                    'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.'
+                    'SUBTITLE' => 'Neue Unterseite'
                 )
             );
         }
@@ -755,8 +740,6 @@
 
     $constructr -> get('/constructr/pages/edit/:PAGE_ID/', $ADMIN_CHECK, function ($PAGE_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $START = microtime(true);
-
             $constructr -> view -> setData('BackendUserRight',13);
 
             if(isset($_SESSION['backend-user-id']) && $_SESSION['backend-user-id'] != '')
@@ -827,13 +810,10 @@
 
             $GUID = create_guid();
             $TEMPLATES = array_diff(scandir($_CONSTRUCTR_CONF['_TEMPLATES_DIR']), array('..', '.'));
-            $MEM = 0;
-            $MEM = number_format(((memory_get_usage()/1014)/1024),2,',','.') . ' MB';
 
             $constructr -> render('pages_edit.php',
                 array
                 (
-                    'MEM' => $MEM,
                     'USERNAME' => $USERNAME,
                     'GUID' => $GUID,
                     'PAGE' => $PAGE,
@@ -842,8 +822,7 @@
                     'FORM_ACTION' => $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/edit/' . $GUID . '/',
                     'FORM_METHOD' => 'post',
                     'FORM_ENCTYPE' => 'application/x-www-form-urlencoded',
-                    'SUBTITLE' => 'Seite bearbeiten',
-                    'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.'
+                    'SUBTITLE' => 'Seite bearbeiten'
                 )
             );
         }

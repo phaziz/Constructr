@@ -21,7 +21,6 @@
 
     $constructr -> get('/constructr/media/', $ADMIN_CHECK, function () use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $START = microtime(true);
             $USERNAME = $_SESSION['backend-user-username'];
             $MEDIA_COUNTER = 0;
 
@@ -85,20 +84,16 @@
             }
 
             $IMAGES = array('.jpg','.jepg','.JPG','.JPEG','.gif','.GIF','.png','.PNG');
-            $MEM = 0;
-            $MEM = number_format(((memory_get_usage()/1014)/1024),2,',','.') . ' MB';
 
             $constructr -> render('media.php',
                 array
                 (
-                    'MEM' => $MEM,
                     'MEDIA' => $MEDIA,
                     'IMAGES' => $IMAGES,
                     'MEDIA_COUNTER' => $MEDIA_COUNTER,
                     'USERNAME' => $USERNAME,
                     '_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,
-                    'SUBTITLE' => 'Medienverwaltung',
-                    'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.'
+                    'SUBTITLE' => 'Medienverwaltung'
                 )
             );
         }
@@ -106,8 +101,6 @@
 
     $constructr -> get('/constructr/media/new/', $ADMIN_CHECK, function () use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $START = microtime(true);
-
             $constructr -> view -> setData('BackendUserRight',41);
 
             if(isset($_SESSION['backend-user-id']) && $_SESSION['backend-user-id'] != '')
@@ -158,21 +151,17 @@
             }
 
             $GUID = create_guid();
-            $MEM = 0;
-            $MEM = number_format(((memory_get_usage()/1014)/1024),2,',','.') . ' MB';
 
             $constructr -> render('media_new.php',
                 array
                 (
-                    'MEM' => $MEM,
                     'USERNAME' => $USERNAME,
                     'GUID' => $GUID,
                     'FORM_ACTION' => $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/media/new/' . $GUID . '/',
                     'FORM_METHOD' => 'post',
                     'FORM_ENCTYPE' => 'multipart/form-data',
                     '_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,
-                    'SUBTITLE' => 'Neuer Upload',
-                    'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.'
+                    'SUBTITLE' => 'Neuer Upload'
                 )
             );
         }
@@ -503,7 +492,6 @@
                 $constructr -> render('media-details.php',
                     array
                     (
-                        'MEM' => $MEM,
                         'DETAILS' => $DETAILS,
                         'USERNAME' => $USERNAME,
                         'MEDIA_ID' => $MEDIA_ID,
@@ -511,8 +499,7 @@
                         'FORM_METHOD' => 'post',
                         'FORM_ENCTYPE' => 'application/x-www-form-urlencoded',
                         '_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,
-                        'SUBTITLE' => 'Detailansicht',
-                        'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.'
+                        'SUBTITLE' => 'Detailansicht'
                     )
                 );
             }
@@ -663,7 +650,6 @@
                 die();
             }
 
-            $START = microtime(true);
             $USERNAME = $_SESSION['backend-user-username'];
             $MEDIA_COUNTER = 0;
 
@@ -716,21 +702,17 @@
             }
 
             $IMAGES = array('.jpg','.jepg','.JPG','.JPEG','.gif','.GIF','.png','.PNG');
-            $MEM = 0;
-            $MEM = number_format(((memory_get_usage()/1014)/1024),2,',','.') . ' MB';
 
             $constructr -> render('media-trashcan.php',
                 array
                 (
-                    'MEM' => $MEM,
                     'MEDIA' => $MEDIA,
                     'DIR_FILES' => $DIR_FILES,
                     'IMAGES' => $IMAGES,
                     'MEDIA_COUNTER' => $MEDIA_COUNTER,
                     'USERNAME' => $USERNAME,
                     '_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,
-                    'SUBTITLE' => 'M&uuml;lleimer',
-                    'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.'
+                    'SUBTITLE' => 'M&uuml;lleimer'
                 )
             );
         }

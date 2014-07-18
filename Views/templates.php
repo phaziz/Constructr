@@ -21,7 +21,6 @@
 
     $constructr -> get('/constructr/templates/', $ADMIN_CHECK, function () use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $START = microtime(true);
             $USERNAME = $_SESSION['backend-user-username'];
             $MEDIA_COUNTER = 0;
 
@@ -86,19 +85,15 @@
 
             $DIR_FILES = array_unique($DIR_FILES);
             $COUNTR = count($DIR_FILES);
-            $MEM = 0;
-            $MEM = number_format(((memory_get_usage()/1014)/1024),2,',','.') . ' MB';
 
             $constructr -> render('templates.php',
                 array
                 (
-                    'MEM' => $MEM,
                     'DIR_FILES' => $DIR_FILES,
                     'COUNTR' => $COUNTR,
                     'USERNAME' => $USERNAME,
                     '_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,
-                    'SUBTITLE' => 'Templates',
-                    'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.'
+                    'SUBTITLE' => 'Templates'
                 )
             );
         }
@@ -106,7 +101,6 @@
 
     $constructr -> get('/constructr/templates/edit/:TEMPLATE/', $ADMIN_CHECK, function ($TEMPLATE) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $START = microtime(true);
             $USERNAME = $_SESSION['backend-user-username'];
             $MEDIA_COUNTER = 0;
 
@@ -163,12 +157,9 @@
             $TEMPLATE = $_CONSTRUCTR_CONF['_TEMPLATES_DIR'] . '/' . $TEMPLATE;
             $TEMPLATE = file_get_contents($TEMPLATE);
             $TEMPLATE = htmlspecialchars($TEMPLATE);
-            $MEM = 0;
-            $MEM = number_format(((memory_get_usage()/1014)/1024),2,',','.') . ' MB';
-            $constructr -> render('templates-edit.php',
-                array
+
+            $constructr -> render('templates-edit.php', array
                 (
-                    'MEM' => $MEM,
                     'TEMPLATE' => $TEMPLATE,
                     'ORIGIN_TEMPLATE' => $ORIGIN_TEMPLATE,
                     'GUID' => $GUID,
@@ -177,8 +168,7 @@
                     'SUBTITLE' => 'Template bearbeiten',
                     'FORM_ACTION' => $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/templates/edit/' . $ORIGIN_TEMPLATE . '/' . $GUID . '/',
                     'FORM_METHOD' => 'post',
-                    'FORM_ENCTYPE' => 'application/x-www-form-urlencoded',
-                    'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.'
+                    'FORM_ENCTYPE' => 'application/x-www-form-urlencoded'
                 )
             );
         }
@@ -337,7 +327,6 @@
 
     $constructr -> get('/constructr/templates/new/', $ADMIN_CHECK, function () use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $START = microtime(true);
             $USERNAME = $_SESSION['backend-user-username'];
 
             $constructr -> view -> setData('BackendUserRight',53);
@@ -388,13 +377,10 @@
             }
 
             $GUID = create_guid();
-            $MEM = 0;
-            $MEM = number_format(((memory_get_usage()/1014)/1024),2,',','.') . ' MB';
 
             $constructr -> render('templates-new.php',
                 array
                 (
-                    'MEM' => $MEM,
                     'USERNAME' => $USERNAME,
                     'GUID' => $GUID,
                     '_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,
@@ -402,8 +388,7 @@
                     'FORM_ACTION' => $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/templates/new/' . $GUID .'/',
                     'FORM_METHOD' => 'post',
                     'FORM_ENCTYPE' => 'application/x-www-form-urlencoded',
-                    'SUBTITLE' => 'Neues Template',
-                    'TIMER' => substr(microtime(true) - $START,0,6) . ' Sek.'
+                    'SUBTITLE' => 'Neues Template'
                 )
             );
         }

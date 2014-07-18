@@ -103,12 +103,12 @@
         '_FTP_REMOTE_USERNAME' => '', // FTP USERNAME - (char)
 
         '_FTP_REMOTE_PASSWORD' => '', // FTP PASSWORD - (char)
-
-        '_ENABLE_USER_TRACKING' => true, // Use Constructr Analytics - (boolean) true | false
         
         '_CONSTRUCTR_WEBSITE_CACHE' => true, // Use ConstructrWebsiteCache mechanism - (boolean) true | false
         
         '_CONSTRUCTR_WEBSITE_CACHE_DIR' => './Website-Cache/', // DESTINATION DIRECTORY FOR CACHED FILES - (char) - './Website-Cache/'
+
+        '_ENABLE_USER_TRACKING' => false, // depreciated - will be removed soon
     );
 
     if(!defined('CRYPT_BLOWFISH') && CRYPT_BLOWFISH)

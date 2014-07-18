@@ -49,7 +49,7 @@
 
     $constructr -> notFound(function () use ($constructr,$_CONSTRUCTR_CONF) 
         {
-            $constructr -> getLog() -> error('404 - Not found: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+            $constructr -> getLog() -> error('404 - Not found: ' . $_SERVER['HTTP_REFERER'] . ' :: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
             $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL']);
             die();
         }

@@ -21,7 +21,6 @@
 
     $constructr -> get('/constructr/user/', $ADMIN_CHECK, function () use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $USERNAME = $_SESSION['backend-user-username'];
             $COUNTR = 0;
 
             $constructr -> view -> setData('BackendUserRight',66);
@@ -85,7 +84,7 @@
             $constructr -> render('user.php',
                 array
                 (
-                    'USERNAME' => $USERNAME,
+                    'USERNAME' => $_SESSION['backend-user-username'],
                     'BACKENDUSER' => $BACKENDUSER,
                     'COUNTR' => $COUNTR,
                     '_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,
@@ -97,8 +96,6 @@
 
     $constructr -> get('/constructr/user/new/', $ADMIN_CHECK, function () use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $USERNAME = $_SESSION['backend-user-username'];
-
             $constructr -> view -> setData('BackendUserRight',67);
 
             if(isset($_SESSION['backend-user-id']) && $_SESSION['backend-user-id'] != '')
@@ -151,7 +148,7 @@
             $constructr -> render('user_new.php',
                 array
                 (
-                    'USERNAME' => $USERNAME,
+                    'USERNAME' => $_SESSION['backend-user-username'],
                     'GUID' => $GUID,
                     '_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,
                     'SUBTITLE' => 'Neuer Benutzer',
@@ -377,6 +374,8 @@
 
     $constructr -> post('/constructr/user/new/:GUID/', $ADMIN_CHECK, function ($GUID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF,$_CONSTRUCTR_USER_RIGHTS_CONF)
         {
+            $GUID = filter_var(trim($GUID),FILTER_SANITIZE_STRING);
+
             if($_CONSTRUCTR_CONF['_LOGGING'] == true)
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
@@ -424,20 +423,20 @@
                 die();
             }
 
-            $USER_FORM_GUID = $constructr -> request() -> post('user_form_guid');
+            $USER_FORM_GUID = filter_var(trim($constructr -> request() -> post('user_form_guid'),FILTER_SANITIZE_STRING));
 
-            if($GUID != $USER_FORM_GUID)
+            if($GUID != $USER_FORM_GUID || $GUID == false)
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ' - USER_FORM_GUID ERROR: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                 $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/logout/');
                 die();
             }
 
-            $USERNAME = $constructr -> request() -> post('username');
-            $PASSWORD = crypt($constructr -> request() -> post('password'),$_CONSTRUCTR_CONF['_SALT']);
-            $PASSWORD_RT = crypt($constructr -> request() -> post('password_retype'),$_CONSTRUCTR_CONF['_SALT']) or die ('error');
-            $EMAIL = $constructr -> request() -> post('email');
-            $ART = $constructr -> request() -> post('art');
+            $USERNAME = trim($constructr -> request() -> post('username'));
+            $PASSWORD = crypt(trim($constructr -> request() -> post('password')),$_CONSTRUCTR_CONF['_SALT']);
+            $PASSWORD_RT = crypt(trim($constructr -> request() -> post('password_retype')),$_CONSTRUCTR_CONF['_SALT']) or die ('error');
+            $EMAIL = filter_var(trim($constructr -> request() -> post('email'),FILTER_VALIDATE_EMAIL));
+            $ART = trim($constructr -> request() -> post('art'));
             $ACTIVE = 1;
 
             if($PASSWORD != $PASSWORD_RT)
@@ -525,7 +524,7 @@
 
     $constructr -> get('/constructr/user/edit/:USER_ID/', $ADMIN_CHECK, function ($USER_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $USERNAME = $_SESSION['backend-user-username'];
+            $USER_ID = filter_var(trim((int) $USER_ID),FILTER_SANITIZE_NUMBER_INT);
 
             $constructr -> view -> setData('BackendUserRight',68);
 
@@ -606,7 +605,7 @@
                 $constructr -> render('user_edit.php',
                     array
                     (
-                        'USERNAME' => $USERNAME,
+                        'USERNAME' => $_SESSION['backend-user-username'],
                         'BACKENDUSER' => $BACKENDUSER,
                         'GUID' => $GUID,
                         '_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,
@@ -628,6 +627,9 @@
 
     $constructr -> post('/constructr/user/edit/:USER_ID/:GUID/', $ADMIN_CHECK, function ($USER_ID,$GUID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
+            $GUID = filter_var(trim($GUID),FILTER_SANITIZE_STRING);
+            $USER_ID = filter_var(trim((int) $USER_ID),FILTER_SANITIZE_NUMBER_INT);
+
             if($_CONSTRUCTR_CONF['_LOGGING'] == true)
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
@@ -675,20 +677,20 @@
                 die();
             }
 
-            $USER_FORM_GUID = $constructr -> request() -> post('user_form_guid');
+            $USER_FORM_GUID = filter_var($constructr -> request() -> post('user_form_guid'),FILTER_SANITIZE_STRING);
 
-            if($GUID != $USER_FORM_GUID)
+            if($GUID != $USER_FORM_GUID || $GUID == false)
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ' - USER_FORM_GUID ERROR: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                 $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/logout/');
                 die();
             }
 
-            $USERNAME = constructr_sanitization($constructr -> request() -> post('username'));
-            $PASSWORD = crypt(constructr_sanitization($constructr -> request() -> post('password')),$_CONSTRUCTR_CONF['_SALT']);
-            $PASSWORD_RT = crypt(constructr_sanitization($constructr -> request() -> post('password_retype')),$_CONSTRUCTR_CONF['_SALT']);
-            $EMAIL = constructr_sanitization($constructr -> request() -> post('email'));
-            $ART = constructr_sanitization($constructr -> request() -> post('art'));
+            $USERNAME = constructr_sanitization(trim($constructr -> request() -> post('username')));
+            $PASSWORD = crypt(constructr_sanitization(trim($constructr -> request() -> post('password'))),$_CONSTRUCTR_CONF['_SALT']);
+            $PASSWORD_RT = crypt(constructr_sanitization(trim($constructr -> request() -> post('password_retype'))),$_CONSTRUCTR_CONF['_SALT']);
+            $EMAIL = filter_var(constructr_sanitization(trim($constructr -> request() -> post('email')),FILTER_VALIDATE_EMAIL));
+            $ART = constructr_sanitization(trim($constructr -> request() -> post('art')));
             $ACTIVE = 1;
 
             if($PASSWORD != $PASSWORD_RT)
@@ -748,6 +750,7 @@
 
     $constructr -> get('/constructr/user/set-inactive/:USER_ID/', function ($USER_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
+            $USER_ID = filter_var(trim((int) $USER_ID),FILTER_SANITIZE_NUMBER_INT);
             $constructr -> view -> setData('BackendUserRight',69);
 
             if(isset($_SESSION['backend-user-id']) && $_SESSION['backend-user-id'] != '')
@@ -790,7 +793,7 @@
                 die();
             }
 
-            if(USER_ID != '')
+            if(USER_ID != '' && $USER_ID != false)
             {
                 try
                 {
@@ -833,6 +836,7 @@
 
     $constructr -> get('/constructr/user/set-active/:USER_ID/', function ($USER_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
+            $USER_ID = filter_var(trim((int) $USER_ID),FILTER_SANITIZE_NUMBER_INT);
             $constructr -> view -> setData('BackendUserRight',69);
 
             if(isset($_SESSION['backend-user-id']) && $_SESSION['backend-user-id'] != '')
@@ -875,7 +879,7 @@
                 die();
             }
 
-            if(USER_ID != '')
+            if(USER_ID != '' && $USER_ID != false)
             {
                 try
                 {
@@ -918,6 +922,7 @@
 
     $constructr -> get('/constructr/user/delete/:USER_ID/', function ($USER_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
+            $USER_ID = filter_var(trim((int) $USER_ID),FILTER_SANITIZE_NUMBER_INT);
             $constructr -> view -> setData('BackendUserRight',60);
 
             if(isset($_SESSION['backend-user-id']) && $_SESSION['backend-user-id'] != '')
@@ -960,7 +965,7 @@
                 die();
             }
 
-            if(USER_ID != '')
+            if(USER_ID != '' && $USER_ID != false)
             {
                 try
                 {

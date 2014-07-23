@@ -21,7 +21,6 @@
 
     $constructr -> get('/constructr/pages/', $ADMIN_CHECK, function () use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $USERNAME = $_SESSION['backend-user-username'];
             $PAGES_COUNTR = 0;
 
             $constructr -> view -> setData('BackendUserRight',10);
@@ -86,7 +85,7 @@
             $constructr -> render('pages.php',
                 array
                 (
-                    'USERNAME' => $USERNAME,
+                    'USERNAME' => $_SESSION['backend-user-username'],
                     'PAGES' => $PAGES,
                     'NEW_PAGES' => $NEW_PAGES,
                     '_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,
@@ -99,8 +98,6 @@
 
     $constructr -> get('/constructr/pages/new/', $ADMIN_CHECK, function () use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $USERNAME = $_SESSION['backend-user-username'];
-
             $constructr -> view -> setData('BackendUserRight',11);
 
             if(isset($_SESSION['backend-user-id']) && $_SESSION['backend-user-id'] != '')
@@ -168,7 +165,7 @@
             $constructr -> render('pages_new.php',
                 array
                 (
-                    'USERNAME' => $USERNAME,
+                    'USERNAME' => $_SESSION['backend-user-username'],
                     'GUID' => $GUID,
                     'PAGES_COUNTR' => $PAGES_COUNTR,
                     'TEMPLATES' => $TEMPLATES,
@@ -184,6 +181,8 @@
 
     $constructr -> post('/constructr/pages/new/:GUID/', $ADMIN_CHECK, function ($GUID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
+            $GUID = filter_var(trim($GUID),FILTER_SANITIZE_STRING);
+
             if($_CONSTRUCTR_CONF['_LOGGING'] == true)
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
@@ -463,6 +462,8 @@
 
     $constructr -> get('/constructr/pages/new/sub/:ID_MOTHER/:MOTHER_LFT/', $ADMIN_CHECK, function ($MOTHER_ID,$MOTHER_LFT) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
+            $MOTHER_ID = filter_var(trim($MOTHER_ID),FILTER_SANITIZE_NUMBER_INT);
+            $MOTHER_LFT = filter_var(trim($MOTHER_LFT),FILTER_SANITIZE_NUMBER_INT);
             $constructr -> view -> setData('BackendUserRight',12);
 
             if(isset($_SESSION['backend-user-id']) && $_SESSION['backend-user-id'] != '')
@@ -505,9 +506,6 @@
                 die();
             }
 
-            $START = microtime(true);
-            $USERNAME = $_SESSION['backend-user-username'];
-
             if($_CONSTRUCTR_CONF['_LOGGING'] == true)
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
@@ -519,7 +517,7 @@
             $constructr -> render('pages_new_sub.php',
                 array
                 (
-                    'USERNAME' => $USERNAME,
+                    'USERNAME' => $_SESSION['backend-user-username'],
                     'GUID' => $GUID,
                     'TEMPLATES' => $TEMPLATES,
                     'MOTHER_ID' => $MOTHER_ID,
@@ -536,6 +534,7 @@
 
     $constructr -> post('/constructr/pages/new/sub/:GUID/', $ADMIN_CHECK, function ($GUID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
+            $GUID = filter_var(trim($GUID),FILTER_SANITIZE_STRING);
             $constructr -> view -> setData('BackendUserRight',12);
 
             if(isset($_SESSION['backend-user-id']) && $_SESSION['backend-user-id'] != '')
@@ -740,6 +739,7 @@
 
     $constructr -> get('/constructr/pages/edit/:PAGE_ID/', $ADMIN_CHECK, function ($PAGE_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
+            $PAGE_ID = filter_var(trim($PAGE_ID),FILTER_SANITIZE_NUMBER_INT);
             $constructr -> view -> setData('BackendUserRight',13);
 
             if(isset($_SESSION['backend-user-id']) && $_SESSION['backend-user-id'] != '')
@@ -782,8 +782,6 @@
                 die();
             }
 
-            $USERNAME = $_SESSION['backend-user-username'];
-
             if($_CONSTRUCTR_CONF['_LOGGING'] == true)
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
@@ -814,7 +812,7 @@
             $constructr -> render('pages_edit.php',
                 array
                 (
-                    'USERNAME' => $USERNAME,
+                    'USERNAME' => $_SESSION['backend-user-username'],
                     'GUID' => $GUID,
                     'PAGE' => $PAGE,
                     'TEMPLATES' => $TEMPLATES,
@@ -830,6 +828,7 @@
 
     $constructr -> post('/constructr/pages/edit/:GUID/', $ADMIN_CHECK, function ($GUID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
+            $GUID = filter_var(trim($GUID),FILTER_SANITIZE_STRING);
             $constructr -> view -> setData('BackendUserRight',13);
 
             if(isset($_SESSION['backend-user-id']) && $_SESSION['backend-user-id'] != '')
@@ -1020,6 +1019,7 @@
 
     $constructr -> get('/constructr/pages/activate/:PAGE_ID/', $ADMIN_CHECK, function ($PAGE_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
+            $PAGE_ID = filter_var(trim($PAGE_ID),FILTER_SANITIZE_NUMBER_INT);
             $constructr -> view -> setData('BackendUserRight',14);
 
             if(isset($_SESSION['backend-user-id']) && $_SESSION['backend-user-id'] != '')
@@ -1104,6 +1104,7 @@
 
     $constructr -> get('/constructr/pages/deactivate/:PAGE_ID/', $ADMIN_CHECK, function ($PAGE_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
+            $PAGE_ID = filter_var(trim($PAGE_ID),FILTER_SANITIZE_NUMBER_INT);
             $constructr -> view -> setData('BackendUserRight',14);
 
             if(isset($_SESSION['backend-user-id']) && $_SESSION['backend-user-id'] != '')
@@ -1189,6 +1190,9 @@
 
     $constructr -> get('/constructr/pages/delete-single/:PAGE_ID/:PAGE_LFT/:PAGE_RGT/', $ADMIN_CHECK, function ($PAGE_ID,$PAGE_LFT,$PAGE_RGT) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
+            $PAGE_ID = filter_var(trim($PAGE_ID),FILTER_SANITIZE_NUMBER_INT);
+            $PAGE_LFT = filter_var(trim($PAGE_LFT),FILTER_SANITIZE_NUMBER_INT);
+            $PAGE_RGT = filter_var(trim($PAGE_RGT),FILTER_SANITIZE_NUMBER_INT);
             $constructr -> view -> setData('BackendUserRight',15);
 
             if(isset($_SESSION['backend-user-id']) && $_SESSION['backend-user-id'] != '')
@@ -1355,6 +1359,9 @@
 
     $constructr -> get('/constructr/pages/delete-recursive/:PAGE_ID/:PAGE_LFT/:PAGE_RGT/', $ADMIN_CHECK, function ($PAGE_ID,$PAGE_LFT,$PAGE_RGT) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
+            $PAGE_ID = filter_var(trim($PAGE_ID),FILTER_SANITIZE_NUMBER_INT);
+            $PAGE_LFT = filter_var(trim($PAGE_LFT),FILTER_SANITIZE_NUMBER_INT);
+            $PAGE_RGT = filter_var(trim($PAGE_RGT),FILTER_SANITIZE_NUMBER_INT);
             $constructr -> view -> setData('BackendUserRight',16);
 
             if(isset($_SESSION['backend-user-id']) && $_SESSION['backend-user-id'] != '')
@@ -1506,6 +1513,8 @@
 
     $constructr -> get('/constructr/pages/reorder/:METHOD/:PAGE_ID/', $ADMIN_CHECK, function ($METHOD,$PAGE_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
+            $PAGE_ID = filter_var(trim($PAGE_ID),FILTER_SANITIZE_NUMBER_INT);
+            $METHOD = filter_var(trim($METHOD),FILTER_SANITIZE_STRING);
             $constructr -> view -> setData('BackendUserRight',17);
 
             if(isset($_SESSION['backend-user-id']) && $_SESSION['backend-user-id'] != '')

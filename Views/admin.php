@@ -21,7 +21,6 @@
 
     $constructr -> get('/constructr/', $ADMIN_CHECK, function () use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $USERNAME = $_SESSION['backend-user-username'];
             $BACKEND_USER_COUNTR = 0;
             $PAGES_COUNTR = 0;
 
@@ -32,19 +31,16 @@
 
             try
             {
-                $BACKENDUSER = $DBCON -> query('SELECT beu_id FROM constructr_backenduser;');
-                $BACKEND_USER_COUNTR = $BACKENDUSER -> rowCount();
-                $PAGES = $DBCON -> query('SELECT pages_id FROM constructr_pages;');
-                $PAGES_COUNTR = $PAGES -> rowCount();
-                $CONTENT = $DBCON -> query('SELECT content_id FROM constructr_content;');
-                $CONTENT_COUNTR = $CONTENT -> rowCount();
-                $CONTENT_HISTORY = $DBCON -> query('SELECT content_id FROM constructr_content_history;');
-                $CONTENT_HISTORY_COUNTR = $CONTENT_HISTORY -> rowCount();
-                $UPLOADS = $DBCON -> query('SELECT media_id FROM constructr_media;');
-                $UPLOADS_COUNTR = $UPLOADS -> rowCount();
+                $BACKEND_USER_COUNTR = $DBCON -> query('SELECT beu_id FROM constructr_backenduser;') -> rowCount();
+                $PAGES_COUNTR = $DBCON -> query('SELECT pages_id FROM constructr_pages;') -> rowCount();
+                $CONTENT_COUNTR = $DBCON -> query('SELECT content_id FROM constructr_content;') -> rowCount();
+                $CONTENT_HISTORY_COUNTR = $DBCON -> query('SELECT content_id FROM constructr_content_history;') -> rowCount();
+                $UPLOADS_COUNTR = $DBCON -> query('SELECT media_id FROM constructr_media;') -> rowCount();
                 $TEMPLATES_COUNTR = 0;
+
                 $ALL_FILES = scandir($_CONSTRUCTR_CONF['_TEMPLATES_DIR']);
                 $DIR_FILES = array();
+
                 foreach($ALL_FILES as $DIR_FILE)
                 {
                     if($DIR_FILE != '.'  && $DIR_FILE != '..')
@@ -52,10 +48,13 @@
                         $DIR_FILES[] = $DIR_FILE;
                     }
                 }
+
                 $DIR_FILES = array_unique($DIR_FILES);
                 $TEMPLATES_COUNTR = count($DIR_FILES);
+
                 $ALL_C_FILES = scandir($_CONSTRUCTR_CONF['_CONSTRUCTR_WEBSITE_CACHE_DIR']);
                 $DIR_C_FILES = array();
+
                 foreach($ALL_C_FILES as $DIR_C_FILE)
                 {
                     if($DIR_C_FILE != '.'  && $DIR_C_FILE != '..')
@@ -63,6 +62,7 @@
                         $DIR_C_FILES[] = $DIR_C_FILE;
                     }
                 }
+
                 $DIR_C_FILES = array_unique($DIR_C_FILES);
                 $C_FILE_COUNTR = count($DIR_C_FILES);
             }
@@ -77,18 +77,18 @@
             $constructr -> render('admin.php',
                 array
                 (
-                    'USERNAME' => $USERNAME,
+                    'USERNAME' => $_SESSION['backend-user-username'],
                     'GUID' => $GUID,
                     'FORM_ACTION' => $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/searchr/' . $GUID . '/',
                     'FORM_METHOD' => 'post',
                     'FORM_ENCTYPE' => 'application/x-www-form-urlencoded',
-                    'BACKEND_USER_COUNTR' => $BACKEND_USER_COUNTR,
-                    'PAGES_COUNTR' => $PAGES_COUNTR,
-                    'CONTENT_COUNTR' => $CONTENT_COUNTR,
-                    'CONTENT_HISTORY_COUNTR' => $CONTENT_HISTORY_COUNTR,
-                    'UPLOADS_COUNTR' => $UPLOADS_COUNTR,
-                    'TEMPLATES_COUNTR' => $TEMPLATES_COUNTR,
-                    'C_FILE_COUNTR' => $C_FILE_COUNTR,
+                    'BACKEND_USER_COUNTR' => (int) $BACKEND_USER_COUNTR,
+                    'PAGES_COUNTR' => (int) $PAGES_COUNTR,
+                    'CONTENT_COUNTR' => (int) $CONTENT_COUNTR,
+                    'CONTENT_HISTORY_COUNTR' => (int) $CONTENT_HISTORY_COUNTR,
+                    'UPLOADS_COUNTR' => (int) $UPLOADS_COUNTR,
+                    'TEMPLATES_COUNTR' => (int) $TEMPLATES_COUNTR,
+                    'C_FILE_COUNTR' => (int) $C_FILE_COUNTR,
                     'SUBTITLE' => 'Dashboard',
                     '_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,
                     '_SERVE_STATIC' => true
@@ -99,7 +99,7 @@
 
     $constructr -> post('/constructr/searchr/:GUID/', $ADMIN_CHECK, function ($GUID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $USERNAME = $_SESSION['backend-user-username'];
+            $GUID = filter_var(trim($GUID),FILTER_SANITIZE_STRING);
 
             $constructr -> view -> setData('BackendUserRight',30);
 
@@ -111,7 +111,7 @@
                     $RIGHT_CHECKER -> execute(
                         array
                         (
-                            ':USER_ID' => $_SESSION['backend-user-id'],
+                            ':USER_ID' => (int) $_SESSION['backend-user-id'],
                             ':RIGHT_ID' => $constructr -> view -> getData('BackendUserRight'),
                             ':CBR_VALUE' => 1
                         )
@@ -153,12 +153,40 @@
 
             try
             {
-                $BACKENDUSER = $DBCON -> query('SELECT beu_id FROM constructr_backenduser;');
-                $BACKEND_USER_COUNTR = $BACKENDUSER -> rowCount();
-                $PAGES = $DBCON -> query('SELECT pages_id FROM constructr_pages;');
-                $PAGES_COUNTR = $PAGES -> rowCount();
-                $UPLOADS = $DBCON -> query('SELECT media_id FROM constructr_media;');
-                $UPLOADS_COUNTR = $UPLOADS -> rowCount();
+                $BACKEND_USER_COUNTR = $DBCON -> query('SELECT beu_id FROM constructr_backenduser;') -> rowCount();
+                $PAGES_COUNTR = $DBCON -> query('SELECT pages_id FROM constructr_pages;') -> rowCount();
+                $CONTENT_COUNTR = $DBCON -> query('SELECT content_id FROM constructr_content;') -> rowCount();
+                $CONTENT_HISTORY_COUNTR = $DBCON -> query('SELECT content_id FROM constructr_content_history;') -> rowCount();
+                $UPLOADS_COUNTR = $DBCON -> query('SELECT media_id FROM constructr_media;') -> rowCount();
+                $TEMPLATES_COUNTR = 0;
+
+                $ALL_FILES = scandir($_CONSTRUCTR_CONF['_TEMPLATES_DIR']);
+                $DIR_FILES = array();
+
+                foreach($ALL_FILES as $DIR_FILE)
+                {
+                    if($DIR_FILE != '.'  && $DIR_FILE != '..')
+                    {
+                        $DIR_FILES[] = $DIR_FILE;
+                    }
+                }
+
+                $DIR_FILES = array_unique($DIR_FILES);
+                $TEMPLATES_COUNTR = count($DIR_FILES);
+
+                $ALL_C_FILES = scandir($_CONSTRUCTR_CONF['_CONSTRUCTR_WEBSITE_CACHE_DIR']);
+                $DIR_C_FILES = array();
+
+                foreach($ALL_C_FILES as $DIR_C_FILE)
+                {
+                    if($DIR_C_FILE != '.'  && $DIR_C_FILE != '..')
+                    {
+                        $DIR_C_FILES[] = $DIR_C_FILE;
+                    }
+                }
+
+                $DIR_C_FILES = array_unique($DIR_C_FILES);
+                $C_FILE_COUNTR = count($DIR_C_FILES);
             }
             catch(PDOException $e)
             {
@@ -167,11 +195,12 @@
             }
 
             $NEEDLES = constructr_sanitization($constructr -> request() -> post('needles'),true,true);
+            $NEEDLES = filter_var(trim($NEEDLES),FILTER_SANITIZE_STRING);
             $USER_FORM_GUID = constructr_sanitization($constructr -> request() -> post('user_form_guid'));
 
-            if($NEEDLES)
+            if($NEEDLES && $NEEDLES != false)
             {
-                if($GUID != $USER_FORM_GUID)
+                if($GUID != $USER_FORM_GUID || $GUID == false)
                 {
                     $constructr -> getLog() -> error('SearchForm GUID Error - ' . $_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                     $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/');
@@ -332,16 +361,20 @@
             $constructr -> render('admin.php',
                 array
                 (
-                    'USERNAME' => $USERNAME,
+                    'USERNAME' => $_SESSION['backend-user-username'],
                     'GUID' => $GUID,
                     'SEARCHR' => $SEARCHR,
                     'SEARCHR_COUNTR' => count($SEARCHR),
                     'FORM_ACTION' => $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/searchr/' . $GUID . '/',
                     'FORM_METHOD' => 'post',
                     'FORM_ENCTYPE' => 'application/x-www-form-urlencoded',
-                    'BACKEND_USER_COUNTR' => $BACKEND_USER_COUNTR,
-                    'PAGES_COUNTR' => $PAGES_COUNTR,
-                    'UPLOADS_COUNTR' => $UPLOADS_COUNTR,
+                    'BACKEND_USER_COUNTR' => (int) $BACKEND_USER_COUNTR,
+                    'PAGES_COUNTR' => (int) $PAGES_COUNTR,
+                    'CONTENT_COUNTR' => (int) $CONTENT_COUNTR,
+                    'CONTENT_HISTORY_COUNTR' => (int) $CONTENT_HISTORY_COUNTR,
+                    'UPLOADS_COUNTR' => (int) $UPLOADS_COUNTR,
+                    'TEMPLATES_COUNTR' => (int) $TEMPLATES_COUNTR,
+                    'C_FILE_COUNTR' => (int) $C_FILE_COUNTR,
                     'SUBTITLE' => 'Suchergebnisse',
                     '_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,
                     '_SERVE_STATIC' => true
@@ -352,7 +385,7 @@
 
     $constructr -> get('/constructr/optimization/:GUID/', $ADMIN_CHECK, function ($GUID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $USERNAME = $_SESSION['backend-user-username'];
+            $GUID = filter_var(trim($GUID),FILTER_SANITIZE_STRING);
 
             $constructr -> view -> setData('BackendUserRight',31);
 
@@ -396,7 +429,7 @@
                 die();
             }
 
-            if($GUID == '')
+            if($GUID == '' || $GUID == false)
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ' - USER_FORM_GUID ERROR: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                 $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/logout/');
@@ -419,7 +452,7 @@
 
     $constructr -> get('/constructr/content-history/:GUID/', $ADMIN_CHECK, function ($GUID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $USERNAME = $_SESSION['backend-user-username'];
+            $GUID = filter_var(trim($GUID),FILTER_SANITIZE_STRING);
 
             $constructr -> view -> setData('BackendUserRight',25);
 
@@ -463,7 +496,7 @@
                 die();
             }
 
-            if($GUID == '')
+            if($GUID == '' || $GUID == false)
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ' - USER_FORM_GUID ERROR: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                 $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/logout/');
@@ -486,7 +519,7 @@
 
     $constructr -> get('/constructr/transfer-static/:GUID/', $ADMIN_CHECK, function ($GUID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $USERNAME = $_SESSION['backend-user-username'];
+            $GUID = filter_var(trim($GUID),FILTER_SANITIZE_STRING);
 
             $constructr -> view -> setData('BackendUserRight',100);
 
@@ -530,7 +563,7 @@
                 die();
             }
 
-            if($GUID == '')
+            if($GUID == '' || $GUID == false)
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ' - USER_FORM_GUID ERROR: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                 $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/logout/');
@@ -679,14 +712,17 @@
 
                         $FTP_CON = @ftp_connect($_CONSTRUCTR_CONF['_FTP_REMOTE_HOST'],$_CONSTRUCTR_CONF['_FTP_REMOTE_PORT']);
                         @ftp_login($FTP_CON, $_CONSTRUCTR_CONF['_FTP_REMOTE_USERNAME'], $_CONSTRUCTR_CONF['_FTP_REMOTE_PASSWORD']);
+
                         @ftp_chmod($FTP_CON, 0777,'sitemap.xml');
                         @ftp_delete($FTP_CON,'sitemap.xml');
                         @ftp_put($FTP_CON,'sitemap.xml',$_CONSTRUCTR_CONF['_BASE_URL'] . '/sitemap.xml', $_CONSTRUCTR_CONF['_FTP_REMOTE_MODE']);
                         @ftp_chmod($FTP_CON, 0777,'sitemap.xml');
+
                         @ftp_chmod($FTP_CON, 0777,'.htaccess');
                         @ftp_delete($FTP_CON,'.htaccess');
                         @ftp_put($FTP_CON,'.htaccess',$_CONSTRUCTR_CONF['_STATIC_DIR'] . '/.htaccess', $_CONSTRUCTR_CONF['_FTP_REMOTE_MODE']);
                         @ftp_chmod($FTP_CON, 0777,'.htaccess');
+
                         @ftp_chmod($FTP_CON, 0777,'robots.txt');
                         @ftp_delete($FTP_CON,'robots.txt');
                         @ftp_put($FTP_CON,'robots.txt',$_CONSTRUCTR_CONF['_STATIC_DIR'] . '/robots.txt', $_CONSTRUCTR_CONF['_FTP_REMOTE_MODE']);
@@ -726,7 +762,7 @@
     
     $constructr -> get('/constructr/clear-cache/:GUID/', $ADMIN_CHECK, function ($GUID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $USERNAME = $_SESSION['backend-user-username'];
+            $GUID = filter_var(trim($GUID),FILTER_SANITIZE_STRING);
 
             $constructr -> view -> setData('BackendUserRight',70);
 
@@ -770,7 +806,7 @@
                 die();
             }
 
-            if($GUID == '')
+            if($GUID == '' || $GUID == false)
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ' - USER_FORM_GUID ERROR: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                 $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/logout/');
@@ -796,7 +832,8 @@
 
     $constructr -> get('/constructr/clear-cache-page/:GUID/:PAGE_ID/', $ADMIN_CHECK, function ($GUID,$PAGE_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $USERNAME = $_SESSION['backend-user-username'];
+            $GUID = filter_var(trim($GUID),FILTER_SANITIZE_STRING);
+            $PAGE_ID = filter_var(trim((int) $PAGE_ID),FILTER_SANITIZE_NUMBER_INT);
 
             $constructr -> view -> setData('BackendUserRight',70);
 
@@ -840,7 +877,7 @@
                 die();
             }
 
-            if($GUID == '')
+            if($GUID == '' || $GUID == false)
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ' - USER_FORM_GUID ERROR: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                 $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/logout/');
@@ -850,7 +887,7 @@
             try
             {
                 $PAGE = $DBCON -> prepare('SELECT pages_url FROM constructr_pages WHERE pages_id = :PAGE_ID LIMIT 1;');
-                $PAGE -> execute(array(':PAGE_ID' => $PAGE_ID));
+                $PAGE -> execute(array(':PAGE_ID' => (int) $PAGE_ID));
                 $PAGE = $PAGE -> fetch();
 
                 $_PAGES_URL = '/' . $PAGE['pages_url'];

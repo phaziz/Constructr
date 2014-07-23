@@ -118,7 +118,8 @@
 
     $constructr -> post('/constructr/login/:GUID/', function ($GUID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            session_regenerate_id(true); 
+            $GUID = filter_var(trim($GUID),FILTER_SANITIZE_STRING);
+            session_regenerate_id(true);
 
             if(isset($_SESSION['constructr_login_blocked']) && $_SESSION['constructr_login_blocked'] != '')
             {

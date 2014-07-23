@@ -21,7 +21,6 @@
 
     $constructr -> get('/constructr/templates/', $ADMIN_CHECK, function () use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $USERNAME = $_SESSION['backend-user-username'];
             $MEDIA_COUNTER = 0;
 
             $constructr -> view -> setData('BackendUserRight',50);
@@ -91,7 +90,7 @@
                 (
                     'DIR_FILES' => $DIR_FILES,
                     'COUNTR' => $COUNTR,
-                    'USERNAME' => $USERNAME,
+                    'USERNAME' => $_SESSION['backend-user-username'],
                     '_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,
                     'SUBTITLE' => 'Templates'
                 )
@@ -101,7 +100,6 @@
 
     $constructr -> get('/constructr/templates/edit/:TEMPLATE/', $ADMIN_CHECK, function ($TEMPLATE) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $USERNAME = $_SESSION['backend-user-username'];
             $MEDIA_COUNTER = 0;
 
             $constructr -> view -> setData('BackendUserRight',51);
@@ -163,7 +161,7 @@
                     'TEMPLATE' => $TEMPLATE,
                     'ORIGIN_TEMPLATE' => $ORIGIN_TEMPLATE,
                     'GUID' => $GUID,
-                    'USERNAME' => $USERNAME,
+                    'USERNAME' => $_SESSION['backend-user-username'],
                     '_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,
                     'SUBTITLE' => 'Template bearbeiten',
                     'FORM_ACTION' => $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/templates/edit/' . $ORIGIN_TEMPLATE . '/' . $GUID . '/',
@@ -176,7 +174,7 @@
 
     $constructr -> post('/constructr/templates/edit/:TEMPLATE/:GUID/', $ADMIN_CHECK, function ($TEMPLATE,$GUID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $USERNAME = $_SESSION['backend-user-username'];
+            $GUID = filter_var(trim($GUID),FILTER_SANITIZE_STRING);
 
             $constructr -> view -> setData('BackendUserRight',51);
 
@@ -327,8 +325,6 @@
 
     $constructr -> get('/constructr/templates/new/', $ADMIN_CHECK, function () use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $USERNAME = $_SESSION['backend-user-username'];
-
             $constructr -> view -> setData('BackendUserRight',53);
 
             if(isset($_SESSION['backend-user-id']) && $_SESSION['backend-user-id'] != '')
@@ -381,7 +377,7 @@
             $constructr -> render('templates-new.php',
                 array
                 (
-                    'USERNAME' => $USERNAME,
+                    'USERNAME' => $_SESSION['backend-user-username'],
                     'GUID' => $GUID,
                     '_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,
                     'NEW_CONTENT_ORDER' => $NEW_CONTENT_ORDER,
@@ -396,7 +392,7 @@
 
     $constructr -> post('/constructr/templates/new/:GUID/', $ADMIN_CHECK, function ($GUID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $USERNAME = $_SESSION['backend-user-username'];
+            $GUID = filter_var(trim($GUID),FILTER_SANITIZE_STRING);
 
             $constructr -> view -> setData('BackendUserRight',53);
 

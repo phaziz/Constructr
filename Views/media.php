@@ -21,7 +21,6 @@
 
     $constructr -> get('/constructr/media/', $ADMIN_CHECK, function () use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $USERNAME = $_SESSION['backend-user-username'];
             $MEDIA_COUNTER = 0;
 
             $constructr -> view -> setData('BackendUserRight',40);
@@ -91,7 +90,7 @@
                     'MEDIA' => $MEDIA,
                     'IMAGES' => $IMAGES,
                     'MEDIA_COUNTER' => $MEDIA_COUNTER,
-                    'USERNAME' => $USERNAME,
+                    'USERNAME' => $_SESSION['backend-user-username'],
                     '_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,
                     'SUBTITLE' => 'Medienverwaltung'
                 )
@@ -143,8 +142,6 @@
                 die();
             }
 
-            $USERNAME = $_SESSION['backend-user-username'];
-
             if($_CONSTRUCTR_CONF['_LOGGING'] == true)
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
@@ -155,7 +152,7 @@
             $constructr -> render('media_new.php',
                 array
                 (
-                    'USERNAME' => $USERNAME,
+                    'USERNAME' => $_SESSION['backend-user-username'],
                     'GUID' => $GUID,
                     'FORM_ACTION' => $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/media/new/' . $GUID . '/',
                     'FORM_METHOD' => 'post',
@@ -169,6 +166,7 @@
 
     $constructr -> post('/constructr/media/new/:GUID/', $ADMIN_CHECK, function ($GUID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
+            $GUID = filter_var(trim($GUID),FILTER_SANITIZE_STRING);
             $constructr -> view -> setData('BackendUserRight',41);
 
             if(isset($_SESSION['backend-user-id']) && $_SESSION['backend-user-id'] != '')
@@ -330,6 +328,7 @@
 
     $constructr -> get('/constructr/media/delete/:MEDIA_ID/', $ADMIN_CHECK, function ($MEDIA_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
+            $MEDIA_ID = filter_var(trim($MEDIA_ID),FILTER_SANITIZE_NUMBER_INT);
             $constructr -> view -> setData('BackendUserRight',42);
 
             if(isset($_SESSION['backend-user-id']) && $_SESSION['backend-user-id'] != '')
@@ -419,6 +418,7 @@
 
     $constructr -> get('/constructr/media/details/:MEDIA_ID/', $ADMIN_CHECK, function ($MEDIA_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
+            $MEDIA_ID = filter_var(trim($MEDIA_ID),FILTER_SANITIZE_NUMBER_INT);
             $constructr -> view -> setData('BackendUserRight',43);
 
             if(isset($_SESSION['backend-user-id']) && $_SESSION['backend-user-id'] != '')
@@ -460,8 +460,6 @@
                 $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/logout/');
                 die();
             }
-
-            $USERNAME = $_SESSION['backend-user-username'];
 
             if($_CONSTRUCTR_CONF['_LOGGING'] == true)
             {
@@ -493,7 +491,7 @@
                     array
                     (
                         'DETAILS' => $DETAILS,
-                        'USERNAME' => $USERNAME,
+                        'USERNAME' => $_SESSION['backend-user-username'],
                         'MEDIA_ID' => $MEDIA_ID,
                         'FORM_ACTION' => $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/media/details/' . $MEDIA_ID . '/',
                         'FORM_METHOD' => 'post',
@@ -518,6 +516,7 @@
 
     $constructr -> post('/constructr/media/details/:MEDIA_ID/', $ADMIN_CHECK, function ($MEDIA_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
+            $MEDIA_ID = filter_var(trim($MEDIA_ID),FILTER_SANITIZE_NUMBER_INT);
             $constructr -> view -> setData('BackendUserRight',43);
 
             if(isset($_SESSION['backend-user-id']) && $_SESSION['backend-user-id'] != '')
@@ -559,8 +558,6 @@
                 $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/logout/');
                 die();
             }
-
-            $USERNAME = $_SESSION['backend-user-username'];
 
             if($_CONSTRUCTR_CONF['_LOGGING'] == true)
             {
@@ -650,7 +647,6 @@
                 die();
             }
 
-            $USERNAME = $_SESSION['backend-user-username'];
             $MEDIA_COUNTER = 0;
 
             if($_CONSTRUCTR_CONF['_LOGGING'] == true)
@@ -710,7 +706,7 @@
                     'DIR_FILES' => $DIR_FILES,
                     'IMAGES' => $IMAGES,
                     'MEDIA_COUNTER' => $MEDIA_COUNTER,
-                    'USERNAME' => $USERNAME,
+                    'USERNAME' => $_SESSION['backend-user-username'],
                     '_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,
                     'SUBTITLE' => 'M&uuml;lleimer'
                 )

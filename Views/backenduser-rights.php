@@ -21,7 +21,8 @@
 
     $constructr -> get('/constructr/user/edit-user-rights/:user_id/:user_name/', $ADMIN_CHECK, function ($USER_ID,$USER_NAME) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $USERNAME = $_SESSION['backend-user-username'];
+            $USER_NAME = filter_var(trim($USER_NAME),FILTER_SANITIZE_STRING);
+            $USER_ID = filter_var(trim((int) $USER_ID),FILTER_SANITIZE_NUMBER_INT);
 
             $constructr -> view -> setData('BackendUserRight',80);
 
@@ -89,11 +90,11 @@
             $constructr -> render('user-rights.php',
                 array
                 (
-                    'USERNAME' => $USERNAME,
+                    'USERNAME' => $_SESSION['backend-user-username'],
                     'USER_NAME' => $USER_NAME,
-                    'USER_ID' => $USER_ID,
+                    'USER_ID' => (int) $USER_ID,
                     'RIGHTS' => $RIGHTS,
-                    'COUNTR' => $COUNTR,
+                    'COUNTR' => (int) $COUNTR,
                     '_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,
                     'SUBTITLE' => 'Benutzerrechte von ' . $USER_NAME,
                 )
@@ -103,7 +104,10 @@
 
     $constructr -> get('/constructr/user/set-user-right/:new_value/:right_id/:user_id/:user_name/', $ADMIN_CHECK, function ($NEW_VALUE,$RIGHT_ID,$USER_ID,$USER_NAME) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $USERNAME = $_SESSION['backend-user-username'];
+            $NEW_VALUE = filter_var(trim((int) $NEW_VALUE),FILTER_SANITIZE_NUMBER_INT);
+            $RIGHT_ID = filter_var(trim((int) $RIGHT_ID),FILTER_SANITIZE_NUMBER_INT);
+            $USER_ID = filter_var(trim((int) $USER_ID),FILTER_SANITIZE_NUMBER_INT);
+            $USER_NAME = filter_var(trim($USER_NAME),FILTER_SANITIZE_STRING);
 
             $constructr -> view -> setData('BackendUserRight',81);
 
@@ -175,6 +179,7 @@
             else
             {
                 $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                $constructr -> redirect('/constructr/user/edit-user-rights/' . $USER_ID . '/' . $USER_NAME . '/?edited=false');
                 die();
             }
             $constructr -> redirect('/constructr/user/edit-user-rights/' . $USER_ID . '/' . $USER_NAME . '/?edited=true');

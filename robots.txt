@@ -1,12 +1,9 @@
 User-agent: *
-Disallow: /Analytics
-Disallow: /Analytics/data
 Disallow: /Assets
 Disallow: /Config
 Disallow: /Constructr
 Disallow: /Install
 Disallow: /Logfiles
-Disallow: /logs
 Disallow: /Postmaster
 Disallow: /Slim
 Disallow: /Static

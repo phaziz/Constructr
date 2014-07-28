@@ -22,8 +22,8 @@
     require_once './Config/constructr.conf.php';
     require_once './Config/constructr_user_rights.conf.php';
 
-    $_CONSTRUCTR_CONF['_VERSION_DATE'] = '20140726';
-    $_CONSTRUCTR_CONF['_VERSION'] = '1.02.8';
+    $_CONSTRUCTR_CONF['_VERSION_DATE'] = '20140728';
+    $_CONSTRUCTR_CONF['_VERSION'] = '1.02.9';
 
     require_once './Slim/Slim.php';
     require_once './Slim/Log/DateTimeFileWriter.php';

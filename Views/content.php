@@ -1024,6 +1024,8 @@
                             ':ACT_ORDER' => $ACT_ORDER
                         )
                     );
+					
+					$constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/content/' . $PAGE_ID . '/?res=del-content-true');
                 }
                 catch(PDOException $e)
                 {

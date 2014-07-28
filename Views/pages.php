@@ -441,7 +441,7 @@
                 $SITEMAP_CONTENT .= '</urlset>' . $NEW_LINE;
                 @fwrite($CREATE_SITEMAP,$SITEMAP_CONTENT);
                 @fclose($CREATE_SITEMAP);
-                @chmod(0777,$SITEMAP_FILE);
+                @chmod($SITEMAP_FILE,0777);
 
                 $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/?res=create-page-true');
                 die();
@@ -985,7 +985,7 @@
 
                     @fwrite($CREATE_SITEMAP,$SITEMAP_CONTENT);
                     @fclose($CREATE_SITEMAP);
-                    @chmod(0777,$SITEMAP_FILE);
+                    @chmod($SITEMAP_FILE,0777);
 
                     $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/?res=edit-page-true');
 

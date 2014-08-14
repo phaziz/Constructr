@@ -1,0 +1,13 @@
+{
+    "name":"Piwik Analytics",
+    "version":"1.0.0",
+    "date":"2014-08-12",
+    "author":"Christian Becher",
+    "email":"phaziz@gmail.com",
+    "website":"http://phaziz.com",
+    "description":"Includes Piwik-Javascript-Tracking-Code",
+    "documentation":"constructr-piwik-analytics-documentation.txt",
+    "installer":"constructr-piwik-analytics-installer.php",
+    "deinstaller":"constructr-piwik-analytics-deinstaller.php",
+    "include":"constructr-piwik-analytics-include.php"
+}

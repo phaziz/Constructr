@@ -3,7 +3,7 @@ Constructr CMS
 
 ConstructrCMS based on Slim-PHP5-Framework, Twitter Bootstrap, PDO (MySQL), jQuery/Javascript and Passion!
 
-That's it for now (2014-07-28):
+That's it for now (2014-08-14):
 
 	- Simple example frontend-template
 	- C.R.U.D. websites

@@ -64,6 +64,7 @@
                         <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/media/trash/" title="M&uuml;lleimer anzeigen" data-toggle="tooltip" data-placement="right">M&uuml;lleimer</a></li>
                         <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/user/" title="Benutzerverwaltung anzeigen" data-toggle="tooltip" data-placement="right">Benutzer</a></li>
                         <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/templates/" title="Templates anzeigen" data-toggle="tooltip" data-placement="right">Templates</a></li>
+                        <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/plugins/" title="Plugins anzeigen" data-toggle="tooltip" data-placement="right">Plugins</a></li>
                         <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/config/" title="Systemkonfiguration anzeigen" data-toggle="tooltip" data-placement="right">System</a></li>
                         <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/logout/" title="<?php echo $_SESSION['backend-user-username']; ?> abmelden" data-toggle="tooltip" data-placement="right">abmelden</a></li>
                     </ul>
@@ -219,9 +220,14 @@
                                                         echo '&#160;';
                                                         echo '<a data-toggle="tooltip" data-placement="top" title="Seite ' . $PAGE['pages_name'] . ' bearbeiten" class="editer tt" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/edit/' . $PAGE['pages_id'] . '/"><button type="button" class="btn btn-success btn-xs" title="Seite ' . $PAGE['pages_name'] . ' bearbeiten"><span class="glyphicon glyphicon-pencil"></span></button></a>';
                                                         echo '&#160;';
-                                                        echo '<a data-toggle="tooltip" data-placement="top" title="Diese Seite l&ouml;schen" class="deleter-single tt" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/delete-single/' . $PAGE['pages_id'] . '/' . $PAGE['pages_lft'] . '/' . $PAGE['pages_rgt'] . '/" title="Seite l&ouml;schen"><button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span></button></a>';
-                                                        echo '&#160;';
-                                                        echo '<a data-toggle="tooltip" data-placement="top" title="Diese Seite rekursiv l&ouml;schen" class="deleter-recursive tt" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/delete-recursive/' . $PAGE['pages_id'] . '/' . $PAGE['pages_lft'] . '/' . $PAGE['pages_rgt'] . '/" title="Seite rekursiv l&ouml;schen"><button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove-circle"></span></button></a>';
+
+                                                        if($PAGE['pages_lft'] != 1)
+                                                        {
+                                                            echo '<a data-toggle="tooltip" data-placement="top" title="Diese Seite l&ouml;schen" class="deleter-single tt" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/delete-single/' . $PAGE['pages_id'] . '/' . $PAGE['pages_lft'] . '/' . $PAGE['pages_rgt'] . '/" title="Seite l&ouml;schen"><button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span></button></a>';
+                                                            echo '&#160;';
+                                                            echo '<a data-toggle="tooltip" data-placement="top" title="Diese Seite rekursiv l&ouml;schen" class="deleter-recursive tt" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/delete-recursive/' . $PAGE['pages_id'] . '/' . $PAGE['pages_lft'] . '/' . $PAGE['pages_rgt'] . '/" title="Seite rekursiv l&ouml;schen"><button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove-circle"></span></button></a>';
+                                                        }
+
                                                         echo '</nobr></td>';
                                                         echo '</tr>';
                                                     }

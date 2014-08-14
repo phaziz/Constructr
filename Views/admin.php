@@ -37,10 +37,8 @@
                 $CONTENT_HISTORY_COUNTR = $DBCON -> query('SELECT content_id FROM constructr_content_history;') -> rowCount();
                 $UPLOADS_COUNTR = $DBCON -> query('SELECT media_id FROM constructr_media;') -> rowCount();
                 $TEMPLATES_COUNTR = 0;
-
                 $ALL_FILES = scandir($_CONSTRUCTR_CONF['_TEMPLATES_DIR']);
                 $DIR_FILES = array();
-
                 foreach($ALL_FILES as $DIR_FILE)
                 {
                     if($DIR_FILE != '.'  && $DIR_FILE != '..')
@@ -48,13 +46,10 @@
                         $DIR_FILES[] = $DIR_FILE;
                     }
                 }
-
                 $DIR_FILES = array_unique($DIR_FILES);
                 $TEMPLATES_COUNTR = count($DIR_FILES);
-
                 $ALL_C_FILES = scandir($_CONSTRUCTR_CONF['_CONSTRUCTR_WEBSITE_CACHE_DIR']);
                 $DIR_C_FILES = array();
-
                 foreach($ALL_C_FILES as $DIR_C_FILE)
                 {
                     if($DIR_C_FILE != '.'  && $DIR_C_FILE != '..')
@@ -62,9 +57,19 @@
                         $DIR_C_FILES[] = $DIR_C_FILE;
                     }
                 }
-
                 $DIR_C_FILES = array_unique($DIR_C_FILES);
                 $C_FILE_COUNTR = count($DIR_C_FILES);
+                $PLUGINS = scandir('./Plugins');
+                $PLUGIN_FILES = array();
+                foreach($PLUGINS as $PLUGIN_FILE)
+                {
+                    if($PLUGIN_FILE != '.'  && $PLUGIN_FILE != '..')
+                    {
+                        $PLUGIN_FILES[] = $PLUGIN_FILE;
+                    }
+                }
+                $PLUGIN_FILES = array_unique($PLUGIN_FILES);
+                $PLUGINS_COUNTR = count($PLUGIN_FILES);
             }
             catch(PDOException $e)
             {
@@ -88,6 +93,7 @@
                     'CONTENT_HISTORY_COUNTR' => (int) $CONTENT_HISTORY_COUNTR,
                     'UPLOADS_COUNTR' => (int) $UPLOADS_COUNTR,
                     'TEMPLATES_COUNTR' => (int) $TEMPLATES_COUNTR,
+                    'PLUGINS_COUNTR' => $PLUGINS_COUNTR,
                     'C_FILE_COUNTR' => (int) $C_FILE_COUNTR,
                     'SUBTITLE' => 'Dashboard',
                     '_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,

@@ -3,7 +3,7 @@ Constructr CMS
 
 ConstructrCMS based on Slim-PHP5-Framework, Twitter Bootstrap, PDO (MySQL), jQuery/Javascript and Passion!
 
-That's it for now (2014-08-14):
+That's it for now (Version 1.03.2 / 2014-08-25):
 
 	- Simple example frontend-template
 	- C.R.U.D. websites
@@ -23,3 +23,10 @@ That's it for now (2014-08-14):
 	- Constructr-Postmaster for contact-form-handling in frontend
 	- User-Tracking and Analytics
 	- File based Website-Caching
+
+
+CHANGELOG
+=========
+2014-08-25 
+- Added Composer-Support (https://getcomposer.org)
+- Added composer.json-File

@@ -1,0 +1,21 @@
+{
+    "name": "constructrcms/constructrcms",
+    "type": "cms",
+    "description": "Constructr CMS",
+    "keywords": ["cms","constructr"],
+    "homepage": "https://github.com/phaziz/Constructr",
+    "license": "DO THE FUCK WHAT YOU WANT",
+    "authors": [
+        {
+            "name": "Christian Becher",
+            "email": "phaziz@gmail.com",
+            "homepage": "http://www.phaziz.com/"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0"
+    },
+    "suggest": {
+        "ext-mcrypt": "Required for HTTP cookie encryption"
+    }
+}

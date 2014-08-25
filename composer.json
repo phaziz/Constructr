@@ -1,15 +1,17 @@
 {
     "name": "constructrcms/constructrcms",
     "type": "cms",
-    "description": "Constructr CMS",
-    "keywords": ["cms","constructr"],
+    "description": "Constructr CMS - ConstructrCMS based on Slim-PHP5-Framework, Twitter Bootstrap, PDO (MySQL), jQuery/Javascript",
+    "keywords": ["phaziz","constructrcms","constructr"],
     "homepage": "https://github.com/phaziz/Constructr",
     "license": "DO THE FUCK WHAT YOU WANT",
+    "time": "2014-08-14",
     "authors": [
         {
             "name": "Christian Becher",
             "email": "phaziz@gmail.com",
-            "homepage": "http://www.phaziz.com/"
+            "homepage": "http://www.phaziz.com/",
+            "role": "Developer"
         }
     ],
     "require": {
@@ -17,5 +19,14 @@
     },
     "suggest": {
         "ext-mcrypt": "Required for HTTP cookie encryption"
+    },
+    "support": {
+        "issues": "https://github.com/phaziz/Constructr/issues",
+        "wiki": "https://github.com/phaziz/Constructr/wiki",
+        "source": "https://github.com/phaziz/Constructr"
+    },
+    "autoload": {
+        "files": ["index.php"]
     }
+    
 }

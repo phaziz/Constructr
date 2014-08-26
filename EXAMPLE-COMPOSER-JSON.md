@@ -1,5 +1,5 @@
-   {
-    "require": {
-        "constructrcms/constructrcms": "dev-master"
-    }
-   }
+	{
+		"require":{
+			"constructrcms/constructrcms": "dev-master"
+		}
+	}

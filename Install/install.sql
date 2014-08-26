@@ -35,6 +35,17 @@ CREATE TABLE IF NOT EXISTS `constructr_content` (
   `content_content` text NOT NULL,
   `content_temp_marker` int(10) NOT NULL DEFAULT '0',
   `content_active` int(11) NOT NULL DEFAULT '1',
+  `content_deleted` int(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`content_id`),
+  UNIQUE KEY `content_id` (`content_id`)
+) ENGINE=MyISAM;
+
+CREATE TABLE IF NOT EXISTS `constructr_content_history` (
+  `content_id` int(11) NOT NULL AUTO_INCREMENT,
+  `content_page_id` int(11) NOT NULL,
+  `content_datetime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `content_content` text NOT NULL,
+  `content_content_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`content_id`),
   UNIQUE KEY `content_id` (`content_id`)
 ) ENGINE=MyISAM;
@@ -44,7 +55,10 @@ CREATE TABLE IF NOT EXISTS `constructr_media` (
   `media_datetime` datetime NOT NULL,
   `media_file` varchar(255) NOT NULL,
   `media_originalname` varchar(255) NOT NULL,
-  `media_exif` text NOT NULL,
+  `media_description` text NOT NULL,
+  `media_title` varchar(255) NOT NULL,
+  `media_keywords` text NOT NULL,
+  `media_copyright` varchar(255) NOT NULL,
   PRIMARY KEY (`media_id`),
   UNIQUE KEY `media_id` (`media_id`)
 ) ENGINE=MyISAM;
@@ -64,4 +78,11 @@ CREATE TABLE IF NOT EXISTS `constructr_pages` (
   `pages_nav_visible` int(1) NOT NULL DEFAULT '1',
   `pages_temp_marker` int(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`pages_id`)
+) ENGINE=MyISAM;
+
+CREATE TABLE IF NOT EXISTS `constructr_plugins` (
+  `plugin_id` int(255) NOT NULL AUTO_INCREMENT,
+  `plugin_name` varchar(255) NOT NULL,
+  `plugin_status` int(1) NOT NULL,
+  PRIMARY KEY (`plugin_id`)
 ) ENGINE=MyISAM;

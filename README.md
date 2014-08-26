@@ -24,9 +24,8 @@ That's it for now (Version 1.03.2 / 2014-08-25):
 	- User-Tracking and Analytics
 	- File based Website-Caching
 
+### CHANGELOG
 
-CHANGELOG
-=========
-2014-08-25 
+	- 2014-08-25 
 	- Added Composer-Support (https://getcomposer.org)
 	- Added composer.json-File

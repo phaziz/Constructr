@@ -147,7 +147,7 @@
                                     </div><!-- // EOF ROW -->
                                 <?php
                             }
-                            if($SEARCHR)
+                            if(isset($SEARCHR))
                             {
                                 ?>
                                     <div class="row">

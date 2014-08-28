@@ -87,7 +87,6 @@
                 (
                     'USERNAME' => $_SESSION['backend-user-username'],
                     'PAGES' => $PAGES,
-                    'NEW_PAGES' => $NEW_PAGES,
                     '_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,
                     'PAGES_COUNTR' => $PAGES_COUNTR,
                     'SUBTITLE' => 'Seitenverwaltung'

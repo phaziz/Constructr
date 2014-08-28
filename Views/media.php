@@ -702,7 +702,6 @@
             $constructr -> render('media-trashcan.php',
                 array
                 (
-                    'MEDIA' => $MEDIA,
                     'DIR_FILES' => $DIR_FILES,
                     'IMAGES' => $IMAGES,
                     'MEDIA_COUNTER' => $MEDIA_COUNTER,

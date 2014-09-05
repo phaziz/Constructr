@@ -117,17 +117,13 @@
                                                 {
                                                     echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Fehler!</strong> Es ist ein Fehler beim l&ouml;schen der Seite aufgetreten.</div>';
                                                 }
-                                                if($_GET['res'] == 'del-recursive-true')
-                                                {
-                                                    echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Erfolg!</strong> Seite(n) wurde erfolgreich rekursiv entfernt.</div>';
-                                                }
-                                                else if($_GET['res'] == 'del-recursive-false')
-                                                {
-                                                    echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Fehler!</strong> Es ist ein Fehler beim rekursiven l&ouml;schen der Seite(n) aufgetreten.</div>';
-                                                }
                                                 if($_GET['res'] == 'content-not-empty')
                                                 {
                                                     echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Fehler!</strong> Es ist ein Fehler aufgetreten. Es existieren noch Inhalte auf dieser Seite!</div>';
+                                                }
+                                                if($_GET['res'] == 'subpages-not-empty')
+                                                {
+                                                    echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Fehler!</strong> Es ist ein Fehler aufgetreten. Es existieren noch Unterseiten zu dieser Seite!</div>';
                                                 }
                                                 if($_GET['res'] == 'url-exists')
                                                 {
@@ -170,11 +166,11 @@
                                                     {
                                                         echo '<tr>';
                                                         echo '<td>';
-                                                        if($PAGE['pages_level'] >= 2)
+                                                        if($PAGE['pages_level'] > 1)
                                                         {
                                                             for($i = 1; $i <= $PAGE['pages_level']; $i++)
                                                             {
-                                                                echo '&#160;&#160;';
+                                                                echo '&#160;&#160;&#160;';
                                                             }
                                                         }
                                                         if($PAGE['pages_nav_visible'] == 0)
@@ -187,24 +183,26 @@
                                                         }
                                                         if($PAGE['pages_url'] == '')
                                                         {
-                                                            echo '<td><small><a class="tt" data-toggle="tooltip" data-placement="top" title="Seite im Browser anzeigen" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '" onclick="window.open(this.href);return false;">' . $_CONSTRUCTR_CONF['_BASE_URL'] . '</a><br>Template: ' . $PAGE['pages_template'] . '</small></td>';
+                                                            echo '<td><small><a class="tt" data-toggle="tooltip" data-placement="top" title="Seite im Browser anzeigen" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '" onclick="window.open(this.href);return false;">' . $_CONSTRUCTR_CONF['_BASE_URL'] . '</a><br>Template: ' . $PAGE['pages_template'] . '<br>Sortierung: ' . $PAGE['pages_order'] . ' | Ebene: ' . $PAGE['pages_level'] . ' | Mutterseite: ' . $PAGE['pages_mother'] . '</small></td>';
                                                         }
                                                         else
                                                         {
-                                                            echo '<td><small><a class="tt" data-toggle="tooltip" data-placement="top" title="Seite im Browser anzeigen" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/' . $PAGE['pages_url'] . '" onclick="window.open(this.href);return false;">' . $PAGE['pages_url'] . '</a><br>Template: ' . $PAGE['pages_template'] . '</small></td>';
+                                                            echo '<td><small><a class="tt" data-toggle="tooltip" data-placement="top" title="Seite im Browser anzeigen" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/' . $PAGE['pages_url'] . '" onclick="window.open(this.href);return false;">' . $PAGE['pages_url'] . '</a><br>Template: ' . $PAGE['pages_template'] . '<br>Sortierung: ' . $PAGE['pages_order'] . ' | Ebene: ' . $PAGE['pages_level'] . ' | Mutterseite: ' . $PAGE['pages_mother'] . '</small></td>';
                                                         }
                                                         echo '<td class="right"><nobr>';
-                                                        if($PAGE['pages_lft'] != 1 && $PAGE['pages_upper'] != 0)
-                                                        {
-                                                            echo '<a data-toggle="tooltip" data-placement="top" title="Seite nach oben verschieben" class="reorder tt" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/reorder/up/' . $PAGE['pages_id'] . '/"><button type="button" class="btn btn-primary btn-xs" title="Seite nach oben verschieben"><span class="glyphicon glyphicon-arrow-up"></span></button></a>';
-                                                            echo '&#160;';
-                                                        }
-                                                        if($PAGE['pages_lower'] != 0)
-                                                        {
-                                                            echo '<a data-toggle="tooltip" data-placement="top" title="Seite nach unten verschieben" class="reorder tt" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/reorder/down/' . $PAGE['pages_id'] . '/"><button type="button" class="btn btn-primary btn-xs" title="Seite nach unten verschieben"><span class="glyphicon glyphicon-arrow-down"></span></button></a>';
-                                                            echo '&#160;';
-                                                        }
-                                                        if($PAGE['pages_active'] == 0)
+
+														if($PAGE['pages_order'] > 1)
+														{
+	                                                        echo '<a data-toggle="tooltip" data-placement="top" title="Seite nach oben verschieben" class="reorder tt" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/reorder/up/' . $PAGE['pages_id'] . '/"><button type="button" class="btn btn-primary btn-xs" title="Seite nach oben verschieben"><span class="glyphicon glyphicon-arrow-up"></span></button></a>';
+	                                                        echo '&#160;';
+														}
+														if($PAGE['pages_order'] < $PAGES_COUNTR)
+														{                                                        
+	                                                        echo '<a data-toggle="tooltip" data-placement="top" title="Seite nach unten verschieben" class="reorder tt" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/reorder/down/' . $PAGE['pages_id'] . '/"><button type="button" class="btn btn-primary btn-xs" title="Seite nach unten verschieben"><span class="glyphicon glyphicon-arrow-down"></span></button></a>';
+	                                                        echo '&#160;';
+														}
+
+		                                                if($PAGE['pages_active'] == 0)
                                                         {
                                                             echo '<a data-toggle="tooltip" data-placement="top" title="Seite aktivieren" class="activator tt" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/activate/' . $PAGE['pages_id'] . '/"><button type="button" class="btn btn-danger btn-xs" title="deaktiviert und unsichtbar"><span class="glyphicon glyphicon-eye-close"></span></button></a>';
                                                             echo '&#160;';
@@ -214,8 +212,7 @@
                                                             echo '<a data-toggle="tooltip" data-placement="top" title="Seite deaktivieren" class="activator tt" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/deactivate/' . $PAGE['pages_id'] . '/"><button type="button" class="btn btn-success btn-xs" title="aktiviert und sichtbar"><span class="glyphicon glyphicon-eye-open"></span></button></a>';
                                                             echo '&#160;';
                                                         }
-                                                        echo '<a data-toggle="tooltip" data-placement="top" title="Neue Unterseite erstellen" class="new_sub tt" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/new/sub/' . $PAGE['pages_id'] . '/' . $PAGE['pages_lft'] . '/"><button type="button" class="btn btn-warning btn-xs" title="Neue Unterseite erstellen"><span class="glyphicon glyphicon-plus"></span></button></a>';
-                                                        echo '&#160;';
+
                                                         echo '<a data-toggle="tooltip" data-placement="top" title="Inhalte von Seite ' . $PAGE['pages_name'] . ' bearbeiten" class="editercontent tt" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/content/' . $PAGE['pages_id'] . '/"><button type="button" class="btn btn-info btn-xs" title="Inhalte von Seite ' . $PAGE['pages_name'] . ' bearbeiten"><span class="glyphicon glyphicon-pencil"></span></button></a>';
                                                         echo '&#160;';
                                                         echo '<a data-toggle="tooltip" data-placement="top" title="Seite ' . $PAGE['pages_name'] . ' bearbeiten" class="editer tt" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/edit/' . $PAGE['pages_id'] . '/"><button type="button" class="btn btn-success btn-xs" title="Seite ' . $PAGE['pages_name'] . ' bearbeiten"><span class="glyphicon glyphicon-pencil"></span></button></a>';
@@ -223,16 +220,14 @@
 
                                                         if($PAGE['pages_lft'] != 1)
                                                         {
-                                                            echo '<a data-toggle="tooltip" data-placement="top" title="Diese Seite l&ouml;schen" class="deleter-single tt" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/delete-single/' . $PAGE['pages_id'] . '/' . $PAGE['pages_lft'] . '/' . $PAGE['pages_rgt'] . '/" title="Seite l&ouml;schen"><button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span></button></a>';
-                                                            echo '&#160;';
-                                                            echo '<a data-toggle="tooltip" data-placement="top" title="Diese Seite rekursiv l&ouml;schen" class="deleter-recursive tt" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/delete-recursive/' . $PAGE['pages_id'] . '/' . $PAGE['pages_lft'] . '/' . $PAGE['pages_rgt'] . '/" title="Seite rekursiv l&ouml;schen"><button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove-circle"></span></button></a>';
+                                                            echo '<a data-toggle="tooltip" data-placement="top" title="Diese Seite l&ouml;schen" class="deleter-single tt" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/delete-single/' . $PAGE['pages_id'] . '/' . $PAGE['pages_order'] . '/" title="Seite l&ouml;schen"><button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span></button></a>';
                                                         }
 
                                                         echo '</nobr></td>';
                                                         echo '</tr>';
                                                     }
                                                 }
-                                                else
+												else
                                                 {
                                                     echo '<tr><td colspan="7">Keine Seiten gefunden!</td></tr>';
                                                 };

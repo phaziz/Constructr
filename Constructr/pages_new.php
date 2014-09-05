@@ -84,6 +84,7 @@
                                     <br><br>
                                     <form role="form" name="new_page_form" id="new_page_form" action="<?php echo $FORM_ACTION; ?>" method="<?php echo $FORM_METHOD; ?>" enctype="<?php echo $FORM_ENCTYPE; ?>" class="form-horizontal">
                                         <input type="hidden" name="user_form_guid" value="<?php echo $GUID; ?>">
+                                        <input type="hidden" name="pages_countr" value="<?php echo $PAGES_COUNTR; ?>">
                                         <div class="form-group">
                                             <label for="page_name" class="col-sm-2 control-label">Name der Seite:</label>
                                             <div class="col-sm-10">
@@ -91,6 +92,59 @@
                                                 <small><span class="help-block" id="status-page_name">Bitte vergeben Sie einen eindeutigen Seitennamen</span></small>
                                             </div>
                                         </div>
+                                        
+										<?php                                      
+                                        
+											if($PAGES_COUNTR > 0)
+											{
+												?>
+
+			                                        <div class="form-group">
+			                                            <label for="new_page_order" class="col-sm-2 control-label">Neue Seite einordnen:</label>
+			                                            <div class="col-sm-10">
+			                                                <select class="form-control input-sm" name="new_page_order" id="new_page_order">
+			                                                    <option value="">Bitte w&auml;hlen</option>
+			                                                    <option value="">- - -</option>
+																<option value="1">vor Seite</option>
+																<option value="2">als Unterseite von</option>
+																<option value="3">nach Seite</option>
+			                                                </select>
+			                                                <select class="form-control input-sm" name="new_page_order_page_id" id="new_page_order_page_id">
+			                                                    <option value="">Bitte w&auml;hlen</option>
+			                                                    <option value="">- - -</option>
+																<?php
+
+																	foreach($PAGES as $PAGE)
+																	{
+																		echo '<option value="' . $PAGE['pages_id'] . '">';
+
+				                                                        if($PAGE['pages_level'] > 1)
+				                                                        {
+				                                                            for($i = 1; $i <= $PAGE['pages_level']; $i++)
+				                                                            {
+				                                                                echo '&#160;&#160;&#160;';
+				                                                            }
+				                                                        }
+
+																		echo $PAGE['pages_name'] . '</option>';
+																	}
+
+																?>
+			                                                </select>
+			                                            </div>
+			                                        </div>
+
+												<?php
+
+											}
+											else
+											{
+												echo '<input type="hidden" name="new_page_order" id="new_page_order" value="">';
+												echo '<input type="hidden" name="new_page_order_page_id" id="new_page_order_page_id" value="0">';
+											}
+
+										?>
+
                                         <div class="form-group">
                                             <label for="page_url" class="col-sm-2 control-label">URL der neuen Seite:</label>
                                             <div class="col-sm-10">

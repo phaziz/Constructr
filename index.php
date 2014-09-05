@@ -22,8 +22,8 @@
     require_once './Config/constructr.conf.php';
     require_once './Config/constructr_user_rights.conf.php';
 
-    $_CONSTRUCTR_CONF['_VERSION_DATE'] = '20140825';
-    $_CONSTRUCTR_CONF['_VERSION'] = '1.03.2';
+    $_CONSTRUCTR_CONF['_VERSION_DATE'] = '20140905';
+    $_CONSTRUCTR_CONF['_VERSION'] = '1.03.4';
 
     require_once './Slim/Slim.php';
     require_once './Slim/Log/DateTimeFileWriter.php';
@@ -119,7 +119,7 @@
         {
             $constructr -> getLog() -> error('404 - URL NOT FOUND: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
             header("HTTP/1.0 404 Not Found");
-            header("Location: " . $_CONSTRUCTR_CONF["_BASE_URL"]);
+            header("Location: " . $_CONSTRUCTR_CONF["_BASE_URL"] . '/404');
             die();
         }
 
@@ -165,7 +165,7 @@
 
                         try
                         {
-                            $PAGES = $DBCON -> query('SELECT n.*, round((n.pages_rgt-n.pages_lft-1)/2,0) AS pages_subpages_countr, count(*)-1+(n.pages_lft>1) AS pages_level, ((min(p.pages_rgt)-n.pages_rgt-(n.pages_lft>1))/2) > 0 AS pages_lower, (((n.pages_lft-max(p.pages_lft)>1))) AS pages_upper FROM constructr_pages n, constructr_pages p WHERE n.pages_lft BETWEEN p.pages_lft AND p.pages_rgt AND (p.pages_id != n.pages_id OR n.pages_lft = 1) AND n.pages_active = 1 AND p.pages_active = 1 GROUP BY n.pages_id ORDER BY n.pages_lft;');
+                            $PAGES = $DBCON -> query('SELECT * FROM constructr_pages ORDER BY pages_order ASC;');
                             $PAGES = $PAGES -> fetchAll();
                         }
                         catch (PDOException $e)
@@ -182,11 +182,10 @@
                                 {
                                     try
                                     {
-                                        $INIT = 1;
-                                        $HOMEPAGE = $DBCON -> prepare('SELECT * FROM constructr_pages WHERE pages_lft = :NESTED_SETS_INIT AND pages_active = 1 LIMIT 1;');
-                                        $HOMEPAGE -> execute(array(':NESTED_SETS_INIT' => $INIT));
+										$PAGES_INIT_ORDER = 1;
+                                        $HOMEPAGE = $DBCON -> prepare('SELECT * FROM constructr_pages WHERE pages_order = :PAGES_INIT_ORDER AND pages_active = 1 LIMIT 1;');
+                                        $HOMEPAGE -> execute(array(':PAGES_INIT_ORDER' => $PAGES_INIT_ORDER));
                                         $HOMEPAGE = $HOMEPAGE -> fetch();
-                                        $PAGE_DATA = $HOMEPAGE;
                                     }
                                     catch (PDOException $e)
                                     {
@@ -276,7 +275,7 @@
 
                         try
                         {
-                            $PAGES = $DBCON -> query('SELECT n.*, round((n.pages_rgt-n.pages_lft-1)/2,0) AS pages_subpages_countr, count(*)-1+(n.pages_lft>1) AS pages_level, ((min(p.pages_rgt)-n.pages_rgt-(n.pages_lft>1))/2) > 0 AS pages_lower, (((n.pages_lft-max(p.pages_lft)>1))) AS pages_upper FROM constructr_pages n, constructr_pages p WHERE n.pages_lft BETWEEN p.pages_lft AND p.pages_rgt AND (p.pages_id != n.pages_id OR n.pages_lft = 1) AND n.pages_active = 1 AND p.pages_active = 1 GROUP BY n.pages_id ORDER BY n.pages_lft;');
+                            $PAGES = $DBCON -> query('SELECT * FROM constructr_pages ORDER BY pages_order ASC;');
                             $PAGES = $PAGES -> fetchAll();
                         }
                         catch (PDOException $e)
@@ -294,8 +293,7 @@
                                     try
                                     {
                                         $INIT = 1;
-                                        $HOMEPAGE = $DBCON -> prepare('SELECT * FROM constructr_pages WHERE pages_lft = :NESTED_SETS_INIT AND pages_active = 1 LIMIT 1;');
-                                        $HOMEPAGE -> execute(array(':NESTED_SETS_INIT' => $INIT));
+                                        $HOMEPAGE = $DBCON -> prepare('SELECT * FROM constructr_pages WHERE pages_order = 1 AND pages_active = 1 LIMIT 1;');
                                         $HOMEPAGE = $HOMEPAGE -> fetch();
                                         $PAGE_DATA = $HOMEPAGE;
                                     }

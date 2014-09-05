@@ -64,16 +64,17 @@ CREATE TABLE IF NOT EXISTS `constructr_media` (
 ) ENGINE=MyISAM;
 
 CREATE TABLE IF NOT EXISTS `constructr_pages` (
-  `pages_id` int(20) NOT NULL AUTO_INCREMENT,
+  `pages_id` int(255) NOT NULL AUTO_INCREMENT,
+  `pages_mother` int(255) NOT NULL DEFAULT '0',
+  `pages_level` int(255) NOT NULL DEFAULT '1',
+  `pages_order` int(255) NOT NULL DEFAULT '0',
   `pages_datetime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `pages_name` varchar(100) NOT NULL DEFAULT 'PAGE_NAME',
+  `pages_name` varchar(255) NOT NULL DEFAULT 'PAGE_NAME',
   `pages_url` varchar(255) NOT NULL DEFAULT 'PAGE_URL',
-  `pages_template` varchar(50) NOT NULL DEFAULT 'index.php',
+  `pages_template` varchar(255) NOT NULL DEFAULT 'index.php',
   `pages_title` varchar(255) NOT NULL,
   `pages_description` text NOT NULL,
   `pages_keywords` text NOT NULL,
-  `pages_lft` int(100) NOT NULL DEFAULT '0',
-  `pages_rgt` int(100) NOT NULL DEFAULT '0',
   `pages_active` int(1) NOT NULL DEFAULT '0',
   `pages_nav_visible` int(1) NOT NULL DEFAULT '1',
   `pages_temp_marker` int(1) NOT NULL DEFAULT '0',

@@ -578,7 +578,7 @@
 
             try
             {
-                $PAGE_CONTENT = $DBCON -> query('SELECT * FROM constructr_pages WHERE pages_active = 1 ORDER BY pages_lft;');
+                $PAGE_CONTENT = $DBCON -> query('SELECT * FROM constructr_pages WHERE pages_active = 1 ORDER BY pages_order ASC;');
                 $PAGE_CONTENT = $PAGE_CONTENT -> fetchAll();
 
                 foreach($PAGE_CONTENT as $PAGE_CONTENT)
@@ -589,7 +589,7 @@
                     $TMP_DIR = '';
                     $ACT_DIR = '';
 
-                    if($PAGE_CONTENT['pages_lft'] != 1)
+                    if($PAGE_CONTENT['pages_order'] != 1)
                     {
                         foreach($DIRS as $DIR)
                         {
@@ -622,7 +622,7 @@
                     {
                         $_HTML_CONTENT = '';
 
-                        if($PAGE_CONTENT['pages_lft'] == 1)
+                        if($PAGE_CONTENT['pages_order'] == 1)
                         {
                             $_HTML_CONTENT = file_get_contents(constructr_sanitization($_CONSTRUCTR_CONF['_BASE_URL'] . '/?key=' . $_CONSTRUCTR_CONF['_MAGIC_GENERATION_KEY']));
                         }
@@ -635,7 +635,7 @@
 
                         if($_HTML_CONTENT != '')
                         {
-                            if($PAGE_CONTENT['pages_lft'] == 1)
+                            if($PAGE_CONTENT['pages_order'] == 1)
                             {
                                 $PHYSICAL_FILE = @fopen($BASE_DIR . '/' . 'index' . $_CONSTRUCTR_CONF['_STATIC_FILETYPE'],"w+");
                                 @fwrite($PHYSICAL_FILE, $_HTML_CONTENT);
@@ -657,12 +657,12 @@
                 {
                     try
                     {
-                        $PAGE_CONTENT = $DBCON -> query('SELECT * FROM constructr_pages WHERE pages_active = 1 ORDER BY pages_lft;');
+                        $PAGE_CONTENT = $DBCON -> query('SELECT * FROM constructr_pages WHERE pages_active = 1 ORDER BY pages_order ASC;');
                         $PAGE_CONTENT = $PAGE_CONTENT -> fetchAll();
 
                         foreach($PAGE_CONTENT as $PAGE_CONTENT)
                         {
-                            if($PAGE_CONTENT['pages_lft'] != 1)
+                            if($PAGE_CONTENT['pages_order'] != 1)
                             {
                                 $FTP_CON = @ftp_connect($_CONSTRUCTR_CONF['_FTP_REMOTE_HOST'],$_CONSTRUCTR_CONF['_FTP_REMOTE_PORT']);
                                 @ftp_login($FTP_CON, $_CONSTRUCTR_CONF['_FTP_REMOTE_USERNAME'], $_CONSTRUCTR_CONF['_FTP_REMOTE_PASSWORD']);
@@ -687,7 +687,7 @@
                                 @ftp_close($FTP_CON);
                             }
 
-                            if($PAGE_CONTENT['pages_lft'] == 1)
+                            if($PAGE_CONTENT['pages_order'] == 1)
                             {
                                 if(is_file($_CONSTRUCTR_CONF['_STATIC_DIR'] . '/index' . $_CONSTRUCTR_CONF['_STATIC_FILETYPE']))
                                 {

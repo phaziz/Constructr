@@ -27,6 +27,15 @@ CREATE TABLE IF NOT EXISTS `constructr_config` (
   UNIQUE KEY `constructr_config_id` (`constructr_config_id`)
 ) ENGINE=MyISAM;
 
+CREATE TABLE IF NOT EXISTS `constructr_content_history` (
+  `content_id` int(11) NOT NULL AUTO_INCREMENT,
+  `content_page_id` int(11) NOT NULL,
+  `content_datetime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `content_content` text NOT NULL,
+  `content_content_id` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`content_id`)
+) ENGINE=MyISAM;
+
 CREATE TABLE IF NOT EXISTS `constructr_content` (
   `content_id` int(11) NOT NULL AUTO_INCREMENT,
   `content_order` int(11) NOT NULL DEFAULT '0',

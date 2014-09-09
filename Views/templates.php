@@ -380,7 +380,6 @@
                     'USERNAME' => $_SESSION['backend-user-username'],
                     'GUID' => $GUID,
                     '_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,
-                    'NEW_CONTENT_ORDER' => $NEW_CONTENT_ORDER,
                     'FORM_ACTION' => $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/templates/new/' . $GUID .'/',
                     'FORM_METHOD' => 'post',
                     'FORM_ENCTYPE' => 'application/x-www-form-urlencoded',

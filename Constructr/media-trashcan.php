@@ -121,15 +121,12 @@
                                                         {
                                                             foreach($DIR_FILES as $DIR_FILE)
                                                             {
-                                                                if($MEDIA_FILE['media_file'] != $DIR_FILE)
-                                                                {
-                                                                    echo '<tr><td><a href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/' . $DIR_FILE . '" title="Datei ansehen" onclick="window.open(this.href);return false;">' . $DIR_FILE . '</a></td>';
-                                                                    echo '<td class="center">';
-                                                                    echo '<a onclick="window.open(this.href);return false;" data-toggle="tooltip" data-placement="top" title="Einfache Vorschau" class="preview tt" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/' . $DIR_FILE . '"><button type="button" class="btn btn-warning btn-xs" title="Einfache Vorschau"><span class="glyphicon glyphicon-eye-close"></span></button></a>&#160;';
-                                                                    echo '<a data-toggle="tooltip" data-placement="top" title="Wiederherstellen" class="preview tt" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/media/re-create/' . str_replace('Uploads/','',$DIR_FILE) . '/"><button type="button" class="btn btn-success btn-xs" title="Wiederherstellung"><span class="glyphicon glyphicon-import"></span></button></a>&#160;';
-                                                                    echo '<a data-toggle="tooltip" data-placement="top" title="Datei endg&uuml;ltig l&ouml;schen" class="deleter tt" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/media/trash/delete/' . base64_encode($DIR_FILE) . '/" title="Datei endg&uuml;ltig l&ouml;schen"><button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span></button></a>';
-                                                                    echo '</td></tr>';
-                                                                }
+                                                                echo '<tr><td><a href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/' . $DIR_FILE . '" title="Datei ansehen" onclick="window.open(this.href);return false;">' . $DIR_FILE . '</a></td>';
+                                                                echo '<td class="center">';
+                                                                echo '<a onclick="window.open(this.href);return false;" data-toggle="tooltip" data-placement="top" title="Einfache Vorschau" class="preview tt" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/' . $DIR_FILE . '"><button type="button" class="btn btn-warning btn-xs" title="Einfache Vorschau"><span class="glyphicon glyphicon-eye-close"></span></button></a>&#160;';
+                                                                echo '<a data-toggle="tooltip" data-placement="top" title="Wiederherstellen" class="preview tt" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/media/re-create/' . str_replace('Uploads/','',$DIR_FILE) . '/"><button type="button" class="btn btn-success btn-xs" title="Wiederherstellung"><span class="glyphicon glyphicon-import"></span></button></a>&#160;';
+                                                                echo '<a data-toggle="tooltip" data-placement="top" title="Datei endg&uuml;ltig l&ouml;schen" class="deleter tt" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/media/trash/delete/' . base64_encode($DIR_FILE) . '/" title="Datei endg&uuml;ltig l&ouml;schen"><button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span></button></a>';
+                                                                echo '</td></tr>';
                                                             }
                                                         }
                                                         else

@@ -83,29 +83,27 @@
                                     <div class="row response">
                                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                                 <?php
-                                                    if($_GET['create'] == 'success')
+                                                    if(isset($_GET['create']) && $_GET['create'] == 'success')
                                                     {
                                                         echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Erfolg!</strong> Neuer Benutzer wurde ohne Fehler erstellt.</div>';
                                                     }
-                                                    else if($_GET['create'] == 'error')
+                                                    else if(isset($_GET['create']) && $_GET['create'] == 'error')
                                                     {
                                                         echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Fehler!</strong> Es ist ein Fehler beim anlegen des Benutzers aufgetreten.</div>';
                                                     }
-
-                                                    if($_GET['edit'] == 'success')
+                                                    if(isset($_GET['edit']) && $_GET['edit'] == 'success')
                                                     {
                                                         echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Erfolg!</strong> Benutzer wurde erfolgreich bearbeitet.</div>';
                                                     }
-                                                    else if($_GET['edit'] == 'error')
+                                                    else if(isset($_GET['edit']) && $_GET['edit'] == 'error')
                                                     {
                                                         echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Fehler!</strong> Es ist ein Fehler beim Bearbeiten des Benutzers aufgetreten.</div>';
                                                     }
-
-                                                    if($_GET['delete'] == 'success')
+                                                    if(isset($_GET['delete']) && $_GET['delete'] == 'success')
                                                     {
                                                         echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Erfolg!</strong> Benutzer wurde entfernt.</div>';
                                                     }
-                                                    else if($_GET['delete'] == 'error')
+                                                    else if(isset($_GET['delete']) && $_GET['delete'] == 'error')
                                                     {
                                                         echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Fehler!</strong> Benutzer wurde nicht entfernt - es ist ein Fehler aufgetreten..</div>';
                                                     }

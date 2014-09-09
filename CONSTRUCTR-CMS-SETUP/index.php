@@ -2,7 +2,7 @@
 
 	require_once('../Config/constructr_user_rights.conf.php');
 
-	// 2014-09-05
+	// 2014-09-09
 	session_start();
 	error_reporting(-1);
 	function create_guid() {static $guid = '';$uid = uniqid("", true);$data = $_SERVER['REQUEST_TIME'];$data .= $_SERVER['HTTP_USER_AGENT'];$data .= $_SERVER['PHP_SELF'];$data .= $_SERVER['SCRIPT_NAME'];$data .= $_SERVER['REMOTE_ADDR'];$data .= $_SERVER['REMOTE_PORT'];$hash = strtoupper(hash('ripemd128', $uid . $guid . md5($data)));$guid = substr($hash,0,2) . substr($hash,2,2) . substr($hash,4,2) . substr($hash,8,2);return $guid;}
@@ -113,7 +113,7 @@
 '_STATIC_FILETYPE' => '.php', " . $NL . "
 '_STATIC_DIR' => './Static', " . $NL . "
 '_CREATE_STATIC_DOMAIN' => '', " . $NL . "
-'_CREATE_DYNAMIC_DOMAIN' => '', " . $NL . "
+'_CREATE_DYNAMIC_DOMAIN' => '" . $_POST['base_url'] . "', " . $NL . "
 '_MAGIC_GENERATION_KEY' => '" . $_POST['salt3'] . "', " . $NL . "
 '_TRANSFER_STATIC' => false, " . $NL . "
 '_FTP_REMOTE_HOST' => '', " . $NL . "
@@ -177,8 +177,8 @@ CREATE TABLE IF NOT EXISTS `constructr_content` (
   `content_content` text NOT NULL,
   `content_temp_marker` int(10) NOT NULL DEFAULT '0',
   `content_active` int(11) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`content_id`),
-  UNIQUE KEY `content_id` (`content_id`)
+  `content_deleted` int(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`content_id`)
 ) ENGINE=MyISAM;
 
 CREATE TABLE IF NOT EXISTS `constructr_content_history` (
@@ -195,22 +195,25 @@ CREATE TABLE IF NOT EXISTS `constructr_media` (
   `media_datetime` datetime NOT NULL,
   `media_file` varchar(255) NOT NULL,
   `media_originalname` varchar(255) NOT NULL,
-  `media_exif` text NOT NULL,
-  PRIMARY KEY (`media_id`),
-  UNIQUE KEY `media_id` (`media_id`)
+  `media_description` text NOT NULL,
+  `media_title` varchar(255) NOT NULL,
+  `media_keywords` text NOT NULL,
+  `media_copyright` varchar(255) NOT NULL,
+  PRIMARY KEY (`media_id`)
 ) ENGINE=MyISAM;
 
 CREATE TABLE IF NOT EXISTS `constructr_pages` (
-  `pages_id` int(20) NOT NULL AUTO_INCREMENT,
+  `pages_id` int(255) NOT NULL AUTO_INCREMENT,
+  `pages_mother` int(255) NOT NULL DEFAULT '0',
+  `pages_level` int(255) NOT NULL DEFAULT '1',
+  `pages_order` int(255) NOT NULL DEFAULT '0',
   `pages_datetime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `pages_name` varchar(100) NOT NULL DEFAULT 'PAGE_NAME',
+  `pages_name` varchar(255) NOT NULL DEFAULT 'PAGE_NAME',
   `pages_url` varchar(255) NOT NULL DEFAULT 'PAGE_URL',
-  `pages_template` varchar(50) NOT NULL DEFAULT 'index.php',
+  `pages_template` varchar(255) NOT NULL DEFAULT 'index.php',
   `pages_title` varchar(255) NOT NULL,
   `pages_description` text NOT NULL,
   `pages_keywords` text NOT NULL,
-  `pages_lft` int(100) NOT NULL DEFAULT '0',
-  `pages_rgt` int(100) NOT NULL DEFAULT '0',
   `pages_active` int(1) NOT NULL DEFAULT '0',
   `pages_nav_visible` int(1) NOT NULL DEFAULT '1',
   `pages_temp_marker` int(1) NOT NULL DEFAULT '0',
@@ -220,43 +223,43 @@ CREATE TABLE IF NOT EXISTS `constructr_pages` (
 INSERT INTO constructr_backenduser SET beu_id = '1', beu_username = :USERNAME, beu_password = :PASSWORD, beu_email = :EMAIL, beu_art = :ART, beu_last_login = :LAST_LOGIN, beu_active = :ACTIVE;
 
 INSERT INTO `constructr_backenduser_rights` (`cbr_id`, `cbr_right`, `cbr_value`, `cbr_user_id`, `cbr_info`) VALUES
-(1,1,1,10 ,'Seitenverwaltung anzeigen'),
-(2,1,1,11 ,'Eine neue Seite erstellen'),
-(3,1,1,12 ,'Eine neue Unterseite erstellen'),
-(4,1,1,13 ,'Seiten-Eigenschaften bearbeiten'),
-(5,1,1,14 ,'Seiten aktivieren / deaktivieren'),
-(6,1,1,15 ,'Einzelseite entfernen'),
-(7,1,1,16 ,'Seiten rekursiv entfernen'),
-(8,1,1,17 ,'Seiten verschieben'),
-(9,1,1,20 ,'Inhaltselemente anzeigen'),
-(10,1,1,21 ,'Inhaltselemente erstellen'),
-(11,1,1,22 ,'Inhaltselemente bearbeiten'),
-(12,1,1,23 ,'Inhaltselemente sortieren'),
-(13,1,1,24 ,'Inhaltselemente aktivieren / deaktivieren'),
-(14,1,1,25 ,'Inhaltselemente entfernen'),
-(15,1,1,30 ,'Suchformular auf Dashboard benutzen'),
-(16,1,1,31 ,'Datenbankstruktur optimieren'),
-(17,1,1,40 ,'Medienverwaltung anzeigen'),
-(18,1,1,41 ,'Upload in Medienverwaltung erstellen'),
-(19,1,1,42 ,'Eintrag aus Medienverwaltung entfernen'),
-(20,1,1,43 ,'Medienverwaltung - Detailansicht anzeigen'),
-(21,1,1,44 ,'Mülleimer anzeigen'),
-(22,1,1,45 ,'Medieneinträge aus Mülleimer entfernen'),
-(23,1,1,50 ,'Templates anzeigen'),
-(24,1,1,51 ,'Templates bearbeiten'),
-(25,1,1,52 ,'Templates entfernen'),
-(26,1,1,53 ,'Templates erstellen'),
-(27,1,1,66 ,'Benutzerverwaltung anzeigen'),
-(28,1,1,60 ,'Benutzer entfernen'),
-(29,1,1,69 ,'Benutzer aktivieren / deaktivieren'),
-(30,1,1,68 ,'Benutzer bearbeiten'),
-(31,1,1,67 ,'Benutzer anlegen'),
-(32,1,1,70 ,'Website-Cache entfernen'),
-(33,1,1,80 ,'Benutzerrechte anzeigen'),
-(34,1,1,81 ,'Benutzerrechte bearbeiten'),
-(35,1,1,90 ,'Constructr Plugins anzeigen'),
-(36,1,1,100 ,'Statische Internetseiten generieren'),
-(37,1,1,1000 ,'Systemverwaltung anzeigen');
+(1,10,1,1 ,'Seitenverwaltung anzeigen'),
+(2,11,1,1 ,'Eine neue Seite erstellen'),
+(3,12,1,1 ,'Eine neue Unterseite erstellen'),
+(4,13,1,1 ,'Seiten-Eigenschaften bearbeiten'),
+(5,14,1,1 ,'Seiten aktivieren / deaktivieren'),
+(6,15,1,1 ,'Einzelseite entfernen'),
+(7,16,1,1 ,'Seiten rekursiv entfernen'),
+(8,17,1,1 ,'Seiten verschieben'),
+(9,20,1,1 ,'Inhaltselemente anzeigen'),
+(10,21,1,1 ,'Inhaltselemente erstellen'),
+(11,22,1,1 ,'Inhaltselemente bearbeiten'),
+(12,23,1,1 ,'Inhaltselemente sortieren'),
+(13,24,1,1 ,'Inhaltselemente aktivieren / deaktivieren'),
+(14,25,1,1 ,'Inhaltselemente entfernen'),
+(15,30,1,1 ,'Suchformular auf Dashboard benutzen'),
+(16,31,1,1 ,'Datenbankstruktur optimieren'),
+(17,40,1,1 ,'Medienverwaltung anzeigen'),
+(18,41,1,1 ,'Upload in Medienverwaltung erstellen'),
+(19,42,1,1 ,'Eintrag aus Medienverwaltung entfernen'),
+(20,43,1,1 ,'Medienverwaltung - Detailansicht anzeigen'),
+(21,44,1,1 ,'Mülleimer anzeigen'),
+(22,45,1,1 ,'Medieneinträge aus Mülleimer entfernen'),
+(23,50,1,1 ,'Templates anzeigen'),
+(24,51,1,1 ,'Templates bearbeiten'),
+(25,52,1,1 ,'Templates entfernen'),
+(26,53,1,1 ,'Templates erstellen'),
+(27,66,1,1 ,'Benutzerverwaltung anzeigen'),
+(28,60,1,1 ,'Benutzer entfernen'),
+(29,69,1,1 ,'Benutzer aktivieren / deaktivieren'),
+(30,68,1,1 ,'Benutzer bearbeiten'),
+(31,67,1,1 ,'Benutzer anlegen'),
+(32,70,1,1 ,'Website-Cache entfernen'),
+(33,80,1,1 ,'Benutzerrechte anzeigen'),
+(34,81,1,1 ,'Benutzerrechte bearbeiten'),
+(35,90,1,1 ,'Constructr Plugins anzeigen'),
+(36,100,1,1 ,'Statische Internetseiten generieren'),
+(37,1000,1,1 ,'Systemverwaltung anzeigen');
 			                    ";			                    
 
 			                    $STMT = $DBCON -> prepare($QUERY);

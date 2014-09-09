@@ -88,7 +88,7 @@
                                             ?>
                                                 <form role="form" name="new_page_form" id="new_page_form" action="<?php echo $FORM_ACTION; ?>" method="<?php echo $FORM_METHOD; ?>" enctype="<?php echo $FORM_ENCTYPE; ?>" class="form-horizontal">
                                                     <input type="hidden" name="user_form_guid" value="<?php echo $GUID; ?>">
-                                                    <input type="hidden" name="pages_lft" value="<?php echo $PAGE['pages_lft']; ?>">
+                                                    <input type="hidden" name="pages_order" value="<?php echo $PAGE['pages_order']; ?>">
                                                     <input type="hidden" name="page_id" id="page_id" value="<?php echo $PAGE['pages_id']; ?>" maxlength="100">
                                                     <div class="form-group">
                                                         <label for="page_name" class="col-sm-2 control-label">Name der Seite:</label>
@@ -98,7 +98,7 @@
                                                         </div>
                                                     </div>
                                                     <?php
-                                                        if($PAGE['pages_lft'] == 1)
+                                                        if($PAGE['pages_order'] == 1)
                                                         {
                                                             ?>
                                                                 <div class="form-group">
@@ -269,7 +269,7 @@
                                 var T = $('#page_template').val();
 
                                 <?php
-                                    if($PAGE['pages_lft'] == 1)
+                                    if($PAGE['pages_order'] == 1)
                                     {
                                         ?>
                                             if(U == '' || P == 'constructr' || T == '')

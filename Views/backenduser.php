@@ -374,11 +374,11 @@
 
     $constructr -> post('/constructr/user/new/:GUID/', $ADMIN_CHECK, function ($GUID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF,$_CONSTRUCTR_USER_RIGHTS_CONF)
         {
-            $GUID = filter_var(trim($GUID),FILTER_SANITIZE_STRING);
+            $GUID = trim($GUID);
 
             if($_CONSTRUCTR_CONF['_LOGGING'] == true)
             {
-                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
+                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
             }
 
             $constructr -> view -> setData('BackendUserRight',67);
@@ -423,7 +423,7 @@
                 die();
             }
 
-            $USER_FORM_GUID = filter_var(trim($constructr -> request() -> post('user_form_guid'),FILTER_SANITIZE_STRING));
+            $USER_FORM_GUID = trim($constructr -> request() -> post('user_form_guid'));
 
             if($GUID != $USER_FORM_GUID || $GUID == false)
             {
@@ -434,9 +434,9 @@
 
             $USERNAME = trim($constructr -> request() -> post('username'));
             $PASSWORD = crypt(trim($constructr -> request() -> post('password')),$_CONSTRUCTR_CONF['_SALT']);
-            $PASSWORD_RT = crypt(trim($constructr -> request() -> post('password_retype')),$_CONSTRUCTR_CONF['_SALT']) or die ('error');
-            $EMAIL = filter_var(trim($constructr -> request() -> post('email'),FILTER_VALIDATE_EMAIL));
-            $ART = trim($constructr -> request() -> post('art'));
+            $PASSWORD_RT = crypt(trim($constructr -> request() -> post('password_retype')),$_CONSTRUCTR_CONF['_SALT']);
+            $EMAIL = filter_var(constructr_sanitization(trim($constructr -> request() -> post('email')),FILTER_VALIDATE_EMAIL));
+            $ART = 0;
             $ACTIVE = 1;
 
             if($PASSWORD != $PASSWORD_RT)
@@ -445,16 +445,7 @@
                 die();
             }
 
-            if($ART == 'intern')
-            {
-                $ART = 0;
-            }
-            else if($ART == 'extern')
-            {
-                $ART = 1;
-            }
-
-            if($USERNAME != '' && $PASSWORD != '' && EMAIL != '' && ART != '' && ACTIVE != '')
+            if($USERNAME != '' && $PASSWORD != '' && $EMAIL != '')
             {
                 try
                 {
@@ -513,7 +504,7 @@
             {
                 if($_CONSTRUCTR_CONF['_LOGGING'] == true)
                 {
-                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . '/' . $USERNAME . '/create/error/');                
+                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . $USERNAME . '/create/error/');                
                 }
 
                 $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/user/?create=error');
@@ -690,7 +681,7 @@
             $PASSWORD = crypt(constructr_sanitization(trim($constructr -> request() -> post('password'))),$_CONSTRUCTR_CONF['_SALT']);
             $PASSWORD_RT = crypt(constructr_sanitization(trim($constructr -> request() -> post('password_retype'))),$_CONSTRUCTR_CONF['_SALT']);
             $EMAIL = filter_var(constructr_sanitization(trim($constructr -> request() -> post('email')),FILTER_VALIDATE_EMAIL));
-            $ART = constructr_sanitization(trim($constructr -> request() -> post('art')));
+            $ART = 0;
             $ACTIVE = 1;
 
             if($PASSWORD != $PASSWORD_RT)
@@ -698,16 +689,7 @@
                 $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/user/?edit=error');
             }
 
-            if($ART == 'intern')
-            {
-                $ART = 0;
-            }
-            else if($ART == 'extern')
-            {
-                $ART = 1;
-            }
-
-            if($USERNAME != '' && $PASSWORD != '' && EMAIL != '' && ART != '' && ACTIVE != '')
+            if($USERNAME != '' && $PASSWORD != '' && $EMAIL != '')
             {
                 try
                 {
@@ -716,7 +698,7 @@
                     $STMT -> bindParam(':USERNAME',$USERNAME,PDO::PARAM_STR);
                     $STMT -> bindParam(':PASSWORD',$PASSWORD,PDO::PARAM_STR);
                     $STMT -> bindParam(':EMAIL',$EMAIL,PDO::PARAM_STR);
-                    $STMT -> bindParam(':ART',$ART,PDO::PARAM_INT);                    
+                    $STMT -> bindParam(':ART',$ART,PDO::PARAM_INT);
                     $STMT -> bindParam(':ACTIVE',$ACTIVE,PDO::PARAM_INT);
                     $STMT -> bindParam(':USER_ID',$USER_ID,PDO::PARAM_INT);
                     $STMT -> execute();
@@ -793,7 +775,7 @@
                 die();
             }
 
-            if(USER_ID != '' && $USER_ID != false)
+            if($USER_ID != '' && $USER_ID != false)
             {
                 try
                 {
@@ -879,7 +861,7 @@
                 die();
             }
 
-            if(USER_ID != '' && $USER_ID != false)
+            if($USER_ID != '' && $USER_ID != false)
             {
                 try
                 {
@@ -965,7 +947,7 @@
                 die();
             }
 
-            if(USER_ID != '' && $USER_ID != false)
+            if($USER_ID != '' && $USER_ID != false)
             {
                 try
                 {

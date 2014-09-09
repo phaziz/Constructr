@@ -25,7 +25,7 @@
     function cmpUp($a,$b){if ($a == $b){return 0;}return ($a < $b) ? -1 : 1;}
     function cmpDown($a,$b){if ($a == $b){return 0;}return ($a > $b) ? -1 : 1;}
     function getFilesFromDir($dir){$files = array();if ($handle = opendir($dir)){while (false !== ($file = readdir($handle))){if ($file != "." && $file != ".."){if(is_dir($dir.'/'.$file)){$dir2 = $dir.'/'.$file;$files[] = getFilesFromDir($dir2);} else {$files[] = $dir.'/'.$file;}}}closedir($handle);}return flatten_array($files);}
-    function flatten_array($array){$size=sizeof($array);$keys=array_keys($array);for($x = 0; $x < $size; $x++){$element = $array[$keys[$x]];if(is_array($element)) {$results = flatten_array($element);$sr = sizeof($results);$sk=array_keys($results);for($y = 0; $y < $sr; $y++) {$flat_array[$sk[$y]] = $results[$sk[$y]];}} else {$flat_array[$keys[$x]] = $element;}}return $flat_array;}
+    function flatten_array($array){$flat_array=array();$size=sizeof($array);$keys=array_keys($array);for($x = 0; $x < $size; $x++){$element = $array[$keys[$x]];if(is_array($element)) {$results = flatten_array($element);$sr = sizeof($results);$sk=array_keys($results);for($y = 0; $y < $sr; $y++) {$flat_array[$sk[$y]] = $results[$sk[$y]];}} else {$flat_array[$keys[$x]] = $element;}}return $flat_array;}
 
     function array_orderby()
     {
@@ -69,7 +69,7 @@
         {
             if($_CONSTRUCTR_CONF['_LOGGING'] == true)
             {
-                $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' - AdminCheckError: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' - AdminCheckError');
             }
 
             $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/login/');

@@ -94,7 +94,7 @@
                     'USER_NAME' => $USER_NAME,
                     'USER_ID' => (int) $USER_ID,
                     'RIGHTS' => $RIGHTS,
-                    'COUNTR' => (int) $COUNTR,
+                    'COUNTR' => (int) $RIGHTS_COUNTR,
                     '_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,
                     'SUBTITLE' => 'Benutzerrechte von ' . $USER_NAME,
                 )

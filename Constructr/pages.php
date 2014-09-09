@@ -217,12 +217,7 @@
                                                         echo '&#160;';
                                                         echo '<a data-toggle="tooltip" data-placement="top" title="Seite ' . $PAGE['pages_name'] . ' bearbeiten" class="editer tt" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/edit/' . $PAGE['pages_id'] . '/"><button type="button" class="btn btn-success btn-xs" title="Seite ' . $PAGE['pages_name'] . ' bearbeiten"><span class="glyphicon glyphicon-pencil"></span></button></a>';
                                                         echo '&#160;';
-
-                                                        if($PAGE['pages_lft'] != 1)
-                                                        {
-                                                            echo '<a data-toggle="tooltip" data-placement="top" title="Diese Seite l&ouml;schen" class="deleter-single tt" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/delete-single/' . $PAGE['pages_id'] . '/' . $PAGE['pages_order'] . '/" title="Seite l&ouml;schen"><button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span></button></a>';
-                                                        }
-
+                                                        echo '<a data-toggle="tooltip" data-placement="top" title="Diese Seite l&ouml;schen" class="deleter-single tt" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/delete-single/' . $PAGE['pages_id'] . '/' . $PAGE['pages_order'] . '/" title="Seite l&ouml;schen"><button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span></button></a>';
                                                         echo '</nobr></td>';
                                                         echo '</tr>';
                                                     }

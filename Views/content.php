@@ -83,9 +83,17 @@
                 $CONTENT -> execute(array(':PAGE_ID' => $PAGE_ID));
                 $CONTENT_COUNTER = $CONTENT -> rowCount();
 
-                $DELETED_CONTENT = $DBCON -> prepare('SELECT * FROM constructr_content WHERE content_page_id = :PAGE_ID AND content_deleted = 1 ORDER BY content_id ASC;');
-                $DELETED_CONTENT -> execute(array(':PAGE_ID' => $PAGE_ID));
-                $DELETED_CONTENT_COUNTER = $DELETED_CONTENT -> rowCount();
+				if($_CONSTRUCTR_CONF['_ENABLE_CONTENT_HISTORY'] == true)
+				{
+	                $DELETED_CONTENT = $DBCON -> prepare('SELECT * FROM constructr_content WHERE content_page_id = :PAGE_ID AND content_deleted = 1 ORDER BY content_id ASC;');
+	                $DELETED_CONTENT -> execute(array(':PAGE_ID' => $PAGE_ID));
+	                $DELETED_CONTENT_COUNTER = $DELETED_CONTENT -> rowCount();
+                }
+				else
+				{
+	                $DELETED_CONTENT = NULL;
+	                $DELETED_CONTENT_COUNTER = 0;
+				}
             }
             catch(PDOException $e)
             {
@@ -404,15 +412,22 @@
                 );
                 $CONTENT = $CONTENT -> fetch();
 
-                $CONTENT_HISTORY = $DBCON -> prepare('SELECT * FROM constructr_content_history WHERE content_page_id = :PAGE_ID AND content_content_id = :CONTENT_ID ORDER BY content_datetime DESC;');
-                $CONTENT_HISTORY -> execute(
-                    array
-                    (
-                        ':PAGE_ID' => $PAGE_ID,
-                        ':CONTENT_ID' => $CONTENT_ID
-                    )
-                );
-                $CONTENT_HISTORY = $CONTENT_HISTORY -> fetchAll();
+				if($_CONSTRUCTR_CONF['_ENABLE_CONTENT_HISTORY'] == true)
+				{
+	                $CONTENT_HISTORY = $DBCON -> prepare('SELECT * FROM constructr_content_history WHERE content_page_id = :PAGE_ID AND content_content_id = :CONTENT_ID ORDER BY content_datetime DESC;');
+	                $CONTENT_HISTORY -> execute(
+	                    array
+	                    (
+	                        ':PAGE_ID' => $PAGE_ID,
+	                        ':CONTENT_ID' => $CONTENT_ID
+	                    )
+	                );
+	                $CONTENT_HISTORY = $CONTENT_HISTORY -> fetchAll();
+				}
+				else
+				{
+					$CONTENT_HISTORY = NULL;
+				}
 
                 $PAGE_NAME = $DBCON -> prepare('SELECT pages_name,pages_url FROM constructr_pages WHERE pages_id = :PAGE_ID LIMIT 1;');
                 $PAGE_NAME -> execute(
@@ -549,13 +564,16 @@
                         )
                     );
 
-                    $QUERY = 'INSERT INTO constructr_content_history SET content_datetime = :CONTENT_DATETIME,content_page_id = :PAGE_ID,content_content = :CONTENT, content_content_id = :LAST_CONTENT_ID;';
-                    $STMT = $DBCON -> prepare($QUERY);
-                    $STMT -> bindParam(':CONTENT',$CONTENT,PDO::PARAM_STR);
-                    $STMT -> bindParam(':CONTENT_DATETIME',$CONTENT_DATETIME,PDO::PARAM_STR);
-                    $STMT -> bindParam(':PAGE_ID',$PAGE_ID,PDO::PARAM_INT);
-                    $STMT -> bindParam(':LAST_CONTENT_ID',$CONTENT_ID,PDO::PARAM_INT);
-                    $STMT -> execute();
+					if($_CONSTRUCTR_CONF['_ENABLE_CONTENT_HISTORY'] == true)
+					{
+	                    $QUERY = 'INSERT INTO constructr_content_history SET content_datetime = :CONTENT_DATETIME,content_page_id = :PAGE_ID,content_content = :CONTENT, content_content_id = :LAST_CONTENT_ID;';
+	                    $STMT = $DBCON -> prepare($QUERY);
+	                    $STMT -> bindParam(':CONTENT',$CONTENT,PDO::PARAM_STR);
+	                    $STMT -> bindParam(':CONTENT_DATETIME',$CONTENT_DATETIME,PDO::PARAM_STR);
+	                    $STMT -> bindParam(':PAGE_ID',$PAGE_ID,PDO::PARAM_INT);
+	                    $STMT -> bindParam(':LAST_CONTENT_ID',$CONTENT_ID,PDO::PARAM_INT);
+	                    $STMT -> execute();
+					}
 
                     $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/content/' . $PAGE_ID . '/?res=edit-content-true');
                     die();

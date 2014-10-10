@@ -23,7 +23,7 @@
         {
             if($_CONSTRUCTR_CONF['_LOGGING'] == true)
             {
-                $constructr -> getLog() -> debug($_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
+                $constructr -> getLog() -> debug($_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
             }
 
             if($_CONSTRUCTR_CONF['_RESET_LOGIN_PASSWORD'] == true)
@@ -108,6 +108,7 @@
                     '_METHOD' => 'post',
                     'GUID' => $GUID,
                     '_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,
+                    'TMP_USERNAME' => $_SESSION['TMP_LOGIN_NAME'],
                     '_ENCTYPE' => 'application/x-www-form-urlencoded',
                     '_ACTION' => $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/login/' . $GUID . '/',
                     'SUBTITLE' => 'Login'
@@ -146,6 +147,7 @@
             }
 
             $_ADMIN_USERNAME = constructr_sanitization($constructr -> request() -> post('_admin_username'),true,true);
+			$_SESSION['TMP_LOGIN_NAME'] = $_ADMIN_USERNAME;
             $_ADMIN_PASSWORD = constructr_sanitization($constructr -> request() -> post('_admin_password'),true,true);
             $_ADMIN_PASSWORD = crypt($_ADMIN_PASSWORD,$_CONSTRUCTR_CONF['_SALT']);
             $_ADMIN_GUID = constructr_sanitization($constructr -> request() -> post('_admin_guid'),true,true);

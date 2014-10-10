@@ -1,9 +1,9 @@
 Constructr CMS
 =============
 
-ConstructrCMS based on Slim-PHP5-Framework, Twitter Bootstrap, PDO (MySQL), jQuery/Javascript and Passion!
+ConstructrCMS based on Slim-PHP5-Framework, Twitter Bootstrap, MySQL/PDO, jQuery/Javascript and Passion!
 
-That's it for now (Version 1.03.4 / 2014-09-05):
+That's it for now (Version 1.03.6 / 2014-10-10):
 
 	- Simple example frontend-template
 	- C.R.U.D. websites
@@ -25,6 +25,9 @@ That's it for now (Version 1.03.4 / 2014-09-05):
 	- File based Website-Caching
 
 ### CHANGELOG
+
+	- 2014-10-10
+	- Updated: Login and Content-History
 
 	- 2014-09-05 
 	- Updated Page Management

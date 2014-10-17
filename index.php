@@ -22,8 +22,8 @@
     require_once './Config/constructr.conf.php';
     require_once './Config/constructr_user_rights.conf.php';
 
-    $_CONSTRUCTR_CONF['_VERSION_DATE'] = '20141010';
-    $_CONSTRUCTR_CONF['_VERSION'] = '1.03.6';
+    $_CONSTRUCTR_CONF['_VERSION_DATE'] = '20141016';
+    $_CONSTRUCTR_CONF['_VERSION'] = '1.03.7';
 
     require_once './Slim/Slim.php';
     require_once './Slim/Log/DateTimeFileWriter.php';
@@ -368,7 +368,6 @@
         require_once './Views/content.php';
         require_once './Views/config.php';
         require_once './Views/media.php';
-        require_once './Views/plugins.php';
     }
 
     $constructr -> run();

@@ -104,6 +104,12 @@
                                         </div>
                                     	<div id="predefined-content-element-form-area">
                                     	</div>
+										<div class="form-group">
+										    <label for="submitter" class="col-sm-2 control-label">&#160;</label>
+										    <div class="col-sm-10">
+										        <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/content/' . $PAGE_ID . '/'; ?>"><button type="button" class="btn btn-danger btn-sm">Abbrechen</button></a>
+										    </div>
+										</div>
                                     </form>
                                 </div><!-- // EOF JUMBOTRON -->
                             </div><!-- // EOF COL-... -->
@@ -176,6 +182,33 @@
                                 }
                             }
                         );
+
+                        $( "#new_predefined_form" ).bind( "submit", function()
+                            {
+                                $("#submitter").attr("disabled", "disabled");
+
+                                var C = $('#content').val();
+
+                                if(C == '')
+                                {
+                                    $('#content').focus();
+                                    vex.dialog.alert(
+                                        {
+                                            className: 'vex-theme-flat-attack',
+                                            message: 'Achtung: Bitte Formular komplett ausf&uuml;llen!',
+                                            afterClose: function()
+                                            {
+                                                $('#content').focus();
+                                                $("#submitter").removeAttr("disabled");
+                                            }
+                                        }
+                                    );
+                                    return false;
+                                }
+                                return true;
+                            }
+                        );
+
                     }
                 );
 

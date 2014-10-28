@@ -1030,19 +1030,38 @@
             {
                 try
                 {
-                    $DELETER = $DBCON -> prepare('
-                        UPDATE constructr_content SET content_deleted = 1, content_order = 0, content_active = 0 WHERE content_id = :CONTENT_ID AND content_page_id = :PAGE_ID LIMIT 1;
-                        UPDATE constructr_content SET content_order = (content_order - 1) WHERE content_order > :ACT_ORDER AND content_page_id = :PAGE_ID;
-                    ');
-                    $DELETER -> execute(
-                        array
-                        (
-                            ':CONTENT_ID' => $CONTENT_ID,
-                            ':PAGE_ID' => $PAGE_ID,
-                            ':ACT_ORDER' => $ACT_ORDER
-                        )
-                    );
-					
+					if($_CONSTRUCTR_CONF['_ENABLE_CONTENT_HISTORY'] == false)
+					{
+	                    $DELETER = $DBCON -> prepare('
+	                        DELETE FROM constructr_content WHERE content_id = :CONTENT_ID AND content_page_id = :PAGE_ID LIMIT 1;
+	                        UPDATE constructr_content SET content_order = (content_order - 1) WHERE content_order > :ACT_ORDER AND content_page_id = :PAGE_ID;
+	                    ');
+	                    $DELETER -> execute(
+	                        array
+	                        (
+	                            ':CONTENT_ID' => $CONTENT_ID,
+	                            ':PAGE_ID' => $PAGE_ID,
+	                            ':ACT_ORDER' => $ACT_ORDER
+	                        )
+	                    );
+					}
+					else
+					{
+	                    $DELETER = $DBCON -> prepare('
+	                        UPDATE constructr_content SET content_deleted = 1, content_order = 0, content_active = 0 WHERE content_id = :CONTENT_ID AND content_page_id = :PAGE_ID LIMIT 1;
+	                        UPDATE constructr_content SET content_order = (content_order - 1) WHERE content_order > :ACT_ORDER AND content_page_id = :PAGE_ID;
+							DELETE FROM constructr_content_history WHERE content_page_id = :PAGE_ID AND content_content_id = :CONTENT_ID;
+	                    ');
+	                    $DELETER -> execute(
+	                        array
+	                        (
+	                            ':CONTENT_ID' => $CONTENT_ID,
+	                            ':PAGE_ID' => $PAGE_ID,
+	                            ':ACT_ORDER' => $ACT_ORDER
+	                        )
+	                    );
+					}
+
 					$constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/content/' . $PAGE_ID . '/?res=del-content-true');
                 }
                 catch(PDOException $e)
@@ -1116,7 +1135,9 @@
             {
                 try
                 {
-                    $DELETER = $DBCON -> prepare('DELETE FROM constructr_content WHERE content_id = :CONTENT_ID AND content_page_id = :PAGE_ID LIMIT 1;');
+                    $DELETER = $DBCON -> prepare('
+                    	DELETE FROM constructr_content WHERE content_id = :CONTENT_ID AND content_page_id = :PAGE_ID LIMIT 1;
+                	');
                     $DELETER -> execute(
                         array
                         (

@@ -90,7 +90,6 @@
                                                 {
                                                     echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Fehler!</strong> Es ist ein Fehler beim anlegen der Seite aufgetreten.</div>';
                                                 }
-
                                                 if($_GET['res'] == 'activate-page-true')
                                                 {
                                                     echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Erfolg!</strong> Seite ist nun im Frontend sichtbar/unsichtbar.</div>';
@@ -99,7 +98,6 @@
                                                 {
                                                     echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Fehler!</strong> Es ist ein Fehler beim aktivieren/deaktivieren der Seite aufgetreten.</div>';
                                                 }
-
                                                 if($_GET['res'] == 'edit-page-true')
                                                 {
                                                     echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Erfolg!</strong> Seite wurde erfolgreich bearbeitet.</div>';
@@ -115,10 +113,6 @@
                                                 else if($_GET['res'] == 'del-single-false')
                                                 {
                                                     echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Fehler!</strong> Es ist ein Fehler beim l&ouml;schen der Seite aufgetreten.</div>';
-                                                }
-                                                if($_GET['res'] == 'content-not-empty')
-                                                {
-                                                    echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Fehler!</strong> Es ist ein Fehler aufgetreten. Es existieren noch Inhalte auf dieser Seite!</div>';
                                                 }
                                                 if($_GET['res'] == 'subpages-not-empty')
                                                 {
@@ -339,7 +333,7 @@
                                 vex.dialog.confirm(
                                     {
                                         className: 'vex-theme-flat-attack',
-                                        message: 'M&ouml;chten Sie wirklich diese Seite l&ouml;schen?',
+                                        message: 'M&ouml;chten Sie wirklich diese Seite l&ouml;schen?<br><small>Vorhandene Inhalte werden ebenfalls gel&ouml;scht!</small>',
                                         callback: function(value)
                                         {
                                             if(value == true)

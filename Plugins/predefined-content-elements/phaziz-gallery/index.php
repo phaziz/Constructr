@@ -1,3 +1,5 @@
+<?php require_once '../../../Config/constructr.conf.php'; ?>
+<input type="hidden" name="phaziz-gallery" value="phaziz-gallery">
 <div class="form-group">
 <label for="" class="col-sm-2 control-label">&#160;</label>
 <div class="col-sm-10">
@@ -8,10 +10,10 @@
 <div class="form-group">
     <label for="new_page_order" class="col-sm-2 control-label">Galerie bearbeiten:</label>
     <div class="col-sm-5">
-    	<strong><small>Alle Bilder im Verzeichnis Uploads</small></strong>
+    	<strong><small>Alle Bilder im Verzeichnis Uploads:</small></strong>
     	<br>
     	<br>
-    	<div class="image-elements">
+<div class="image-elements">
 <?php 
 
 $_USER_UPLOADS = __DIR__ . '/../../../Uploads/';
@@ -28,36 +30,47 @@ if(in_array($FILE_TYPE,$IMAGE_TYPES))
 }
 
 ?>
-    	</div>
+</div>
 	</div>
 	<div class="col-sm-5">
-		<strong><small>Alle Bilder im Galerie-Element auf dieser Seite</small></strong>
-		<br>
-		<br>
-    	<div id="gallery-images">
-
-    	</div>
+		<strong><small>Galerie-Code für das Inhaltselement:</small></strong>
+		<textarea class="form-control" rows="10" cols="100" name="content" id="content"></textarea>
     </div>
 </div>
-<style>
-.img:hover,.imgage-el:hover{
-	cursor:pointer;
-}
-</style>
-<script>
 
-	$('span.img').dblclick(function()
+<div class="form-group">
+    <label for="cleaner" class="col-sm-2 control-label">&#160;</label>
+    <div class="col-sm-10">
+        <button id="cleaner" name="cleaner" class="btn btn-info btn-sm">Neuen vordefinierten Inhalt speichern</button>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+	$('#cleaner').click(function(){
+		var CONTENT = $('#content').html();
+		if(CONTENT != '')
 		{
-			var H = $('#gallery-images').html();
-			var E = $(this).html().replace('<br>','');
-			NEW_ELEMENT = '<span class="image-el">' + E + " <a href=\"\" id=\"removr\" onclick=\"javascript:return false;\" title=\"Bild entfernen\">X</a><br></span>";
-			var NEW_H = H += NEW_ELEMENT;
-			$('#gallery-images').html(NEW_H);
+			$('#content').html('<ul>' + CONTENT + '</ul>');
+			return true	
 		}
-	);
-
-	$('span.image-el').bind('dblclick',function()
+		else
 		{
+			return false;
+		}
+	});
+
+	$("head link[rel='stylesheet']").last().after("<style>.img:hover,.img-del:hover{cursor:pointer;}</style>");
+
+	String.prototype.str_replace = function(search, replace)
+	{
+	    return this.split(search).join(replace);
+	}
+
+	$('.img').bind('click', function()
+		{
+			var E = $(this).html().replace('<br>','');
+			$('#content').html($('#content').html() + '<li><img src="<?php echo $_CONSTRUCTR_CONF['_BASE_URL']; ?>/Uploads/' + E + '" alt="gal-img"></li>');
 		}
 	);
 

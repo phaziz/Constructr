@@ -26,6 +26,10 @@ That's it for now (Version 1.03.7 / 2014-10-16):
 
 ### CHANGELOG
 
+	- 2014-11-25
+	- Updated: Views and Helper
+	- Security Update
+
 	- 2014-10-16
 	- Updated: Updated Plugin-Structure.
 	- New: Predefined Content-Elements

@@ -237,7 +237,7 @@
     $constructr -> post('/constructr/content/:PAGE_ID/new/:GUID/', $ADMIN_CHECK, function ($PAGE_ID,$GUID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
             $PAGE_ID = filter_var(trim((int) $PAGE_ID),FILTER_SANITIZE_NUMBER_INT);
-            $GUID = filter_var(trim($GUID),FILTER_SANITIZE_STRING);
+            $GUID = filter_var(trim($GUID),FILTER_SANITIZE_NUMBER_INT);
 
             $constructr -> view -> setData('BackendUserRight',21);
 
@@ -283,14 +283,14 @@
 
             if($_CONSTRUCTR_CONF['_LOGGING'] == true)
             {
-                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
+                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
             }
 
-            $USER_FORM_GUID = $constructr -> request() -> post('user_form_guid');
+			$USER_FORM_GUID = filter_var(trim($constructr -> request() -> post('user_form_guid'), FILTER_SANITIZE_FULL_SPECIAL_CHARS));
 
             if($GUID != $USER_FORM_GUID || $GUID == false)
             {
-                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ' - USER_FORM_GUID ERROR: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ' - USER_FORM_GUID ERROR (' . $USER_FORM_GUID . '|' . $GUID . '): ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                 $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/logout/');
                 die();
             }
@@ -471,7 +471,7 @@
         {
             $PAGE_ID = filter_var(trim((int) $PAGE_ID),FILTER_SANITIZE_NUMBER_INT);
             $CONTENT_ID = filter_var(trim((int) $CONTENT_ID),FILTER_SANITIZE_NUMBER_INT);
-            $GUID = filter_var(trim($GUID),FILTER_SANITIZE_STRING);
+            $GUID = filter_var(trim($GUID),FILTER_SANITIZE_NUMBER_INT);
 
             $constructr -> view -> setData('BackendUserRight',22);
 
@@ -517,14 +517,14 @@
 
             if($_CONSTRUCTR_CONF['_LOGGING'] == true)
             {
-                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
+                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
             }
 
-            $USER_FORM_GUID = filter_var(trim($constructr -> request() -> post('user_form_guid'), FILTER_SANITIZE_STRING));
+            $USER_FORM_GUID = filter_var(trim($constructr -> request() -> post('user_form_guid'), FILTER_SANITIZE_NUMBER_INT));
 
             if($GUID != $USER_FORM_GUID || $GUID == false)
             {
-                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ' - USER_FORM_GUID ERROR: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ' - USER_FORM_GUID ERROR (' . $USER_FORM_GUID . '|' . $GUID . '): ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                 $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/logout/');
                 die();
             }
@@ -1030,38 +1030,19 @@
             {
                 try
                 {
-					if($_CONSTRUCTR_CONF['_ENABLE_CONTENT_HISTORY'] == false)
-					{
-	                    $DELETER = $DBCON -> prepare('
-	                        DELETE FROM constructr_content WHERE content_id = :CONTENT_ID AND content_page_id = :PAGE_ID LIMIT 1;
-	                        UPDATE constructr_content SET content_order = (content_order - 1) WHERE content_order > :ACT_ORDER AND content_page_id = :PAGE_ID;
-	                    ');
-	                    $DELETER -> execute(
-	                        array
-	                        (
-	                            ':CONTENT_ID' => $CONTENT_ID,
-	                            ':PAGE_ID' => $PAGE_ID,
-	                            ':ACT_ORDER' => $ACT_ORDER
-	                        )
-	                    );
-					}
-					else
-					{
-	                    $DELETER = $DBCON -> prepare('
-	                        UPDATE constructr_content SET content_deleted = 1, content_order = 0, content_active = 0 WHERE content_id = :CONTENT_ID AND content_page_id = :PAGE_ID LIMIT 1;
-	                        UPDATE constructr_content SET content_order = (content_order - 1) WHERE content_order > :ACT_ORDER AND content_page_id = :PAGE_ID;
-							DELETE FROM constructr_content_history WHERE content_page_id = :PAGE_ID AND content_content_id = :CONTENT_ID;
-	                    ');
-	                    $DELETER -> execute(
-	                        array
-	                        (
-	                            ':CONTENT_ID' => $CONTENT_ID,
-	                            ':PAGE_ID' => $PAGE_ID,
-	                            ':ACT_ORDER' => $ACT_ORDER
-	                        )
-	                    );
-					}
-
+                    $DELETER = $DBCON -> prepare('
+                        UPDATE constructr_content SET content_deleted = 1, content_order = 0, content_active = 0 WHERE content_id = :CONTENT_ID AND content_page_id = :PAGE_ID LIMIT 1;
+                        UPDATE constructr_content SET content_order = (content_order - 1) WHERE content_order > :ACT_ORDER AND content_page_id = :PAGE_ID;
+                    ');
+                    $DELETER -> execute(
+                        array
+                        (
+                            ':CONTENT_ID' => $CONTENT_ID,
+                            ':PAGE_ID' => $PAGE_ID,
+                            ':ACT_ORDER' => $ACT_ORDER
+                        )
+                    );
+					
 					$constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/content/' . $PAGE_ID . '/?res=del-content-true');
                 }
                 catch(PDOException $e)
@@ -1135,9 +1116,7 @@
             {
                 try
                 {
-                    $DELETER = $DBCON -> prepare('
-                    	DELETE FROM constructr_content WHERE content_id = :CONTENT_ID AND content_page_id = :PAGE_ID LIMIT 1;
-                	');
+                    $DELETER = $DBCON -> prepare('DELETE FROM constructr_content WHERE content_id = :CONTENT_ID AND content_page_id = :PAGE_ID LIMIT 1;');
                     $DELETER -> execute(
                         array
                         (
@@ -1344,101 +1323,3 @@
             }
         }
     );
-
-    $constructr -> get('/constructr/content/new/predefined/:PAGE_ID/:NEW_CONTENT_ORDER/', $ADMIN_CHECK, function ($PAGE_ID,$NEW_CONTENT_ORDER) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
-        {
-
-            $PAGE_ID = filter_var(trim((int) $PAGE_ID),FILTER_SANITIZE_NUMBER_INT);
-            $NEW_CONTENT_ORDER = filter_var(trim((int) $NEW_CONTENT_ORDER),FILTER_SANITIZE_NUMBER_INT);
-
-            $constructr -> view -> setData('BackendUserRight',21);
-
-            if(isset($_SESSION['backend-user-id']) && $_SESSION['backend-user-id'] != '')
-            {
-                try
-                {
-                    $RIGHT_CHECKER = $DBCON -> prepare('SELECT * FROM constructr_backenduser_rights WHERE cbr_right = :RIGHT_ID AND cbr_user_id = :USER_ID AND cbr_value = :CBR_VALUE LIMIT 1;');
-                    $RIGHT_CHECKER -> execute(
-                        array
-                        (
-                            ':USER_ID' => $_SESSION['backend-user-id'],
-                            ':RIGHT_ID' => $constructr -> view -> getData('BackendUserRight'),
-                            ':CBR_VALUE' => 1
-                        )
-                    );
-
-                    $RIGHTS_COUNTR = $RIGHT_CHECKER -> rowCount();
-
-                    if($RIGHTS_COUNTR != 1)
-                    {
-                        $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Error ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                        $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/?no-rights=true');
-                        die();
-                    }
-                    else
-                    {
-                        $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                    }
-                }
-                catch(PDOException $e) 
-                {
-                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
-                    die();
-                }
-            }
-            else
-            {
-                $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': Error User-Rights-Check: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/logout/');
-                die();
-            }
-
-            if($_CONSTRUCTR_CONF['_LOGGING'] == true)
-            {
-                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
-            }
-
-            try
-            {
-                $PAGE_NAME = $DBCON -> prepare('SELECT pages_name,pages_url FROM constructr_pages WHERE pages_id = :PAGE_ID LIMIT 1;');
-                $PAGE_NAME -> execute(array(':PAGE_ID' => $PAGE_ID));
-                $PAGE_NAME = $PAGE_NAME -> fetch();
-            }
-            catch(PDOException $e)
-            {
-                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
-                die();
-            }
-
-            $GUID = create_guid();
-
-			$PREDEFINED_ELEMENTS_DIRECTORY = './Plugins/predefined-content-elements/';
-			$PREDEFINED_ELEMENTS = scandir($PREDEFINED_ELEMENTS_DIRECTORY);
-			$ALL_PREDEFINED_ELEMENTS = array();
-
-			foreach($PREDEFINED_ELEMENTS AS $PREDEFINED_ELEMENT)
-			{
-				if($PREDEFINED_ELEMENT != '' && $PREDEFINED_ELEMENT != '.' && $PREDEFINED_ELEMENT != '..')
-				{
-					$ALL_PREDEFINED_ELEMENTS[$PREDEFINED_ELEMENT] = array(1 => $_CONSTRUCTR_CONF['_BASE_URL'] . '/Plugins/predefined-content-elements/' . $PREDEFINED_ELEMENT . '/index.php', 2 => './Plugins/predefined-content-elements/' . $PREDEFINED_ELEMENT . '/postprocessing.php', 3 => './Plugins/predefined-content-elements/' . $PREDEFINED_ELEMENT . '/edit.php', 4 => './Plugins/predefined-content-elements/' . $PREDEFINED_ELEMENT . '/delete.php');
-				}
-			}
-
-            $constructr -> render('content_predefined.php',
-                array
-                (
-                    'USERNAME' => $_SESSION['backend-user-username'],
-                    'PAGE_NAME' => $PAGE_NAME,
-                    'GUID' => $GUID,
-                    'PAGE_ID' => $PAGE_ID,
-                    'FORM_ACTION' => $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/content/' . $PAGE_ID . '/new/' . $GUID .'/',
-                    'FORM_METHOD' => 'post',
-                    'FORM_ENCTYPE' => 'application/x-www-form-urlencoded',
-                    '_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,
-                    'NEW_CONTENT_ORDER' => $NEW_CONTENT_ORDER,
-                    'ALL_PREDEFINED_ELEMENTS' => $ALL_PREDEFINED_ELEMENTS,
-                    'SUBTITLE' => 'Neuer vordefinierter Inhalt'
-                )
-            );
-		}
-	);

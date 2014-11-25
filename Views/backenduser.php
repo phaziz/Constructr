@@ -374,7 +374,7 @@
 
     $constructr -> post('/constructr/user/new/:GUID/', $ADMIN_CHECK, function ($GUID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF,$_CONSTRUCTR_USER_RIGHTS_CONF)
         {
-            $GUID = trim($GUID);
+            $GUID = filter_var(trim($GUID),FILTER_SANITIZE_NUMBER_INT);
 
             if($_CONSTRUCTR_CONF['_LOGGING'] == true)
             {
@@ -618,7 +618,7 @@
 
     $constructr -> post('/constructr/user/edit/:USER_ID/:GUID/', $ADMIN_CHECK, function ($USER_ID,$GUID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $GUID = filter_var(trim($GUID),FILTER_SANITIZE_STRING);
+            $GUID = filter_var(trim($GUID),FILTER_SANITIZE_NUMBER_INT);
             $USER_ID = filter_var(trim((int) $USER_ID),FILTER_SANITIZE_NUMBER_INT);
 
             if($_CONSTRUCTR_CONF['_LOGGING'] == true)

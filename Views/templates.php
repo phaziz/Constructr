@@ -174,7 +174,7 @@
 
     $constructr -> post('/constructr/templates/edit/:TEMPLATE/:GUID/', $ADMIN_CHECK, function ($TEMPLATE,$GUID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $GUID = filter_var(trim($GUID),FILTER_SANITIZE_STRING);
+            $GUID = filter_var(trim($GUID),FILTER_SANITIZE_NUMBER_INT);
 
             $constructr -> view -> setData('BackendUserRight',51);
 
@@ -391,7 +391,7 @@
 
     $constructr -> post('/constructr/templates/new/:GUID/', $ADMIN_CHECK, function ($GUID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $GUID = filter_var(trim($GUID),FILTER_SANITIZE_STRING);
+            $GUID = filter_var(trim($GUID),FILTER_SANITIZE_NUMBER_INT);
 
             $constructr -> view -> setData('BackendUserRight',53);
 

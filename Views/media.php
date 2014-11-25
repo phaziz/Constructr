@@ -166,7 +166,7 @@
 
     $constructr -> post('/constructr/media/new/:GUID/', $ADMIN_CHECK, function ($GUID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $GUID = filter_var(trim($GUID),FILTER_SANITIZE_STRING);
+            $GUID = filter_var(trim($GUID),FILTER_SANITIZE_NUMBER_INT);
             $constructr -> view -> setData('BackendUserRight',41);
 
             if(isset($_SESSION['backend-user-id']) && $_SESSION['backend-user-id'] != '')

@@ -39,7 +39,6 @@
                 $TEMPLATES_COUNTR = 0;
                 $ALL_FILES = scandir($_CONSTRUCTR_CONF['_TEMPLATES_DIR']);
                 $DIR_FILES = array();
-
                 foreach($ALL_FILES as $DIR_FILE)
                 {
                     if($DIR_FILE != '.'  && $DIR_FILE != '..')
@@ -47,12 +46,10 @@
                         $DIR_FILES[] = $DIR_FILE;
                     }
                 }
-
                 $DIR_FILES = array_unique($DIR_FILES);
                 $TEMPLATES_COUNTR = count($DIR_FILES);
                 $ALL_C_FILES = scandir($_CONSTRUCTR_CONF['_CONSTRUCTR_WEBSITE_CACHE_DIR']);
                 $DIR_C_FILES = array();
-
                 foreach($ALL_C_FILES as $DIR_C_FILE)
                 {
                     if($DIR_C_FILE != '.'  && $DIR_C_FILE != '..')
@@ -60,12 +57,10 @@
                         $DIR_C_FILES[] = $DIR_C_FILE;
                     }
                 }
-
                 $DIR_C_FILES = array_unique($DIR_C_FILES);
                 $C_FILE_COUNTR = count($DIR_C_FILES);
                 $PLUGINS = scandir('./Plugins');
                 $PLUGIN_FILES = array();
-
                 foreach($PLUGINS as $PLUGIN_FILE)
                 {
                     if($PLUGIN_FILE != '.'  && $PLUGIN_FILE != '..')
@@ -73,7 +68,6 @@
                         $PLUGIN_FILES[] = $PLUGIN_FILE;
                     }
                 }
-
                 $PLUGIN_FILES = array_unique($PLUGIN_FILES);
                 $PLUGINS_COUNTR = count($PLUGIN_FILES);
             }
@@ -111,7 +105,7 @@
 
     $constructr -> post('/constructr/searchr/:GUID/', $ADMIN_CHECK, function ($GUID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $GUID = filter_var(trim($GUID),FILTER_SANITIZE_STRING);
+            $GUID = filter_var(trim($GUID),FILTER_SANITIZE_NUMBER_INT);
 
             $constructr -> view -> setData('BackendUserRight',30);
 
@@ -397,7 +391,7 @@
 
     $constructr -> get('/constructr/optimization/:GUID/', $ADMIN_CHECK, function ($GUID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $GUID = filter_var(trim($GUID),FILTER_SANITIZE_STRING);
+            $GUID = filter_var(trim($GUID),FILTER_SANITIZE_NUMBER_INT);
 
             $constructr -> view -> setData('BackendUserRight',31);
 
@@ -464,7 +458,7 @@
 
     $constructr -> get('/constructr/content-history/:GUID/', $ADMIN_CHECK, function ($GUID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $GUID = filter_var(trim($GUID),FILTER_SANITIZE_STRING);
+            $GUID = filter_var(trim($GUID),FILTER_SANITIZE_NUMBER_INT);
 
             $constructr -> view -> setData('BackendUserRight',25);
 
@@ -531,7 +525,7 @@
 
     $constructr -> get('/constructr/transfer-static/:GUID/', $ADMIN_CHECK, function ($GUID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $GUID = filter_var(trim($GUID),FILTER_SANITIZE_STRING);
+            $GUID = filter_var(trim($GUID),FILTER_SANITIZE_NUMBER_INT);
 
             $constructr -> view -> setData('BackendUserRight',100);
 
@@ -723,7 +717,6 @@
                         }
 
                         $FTP_CON = @ftp_connect($_CONSTRUCTR_CONF['_FTP_REMOTE_HOST'],$_CONSTRUCTR_CONF['_FTP_REMOTE_PORT']);
-
                         @ftp_login($FTP_CON, $_CONSTRUCTR_CONF['_FTP_REMOTE_USERNAME'], $_CONSTRUCTR_CONF['_FTP_REMOTE_PASSWORD']);
 
                         @ftp_chmod($FTP_CON, 0777,'sitemap.xml');
@@ -740,7 +733,6 @@
                         @ftp_delete($FTP_CON,'robots.txt');
                         @ftp_put($FTP_CON,'robots.txt',$_CONSTRUCTR_CONF['_STATIC_DIR'] . '/robots.txt', $_CONSTRUCTR_CONF['_FTP_REMOTE_MODE']);
                         @ftp_chmod($FTP_CON, 0777,'robots.txt');
-
                         @ftp_close($FTP_CON);
                     }
                     catch(PDOException $e)
@@ -846,7 +838,7 @@
 
     $constructr -> get('/constructr/clear-cache-page/:GUID/:PAGE_ID/', $ADMIN_CHECK, function ($GUID,$PAGE_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $GUID = filter_var(trim($GUID),FILTER_SANITIZE_STRING);
+            $GUID = filter_var(trim($GUID),FILTER_SANITIZE_NUMBER_INT);
             $PAGE_ID = filter_var(trim((int) $PAGE_ID),FILTER_SANITIZE_NUMBER_INT);
 
             $constructr -> view -> setData('BackendUserRight',70);

@@ -286,7 +286,7 @@
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
             }
 
-			$USER_FORM_GUID = filter_var(trim($constructr -> request() -> post('user_form_guid'), FILTER_SANITIZE_FULL_SPECIAL_CHARS));
+			$USER_FORM_GUID = filter_var(trim($constructr -> request() -> post('user_form_guid'), FILTER_SANITIZE_NUMBER_INT));
 
             if($GUID != $USER_FORM_GUID || $GUID == false)
             {

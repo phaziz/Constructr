@@ -374,7 +374,7 @@
 
     $constructr -> post('/constructr/user/new/:GUID/', $ADMIN_CHECK, function ($GUID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF,$_CONSTRUCTR_USER_RIGHTS_CONF)
         {
-            $GUID = filter_var(trim($GUID),FILTER_SANITIZE_NUMBER_INT);
+            $GUID = constructr_sanitization($GUID,true,true);
 
             if($_CONSTRUCTR_CONF['_LOGGING'] == true)
             {
@@ -423,9 +423,9 @@
                 die();
             }
 
-            $USER_FORM_GUID = trim($constructr -> request() -> post('user_form_guid'));
+            $USER_FORM_GUID = constructr_sanitization($constructr -> request() -> post('user_form_guid'),true,true);
 
-            if($GUID != $USER_FORM_GUID || $GUID == false)
+            if($GUID != $USER_FORM_GUID)
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ' - USER_FORM_GUID ERROR: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                 $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/logout/');
@@ -515,7 +515,7 @@
 
     $constructr -> get('/constructr/user/edit/:USER_ID/', $ADMIN_CHECK, function ($USER_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $USER_ID = filter_var(trim((int) $USER_ID),FILTER_SANITIZE_NUMBER_INT);
+            $USER_ID = constructr_sanitization($USER_ID,true,true);
 
             $constructr -> view -> setData('BackendUserRight',68);
 
@@ -618,8 +618,8 @@
 
     $constructr -> post('/constructr/user/edit/:USER_ID/:GUID/', $ADMIN_CHECK, function ($USER_ID,$GUID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $GUID = filter_var(trim($GUID),FILTER_SANITIZE_NUMBER_INT);
-            $USER_ID = filter_var(trim((int) $USER_ID),FILTER_SANITIZE_NUMBER_INT);
+            $GUID = constructr_sanitization($GUID,true,true);
+            $USER_ID = constructr_sanitization($USER_ID,true,true);
 
             if($_CONSTRUCTR_CONF['_LOGGING'] == true)
             {
@@ -668,9 +668,9 @@
                 die();
             }
 
-            $USER_FORM_GUID = filter_var($constructr -> request() -> post('user_form_guid'),FILTER_SANITIZE_STRING);
+            $USER_FORM_GUID = constructr_sanitization($constructr -> request() -> post('user_form_guid'),true,true);
 
-            if($GUID != $USER_FORM_GUID || $GUID == false)
+            if($GUID != $USER_FORM_GUID)
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ' - USER_FORM_GUID ERROR: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                 $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/logout/');
@@ -732,7 +732,7 @@
 
     $constructr -> get('/constructr/user/set-inactive/:USER_ID/', function ($USER_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $USER_ID = filter_var(trim((int) $USER_ID),FILTER_SANITIZE_NUMBER_INT);
+            $USER_ID = constructr_sanitization($USER_ID,true,true);
             $constructr -> view -> setData('BackendUserRight',69);
 
             if(isset($_SESSION['backend-user-id']) && $_SESSION['backend-user-id'] != '')
@@ -775,7 +775,7 @@
                 die();
             }
 
-            if($USER_ID != '' && $USER_ID != false)
+            if($USER_ID != '')
             {
                 try
                 {
@@ -818,7 +818,7 @@
 
     $constructr -> get('/constructr/user/set-active/:USER_ID/', function ($USER_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $USER_ID = filter_var(trim((int) $USER_ID),FILTER_SANITIZE_NUMBER_INT);
+            $USER_ID = constructr_sanitization($USER_ID,true,true);
             $constructr -> view -> setData('BackendUserRight',69);
 
             if(isset($_SESSION['backend-user-id']) && $_SESSION['backend-user-id'] != '')
@@ -904,7 +904,7 @@
 
     $constructr -> get('/constructr/user/delete/:USER_ID/', function ($USER_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $USER_ID = filter_var(trim((int) $USER_ID),FILTER_SANITIZE_NUMBER_INT);
+            $USER_ID = constructr_sanitization($USER_ID,true,true);
             $constructr -> view -> setData('BackendUserRight',60);
 
             if(isset($_SESSION['backend-user-id']) && $_SESSION['backend-user-id'] != '')
@@ -953,7 +953,7 @@
                 {
                     $QUERY = 'DELETE FROM constructr_backenduser WHERE beu_id = :USER_ID LIMIT 1; DELETE FROM constructr_backenduser_rights WHERE cbr_user_id = :USER_ID;';
                     $STMT = $DBCON -> prepare($QUERY);
-                    $STMT -> bindParam(':USER_ID', $USER_ID, PDO::PARAM_INT);   
+                    $STMT -> bindParam(':USER_ID', $USER_ID, PDO::PARAM_INT);
                     $STMT -> execute();
 
                     if($_CONSTRUCTR_CONF['_LOGGING'] == true)

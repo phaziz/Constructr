@@ -181,7 +181,7 @@
 
     $constructr -> post('/constructr/pages/new/:GUID/', $ADMIN_CHECK, function ($GUID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $GUID = filter_var(trim($GUID),FILTER_SANITIZE_NUMBER_INT);
+            $GUID = constructr_sanitization($GUID,true,true);
 
             if($_CONSTRUCTR_CONF['_LOGGING'] == true)
             {
@@ -810,7 +810,7 @@
 
     $constructr -> get('/constructr/pages/edit/:PAGE_ID/', $ADMIN_CHECK, function ($PAGE_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $PAGE_ID = filter_var(trim($PAGE_ID),FILTER_SANITIZE_NUMBER_INT);
+            $PAGE_ID = constructr_sanitization($PAGE_ID,true,true);
             $constructr -> view -> setData('BackendUserRight',13);
 
             if(isset($_SESSION['backend-user-id']) && $_SESSION['backend-user-id'] != '')
@@ -899,7 +899,7 @@
 
     $constructr -> post('/constructr/pages/edit/:GUID/', $ADMIN_CHECK, function ($GUID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $GUID = filter_var(trim($GUID),FILTER_SANITIZE_NUMBER_INT);
+            $GUID = constructr_sanitization($GUID,true,true);
             $constructr -> view -> setData('BackendUserRight',13);
 
             if(isset($_SESSION['backend-user-id']) && $_SESSION['backend-user-id'] != '')
@@ -1090,7 +1090,7 @@
 
     $constructr -> get('/constructr/pages/activate/:PAGE_ID/', $ADMIN_CHECK, function ($PAGE_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $PAGE_ID = filter_var(trim($PAGE_ID),FILTER_SANITIZE_NUMBER_INT);
+            $PAGE_ID = constructr_sanitization($PAGE_ID,true,true);
             $constructr -> view -> setData('BackendUserRight',14);
 
             if(isset($_SESSION['backend-user-id']) && $_SESSION['backend-user-id'] != '')
@@ -1175,7 +1175,7 @@
 
     $constructr -> get('/constructr/pages/deactivate/:PAGE_ID/', $ADMIN_CHECK, function ($PAGE_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $PAGE_ID = filter_var(trim($PAGE_ID),FILTER_SANITIZE_NUMBER_INT);
+            $PAGE_ID = constructr_sanitization($PAGE_ID,true,true);
             $constructr -> view -> setData('BackendUserRight',14);
 
             if(isset($_SESSION['backend-user-id']) && $_SESSION['backend-user-id'] != '')
@@ -1261,8 +1261,9 @@
 
     $constructr -> get('/constructr/pages/delete-single/:PAGE_ID/:PAGE_ORDER/', $ADMIN_CHECK, function ($PAGE_ID,$PAGE_ORDER) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $PAGE_ID = filter_var(trim($PAGE_ID),FILTER_SANITIZE_NUMBER_INT);
-            $PAGE_ORDER = filter_var(trim($PAGE_ORDER),FILTER_SANITIZE_NUMBER_INT);
+            $PAGE_ID = constructr_sanitization($PAGE_ID,true,true);
+            $PAGE_ORDER = constructr_sanitization($PAGE_ORDER,true,true);
+
             $constructr -> view -> setData('BackendUserRight',15);
 
             if(isset($_SESSION['backend-user-id']) && $_SESSION['backend-user-id'] != '')
@@ -1397,8 +1398,9 @@
 
     $constructr -> get('/constructr/pages/reorder/:METHOD/:PAGE_ID/', $ADMIN_CHECK, function ($METHOD,$PAGE_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $PAGE_ID = filter_var(trim($PAGE_ID),FILTER_SANITIZE_NUMBER_INT);
-            $METHOD = filter_var(trim($METHOD),FILTER_SANITIZE_STRING);
+            $PAGE_ID = constructr_sanitization($PAGE_ID,true,true);
+            $METHOD = constructr_sanitization($METHOD,true,true);
+
             $constructr -> view -> setData('BackendUserRight',17);
 
             if(isset($_SESSION['backend-user-id']) && $_SESSION['backend-user-id'] != '')

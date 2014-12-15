@@ -19,8 +19,7 @@
     ***************************************************************************
     */
 
-    function make_seed(){list($usec, $sec) = explode(' ', microtime());return (float) $sec + ((float) $usec * 100000);}
-	function create_guid(){mt_srand(make_seed());$randval = mt_rand();return $randval;}
+	function create_guid(){return mt_rand();}
     function mysql_escape_mimic($INPUT){if(!empty($INPUT) && is_string($INPUT)){return str_replace(array('\\', "\0", "\n", "\r", "'", '"', "\x1a"),array('\\\\', '\\0', '\\n', '\\r', "\\'", '\\"', '\\Z'),$INPUT);}return $INPUT;}
     function constructr_sanitization($VAR,$TRIM=true,$STRICT=false){if($TRIM == true){$VAR = trim($VAR);}if($STRICT == true){$VAR = mysql_escape_mimic(strip_tags($VAR));}return $VAR;}
     function cmpUp($a,$b){if ($a == $b){return 0;}return ($a < $b) ? -1 : 1;}

@@ -105,7 +105,7 @@
 
     $constructr -> post('/constructr/searchr/:GUID/', $ADMIN_CHECK, function ($GUID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $GUID = filter_var(trim($GUID),FILTER_SANITIZE_NUMBER_INT);
+            $GUID = constructr_sanitization($GUID,true,true);
 
             $constructr -> view -> setData('BackendUserRight',30);
 
@@ -201,12 +201,12 @@
             }
 
             $NEEDLES = constructr_sanitization($constructr -> request() -> post('needles'),true,true);
-            $NEEDLES = filter_var(trim($NEEDLES),FILTER_SANITIZE_STRING);
+            $NEEDLES = constructr_sanitization($NEEDLES,true,true);
             $USER_FORM_GUID = constructr_sanitization($constructr -> request() -> post('user_form_guid'));
 
             if($NEEDLES && $NEEDLES != false)
             {
-                if($GUID != $USER_FORM_GUID || $GUID == false)
+                if($GUID != $USER_FORM_GUID)
                 {
                     $constructr -> getLog() -> error('SearchForm GUID Error - ' . $_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                     $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/');
@@ -391,7 +391,7 @@
 
     $constructr -> get('/constructr/optimization/:GUID/', $ADMIN_CHECK, function ($GUID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $GUID = filter_var(trim($GUID),FILTER_SANITIZE_NUMBER_INT);
+            $GUID = constructr_sanitization($GUID,true,true);
 
             $constructr -> view -> setData('BackendUserRight',31);
 
@@ -435,7 +435,7 @@
                 die();
             }
 
-            if($GUID == '' || $GUID == false)
+            if($GUID == '')
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ' - USER_FORM_GUID ERROR: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                 $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/logout/');
@@ -458,7 +458,7 @@
 
     $constructr -> get('/constructr/content-history/:GUID/', $ADMIN_CHECK, function ($GUID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $GUID = filter_var(trim($GUID),FILTER_SANITIZE_NUMBER_INT);
+            $GUID = constructr_sanitization($GUID,true,true);
 
             $constructr -> view -> setData('BackendUserRight',25);
 
@@ -502,7 +502,7 @@
                 die();
             }
 
-            if($GUID == '' || $GUID == false)
+            if($GUID == '')
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ' - USER_FORM_GUID ERROR: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                 $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/logout/');
@@ -525,7 +525,7 @@
 
     $constructr -> get('/constructr/transfer-static/:GUID/', $ADMIN_CHECK, function ($GUID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $GUID = filter_var(trim($GUID),FILTER_SANITIZE_NUMBER_INT);
+            $GUID = constructr_sanitization($GUID,true,true);
 
             $constructr -> view -> setData('BackendUserRight',100);
 
@@ -569,7 +569,7 @@
                 die();
             }
 
-            if($GUID == '' || $GUID == false)
+            if($GUID == '')
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ' - USER_FORM_GUID ERROR: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                 $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/logout/');
@@ -768,7 +768,7 @@
     
     $constructr -> get('/constructr/clear-cache/:GUID/', $ADMIN_CHECK, function ($GUID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $GUID = filter_var(trim($GUID),FILTER_SANITIZE_STRING);
+            $GUID = constructr_sanitization($GUID,true,true);
 
             $constructr -> view -> setData('BackendUserRight',70);
 
@@ -812,7 +812,7 @@
                 die();
             }
 
-            if($GUID == '' || $GUID == false)
+            if($GUID == '')
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ' - USER_FORM_GUID ERROR: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                 $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/logout/');
@@ -838,8 +838,8 @@
 
     $constructr -> get('/constructr/clear-cache-page/:GUID/:PAGE_ID/', $ADMIN_CHECK, function ($GUID,$PAGE_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $GUID = filter_var(trim($GUID),FILTER_SANITIZE_NUMBER_INT);
-            $PAGE_ID = filter_var(trim((int) $PAGE_ID),FILTER_SANITIZE_NUMBER_INT);
+            $GUID = constructr_sanitization($GUID,true,true);
+            $PAGE_ID = constructr_sanitization($PAGE_ID,true,true);
 
             $constructr -> view -> setData('BackendUserRight',70);
 
@@ -883,7 +883,7 @@
                 die();
             }
 
-            if($GUID == '' || $GUID == false)
+            if($GUID == '')
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ' - USER_FORM_GUID ERROR: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                 $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/logout/');

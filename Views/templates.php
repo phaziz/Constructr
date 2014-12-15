@@ -174,7 +174,7 @@
 
     $constructr -> post('/constructr/templates/edit/:TEMPLATE/:GUID/', $ADMIN_CHECK, function ($TEMPLATE,$GUID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $GUID = filter_var(trim($GUID),FILTER_SANITIZE_NUMBER_INT);
+            $GUID = constructr_sanitization($GUID,true,true);
 
             $constructr -> view -> setData('BackendUserRight',51);
 
@@ -223,7 +223,8 @@
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
             }
 
-            $USER_FORM_GUID = $constructr -> request() -> post('user_form_guid');
+            $USER_FORM_GUID = constructr_sanitization($constructr -> request() -> post('user_form_guid'),true,true);
+
             if($GUID != $USER_FORM_GUID)
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ' - USER_FORM_GUID ERROR: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
@@ -391,7 +392,7 @@
 
     $constructr -> post('/constructr/templates/new/:GUID/', $ADMIN_CHECK, function ($GUID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $GUID = filter_var(trim($GUID),FILTER_SANITIZE_NUMBER_INT);
+            $GUID = constructr_sanitization($GUID,true,true);
 
             $constructr -> view -> setData('BackendUserRight',53);
 
@@ -440,7 +441,7 @@
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
             }
 
-            $USER_FORM_GUID = $constructr -> request() -> post('user_form_guid');
+            $USER_FORM_GUID = constructr_sanitization($constructr -> request() -> post('user_form_guid'),true,true);
 
             if($GUID != $USER_FORM_GUID)
             {

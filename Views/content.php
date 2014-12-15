@@ -22,7 +22,7 @@
 
     $constructr -> get('/constructr/content/:PAGE_ID/', $ADMIN_CHECK, function ($PAGE_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $PAGE_ID = filter_var(trim((int) $PAGE_ID),FILTER_SANITIZE_NUMBER_INT);
+            $PAGE_ID = constructr_sanitization($PAGE_ID,true,true);
             $CONTENT_COUNTER = 0;
             $CONTENT = '';
 
@@ -152,8 +152,8 @@
 
     $constructr -> get('/constructr/content/:PAGE_ID/:NEW_CONTENT_ORDER/new/', $ADMIN_CHECK, function ($PAGE_ID,$NEW_CONTENT_ORDER) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $PAGE_ID = filter_var(trim((int) $PAGE_ID),FILTER_SANITIZE_NUMBER_INT);
-            $NEW_CONTENT_ORDER = filter_var(trim((int) $NEW_CONTENT_ORDER),FILTER_SANITIZE_NUMBER_INT);
+            $PAGE_ID = constructr_sanitization($PAGE_ID,true,true);
+            $NEW_CONTENT_ORDER = constructr_sanitization($NEW_CONTENT_ORDER,true,true);
 
             $constructr -> view -> setData('BackendUserRight',21);
 
@@ -236,8 +236,16 @@
 
     $constructr -> post('/constructr/content/:PAGE_ID/new/:GUID/', $ADMIN_CHECK, function ($PAGE_ID,$GUID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $PAGE_ID = filter_var(trim((int) $PAGE_ID),FILTER_SANITIZE_NUMBER_INT);
-            $GUID = filter_var(trim($GUID),FILTER_SANITIZE_NUMBER_INT);
+			$PAGE_ID = constructr_sanitization($PAGE_ID,true,true);
+            $GUID = constructr_sanitization($GUID,true,true);
+			$USER_FORM_GUID = constructr_sanitization($constructr -> request() -> post('user_form_guid'),true,true);
+
+            if($GUID != $USER_FORM_GUID)
+            {
+                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ' - USER_FORM_GUID ERROR (' . $USER_FORM_GUID . '|' . $GUID . '): ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/logout/');
+                die();
+            }
 
             $constructr -> view -> setData('BackendUserRight',21);
 
@@ -284,15 +292,6 @@
             if($_CONSTRUCTR_CONF['_LOGGING'] == true)
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-            }
-
-			$USER_FORM_GUID = filter_var(trim($constructr -> request() -> post('user_form_guid'), FILTER_SANITIZE_NUMBER_INT));
-
-            if($GUID != $USER_FORM_GUID || $GUID == false)
-            {
-                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ' - USER_FORM_GUID ERROR (' . $USER_FORM_GUID . '|' . $GUID . '): ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/logout/');
-                die();
             }
 
             $CONTENT_DATETIME = date('Y-m-d H:i:s');
@@ -350,8 +349,8 @@
 
     $constructr -> get('/constructr/content/:PAGE_ID/:CONTENT_ID/edit/', $ADMIN_CHECK, function ($PAGE_ID,$CONTENT_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $PAGE_ID = filter_var(trim((int) $PAGE_ID),FILTER_SANITIZE_NUMBER_INT);
-            $CONTENT_ID = filter_var(trim((int) $CONTENT_ID),FILTER_SANITIZE_NUMBER_INT);
+            $PAGE_ID = constructr_sanitization($PAGE_ID,true,true);
+            $CONTENT_ID = constructr_sanitization($CONTENT_ID,true,true);
 
             $constructr -> view -> setData('BackendUserRight',22);
 
@@ -469,9 +468,17 @@
 
     $constructr -> post('/constructr/content/:PAGE_ID/:CONTENT_ID/edit/:GUID/', $ADMIN_CHECK, function ($PAGE_ID,$CONTENT_ID,$GUID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $PAGE_ID = filter_var(trim((int) $PAGE_ID),FILTER_SANITIZE_NUMBER_INT);
-            $CONTENT_ID = filter_var(trim((int) $CONTENT_ID),FILTER_SANITIZE_NUMBER_INT);
-            $GUID = filter_var(trim($GUID),FILTER_SANITIZE_NUMBER_INT);
+            $PAGE_ID = constructr_sanitization($PAGE_ID,true,true);
+            $CONTENT_ID = constructr_sanitization($CONTENT_ID,true,true);
+            $GUID = constructr_sanitization($GUID,true,true);
+			$USER_FORM_GUID = constructr_sanitization($constructr -> request() -> post('user_form_guid'),true,true);
+
+            if($GUID != $USER_FORM_GUID)
+            {
+                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ' - USER_FORM_GUID ERROR (' . $USER_FORM_GUID . '|' . $GUID . '): ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/logout/');
+                die();
+            }
 
             $constructr -> view -> setData('BackendUserRight',22);
 
@@ -518,15 +525,6 @@
             if($_CONSTRUCTR_CONF['_LOGGING'] == true)
             {
                 $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-            }
-
-            $USER_FORM_GUID = filter_var(trim($constructr -> request() -> post('user_form_guid'), FILTER_SANITIZE_NUMBER_INT));
-
-            if($GUID != $USER_FORM_GUID || $GUID == false)
-            {
-                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ' - USER_FORM_GUID ERROR (' . $USER_FORM_GUID . '|' . $GUID . '): ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/logout/');
-                die();
             }
 
             $CONTENT_DATETIME = date('Y-m-d H:i:s');
@@ -595,9 +593,10 @@
 
     $constructr -> get('/constructr/content/:PAGE_ID/:CONTENT_ID/:ACT_ORDER/up/', $ADMIN_CHECK, function ($PAGE_ID,$CONTENT_ID,$ACT_ORDER) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $PAGE_ID = filter_var(trim((int) $PAGE_ID),FILTER_SANITIZE_NUMBER_INT);
-            $CONTENT_ID = filter_var(trim((int) $CONTENT_ID),FILTER_SANITIZE_NUMBER_INT);
-            $ACT_ORDER = filter_var(trim((int) $ACT_ORDER),FILTER_SANITIZE_NUMBER_INT);
+            $PAGE_ID = constructr_sanitization($PAGE_ID,true,true);
+            $CONTENT_ID = constructr_sanitization($CONTENT_ID,true,true);
+            $ACT_ORDER = constructr_sanitization($ACT_ORDER,true,true);
+
             $constructr -> view -> setData('BackendUserRight',23);
 
             if(isset($_SESSION['backend-user-id']) && $_SESSION['backend-user-id'] != '')
@@ -696,9 +695,10 @@
 
     $constructr -> get('/constructr/content/:PAGE_ID/:CONTENT_ID/:ACT_ORDER/down/', $ADMIN_CHECK, function ($PAGE_ID,$CONTENT_ID,$ACT_ORDER) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $PAGE_ID = filter_var(trim((int) $PAGE_ID),FILTER_SANITIZE_NUMBER_INT);
-            $CONTENT_ID = filter_var(trim((int) $CONTENT_ID),FILTER_SANITIZE_NUMBER_INT);
-            $ACT_ORDER = filter_var(trim((int) $ACT_ORDER),FILTER_SANITIZE_NUMBER_INT);
+            $PAGE_ID = constructr_sanitization($PAGE_ID,true,true);
+            $CONTENT_ID = constructr_sanitization($CONTENT_ID,true,true);
+            $ACT_ORDER = constructr_sanitization($ACT_ORDER,true,true);
+
             $constructr -> view -> setData('BackendUserRight',23);
 
             if(isset($_SESSION['backend-user-id']) && $_SESSION['backend-user-id'] != '')
@@ -797,8 +797,8 @@
 
     $constructr -> get('/constructr/content/:PAGE_ID/:CONTENT_ID/activate/', $ADMIN_CHECK, function ($PAGE_ID,$CONTENT_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $PAGE_ID = filter_var(trim((int) $PAGE_ID),FILTER_SANITIZE_NUMBER_INT);
-            $CONTENT_ID = filter_var(trim((int) $CONTENT_ID),FILTER_SANITIZE_NUMBER_INT);
+            $PAGE_ID = constructr_sanitization($PAGE_ID,true,true);
+            $CONTENT_ID = constructr_sanitization($CONTENT_ID,true,true);
 
             $constructr -> view -> setData('BackendUserRight',24);
 
@@ -886,8 +886,8 @@
 
     $constructr -> get('/constructr/content/:PAGE_ID/:CONTENT_ID/deactivate/', $ADMIN_CHECK, function ($PAGE_ID,$CONTENT_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $PAGE_ID = filter_var(trim((int) $PAGE_ID),FILTER_SANITIZE_NUMBER_INT);
-            $CONTENT_ID = filter_var(trim((int) $CONTENT_ID),FILTER_SANITIZE_NUMBER_INT);
+            $PAGE_ID = constructr_sanitization($PAGE_ID,true,true);
+            $CONTENT_ID = constructr_sanitization($CONTENT_ID,true,true);
 
             $constructr -> view -> setData('BackendUserRight',24);
 
@@ -975,9 +975,9 @@
 
     $constructr -> get('/constructr/content/:PAGE_ID/:CONTENT_ID/:ACT_ORDER/delete/', $ADMIN_CHECK, function ($PAGE_ID,$CONTENT_ID,$ACT_ORDER) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $PAGE_ID = filter_var(trim((int) $PAGE_ID),FILTER_SANITIZE_NUMBER_INT);
-            $CONTENT_ID = filter_var(trim((int) $CONTENT_ID),FILTER_SANITIZE_NUMBER_INT);
-            $ACT_ORDER = filter_var(trim((int) $ACT_ORDER),FILTER_SANITIZE_NUMBER_INT);
+            $PAGE_ID = constructr_sanitization($PAGE_ID,true,true);
+            $CONTENT_ID = constructr_sanitization($CONTENT_ID,true,true);
+            $ACT_ORDER = constructr_sanitization($ACT_ORDER,true,true);
 
             $constructr -> view -> setData('BackendUserRight',25);
 
@@ -1062,8 +1062,8 @@
 
     $constructr -> get('/constructr/content/:PAGE_ID/:CONTENT_ID/delete-complete/', $ADMIN_CHECK, function ($PAGE_ID,$CONTENT_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $PAGE_ID = filter_var(trim((int) $PAGE_ID),FILTER_SANITIZE_NUMBER_INT);
-            $CONTENT_ID = filter_var(trim((int) $CONTENT_ID),FILTER_SANITIZE_NUMBER_INT);
+            $PAGE_ID = constructr_sanitization($PAGE_ID,true,true);
+            $CONTENT_ID = constructr_sanitization($CONTENT_ID,true,true);
 
             $constructr -> view -> setData('BackendUserRight',25);
 
@@ -1154,9 +1154,9 @@
 
     $constructr -> get('/constructr/content/:PAGE_ID/:CONTENT_HISTORY_ID/:CONTENT_ID/delete-history-complete/', $ADMIN_CHECK, function ($PAGE_ID,$CONTENT_HISTORY_ID,$CONTENT_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $PAGE_ID = filter_var(trim((int) $PAGE_ID),FILTER_SANITIZE_NUMBER_INT);
-            $CONTENT_HISTORY_ID = filter_var(trim((int) $CONTENT_HISTORY_ID),FILTER_SANITIZE_NUMBER_INT);
-            $CONTENT_ID = filter_var(trim((int) $CONTENT_ID),FILTER_SANITIZE_NUMBER_INT);
+            $PAGE_ID = constructr_sanitization($PAGE_ID,true,true);
+            $CONTENT_HISTORY_ID = constructr_sanitization($CONTENT_HISTORY_ID,true,true);
+            $CONTENT_ID = constructr_sanitization($CONTENT_ID,true,true);
 
             $constructr -> view -> setData('BackendUserRight',25);
 
@@ -1239,9 +1239,9 @@
 
     $constructr -> get('/constructr/content/:PAGE_ID/:CONTENT_ID/:NEW_ORDER/re-create/', $ADMIN_CHECK, function ($PAGE_ID,$CONTENT_ID,$NEW_ORDER) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $PAGE_ID = filter_var(trim((int) $PAGE_ID),FILTER_SANITIZE_NUMBER_INT);
-            $CONTENT_ID = filter_var(trim((int) $CONTENT_ID),FILTER_SANITIZE_NUMBER_INT);
-            $NEW_ORDER = filter_var(trim((int) $NEW_ORDER),FILTER_SANITIZE_NUMBER_INT);
+            $PAGE_ID = constructr_sanitization($PAGE_ID,true,true);
+            $CONTENT_ID = constructr_sanitization($CONTENT_ID,true,true);
+            $NEW_ORDER = constructr_sanitization($NEW_ORDER,true,true);
 
             $constructr -> view -> setData('BackendUserRight',21);
 

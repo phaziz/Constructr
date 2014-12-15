@@ -166,7 +166,7 @@
 
     $constructr -> post('/constructr/media/new/:GUID/', $ADMIN_CHECK, function ($GUID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $GUID = filter_var(trim($GUID),FILTER_SANITIZE_NUMBER_INT);
+            $GUID = constructr_sanitization($GUID,true,true);
             $constructr -> view -> setData('BackendUserRight',41);
 
             if(isset($_SESSION['backend-user-id']) && $_SESSION['backend-user-id'] != '')
@@ -328,7 +328,7 @@
 
     $constructr -> get('/constructr/media/delete/:MEDIA_ID/', $ADMIN_CHECK, function ($MEDIA_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $MEDIA_ID = filter_var(trim($MEDIA_ID),FILTER_SANITIZE_NUMBER_INT);
+            $MEDIA_ID = constructr_sanitization($MEDIA_ID,true,true);
             $constructr -> view -> setData('BackendUserRight',42);
 
             if(isset($_SESSION['backend-user-id']) && $_SESSION['backend-user-id'] != '')
@@ -418,7 +418,7 @@
 
     $constructr -> get('/constructr/media/details/:MEDIA_ID/', $ADMIN_CHECK, function ($MEDIA_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $MEDIA_ID = filter_var(trim($MEDIA_ID),FILTER_SANITIZE_NUMBER_INT);
+            $MEDIA_ID = constructr_sanitization($MEDIA_ID,true,true);
             $constructr -> view -> setData('BackendUserRight',43);
 
             if(isset($_SESSION['backend-user-id']) && $_SESSION['backend-user-id'] != '')
@@ -516,7 +516,7 @@
 
     $constructr -> post('/constructr/media/details/:MEDIA_ID/', $ADMIN_CHECK, function ($MEDIA_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $MEDIA_ID = filter_var(trim($MEDIA_ID),FILTER_SANITIZE_NUMBER_INT);
+            $MEDIA_ID = constructr_sanitization($MEDIA_ID,true,true);
             $constructr -> view -> setData('BackendUserRight',43);
 
             if(isset($_SESSION['backend-user-id']) && $_SESSION['backend-user-id'] != '')

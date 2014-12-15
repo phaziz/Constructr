@@ -21,8 +21,8 @@
 
     $constructr -> get('/constructr/user/edit-user-rights/:user_id/:user_name/', $ADMIN_CHECK, function ($USER_ID,$USER_NAME) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $USER_NAME = filter_var(trim($USER_NAME),FILTER_SANITIZE_STRING);
-            $USER_ID = filter_var(trim((int) $USER_ID),FILTER_SANITIZE_NUMBER_INT);
+            $USER_NAME = constructr_sanitization($USER_NAME,true,true);
+            $USER_ID = constructr_sanitization($USER_ID,true,true);
 
             $constructr -> view -> setData('BackendUserRight',80);
 
@@ -104,10 +104,10 @@
 
     $constructr -> get('/constructr/user/set-user-right/:new_value/:right_id/:user_id/:user_name/', $ADMIN_CHECK, function ($NEW_VALUE,$RIGHT_ID,$USER_ID,$USER_NAME) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
-            $NEW_VALUE = filter_var(trim((int) $NEW_VALUE),FILTER_SANITIZE_NUMBER_INT);
-            $RIGHT_ID = filter_var(trim((int) $RIGHT_ID),FILTER_SANITIZE_NUMBER_INT);
-            $USER_ID = filter_var(trim((int) $USER_ID),FILTER_SANITIZE_NUMBER_INT);
-            $USER_NAME = filter_var(trim($USER_NAME),FILTER_SANITIZE_STRING);
+            $NEW_VALUE = constructr_sanitization($NEW_VALUE,true,true);
+            $RIGHT_ID = constructr_sanitization($RIGHT_ID,true,true);
+            $USER_ID = constructr_sanitization($USER_ID,true,true);
+            $USER_NAME = constructr_sanitization($USER_NAME,true,true);
 
             $constructr -> view -> setData('BackendUserRight',81);
 

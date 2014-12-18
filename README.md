@@ -21,7 +21,6 @@ That's it for now (Version 1.04.0 / 2014-12-18):
 	- FTP-Transfer of static sites to frontend-domain
 	- Backend searchengine for pages, content-elements, content-history-elements media-files and backend-users, ...
 	- Constructr-Postmaster for contact-form-handling in frontend
-	- User-Tracking and Analytics
 	- File based Website-Caching
 
 ### CHANGELOG

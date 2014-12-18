@@ -154,7 +154,16 @@
                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <div class="jumbotron">
-                                    <h1><?php echo $SUBTITLE; ?>: <a data-toggle="tooltip" data-placement="top" title="Seite anzeigen" class="tt" onclick="window.open(this.href);return false;" href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] .'/'. $PAGE_NAME['pages_url']; ?>"><strong><?php echo $PAGE_NAME['pages_name']; ?></strong></a> | <a data-toggle="tooltip" data-placement="top" title="Cache dieser Seite l&ouml;schen" class="tt" href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] .'/constructr/clear-cache-page/'. $GUID . '/' . $PAGE_NAME['pages_id'] . '/'; ?>"><strong>Cache l&ouml;schen</strong></a></h1>
+                                    <h1><?php echo $SUBTITLE; ?>: <a data-toggle="tooltip" data-placement="top" title="Seite anzeigen" class="tt" onclick="window.open(this.href);return false;" href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] .'/'. $PAGE_NAME['pages_url']; ?>"><strong><?php echo $PAGE_NAME['pages_name']; ?></strong></a>
+                                    <?php 
+
+	                                     if($_CONSTRUCTR_CONF['_CONSTRUCTR_WEBSITE_CACHE'] == true)
+	                                     {
+	                                     	?> | <a data-toggle="tooltip" data-placement="top" title="Cache dieser Seite l&ouml;schen" class="tt" href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] .'/constructr/clear-cache-page/'. $GUID . '/' . $PAGE_NAME['pages_id'] . '/'; ?>"><strong>Cache l&ouml;schen</strong></a> <?php
+	                                     }
+
+                                    ?>	
+                                    </h1>
                                     <h2><?php echo $CONTENT_COUNTER; ?> Angelegte Inhalte von <strong><?php echo $PAGE_NAME['pages_name']; ?></strong> <a data-toggle="tooltip" data-placement="top" title="Neuen Inhalt erstellen" class="tt" href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/content/' . $PAGE_ID . '/' . ($CONTENT_COUNTER + 1) . '/new/' ?>"><button type="button" class="btn btn-info btn-sm" title="Neuen Inhalt erstellen"><span class="glyphicon glyphicon-plus"></span></button></a></h2>
                                     <br><br>
                                     <div class="table-responsive">

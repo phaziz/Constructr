@@ -242,17 +242,44 @@
                                         <li class="list-group-item">
                                             <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL']; ?>/constructr/optimization/<?php echo $GUID ?>/" title="Datenbank optimieren">Datenbank optimieren</a>
                                         </li>
-                                        <li class="list-group-item">
-                                            <span class="badge"><?php echo $CONTENT_HISTORY_COUNTR; ?></span>
-                                            <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL']; ?>/constructr/content-history/<?php echo $GUID ?>/" title="Content Historie entfernen">Content Historie entfernen</a>
-                                        </li>
-                                        <li class="list-group-item">
-                                            <span class="badge"><?php echo $C_FILE_COUNTR; ?></span>
-                                            <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL']; ?>/constructr/clear-cache/<?php echo $GUID ?>/" title="Website Cache entfernen">Website Cache entfernen</a>
-                                        </li>
-                                        <li class="list-group-item">
-                                            <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL']; ?>/Logfiles/<?php echo date('Ymd'); ?>.txt" title="Logfile anzeigen" onclick="window.open(this.href);return false;">Aktuelles Logfile anzeigen</a>
-                                        </li>
+                                        <?php
+
+                                        	if($_CONSTRUCTR_CONF['_ENABLE_CONTENT_HISTORY'] == true)
+                                        	{
+                                        		?>
+			                                        <li class="list-group-item">
+			                                            <span class="badge"><?php echo $CONTENT_HISTORY_COUNTR; ?></span>
+			                                            <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL']; ?>/constructr/content-history/<?php echo $GUID ?>/" title="Content Historie entfernen">Content Historie entfernen</a>
+			                                        </li>
+                                        		<?php
+                                        	}
+
+                                        ?>
+                                        <?php
+
+                                        	if($_CONSTRUCTR_CONF['_CONSTRUCTR_WEBSITE_CACHE'] == true)
+                                        	{
+                                        		?>
+			                                        <li class="list-group-item">
+			                                            <span class="badge"><?php echo $C_FILE_COUNTR; ?></span>
+			                                            <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL']; ?>/constructr/clear-cache/<?php echo $GUID ?>/" title="Website Cache entfernen">Website Cache entfernen</a>
+			                                        </li>
+                                        		<?php
+                                        	}
+
+                                        ?>
+                                        <?php
+
+                                        	if($_CONSTRUCTR_CONF['_CONSTRUCTR_LOG_ENABLED'] == true)
+                                        	{
+                                        		?>
+			                                        <li class="list-group-item">
+			                                            <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL']; ?>/Logfiles/<?php echo date('Ymd'); ?>.txt" title="Logfile anzeigen" onclick="window.open(this.href);return false;">Aktuelles Logfile anzeigen</a>
+			                                        </li>
+                                        		<?php
+                                        	}
+
+                                        ?>
                                         <li class="list-group-item">
                                             <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL']; ?>/sitemap.xml" title="Sitemap anzeigen" onclick="window.open(this.href);return false;">Generierte sitemap.xml anzeigen</a>
                                         </li>

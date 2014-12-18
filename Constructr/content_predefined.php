@@ -92,10 +92,10 @@
 		                                    		<option value="">Bitte w&auml;hlen</option>
 		                                    		<option value="">- - -</option>
 		                                    		<?php 
-		
+
 														foreach($ALL_PREDEFINED_ELEMENTS AS $KEY => $ALL_PREDEFINED_ELEMENT)
 														{
-															echo '<option value="' . $ALL_PREDEFINED_ELEMENT[1] . '">' . $KEY . '</option>';													
+															echo '<option value="' . $ALL_PREDEFINED_ELEMENT[0] . '">' . $KEY . '</option>';													
 														}
 
 		                                    		?>

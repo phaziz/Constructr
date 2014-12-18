@@ -1323,3 +1323,114 @@
             }
         }
     );
+	
+	
+	
+	
+	
+	
+	
+	
+    $constructr -> get('/constructr/content/new/predefined/:PAGE_ID/:NEW_CONTENT_ORDER/', $ADMIN_CHECK, function ($PAGE_ID,$NEW_CONTENT_ORDER) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
+        {
+            $PAGE_ID = constructr_sanitization($PAGE_ID,true,true);
+            $NEW_CONTENT_ORDER = constructr_sanitization($NEW_CONTENT_ORDER,true,true);
+
+            $constructr -> view -> setData('BackendUserRight',21);
+
+            if(isset($_SESSION['backend-user-id']) && $_SESSION['backend-user-id'] != '')
+            {
+                try
+                {
+                    $RIGHT_CHECKER = $DBCON -> prepare('SELECT * FROM constructr_backenduser_rights WHERE cbr_right = :RIGHT_ID AND cbr_user_id = :USER_ID AND cbr_value = :CBR_VALUE LIMIT 1;');
+                    $RIGHT_CHECKER -> execute(
+                        array
+                        (
+                            ':USER_ID' => $_SESSION['backend-user-id'],
+                            ':RIGHT_ID' => $constructr -> view -> getData('BackendUserRight'),
+                            ':CBR_VALUE' => 1
+                        )
+                    );
+
+                    $RIGHTS_COUNTR = $RIGHT_CHECKER -> rowCount();
+
+                    if($RIGHTS_COUNTR != 1)
+                    {
+                        $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Error ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                        $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/?no-rights=true');
+                        die();
+                    }
+                    else
+                    {
+                        $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                    }
+                }
+                catch(PDOException $e) 
+                {
+                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
+                    die();
+                }
+            }
+            else
+            {
+                $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': Error User-Rights-Check: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/logout/');
+                die();
+            }
+
+            if($_CONSTRUCTR_CONF['_LOGGING'] == true)
+            {
+                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
+            }
+
+            try
+            {
+                $PAGE_NAME = $DBCON -> prepare('SELECT pages_name,pages_url FROM constructr_pages WHERE pages_id = :PAGE_ID LIMIT 1;');
+                $PAGE_NAME -> execute(array(':PAGE_ID' => $PAGE_ID));
+                $PAGE_NAME = $PAGE_NAME -> fetch();
+            }
+            catch(PDOException $e)
+            {
+                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
+                die();
+            }
+
+            $GUID = create_guid();
+
+			$ALL_PREDEFINED_ELEMENTS = array
+			(
+				'phaziz-gallery' => array('http://constructr.phaziz.com/Plugins/predefined-content-elements/phaziz-gallery/index.php')
+			);
+
+            $constructr -> render('content_predefined.php',
+                array
+                (
+                    'USERNAME' => $_SESSION['backend-user-username'],
+                    'PAGE_NAME' => $PAGE_NAME,
+                    'GUID' => $GUID,
+                    'PAGE_ID' => $PAGE_ID,
+                    'ALL_PREDEFINED_ELEMENTS' => $ALL_PREDEFINED_ELEMENTS,
+                    '_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,
+                    'NEW_CONTENT_ORDER' => $NEW_CONTENT_ORDER,
+                    'FORM_ACTION' => $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/content/' . $PAGE_ID . '/new/' . $GUID .'/',
+                    'FORM_METHOD' => 'post',
+                    'FORM_ENCTYPE' => 'application/x-www-form-urlencoded',
+                    'SUBTITLE' => 'Neuer Inhalt'
+                )
+            );
+        }
+    );
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

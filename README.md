@@ -3,7 +3,7 @@ Constructr CMS
 
 ConstructrCMS (<a href="http://constructr-cms.org">http://constructr-cms.org</a>) based on Slim-PHP5-Framework, Twitter Bootstrap, MySQL/PDO, jQuery/Javascript and Passion!
 
-That's it for now (Version 1.04.0 / 2014-12-18):
+That's it for now (Version 1.04.1 / 2014-12-19):
 
 	- Simple example frontend-template
 	- C.R.U.D. websites
@@ -13,6 +13,7 @@ That's it for now (Version 1.04.0 / 2014-12-18):
 	- C.R.U.D. Uploads
 	- Media information (title, copyright, description, keywords)
 	- Media trashcan and recovery
+	- 2 Factor Authentication-Login (2FA)
 	- User management
 	- User rights management
 	- User password resetting via CONSTRUCTR_CONF-option for all backend-user-accounts
@@ -24,6 +25,9 @@ That's it for now (Version 1.04.0 / 2014-12-18):
 	- File based Website-Caching
 
 ### CHANGELOG
+
+	- 2014-12-19
+	- New Feature: 2 Factor Authentication-Login (2FA)
 
 	- 2014-12-18
 	- Updated: Views (constructr_sanitization)

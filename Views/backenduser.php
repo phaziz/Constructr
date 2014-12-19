@@ -433,6 +433,7 @@
             }
 
             $USERNAME = trim($constructr -> request() -> post('username'));
+			$FACTOR = '';
             $PASSWORD = crypt(trim($constructr -> request() -> post('password')),$_CONSTRUCTR_CONF['_SALT']);
             $PASSWORD_RT = crypt(trim($constructr -> request() -> post('password_retype')),$_CONSTRUCTR_CONF['_SALT']);
             $EMAIL = filter_var(constructr_sanitization(trim($constructr -> request() -> post('email')),FILTER_VALIDATE_EMAIL));
@@ -449,16 +450,17 @@
             {
                 try
                 {
-                    $QUERY = $DBCON -> prepare('INSERT INTO constructr_backenduser SET beu_username = :USERNAME,beu_password = :PASSWORD,beu_email = :EMAIL,beu_art = :ART,beu_last_login  = :LAST_LOGIN,beu_active = :ACTIVE;');
+                    $QUERY = $DBCON -> prepare('INSERT INTO constructr_backenduser SET beu_username = :USERNAME,beu_password = :PASSWORD,beu_factor = :FACTOR,beu_email = :EMAIL,beu_art = :ART,beu_last_login  = :LAST_LOGIN,beu_active = :ACTIVE;');
                     $QUERY -> execute( 
                         array
                         (
-                            'USERNAME' => $USERNAME,
-                            'PASSWORD' => $PASSWORD,
-                            'EMAIL' => $EMAIL,
-                            'ART' => $ART,
-                            'LAST_LOGIN' => '0000-00-00 00:00:00',
-                            'ACTIVE' => $ACTIVE
+                            ':USERNAME' => $USERNAME,
+                            ':PASSWORD' => $PASSWORD,
+                            ':FACTOR' => $FACTOR,
+                            ':EMAIL' => $EMAIL,
+                            ':ART' => $ART,
+                            ':LAST_LOGIN' => '0000-00-00 00:00:00',
+                            ':ACTIVE' => $ACTIVE
                         )
                     );
 

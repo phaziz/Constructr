@@ -144,6 +144,7 @@ CREATE TABLE IF NOT EXISTS `constructr_backenduser` (
   `beu_id` int(25) NOT NULL AUTO_INCREMENT,
   `beu_username` varchar(255) COLLATE latin1_german2_ci NOT NULL,
   `beu_password` varchar(255) COLLATE latin1_german2_ci NOT NULL,
+  `beu_factor` varchar(255) COLLATE latin1_german2_ci NOT NULL,
   `beu_email` varchar(255) COLLATE latin1_german2_ci NOT NULL,
   `beu_art` int(1) NOT NULL,
   `beu_last_login` datetime NOT NULL,

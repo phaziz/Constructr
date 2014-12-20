@@ -1326,12 +1326,6 @@
                     die();
                 }
 
-                if($CONTENT_COUNTR != 0)
-                {
-                    $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/?res=content-not-empty');
-                    die();
-                }
-
                 try
                 {
                     $SUB_PAGES = $DBCON -> prepare('SELECT pages_id FROM constructr_pages WHERE pages_mother = :PAGE_ID LIMIT 1;');
@@ -1349,6 +1343,22 @@
                 {
                     $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/?res=subpages-not-empty');
                     die();
+                }
+
+                if($CONTENT_COUNTR != 0)
+                {
+	                try
+	                {
+	                    $CONTENT = $DBCON -> prepare('DELETE FROM constructr_content WHERE content_page_id = :PAGE_ID;');
+	                    $CONTENT -> execute(array(':PAGE_ID' => $PAGE_ID));
+	                    $CONTENT_COUNTR = $CONTENT -> rowCount();
+	                }
+	                catch(PDOException $e)
+	                {
+	                    $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
+	                    $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/?res=del-single-false');
+	                    die();
+	                }
                 }
 
                 try

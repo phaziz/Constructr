@@ -186,6 +186,7 @@
                                         $HOMEPAGE = $DBCON -> prepare('SELECT * FROM constructr_pages WHERE pages_order = :PAGES_INIT_ORDER AND pages_active = 1 LIMIT 1;');
                                         $HOMEPAGE -> execute(array(':PAGES_INIT_ORDER' => $PAGES_INIT_ORDER));
                                         $HOMEPAGE = $HOMEPAGE -> fetch();
+                                        $PAGE_DATA = $HOMEPAGE;
                                     }
                                     catch (PDOException $e)
                                     {

@@ -79,7 +79,7 @@
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <div class="jumbotron">
                                     <h1><?php echo $SUBTITLE; ?>: <a data-toggle="tooltip" data-placement="top" title="Seite anzeigen" class="tt" onclick="window.open(this.href);return false;" href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] .'/'. $PAGE_NAME['pages_url']; ?>"><strong><?php echo $PAGE_NAME['pages_name']; ?></strong></a></h1>
-                                    <h2>Neuen Inhalt auf Seite <strong><?php echo $PAGE_NAME['pages_name']; ?></strong> erstellen | <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] ?>/constructr/content/new/predefined/<?php echo $PAGE_ID; ?>/<?php echo $NEW_CONTENT_ORDER; ?>/">Neuen vordefinierten Inhalt auf Seite <strong><?php echo $PAGE_NAME['pages_name']; ?></strong> erstellen</a></h2>
+                                    <h2>Neuen Inhalt auf Seite <strong><?php echo $PAGE_NAME['pages_name']; ?></strong> erstellen</h2>
                                     <br><br>
                                     <form role="form" name="new_page_form" id="new_page_form" action="<?php echo $FORM_ACTION; ?>" method="<?php echo $FORM_METHOD; ?>" enctype="<?php echo $FORM_ENCTYPE; ?>" class="form-horizontal">
                                         <input type="hidden" name="user_form_guid" value="<?php echo $GUID; ?>">

@@ -22,8 +22,24 @@
     require_once './Config/constructr.conf.php';
     require_once './Config/constructr_user_rights.conf.php';
 
-    $_CONSTRUCTR_CONF['_VERSION_DATE'] = '20141219';
-    $_CONSTRUCTR_CONF['_VERSION'] = '1.04.1';
+    $_CONSTRUCTR_CONF['_VERSION_DATE'] = '20150209';
+    $_CONSTRUCTR_CONF['_VERSION'] = '1.04.2';
+	$_CONSTRUCTR_PLUGINS = array
+	(
+		'_CONSTRUCTR_PLUGINS_CSS' => array
+		(
+			'<!--CONSTRUCTR CMS PLUGIN START--><link href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/Plugins/constructr-backstretch-gallery/css/constructr-backstretch-plugin.css" rel="stylesheet"><!--CONSTRUCTR CMS PLUGIN ENDE-->'
+		),
+		'_CONSTRUCTR_PLUGINS_CONTENT' => array
+		(
+			'<!--CONSTRUCTR CMS PLUGIN START--><div id="constructr-backstretch-plugin"></div><!--CONSTRUCTR CMS PLUGIN ENDE-->',
+		),
+		'_CONSTRUCTR_PLUGINS_JS' => array
+		(
+			'<!--CONSTRUCTR CMS PLUGIN START--><script src="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/Plugins/constructr-backstretch-gallery/js/backstretch.min.js"></script><!--CONSTRUCTR CMS PLUGIN ENDE-->',
+			'<!--CONSTRUCTR CMS PLUGIN START--><script> $("#constructr-backstretch-plugin").backstretch(["http://constructr.phaziz.com/Uploads/tumblr_ncjsefbCKP1tq93fro1_1280.jpg","http://constructr.phaziz.com/Uploads/tumblr_n3tw3oIgx21tq93fro1_1280.jpg","http://constructr.phaziz.com/Uploads/tumblr_n3tw2xMEbO1tq93fro1_1280.jpg"],{duration: 3000, fade: 750});</script><!--CONSTRUCTR CMS PLUGIN ENDE-->'
+		)
+	);
 
     require_once './Slim/Slim.php';
     require_once './Slim/Log/DateTimeFileWriter.php';
@@ -134,7 +150,7 @@
         {
             case 'GET':
 
-                $constructr -> get('(:ROUTE+)', function ($ROUTE) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
+                $constructr -> get('(:ROUTE+)', function ($ROUTE) use ($constructr,$DBCON,$_CONSTRUCTR_CONF,$_CONSTRUCTR_PLUGINS)
                     {
                         if($_CONSTRUCTR_CONF['_CONSTRUCTR_WEBSITE_CACHE'] == true)
                         {
@@ -186,7 +202,7 @@
                                         $HOMEPAGE = $DBCON -> prepare('SELECT * FROM constructr_pages WHERE pages_order = :PAGES_INIT_ORDER AND pages_active = 1 LIMIT 1;');
                                         $HOMEPAGE -> execute(array(':PAGES_INIT_ORDER' => $PAGES_INIT_ORDER));
                                         $HOMEPAGE = $HOMEPAGE -> fetch();
-                                        $PAGE_DATA = $HOMEPAGE;
+										$PAGE_DATA = $HOMEPAGE;
                                     }
                                     catch (PDOException $e)
                                     {
@@ -240,7 +256,8 @@
                         }
 
                         $POSTMASTER_GUID = create_guid();
-                        $constructr -> render($TEMPLATE,array('PAGES' => $PAGES,'PAGE_DATA' => $PAGE_DATA,'CONTENT' => $CONTENT,'_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,'POSTMASTER_GUID' => $POSTMASTER_GUID));
+						
+                        $constructr -> render($TEMPLATE,array('_CONSTRUCTR_PLUGINS' => $_CONSTRUCTR_PLUGINS, 'PAGES' => $PAGES,'PAGE_DATA' => $PAGE_DATA,'CONTENT' => $CONTENT,'_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,'POSTMASTER_GUID' => $POSTMASTER_GUID));
 
                         if($_CONSTRUCTR_CONF['_CONSTRUCTR_WEBSITE_CACHE'] == true)
                         {

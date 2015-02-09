@@ -3,7 +3,7 @@ Constructr CMS
 
 ConstructrCMS (<a href="http://constructr-cms.org">http://constructr-cms.org</a>) based on Slim-PHP5-Framework, Twitter Bootstrap, MySQL/PDO, jQuery/Javascript and Passion!
 
-That's it for now (Version 1.04.1 / 2014-12-19):
+That's it for now (Version 1.04.2 / 2015-02-09):
 
 	- Simple example frontend-template
 	- C.R.U.D. websites
@@ -23,8 +23,12 @@ That's it for now (Version 1.04.1 / 2014-12-19):
 	- Backend searchengine for pages, content-elements, content-history-elements media-files and backend-users, ...
 	- Constructr-Postmaster for contact-form-handling in frontend
 	- File based Website-Caching
+	- Easy Plugin-System (beta feature)
 
 ### CHANGELOG
+
+	- 2015-02-09
+	- New Feature: Constructr Plugins in $_GET-Routes (beta feature)
 
 	- 2014-12-19
 	- New Feature: 2 Factor Authentication-Login (2FA)

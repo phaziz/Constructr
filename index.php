@@ -46,16 +46,6 @@
 
     \Slim\Slim::registerAutoloader();
 
-    try
-    {
-        $DBCON = new PDO('mysql:host=' . $_CONSTRUCTR_CONF['_CONSTRUCTR_DATABASE_HOST'] . ';dbname=' . $_CONSTRUCTR_CONF['_CONSTRUCTR_DATABASE_NAME'],$_CONSTRUCTR_CONF['_CONSTRUCTR_DATABASE_USER'],$_CONSTRUCTR_CONF['_CONSTRUCTR_DATABASE_PASSWORD'],array(PDO::ATTR_PERSISTENT => true));
-        $DBCON -> setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
-    }
-    catch (PDOException $e)
-    {
-        die('<p>Fehler bei der Datenbankverbindung!</p>');
-    }
-
     $constructr = new \Slim\Slim(
         array
         (
@@ -95,14 +85,23 @@
         )
     );
 
+    try
+    {
+        $DBCON = new PDO('mysql:host=' . $_CONSTRUCTR_CONF['_CONSTRUCTR_DATABASE_HOST'] . ';dbname=' . $_CONSTRUCTR_CONF['_CONSTRUCTR_DATABASE_NAME'],$_CONSTRUCTR_CONF['_CONSTRUCTR_DATABASE_USER'],$_CONSTRUCTR_CONF['_CONSTRUCTR_DATABASE_PASSWORD'],array(PDO::ATTR_PERSISTENT => true));
+        $DBCON -> setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+    }
+    catch (PDOException $e)
+    {
+        die('<p>Fehler bei der Datenbankverbindung!</p>');
+    }
+
     require_once './Views/helper.php';
 
-    $REQUEST = $constructr -> request -> getPath();
+	$REQUEST = $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+	$REQUEST = str_replace(str_replace('http://','',$_CONSTRUCTR_CONF['_BASE_URL']),'',$REQUEST);
 
-    $FINDR = strpos($REQUEST, 'constructr');
-
-    if($FINDR === false)
-    {
+	if(strpos($REQUEST,'constructr') === false)
+	{
         try
         {
             $URLS = $DBCON -> prepare('SELECT pages_url FROM constructr_pages WHERE pages_active = 1;');
@@ -380,9 +379,9 @@
 
                 break;
         }
-    }
-    else
-    {
+	}
+	else
+	{
         require_once './Views/backenduser.php';
         require_once './Views/backenduser-rights.php';
         require_once './Views/login.php';

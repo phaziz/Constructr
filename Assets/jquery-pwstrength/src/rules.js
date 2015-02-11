@@ -24,15 +24,15 @@ try {
     var validation = {};
 
     rulesEngine.forbiddenSequences = [
-        "0123456789", "abcdefghijklmnopqrstuvxywz", "qwertyuiop", "asdfghjkl",
+        "0123456789", "abcdefghijklmnopqrstuvwxyz", "qwertyuiop", "asdfghjkl",
         "zxcvbnm", "!@#$%^&*()_+"
     ];
 
     validation.wordNotEmail = function (options, word, score) {
         if (word.match(/^([\w\!\#$\%\&\'\*\+\-\/\=\?\^\`{\|\}\~]+\.)*[\w\!\#$\%\&\'\*\+\-\/\=\?\^\`{\|\}\~]+@((((([a-z0-9]{1}[a-z0-9\-]{0,62}[a-z0-9]{1})|[a-z])\.)+[a-z]{2,6})|(\d{1,3}\.){3}\d{1,3}(\:\d{1,5})?)$/i)) {
-            options.instances.errors.push(options.ui.spanError(options, "email_as_password"));
             return score;
         }
+        return 0;
     };
 
     validation.wordLength = function (options, word, score) {
@@ -40,7 +40,6 @@ try {
             lenScore = Math.pow(wordlen, options.rules.raisePower);
         if (wordlen < options.common.minChar) {
             lenScore = (lenScore + score);
-            options.instances.errors.push(options.ui.spanError(options, "password_too_short"));
         }
         return lenScore;
     };
@@ -48,10 +47,9 @@ try {
     validation.wordSimilarToUsername = function (options, word, score) {
         var username = $(options.common.usernameField).val();
         if (username && word.toLowerCase().match(username.toLowerCase())) {
-            options.instances.errors.push(options.ui.spanError(options, "same_as_username"));
             return score;
         }
-        return false;
+        return 0;
     };
 
     validation.wordTwoCharacterClasses = function (options, word, score) {
@@ -60,16 +58,12 @@ try {
                 (word.match(/(.[!,@,#,$,%,\^,&,*,?,_,~])/) && word.match(/[a-zA-Z0-9_]/))) {
             return score;
         }
-        options.instances.errors.push(options.ui.spanError(options, "two_character_classes"));
-        return false;
+        return 0;
     };
 
     validation.wordRepetitions = function (options, word, score) {
-        if (word.match(/(.)\1\1/)) {
-            options.instances.errors.push(options.ui.spanError(options, "repeated_character"));
-            return score;
-        }
-        return false;
+        if (word.match(/(.)\1\1/)) { return score; }
+        return 0;
     };
 
     validation.wordSequences = function (options, word, score) {
@@ -86,12 +80,9 @@ try {
                     }
                 });
             });
-            if (found) {
-                options.instances.errors.push(options.ui.spanError(options, "sequence_found"));
-                return score;
-            }
+            if (found) { return score; }
         }
-        return false;
+        return 0;
     };
 
     validation.wordLowercase = function (options, word, score) {
@@ -111,7 +102,7 @@ try {
     };
 
     validation.wordOneSpecialChar = function (options, word, score) {
-        return word.match(/.[!,@,#,$,%,\^,&,*,?,_,~]/) && score;
+        return word.match(/[!,@,#,$,%,\^,&,*,?,_,~]/) && score;
     };
 
     validation.wordTwoSpecialChar = function (options, word, score) {
@@ -139,7 +130,8 @@ try {
             if (active) {
                 var score = options.rules.scores[rule],
                     funct = rulesEngine.validation[rule],
-                    result;
+                    result,
+                    errorMessage;
 
                 if (!$.isFunction(funct)) {
                     funct = options.rules.extra[rule];
@@ -149,6 +141,12 @@ try {
                     result = funct(options, word, score);
                     if (result) {
                         totalScore += result;
+                    }
+                    if (result < 0 || (!$.isNumeric(result) && !result)) {
+                        errorMessage = options.ui.spanError(options, rule);
+                        if (errorMessage.length > 0) {
+                            options.instances.errors.push(errorMessage);
+                        }
                     }
                 }
             }

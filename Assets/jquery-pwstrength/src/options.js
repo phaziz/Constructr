@@ -1,5 +1,5 @@
-/*jslint browser: true */
-/*global */
+/*jslint browser: true, unparam: true */
+/*global jQuery */
 
 /*
 * jQuery Password Strength plugin for Twitter Bootstrap
@@ -14,9 +14,15 @@ var defaultOptions = {};
 defaultOptions.common = {};
 defaultOptions.common.minChar = 6;
 defaultOptions.common.usernameField = "#username";
+defaultOptions.common.userInputs = [
+    // Selectors for input fields with user input
+];
 defaultOptions.common.onLoad = undefined;
 defaultOptions.common.onKeyUp = undefined;
 defaultOptions.common.zxcvbn = false;
+defaultOptions.common.zxcvbnTerms = [
+    // List of disrecommended words
+];
 defaultOptions.common.debug = false;
 
 defaultOptions.rules = {};
@@ -65,19 +71,31 @@ defaultOptions.ui.showStatus = false;
 defaultOptions.ui.spanError = function (options, key) {
     "use strict";
     var text = options.ui.errorMessages[key];
+    if (!text) { return ''; }
     return '<span style="color: #d52929">' + text + '</span>';
 };
+defaultOptions.ui.popoverError = function (errors) {
+    "use strict";
+    var message = "<div>Errors:<ul class='error-list' style='margin-bottom: 0;'>";
+
+    jQuery.each(errors, function (idx, err) {
+        message += "<li>" + err + "</li>";
+    });
+    message += "</ul></div>";
+    return message;
+};
 defaultOptions.ui.errorMessages = {
-    password_too_short: "The Password is too short",
-    email_as_password: "Do not use your email as your password",
-    same_as_username: "Your password cannot contain your username",
-    two_character_classes: "Use different character classes",
-    repeated_character: "Too many repetitions",
-    sequence_found: "Your password contains sequences"
+    wordLength: "Your password is too short",
+    wordNotEmail: "Do not use your email as your password",
+    wordSimilarToUsername: "Your password cannot contain your username",
+    wordTwoCharacterClasses: "Use different character classes",
+    wordRepetitions: "Too many repetitions",
+    wordSequences: "Your password contains sequences"
 };
 defaultOptions.ui.verdicts = ["Weak", "Normal", "Medium", "Strong", "Very Strong"];
 defaultOptions.ui.showVerdicts = true;
 defaultOptions.ui.showVerdictsInsideProgressBar = false;
+defaultOptions.ui.useVerdictCssClass = false;
 defaultOptions.ui.showErrors = false;
 defaultOptions.ui.container = undefined;
 defaultOptions.ui.viewports = {

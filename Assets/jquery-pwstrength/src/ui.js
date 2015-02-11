@@ -142,9 +142,13 @@ var ui = {};
         $bar.css("width", percentage + '%');
     };
 
-    ui.updateVerdict = function (options, $el, text) {
+    ui.updateVerdict = function (options, $el, cssClass, text) {
         var $verdict = ui.getUIElements(options, $el).$verdict;
-        $verdict.text(text);
+        $verdict.removeClass(barClasses.join(' '));
+        if (cssClass > -1) {
+            $verdict.addClass(barClasses[cssClass]);
+        }
+        $verdict.html(text);
     };
 
     ui.updateErrors = function (options, $el) {
@@ -161,18 +165,18 @@ var ui = {};
             html = "",
             hide = true;
 
-        if (options.ui.showVerdicts && verdictText.length > 0) {
+        if (options.ui.showVerdicts &&
+                !options.ui.showVerdictsInsideProgressBar &&
+                verdictText.length > 0) {
             html = "<h5><span class='password-verdict'>" + verdictText +
                 "</span></h5>";
             hide = false;
         }
         if (options.ui.showErrors) {
-            html += "<div><ul class='error-list'>";
-            $.each(options.instances.errors, function (idx, err) {
-                html += "<li>" + err + "</li>";
+            if (options.instances.errors.length > 0) {
                 hide = false;
-            });
-            html += "</ul></div>";
+            }
+            html += options.ui.popoverError(options.instances.errors);
         }
 
         if (hide) {
@@ -207,39 +211,56 @@ var ui = {};
 
     ui.percentage = function (score, maximun) {
         var result = Math.floor(100 * score / maximun);
-        result = result < 0 ? 0 : result;
+        result = result < 0 ? 1 : result; // Don't show the progress bar empty
         result = result > 100 ? 100 : result;
         return result;
     };
 
-    ui.updateUI = function (options, $el, score) {
-        var cssClass, barPercentage, verdictText;
+    ui.getVerdictAndCssClass = function (options, score) {
+        var cssClass, verdictText, level;
 
         if (score <= 0) {
             cssClass = 0;
-            verdictText = "";
+            level = -1;
+            verdictText = options.ui.verdicts[0];
         } else if (score < options.ui.scores[0]) {
             cssClass = 0;
+            level = 0;
             verdictText = options.ui.verdicts[0];
         } else if (score < options.ui.scores[1]) {
             cssClass = 0;
+            level = 1;
             verdictText = options.ui.verdicts[1];
         } else if (score < options.ui.scores[2]) {
             cssClass = 1;
+            level = 2;
             verdictText = options.ui.verdicts[2];
         } else if (score < options.ui.scores[3]) {
             cssClass = 1;
+            level = 3;
             verdictText = options.ui.verdicts[3];
         } else {
             cssClass = 2;
+            level = 4;
             verdictText = options.ui.verdicts[4];
         }
+
+        return [verdictText, cssClass, level];
+    };
+
+    ui.updateUI = function (options, $el, score) {
+        var cssClass, barPercentage, verdictText, verdictCssClass;
+
+        cssClass = ui.getVerdictAndCssClass(options, score);
+        verdictText = score === 0 ? '' : cssClass[0];
+        cssClass = cssClass[1];
+        verdictCssClass = options.ui.useVerdictCssClass ? cssClass : -1;
 
         if (options.ui.showProgressBar) {
             barPercentage = ui.percentage(score, options.ui.scores[3]);
             ui.updateProgressBar(options, $el, cssClass, barPercentage);
             if (options.ui.showVerdictsInsideProgressBar) {
-                ui.updateVerdict(options, $el, verdictText);
+                ui.updateVerdict(options, $el, verdictCssClass, verdictText);
             }
         }
 
@@ -251,7 +272,7 @@ var ui = {};
             ui.updatePopover(options, $el, verdictText);
         } else {
             if (options.ui.showVerdicts && !options.ui.showVerdictsInsideProgressBar) {
-                ui.updateVerdict(options, $el, verdictText);
+                ui.updateVerdict(options, $el, verdictCssClass, verdictText);
             }
             if (options.ui.showErrors) {
                 ui.updateErrors(options, $el);

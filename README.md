@@ -29,6 +29,9 @@ That's it for now (Version 1.04.3 / 2015-02-11):
 
 	- 2015-02-11
 	- New Feature: Page specific CSS/JS-Content
+	- Bugfixes
+	- CleanUp
+	- Assets Updates
 
 	- 2015-02-09
 	- New Feature: Constructr Plugins in $_GET-Routes (beta feature)

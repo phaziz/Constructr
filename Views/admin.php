@@ -59,17 +59,6 @@
                 }
                 $DIR_C_FILES = array_unique($DIR_C_FILES);
                 $C_FILE_COUNTR = count($DIR_C_FILES);
-                $PLUGINS = scandir('./Plugins');
-                $PLUGIN_FILES = array();
-                foreach($PLUGINS as $PLUGIN_FILE)
-                {
-                    if($PLUGIN_FILE != '.'  && $PLUGIN_FILE != '..')
-                    {
-                        $PLUGIN_FILES[] = $PLUGIN_FILE;
-                    }
-                }
-                $PLUGIN_FILES = array_unique($PLUGIN_FILES);
-                $PLUGINS_COUNTR = count($PLUGIN_FILES);
             }
             catch(PDOException $e)
             {
@@ -93,7 +82,6 @@
                     'CONTENT_HISTORY_COUNTR' => (int) $CONTENT_HISTORY_COUNTR,
                     'UPLOADS_COUNTR' => (int) $UPLOADS_COUNTR,
                     'TEMPLATES_COUNTR' => (int) $TEMPLATES_COUNTR,
-                    'PLUGINS_COUNTR' => $PLUGINS_COUNTR,
                     'C_FILE_COUNTR' => (int) $C_FILE_COUNTR,
                     'SUBTITLE' => 'Dashboard',
                     '_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,

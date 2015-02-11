@@ -49,7 +49,7 @@ var jsdom = require('jsdom').jsdom,
             raisePower: 1.4
         },
         ui: {
-            spanError: function (options, error) { return error; }
+            spanError: function (options, rule) { return rule; }
         },
         instances: {
             errors: []
@@ -173,15 +173,18 @@ describe('Looking for sequences', function () {
 
     it('at the beginning of the password', function () {
         var password = 'abcx';
-        expect(rulesEngine.validation.wordSequences(options, password, 123))
-            .toEqual(123);
-        expect(options.instances.errors).toEqual(["sequence_found"]);
+        expect(rulesEngine.validation.wordSequences(options, password, 123)).toEqual(123);
     });
 
     it('at the end of the password', function () {
         var password = 'xabc';
         expect(rulesEngine.validation.wordSequences(options, password, 123))
             .toEqual(123);
-        expect(options.instances.errors).toEqual(["sequence_found"]);
+    });
+
+    it('and not finding them', function () {
+        var password = 'mdiw93jc65oak$&!';
+        expect(rulesEngine.validation.wordSequences(options, password, 123))
+            .toEqual(0);
     });
 });

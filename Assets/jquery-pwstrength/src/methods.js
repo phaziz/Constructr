@@ -19,26 +19,42 @@ var methods = {};
         var $el = $(event.target),
             options = $el.data("pwstrength-bootstrap"),
             word = $el.val(),
-            username,
+            userInputs,
+            verdictText,
+            verdictLevel,
             score;
 
+        if (options === undefined) { return; }
+
         options.instances.errors = [];
-        if (options.common.zxcvbn) {
-            username = $(options.common.usernameField).val();
-            if (username && username.length > 0) {
-                score = zxcvbn(word, [username]).entropy;
-            } else {
-                score = zxcvbn(word).entropy;
-            }
+        if (word.length === 0) {
+            score = 0;
         } else {
-            score = rulesEngine.executeRules(options, word);
+            if (options.common.zxcvbn) {
+                userInputs = [];
+                $.each(options.common.userInputs.concat([options.common.usernameField]), function (idx, selector) {
+                    var value = $(selector).val();
+                    if (value) { userInputs.push(value); }
+                });
+                userInputs = userInputs.concat(options.common.zxcvbnTerms);
+                score = zxcvbn(word, userInputs).entropy;
+            } else {
+                score = rulesEngine.executeRules(options, word);
+            }
         }
         ui.updateUI(options, $el, score);
+        verdictText = ui.getVerdictAndCssClass(options, score);
+        verdictLevel = verdictText[2];
+        verdictText = verdictText[0];
 
-        if (options.common.debug) { console.log(score); }
+        if (options.common.debug) { console.log(score + ' - ' + verdictText); }
 
         if ($.isFunction(options.common.onKeyUp)) {
-            options.common.onKeyUp(event);
+            options.common.onKeyUp(event, {
+                score: score,
+                verdictText: verdictText,
+                verdictLevel: verdictLevel
+            });
         }
     };
 
@@ -53,9 +69,11 @@ var methods = {};
             localOptions.instances = {};
             $el.data("pwstrength-bootstrap", localOptions);
             $el.on("keyup", onKeyUp);
+            $el.on("change", onKeyUp);
+            $el.on("onpaste", onKeyUp);
 
             ui.initUI(localOptions, $el);
-            if ($el.val().trim()) { // Not empty, calculate the strength
+            if ($.trim($el.val())) { // Not empty, calculate the strength
                 $el.trigger("keyup");
             }
 

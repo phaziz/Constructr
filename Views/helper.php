@@ -69,6 +69,7 @@
         {
             if($_CONSTRUCTR_CONF['_LOGGING'] == true)
             {
+            	if(!isset($_SESSION['backend-user-username'])){ $_SESSION['backend-user-username'] = 'unknown'; }
                 $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' - AdminCheckError');
             }
 
@@ -89,6 +90,7 @@
 
                 if($COUNTR != 1)
                 {
+                	if(!isset($_SESSION['backend-user-username'])){ $_SESSION['backend-user-username'] = 'unknown'; }
                     $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' - AdminCheckError: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                     $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/login/');
                     die();
@@ -96,6 +98,7 @@
             }
             catch(PDOException $e)
             {
+            	if(!isset($_SESSION['backend-user-username'])){ $_SESSION['backend-user-username'] = 'unknown'; }
                 $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' - AdminCheckError: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                 $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/login/');
                 die();

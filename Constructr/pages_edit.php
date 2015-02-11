@@ -193,6 +193,20 @@
                                                             <small><span class="help-block" id="status-page_keywords">Diese Information wird f&uuml;r die Metadaten ben&ouml;tigt</span></small>
                                                         </div>
                                                     </div>
+			                                        <div class="form-group">
+			                                            <label for="page_css" class="col-sm-2 control-label">Seitenspezifisches CSS:</label>
+			                                            <div class="col-sm-10">
+			                                                <textarea rows="5" cols="50" class="form-control input-sm" name="page_css" id="page_css" placeholder="Seitenspezifisches CSS f&uuml;r diese Seite"><?php echo $PAGE['pages_css']; ?></textarea>
+			                                                <small><span class="help-block" id="status-page_description">Spezielle CSS-Angaben nur f&uuml;r diese Seite</span></small>
+			                                            </div>
+			                                        </div>
+			                                        <div class="form-group">
+			                                            <label for="page_js" class="col-sm-2 control-label">Seitenspezifisches Javascript:</label>
+			                                            <div class="col-sm-10">
+			                                                <textarea rows="5" cols="50" class="form-control input-sm" name="page_js" id="page_js" placeholder="Seitenspezifisches Javascript f&uuml;r diese Seite"><?php echo $PAGE['pages_js']; ?></textarea>
+			                                                <small><span class="help-block" id="status-page_description">Spezielle Javascript-Angaben nur f&uuml;r diese Seite</span></small>
+			                                            </div>
+			                                        </div>
                                                     <div class="form-group">
                                                         <label for="submitter" class="col-sm-2 control-label">&#160;</label>
                                                         <div class="col-sm-10">

@@ -22,8 +22,8 @@
     require_once './Config/constructr.conf.php';
     require_once './Config/constructr_user_rights.conf.php';
 
-    $_CONSTRUCTR_CONF['_VERSION_DATE'] = '20150209';
-    $_CONSTRUCTR_CONF['_VERSION'] = '1.04.2';
+    $_CONSTRUCTR_CONF['_VERSION_DATE'] = '20150211';
+    $_CONSTRUCTR_CONF['_VERSION'] = '1.04.3';
 	$_CONSTRUCTR_PLUGINS = array
 	(
 		'_CONSTRUCTR_PLUGINS_CSS' => array
@@ -98,6 +98,7 @@
     require_once './Views/helper.php';
 
     $REQUEST = $constructr -> request -> getPath();
+
     $FINDR = strpos($REQUEST, 'constructr');
 
     if($FINDR === false)
@@ -128,7 +129,7 @@
         }
         else
         {
-            die('Keine Seiten gefunden!');
+            die('Keine angelegten Seiten gefunden!');
         }
 
         if(!in_array($REQUEST,$URLS_ARRAY) && $REQUEST != '/' && $REQUEST != '')
@@ -156,18 +157,22 @@
                         {
                             $C_FILE = $_CONSTRUCTR_CONF['_CONSTRUCTR_WEBSITE_CACHE_DIR'] . base64_encode($_SERVER['REQUEST_URI']) . '.php';
                             $C_TIME = 18000;
+
                             if (file_exists($C_FILE) && time() - $C_TIME < filemtime($C_FILE))
                             {
                                 include($C_FILE);
                                 exit();
                             }
+
                             ob_start();
                         }
 
-                        $FULL_ROUTE;
-                        $PAGES;
-                        $CONTENT;
-                        $PAGE_DATA;
+                        $FULL_ROUTE = NULL;
+                        $PAGES = NULL;
+                        $CONTENT = NULL;
+                        $PAGE_DATA = NULL;
+						$TEMPLATE = NULL;
+						$PAGE_ID = NULL;
 
                         foreach($ROUTE as $ROUTE)
                         {
@@ -276,10 +281,12 @@
 
                 $constructr -> post('(:ROUTE+)', function ($ROUTE) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
                     {
-                        $FULL_ROUTE;
-                        $PAGES;
-                        $CONTENT;
-                        $PAGE_DATA;
+                        $FULL_ROUTE = NULL;
+                        $PAGES = NULL;
+                        $CONTENT = NULL;
+                        $PAGE_DATA = NULL;
+						$TEMPLATE = NULL;
+						$PAGE_ID = NULL;
 
                         foreach($ROUTE as $ROUTE)
                         {

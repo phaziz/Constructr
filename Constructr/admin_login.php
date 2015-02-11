@@ -68,7 +68,7 @@
                                                 <input type="hidden" name="_admin_guid" value="<?php if($GUID){echo $GUID;}?>"  id="_admin_guid">
                                                 <div class="form-group">
                                                     <label for="_admin_username">Benutzername:</label>
-                                                    <input type="text" name="_admin_username" value="<?php echo $_SESSION['TMP_LOGIN_NAME']; ?>" class="form-control" id="_admin_username" placeholder="Benutzername">
+                                                    <input type="text" name="_admin_username" value="<?php if(isset($_SESSION['TMP_LOGIN_NAME'])){ echo $_SESSION['TMP_LOGIN_NAME']; }; ?>" class="form-control" id="_admin_username" placeholder="Benutzername">
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="_admin_password">Passwort:</label>
@@ -89,7 +89,7 @@
                                             <input type="hidden" name="_admin_guid" value="<?php if($GUID){echo $GUID;}?>"  id="_admin_guid">
                                             <div class="form-group">
                                                 <label for="_admin_username">Benutzername:</label>
-                                                <input type="text" value="<?php echo $_SESSION['TMP_LOGIN_NAME']; ?>" name="_admin_username" class="form-control" id="_admin_username" placeholder="Benutzername">
+                                                <input type="text" value="<?php if(isset($_SESSION['TMP_LOGIN_NAME'])){ echo $_SESSION['TMP_LOGIN_NAME']; }; ?>" name="_admin_username" class="form-control" id="_admin_username" placeholder="Benutzername">
                                             </div>
                                             <div class="form-group">
                                                 <label for="_admin_password">Passwort:</label>

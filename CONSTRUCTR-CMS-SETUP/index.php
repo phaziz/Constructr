@@ -2,7 +2,7 @@
 
 	require_once('../Config/constructr_user_rights.conf.php');
 
-	// 2014-09-09
+	// 2015-02-11
 	session_start();
 	error_reporting(-1);
 	function create_guid() {static $guid = '';$uid = uniqid("", true);$data = $_SERVER['REQUEST_TIME'];$data .= $_SERVER['HTTP_USER_AGENT'];$data .= $_SERVER['PHP_SELF'];$data .= $_SERVER['SCRIPT_NAME'];$data .= $_SERVER['REMOTE_ADDR'];$data .= $_SERVER['REMOTE_PORT'];$hash = strtoupper(hash('ripemd128', $uid . $guid . md5($data)));$guid = substr($hash,0,2) . substr($hash,2,2) . substr($hash,4,2) . substr($hash,8,2);return $guid;}
@@ -122,6 +122,7 @@
 '_FTP_REMOTE_MODE' => FTP_BINARY, " . $NL . "
 '_FTP_REMOTE_USERNAME' => '', " . $NL . "
 '_FTP_REMOTE_PASSWORD' => '', " . $NL . "
+'_ENABLE_CONTENT_HISTORY' => false " . $NL . "
 '_CONSTRUCTR_WEBSITE_CACHE' => false, " . $NL . "
 '_CONSTRUCTR_WEBSITE_CACHE_DIR' => './Website-Cache/' " . $NL . "
 );";
@@ -150,7 +151,7 @@ CREATE TABLE IF NOT EXISTS `constructr_backenduser` (
   `beu_last_login` datetime NOT NULL,
   `beu_active` int(1) NOT NULL,
   UNIQUE KEY `beu_id` (`beu_id`)
-) ENGINE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `constructr_backenduser_rights` (
   `cbr_id` int(25) NOT NULL AUTO_INCREMENT,
@@ -160,7 +161,7 @@ CREATE TABLE IF NOT EXISTS `constructr_backenduser_rights` (
   `cbr_info` text NOT NULL,
   PRIMARY KEY (`cbr_id`),
   UNIQUE KEY `cbr_id` (`cbr_id`)
-) ENGINE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `constructr_config` (
   `constructr_config_id` int(20) NOT NULL AUTO_INCREMENT,
@@ -168,7 +169,7 @@ CREATE TABLE IF NOT EXISTS `constructr_config` (
   `constructr_config_value` varchar(200) NOT NULL,
   PRIMARY KEY (`constructr_config_id`),
   UNIQUE KEY `constructr_config_id` (`constructr_config_id`)
-) ENGINE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `constructr_content` (
   `content_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -180,7 +181,7 @@ CREATE TABLE IF NOT EXISTS `constructr_content` (
   `content_active` int(11) NOT NULL DEFAULT '1',
   `content_deleted` int(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`content_id`)
-) ENGINE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `constructr_content_history` (
   `content_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -189,7 +190,7 @@ CREATE TABLE IF NOT EXISTS `constructr_content_history` (
   `content_content` text NOT NULL,
   `content_content_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`content_id`)
-) ENGINE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `constructr_media` (
   `media_id` int(255) NOT NULL AUTO_INCREMENT,
@@ -201,9 +202,9 @@ CREATE TABLE IF NOT EXISTS `constructr_media` (
   `media_keywords` text NOT NULL,
   `media_copyright` varchar(255) NOT NULL,
   PRIMARY KEY (`media_id`)
-) ENGINE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-CREATE TABLE IF NOT EXISTS `constructr_pages` (
+CREATE TABLE `constructr_pages` (
   `pages_id` int(255) NOT NULL AUTO_INCREMENT,
   `pages_mother` int(255) NOT NULL DEFAULT '0',
   `pages_level` int(255) NOT NULL DEFAULT '1',
@@ -211,6 +212,8 @@ CREATE TABLE IF NOT EXISTS `constructr_pages` (
   `pages_datetime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `pages_name` varchar(255) NOT NULL DEFAULT 'PAGE_NAME',
   `pages_url` varchar(255) NOT NULL DEFAULT 'PAGE_URL',
+  `pages_css` text NOT NULL,
+  `pages_js` text NOT NULL,
   `pages_template` varchar(255) NOT NULL DEFAULT 'index.php',
   `pages_title` varchar(255) NOT NULL,
   `pages_description` text NOT NULL,
@@ -219,7 +222,7 @@ CREATE TABLE IF NOT EXISTS `constructr_pages` (
   `pages_nav_visible` int(1) NOT NULL DEFAULT '1',
   `pages_temp_marker` int(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`pages_id`)
-) ENGINE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 INSERT INTO constructr_backenduser SET beu_id = '1', beu_username = :USERNAME, beu_password = :PASSWORD, beu_email = :EMAIL, beu_art = :ART, beu_last_login = :LAST_LOGIN, beu_active = :ACTIVE;
 
@@ -261,10 +264,9 @@ INSERT INTO `constructr_backenduser_rights` (`cbr_id`, `cbr_right`, `cbr_value`,
 (35,90,1,1 ,'Constructr Plugins anzeigen'),
 (36,100,1,1 ,'Statische Internetseiten generieren'),
 (37,1000,1,1 ,'Systemverwaltung anzeigen');
-			                    ";			                    
+			                    ";
 
 			                    $STMT = $DBCON -> prepare($QUERY);
-
 					            $USERNAME = trim($_POST['admin_username']);
 					            $PASSWORD = crypt(trim($_POST['admin_password']),$_POST['salt1']);
 					            $EMAIL = filter_var(trim($_POST['admin_email'],FILTER_VALIDATE_EMAIL));
@@ -290,7 +292,6 @@ INSERT INTO `constructr_backenduser_rights` (`cbr_id`, `cbr_right`, `cbr_value`,
 						    }
 							// EINRICHTUNG DER DATENBANK
 
-
 							echo '<p style="color:green;">Datenbank wurde eingerichtet - Sie k&ouml;nnen sich nun anmelden: <a href="' . 'http://' . $_SERVER['HTTP_HOST'] . '/constructr/login">Constructr CMS Login</a></p><br><br><br><br><br>';
 	                    }
 
@@ -313,11 +314,9 @@ INSERT INTO `constructr_backenduser_rights` (`cbr_id`, `cbr_right`, `cbr_value`,
 				<br><br><strong>Benutzer-Informationen</strong><br><br>
 				Administrator Benutzername:<br><input type="text" name="admin_username" id="admin_username" value="" size="50" required="required"><br><br>
 				Administrator Passwort:<br><input type="text" name="admin_password" id="admin_password" value="" size="50" required="required"><br><br>
-				Administrator eMail:<br><input type="text" name="admin_email" id="admin_email" value="" size="50" required="required"><br><br>
+				Administrator eMail:<br><input type="email" name="admin_email" id="admin_email" value="" size="50" required="required"><br><br>
 				<br><input type="submit" value="ConstructrCMS installieren">
 				</form>
-
 			</div>
-
 		</body>
 	</html>

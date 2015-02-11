@@ -200,41 +200,33 @@
                                         }
                                     ?>
                                     <h2>Seiten, Uploads &amp; Benutzer:</h2>
-                                    <?php
-                                        if($PAGES_COUNTR || $BACKEND_USER_COUNTR || $UPLOADS_COUNTR)
-                                        {
-                                            ?>
-                                                <br>
-                                                <ul class="list-group">
-                                                      <li class="list-group-item">
-                                                            <span class="badge"><?php echo $PAGES_COUNTR; ?></span>
-                                                            <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL']; ?>/constructr/pages/" title="Seiten anzeigen">Seiten</a>:
-                                                      </li>
-                                                      <li class="list-group-item">
-                                                            <span class="badge"><?php echo $CONTENT_COUNTR; ?></span>
-                                                            Inhalte:
-                                                      </li>
-                                                      <li class="list-group-item">
-                                                            <span class="badge"><?php echo $UPLOADS_COUNTR; ?></span>
-                                                            <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL']; ?>/constructr/media/" title="Uploads anzeigen">Uploads</a>:
-                                                      </li>
-                                                      <li class="list-group-item">
-                                                            <span class="badge"><?php echo $BACKEND_USER_COUNTR; ?></span>
-                                                            <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL']; ?>/constructr/user/" title="Benutzer anzeigen">Benutzer</a>:
-                                                      </li>
-                                                      <li class="list-group-item">
-                                                            <span class="badge"><?php echo $TEMPLATES_COUNTR; ?></span>
-                                                            <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL']; ?>/constructr/templates/" title="Templates anzeigen">Templates</a>:
-                                                      </li>
-                                                      <li class="list-group-item">
-                                                            <span class="badge"><?php echo $PLUGINS_COUNTR; ?></span>
-                                                            <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL']; ?>/constructr/plugins/" title="Plugins anzeigen">Plugins</a>:
-                                                      </li>
-                                                </ul>
-                                            <?php
-                                        }
-
-                                    ?>
+                                    <br>
+                                    <ul class="list-group">
+                                          <li class="list-group-item">
+                                                <span class="badge"><?php echo $PAGES_COUNTR; ?></span>
+                                                <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL']; ?>/constructr/pages/" title="Seiten anzeigen">Seiten</a>:
+                                          </li>
+                                          <li class="list-group-item">
+                                                <span class="badge"><?php echo $CONTENT_COUNTR; ?></span>
+                                                Inhalte:
+                                          </li>
+                                          <li class="list-group-item">
+                                                <span class="badge"><?php echo $UPLOADS_COUNTR; ?></span>
+                                                <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL']; ?>/constructr/media/" title="Uploads anzeigen">Uploads</a>:
+                                          </li>
+                                          <li class="list-group-item">
+                                                <span class="badge"><?php echo $BACKEND_USER_COUNTR; ?></span>
+                                                <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL']; ?>/constructr/user/" title="Benutzer anzeigen">Benutzer</a>:
+                                          </li>
+                                          <li class="list-group-item">
+                                                <span class="badge"><?php echo $TEMPLATES_COUNTR; ?></span>
+                                                <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL']; ?>/constructr/templates/" title="Templates anzeigen">Templates</a>:
+                                          </li>
+                                          <li class="list-group-item">
+                                                <span class="badge"><?php echo $PLUGINS_COUNTR; ?></span>
+                                                <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL']; ?>/constructr/plugins/" title="Plugins anzeigen">Plugins</a>:
+                                          </li>
+                                    </ul>
                                     <br>
                                     <h2>Wartung:</h2>
                                     <br>
@@ -244,7 +236,7 @@
                                         </li>
                                         <?php
 
-                                        	if($_CONSTRUCTR_CONF['_ENABLE_CONTENT_HISTORY'] == true)
+                                        	if(isset($_CONSTRUCTR_CONF['_ENABLE_CONTENT_HISTORY']) && $_CONSTRUCTR_CONF['_ENABLE_CONTENT_HISTORY'] == true)
                                         	{
                                         		?>
 			                                        <li class="list-group-item">
@@ -257,7 +249,7 @@
                                         ?>
                                         <?php
 
-                                        	if($_CONSTRUCTR_CONF['_CONSTRUCTR_WEBSITE_CACHE'] == true)
+                                        	if(isset($_CONSTRUCTR_CONF['_CONSTRUCTR_WEBSITE_CACHE']) && $_CONSTRUCTR_CONF['_CONSTRUCTR_WEBSITE_CACHE'] == true)
                                         	{
                                         		?>
 			                                        <li class="list-group-item">
@@ -270,7 +262,7 @@
                                         ?>
                                         <?php
 
-                                        	if($_CONSTRUCTR_CONF['_CONSTRUCTR_LOG_ENABLED'] == true)
+                                        	if(isset($_CONSTRUCTR_CONF['_CONSTRUCTR_LOG_ENABLED']) && $_CONSTRUCTR_CONF['_CONSTRUCTR_LOG_ENABLED'] == true)
                                         	{
                                         		?>
 			                                        <li class="list-group-item">

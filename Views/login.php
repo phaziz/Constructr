@@ -26,6 +26,11 @@
                 $constructr -> getLog() -> debug($_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
             }
 
+			if(!isset($_SESSION['TMP_LOGIN_NAME']))
+			{
+				$_SESSION['TMP_LOGIN_NAME'] = '';
+			}
+
             if($_CONSTRUCTR_CONF['_RESET_LOGIN_PASSWORD'] == true)
             {
                 $constructr -> getLog() -> debug('Constructr resetting User-Passwords...');

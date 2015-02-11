@@ -206,6 +206,20 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
+                                            <label for="page_css" class="col-sm-2 control-label">Seitenspezifisches CSS:</label>
+                                            <div class="col-sm-10">
+                                                <textarea rows="5" cols="50" class="form-control input-sm" name="page_css" id="page_css" placeholder="Seitenspezifisches CSS f&uuml;r diese Seite"></textarea>
+                                                <small><span class="help-block" id="status-page_description">Spezielle CSS-Angaben nur f&uuml;r diese Seite</span></small>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="page_js" class="col-sm-2 control-label">Seitenspezifisches Javascript:</label>
+                                            <div class="col-sm-10">
+                                                <textarea rows="5" cols="50" class="form-control input-sm" name="page_js" id="page_js" placeholder="Seitenspezifisches Javascript f&uuml;r diese Seite"></textarea>
+                                                <small><span class="help-block" id="status-page_description">Spezielle Javascript-Angaben nur f&uuml;r diese Seite</span></small>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
                                             <label for="submitter" class="col-sm-2 control-label">&#160;</label>
                                             <div class="col-sm-10">
                                                 <button type="submit" name="submitter" id="submitter" class="btn btn-info btn-sm">Neue Seite anlegen &#8250;&#8250;</button>

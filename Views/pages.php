@@ -259,6 +259,8 @@
             $PAGE_TITLE = constructr_sanitization($constructr -> request() -> post('page_title'));
             $PAGE_DESCRIPTION = constructr_sanitization($constructr -> request() -> post('page_description'));
             $PAGE_KEYWORDS = constructr_sanitization($constructr -> request() -> post('page_keywords'));
+			$PAGE_CSS = $constructr -> request() -> post('page_css');
+			$PAGE_JS = $constructr -> request() -> post('page_js');
             $PAGE_VISIBILITY = constructr_sanitization($constructr -> request() -> post('page_nav_visible'));
             $SEARCHR = strripos($PAGE_URL, '/');
 
@@ -318,7 +320,7 @@
 
 	                try
 	                {
-	                    $QUERY = 'INSERT INTO constructr_pages SET pages_level = :PAGE_LEVEL,pages_mother = :PAGE_MOTHER,pages_order= :PAGE_ORDER,pages_datetime = :PAGE_DATETIME,pages_name = :PAGE_NAME,pages_nav_visible = :PAGE_VISIBILITY,pages_url = :PAGE_URL,pages_template = :PAGE_TEMPLATE,pages_title = :PAGE_TITLE,pages_description = :PAGE_DESCRIPTION,pages_keywords = :PAGE_KEYWORDS,pages_active = :PAGE_ACTIVE;';
+	                    $QUERY = 'INSERT INTO constructr_pages SET pages_css = :PAGE_CSS, pages_jd = :PAGE_JS, pages_level = :PAGE_LEVEL,pages_mother = :PAGE_MOTHER,pages_order= :PAGE_ORDER,pages_datetime = :PAGE_DATETIME,pages_name = :PAGE_NAME,pages_nav_visible = :PAGE_VISIBILITY,pages_url = :PAGE_URL,pages_template = :PAGE_TEMPLATE,pages_title = :PAGE_TITLE,pages_description = :PAGE_DESCRIPTION,pages_keywords = :PAGE_KEYWORDS,pages_active = :PAGE_ACTIVE;';
 	                    $STMT = $DBCON -> prepare($QUERY);
 						$STMT -> bindParam(':PAGE_LEVEL', $PAGE_LEVEL,PDO::PARAM_INT);
 						$STMT -> bindParam(':PAGE_MOTHER', $PAGE_MOTHER,PDO::PARAM_INT);
@@ -326,6 +328,8 @@
 	                    $STMT -> bindParam(':PAGE_NAME',$PAGE_NAME,PDO::PARAM_STR);
 	                    $STMT -> bindParam(':PAGE_URL',$PAGE_URL,PDO::PARAM_STR);
 	                    $STMT -> bindParam(':PAGE_TEMPLATE',$PAGE_TEMPLATE,PDO::PARAM_STR);
+	                    $STMT -> bindParam(':PAGE_CSS',$PAGE_CSS,PDO::PARAM_STR);
+	                    $STMT -> bindParam(':PAGE_JS',$PAGE_JS,PDO::PARAM_STR);
 	                    $STMT -> bindParam(':PAGE_TITLE',$PAGE_TITLE,PDO::PARAM_STR);
 	                    $STMT -> bindParam(':PAGE_DESCRIPTION',$PAGE_DESCRIPTION,PDO::PARAM_STR);
 	                    $STMT -> bindParam(':PAGE_KEYWORDS',$PAGE_KEYWORDS,PDO::PARAM_STR);
@@ -420,7 +424,7 @@
 						$PAGE_MOTHER = $RES['pages_mother'];
 						$PAGE_ORDER = $RES['pages_order'];
 
-	                    $QUERY = 'INSERT INTO constructr_pages SET pages_level = :PAGE_LEVEL,pages_mother = :PAGE_MOTHER,pages_order= :PAGE_ORDER,pages_datetime = :PAGE_DATETIME,pages_name = :PAGE_NAME,pages_nav_visible = :PAGE_VISIBILITY,pages_url = :PAGE_URL,pages_template = :PAGE_TEMPLATE,pages_title = :PAGE_TITLE,pages_description = :PAGE_DESCRIPTION,pages_keywords = :PAGE_KEYWORDS,pages_active = :PAGE_ACTIVE;';
+	                    $QUERY = 'INSERT INTO constructr_pages SET pages_css = :PAGE_CSS, pages_js = :PAGE_JS, pages_level = :PAGE_LEVEL,pages_mother = :PAGE_MOTHER,pages_order= :PAGE_ORDER,pages_datetime = :PAGE_DATETIME,pages_name = :PAGE_NAME,pages_nav_visible = :PAGE_VISIBILITY,pages_url = :PAGE_URL,pages_template = :PAGE_TEMPLATE,pages_title = :PAGE_TITLE,pages_description = :PAGE_DESCRIPTION,pages_keywords = :PAGE_KEYWORDS,pages_active = :PAGE_ACTIVE;';
 	                    $STMT = $DBCON -> prepare($QUERY);
 						$STMT -> bindParam(':PAGE_LEVEL', $PAGE_LEVEL,PDO::PARAM_INT);
 						$STMT -> bindParam(':PAGE_MOTHER', $PAGE_MOTHER,PDO::PARAM_INT);
@@ -428,6 +432,8 @@
 	                    $STMT -> bindParam(':PAGE_NAME',$PAGE_NAME,PDO::PARAM_STR);
 	                    $STMT -> bindParam(':PAGE_URL',$PAGE_URL,PDO::PARAM_STR);
 	                    $STMT -> bindParam(':PAGE_TEMPLATE',$PAGE_TEMPLATE,PDO::PARAM_STR);
+						$STMT -> bindParam(':PAGE_CSS',$PAGE_CSS,PDO::PARAM_STR);
+						$STMT -> bindParam(':PAGE_JS',$PAGE_JS,PDO::PARAM_STR);
 	                    $STMT -> bindParam(':PAGE_TITLE',$PAGE_TITLE,PDO::PARAM_STR);
 	                    $STMT -> bindParam(':PAGE_DESCRIPTION',$PAGE_DESCRIPTION,PDO::PARAM_STR);
 	                    $STMT -> bindParam(':PAGE_KEYWORDS',$PAGE_KEYWORDS,PDO::PARAM_STR);
@@ -521,7 +527,7 @@
 						$PAGE_MOTHER = $NEW_PAGE_ORDER_PAGE_ID;
 						$PAGE_ORDER = ($RES['pages_order'] + 1);
 
-	                    $QUERY = 'INSERT INTO constructr_pages SET pages_level = :PAGE_LEVEL,pages_mother = :PAGE_MOTHER,pages_order= :PAGE_ORDER,pages_datetime = :PAGE_DATETIME,pages_name = :PAGE_NAME,pages_nav_visible = :PAGE_VISIBILITY,pages_url = :PAGE_URL,pages_template = :PAGE_TEMPLATE,pages_title = :PAGE_TITLE,pages_description = :PAGE_DESCRIPTION,pages_keywords = :PAGE_KEYWORDS,pages_active = :PAGE_ACTIVE;';
+	                    $QUERY = 'INSERT INTO constructr_pages SET pages_css = :PAGE_CSS, pages_js = :PAGE_JS, pages_level = :PAGE_LEVEL,pages_mother = :PAGE_MOTHER,pages_order= :PAGE_ORDER,pages_datetime = :PAGE_DATETIME,pages_name = :PAGE_NAME,pages_nav_visible = :PAGE_VISIBILITY,pages_url = :PAGE_URL,pages_template = :PAGE_TEMPLATE,pages_title = :PAGE_TITLE,pages_description = :PAGE_DESCRIPTION,pages_keywords = :PAGE_KEYWORDS,pages_active = :PAGE_ACTIVE;';
 	                    $STMT = $DBCON -> prepare($QUERY);
 						$STMT -> bindParam(':PAGE_LEVEL',$PAGE_LEVEL,PDO::PARAM_INT);
 						$STMT -> bindParam(':PAGE_MOTHER',$PAGE_MOTHER,PDO::PARAM_INT);
@@ -529,6 +535,8 @@
 	                    $STMT -> bindParam(':PAGE_NAME',$PAGE_NAME,PDO::PARAM_STR);
 	                    $STMT -> bindParam(':PAGE_URL',$PAGE_URL,PDO::PARAM_STR);
 	                    $STMT -> bindParam(':PAGE_TEMPLATE',$PAGE_TEMPLATE,PDO::PARAM_STR);
+						$STMT -> bindParam(':PAGE_CSS',$PAGE_CSS,PDO::PARAM_STR);
+						$STMT -> bindParam(':PAGE_JS',$PAGE_JS,PDO::PARAM_STR);
 	                    $STMT -> bindParam(':PAGE_TITLE',$PAGE_TITLE,PDO::PARAM_STR);
 	                    $STMT -> bindParam(':PAGE_DESCRIPTION',$PAGE_DESCRIPTION,PDO::PARAM_STR);
 	                    $STMT -> bindParam(':PAGE_KEYWORDS',$PAGE_KEYWORDS,PDO::PARAM_STR);
@@ -622,7 +630,7 @@
 						$PAGE_MOTHER = $RES['pages_mother'];
 						$PAGE_ORDER = ($RES['pages_order'] + 1);
 
-	                    $QUERY = 'INSERT INTO constructr_pages SET pages_level = :PAGE_LEVEL,pages_mother = :PAGE_MOTHER,pages_order= :PAGE_ORDER,pages_datetime = :PAGE_DATETIME,pages_name = :PAGE_NAME,pages_nav_visible = :PAGE_VISIBILITY,pages_url = :PAGE_URL,pages_template = :PAGE_TEMPLATE,pages_title = :PAGE_TITLE,pages_description = :PAGE_DESCRIPTION,pages_keywords = :PAGE_KEYWORDS,pages_active = :PAGE_ACTIVE;';
+	                    $QUERY = 'INSERT INTO constructr_pages SET pages_css = :PAGE_CSS, pages_js = :PAGE_JS, pages_level = :PAGE_LEVEL,pages_mother = :PAGE_MOTHER,pages_order= :PAGE_ORDER,pages_datetime = :PAGE_DATETIME,pages_name = :PAGE_NAME,pages_nav_visible = :PAGE_VISIBILITY,pages_url = :PAGE_URL,pages_template = :PAGE_TEMPLATE,pages_title = :PAGE_TITLE,pages_description = :PAGE_DESCRIPTION,pages_keywords = :PAGE_KEYWORDS,pages_active = :PAGE_ACTIVE;';
 	                    $STMT = $DBCON -> prepare($QUERY);
 						$STMT -> bindParam(':PAGE_LEVEL',$PAGE_LEVEL,PDO::PARAM_INT);
 						$STMT -> bindParam(':PAGE_MOTHER',$PAGE_MOTHER,PDO::PARAM_INT);
@@ -630,6 +638,8 @@
 	                    $STMT -> bindParam(':PAGE_NAME',$PAGE_NAME,PDO::PARAM_STR);
 	                    $STMT -> bindParam(':PAGE_URL',$PAGE_URL,PDO::PARAM_STR);
 	                    $STMT -> bindParam(':PAGE_TEMPLATE',$PAGE_TEMPLATE,PDO::PARAM_STR);
+						$STMT -> bindParam(':PAGE_CSS',$PAGE_CSS,PDO::PARAM_STR);
+						$STMT -> bindParam(':PAGE_JS',$PAGE_JS,PDO::PARAM_STR);
 	                    $STMT -> bindParam(':PAGE_TITLE',$PAGE_TITLE,PDO::PARAM_STR);
 	                    $STMT -> bindParam(':PAGE_DESCRIPTION',$PAGE_DESCRIPTION,PDO::PARAM_STR);
 	                    $STMT -> bindParam(':PAGE_KEYWORDS',$PAGE_KEYWORDS,PDO::PARAM_STR);
@@ -712,7 +722,7 @@
 
 	                try
 	                {
-	                    $QUERY = 'INSERT INTO constructr_pages SET pages_level = :PAGE_LEVEL,pages_mother = :PAGE_MOTHER,pages_order= :PAGE_ORDER,pages_datetime = :PAGE_DATETIME,pages_name = :PAGE_NAME,pages_nav_visible = :PAGE_VISIBILITY,pages_url = :PAGE_URL,pages_template = :PAGE_TEMPLATE,pages_title = :PAGE_TITLE,pages_description = :PAGE_DESCRIPTION,pages_keywords = :PAGE_KEYWORDS,pages_active = :PAGE_ACTIVE;';
+	                    $QUERY = 'INSERT INTO constructr_pages SET pages_css = :PAGE_CSS, pages_js = :PAGE_JS, pages_level = :PAGE_LEVEL,pages_mother = :PAGE_MOTHER,pages_order= :PAGE_ORDER,pages_datetime = :PAGE_DATETIME,pages_name = :PAGE_NAME,pages_nav_visible = :PAGE_VISIBILITY,pages_url = :PAGE_URL,pages_template = :PAGE_TEMPLATE,pages_title = :PAGE_TITLE,pages_description = :PAGE_DESCRIPTION,pages_keywords = :PAGE_KEYWORDS,pages_active = :PAGE_ACTIVE;';
 	                    $STMT = $DBCON -> prepare($QUERY);
 						$STMT -> bindParam(':PAGE_LEVEL', $PAGE_LEVEL,PDO::PARAM_INT);
 						$STMT -> bindParam(':PAGE_MOTHER', $PAGE_MOTHER,PDO::PARAM_INT);
@@ -720,6 +730,8 @@
 	                    $STMT -> bindParam(':PAGE_NAME',$PAGE_NAME,PDO::PARAM_STR);
 	                    $STMT -> bindParam(':PAGE_URL',$PAGE_URL,PDO::PARAM_STR);
 	                    $STMT -> bindParam(':PAGE_TEMPLATE',$PAGE_TEMPLATE,PDO::PARAM_STR);
+						$STMT -> bindParam(':PAGE_CSS',$PAGE_CSS,PDO::PARAM_STR);
+						$STMT -> bindParam(':PAGE_JS',$PAGE_JS,PDO::PARAM_STR);
 	                    $STMT -> bindParam(':PAGE_TITLE',$PAGE_TITLE,PDO::PARAM_STR);
 	                    $STMT -> bindParam(':PAGE_DESCRIPTION',$PAGE_DESCRIPTION,PDO::PARAM_STR);
 	                    $STMT -> bindParam(':PAGE_KEYWORDS',$PAGE_KEYWORDS,PDO::PARAM_STR);
@@ -964,6 +976,8 @@
             $PAGE_TITLE = constructr_sanitization($constructr -> request() -> post('page_title'));
             $PAGE_DESCRIPTION = constructr_sanitization($constructr -> request() -> post('page_description'));
             $PAGE_KEYWORDS = constructr_sanitization($constructr -> request() -> post('page_keywords'));
+			$PAGE_CSS = $constructr -> request() -> post('page_css');
+			$PAGE_JS = $constructr -> request() -> post('page_js');
             $PAGE_VISIBILITY = constructr_sanitization($constructr -> request() -> post('page_nav_visible'));
             $PAGE_URL = str_replace('//','/',$PAGE_URL);
             $PAGE_URL = preg_replace("[^A-Za-z0-9_-\/]", "", $PAGE_URL);
@@ -987,12 +1001,14 @@
             {
                 try
                 {
-                    $QUERY = 'UPDATE constructr_pages SET pages_name = :PAGE_NAME, pages_url = :PAGE_URL, pages_nav_visible = :PAGE_VISIBILITY, pages_template = :PAGE_TEMPLATE, pages_title = :PAGE_TITLE, pages_description = :PAGE_DESCRIPTION, pages_keywords = :PAGE_KEYWORDS WHERE pages_id >= :PAGE_ID LIMIT 1;';
+                    $QUERY = 'UPDATE constructr_pages SET pages_css = :PAGE_CSS, pages_js = :PAGE_JS, pages_name = :PAGE_NAME, pages_url = :PAGE_URL, pages_nav_visible = :PAGE_VISIBILITY, pages_template = :PAGE_TEMPLATE, pages_title = :PAGE_TITLE, pages_description = :PAGE_DESCRIPTION, pages_keywords = :PAGE_KEYWORDS WHERE pages_id >= :PAGE_ID LIMIT 1;';
                     $STMT = $DBCON -> prepare($QUERY);
                     $STMT -> bindParam(':PAGE_ID',$PAGE_ID,PDO::PARAM_INT);
                     $STMT -> bindParam(':PAGE_NAME',$PAGE_NAME,PDO::PARAM_STR);
                     $STMT -> bindParam(':PAGE_URL',$PAGE_URL,PDO::PARAM_STR);
                     $STMT -> bindParam(':PAGE_TEMPLATE',$PAGE_TEMPLATE,PDO::PARAM_STR);
+					$STMT -> bindParam(':PAGE_CSS',$PAGE_CSS,PDO::PARAM_STR);
+					$STMT -> bindParam(':PAGE_JS',$PAGE_JS,PDO::PARAM_STR);
                     $STMT -> bindParam(':PAGE_TITLE',$PAGE_TITLE,PDO::PARAM_STR);
                     $STMT -> bindParam(':PAGE_KEYWORDS',$PAGE_KEYWORDS,PDO::PARAM_STR);
                     $STMT -> bindParam(':PAGE_DESCRIPTION',$PAGE_DESCRIPTION,PDO::PARAM_STR);

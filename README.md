@@ -3,29 +3,32 @@ Constructr CMS
 
 ConstructrCMS (<a href="http://constructr-cms.org">http://constructr-cms.org</a>) based on Slim-PHP5-Framework, Twitter Bootstrap, MySQL/PDO, jQuery/Javascript and Passion!
 
-That's it for now (Version 1.04.2 / 2015-02-09):
+That's it for now (Version 1.04.3 / 2015-02-11):
 
-	- Simple example frontend-template
-	- C.R.U.D. websites
+	- C.R.U.D. Pages
+	- Page specific CSS- and JS-Content
 	- Automatic sitemap.xml generation
-	- C.R.U.D. content elements
-	- Content trashcan and recovery
+	- C.R.U.D. Content-Elements
+	- Content Trashcan and Recovery
 	- C.R.U.D. Uploads
-	- Media information (title, copyright, description, keywords)
-	- Media trashcan and recovery
+	- Media information (Title, Copyright, Description, Keywords)
+	- Media Trashcan and Recovery
 	- 2 Factor Authentication-Login (2FA)
-	- User management
-	- User rights management
-	- User password resetting via CONSTRUCTR_CONF-option for all backend-user-accounts
-	- Generating dynamic websites
-	- Generating domain specific static websites
-	- FTP-Transfer of static sites to frontend-domain
-	- Backend searchengine for pages, content-elements, content-history-elements media-files and backend-users, ...
-	- Constructr-Postmaster for contact-form-handling in frontend
+	- User Management
+	- User Rights-Management
+	- User Password resetting via CONSTRUCTR_CONF-Option for all User-Accounts
+	- Generating dynamic Websites
+	- Generating Domain specific static Websites
+	- FTP-Transfer of static Sites to Frontend-Domain
+	- Backend Searchengine
+	- Constructr-Postmaster for Contact-Form-Handling in Frontend
 	- File based Website-Caching
 	- Easy Plugin-System (beta feature)
 
 ### CHANGELOG
+
+	- 2015-02-11
+	- New Feature: Page specific CSS/JS-Content
 
 	- 2015-02-09
 	- New Feature: Constructr Plugins in $_GET-Routes (beta feature)

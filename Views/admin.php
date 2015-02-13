@@ -1,5 +1,4 @@
 <?php
-
 /**
  * 	Constructr CMS - a Slim-PHP-Framework based Content Management System
  * 
@@ -773,7 +772,7 @@
             }
         }
     );
-    
+
     $constructr -> get('/constructr/clear-cache/:GUID/', $ADMIN_CHECK, function ($GUID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
             $GUID = constructr_sanitization($GUID,true,true);

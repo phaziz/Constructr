@@ -1,4 +1,5 @@
 <?php
+
 /**
  * 	Constructr CMS - a Slim-PHP-Framework based Content Management System
  * 

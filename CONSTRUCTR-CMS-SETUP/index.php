@@ -1,8 +1,46 @@
 <?php
 
+/**
+ * 	Constructr CMS - a Slim-PHP-Framework based Content Management System
+ * 
+ * 	Built with:
+ * 	Slim-PHP-Framework (http://www.slimframework.com/)
+ * 	Bootstrap Frontend Framework (http://getbootstrap.com/)
+ * 	PHP PDO (http://php.net/manual/de/book.pdo.php)
+ *  jQuery (http://jquery.com/)
+ *  ckEditor (http://ckeditor.com/)
+ *	Codemirror (http://codemirror.net/)
+ * 	...
+ * 
+ *	LICENCE 
+ * 
+ *  DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+ *  Version 1, February 2015
+ *	Copyright (C) 2015 Christian Becher | phaziz.com <christian@phaziz.com>
+ *  Everyone is permitted to copy and distribute verbatim or modified
+ *  copies of this license document, and changing it is allowed as long
+ *  as the name is changed.
+ *
+ *  DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+ *  TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+ *  0. YOU JUST DO WHAT THE FUCK YOU WANT TO!
+ *
+ *  Visit http://constructr-cms.org
+ * 	Visit http://blog.phaziz.com/category/constructr-cms/
+ *  Visit http://phaziz.com
+ * 
+ * 
+ * @author Christian Becher | phaziz.com <phaziz@gmail.com>
+ * @copyright 2015 Christian Becher | phaziz.com
+ * @license DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+ * @version 1.04.3
+ * @link http://constructr-cms.org/
+ * @package ConstructrCMS
+ * 
+ */
+
 	require_once('../Config/constructr_user_rights.conf.php');
 
-	// 2015-02-11
 	session_start();
 	error_reporting(-1);
 	function create_guid() {static $guid = '';$uid = uniqid("", true);$data = $_SERVER['REQUEST_TIME'];$data .= $_SERVER['HTTP_USER_AGENT'];$data .= $_SERVER['PHP_SELF'];$data .= $_SERVER['SCRIPT_NAME'];$data .= $_SERVER['REMOTE_ADDR'];$data .= $_SERVER['REMOTE_PORT'];$hash = strtoupper(hash('ripemd128', $uid . $guid . md5($data)));$guid = substr($hash,0,2) . substr($hash,2,2) . substr($hash,4,2) . substr($hash,8,2);return $guid;}

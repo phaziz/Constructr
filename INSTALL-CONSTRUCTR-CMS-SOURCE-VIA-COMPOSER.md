@@ -7,7 +7,8 @@
 
 
 	{
-		"require": {
+		"require":
+		{
 			"constructrcms/constructrcms": "dev-master"
 		}
 	}

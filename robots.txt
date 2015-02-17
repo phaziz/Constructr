@@ -2,13 +2,15 @@ User-agent: *
 Disallow: /Assets
 Disallow: /Config
 Disallow: /Constructr
-Disallow: /Install
+Disallow: /CONSTRUCTR-CMS-SETUP
 Disallow: /Logfiles
+Disallow: /Plugins
 Disallow: /Postmaster
 Disallow: /Slim
 Disallow: /Static
 Disallow: /Uploads
 Disallow: /Views
+Disallow: /Website-Cache
 Disallow: /Website-Template
 
 User-agent: Googlebot

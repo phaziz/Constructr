@@ -22,10 +22,6 @@ color: rgb(255,255,255) !important;
 .jumbotron{
 background: rgb(255,255,255);
 color: rgb(66,66,66);
-border-radius: 0px !important; 
--moz-border-radius: 0px !important;
--webkit-border-radius: 0px !important;
-border: 1px solid #dfdfdf;
 }
 .jumbotron h1{
 margin: 0 0 0 0;

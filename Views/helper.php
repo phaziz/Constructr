@@ -1,44 +1,48 @@
 <?php
 
-/**
- * 	Constructr CMS - a Slim-PHP-Framework based Content Management System
- * 
- * 	Built with:
- * 	Slim-PHP-Framework (http://www.slimframework.com/)
- * 	Bootstrap Frontend Framework (http://getbootstrap.com/)
- * 	PHP PDO (http://php.net/manual/de/book.pdo.php)
- *  jQuery (http://jquery.com/)
- *  ckEditor (http://ckeditor.com/)
- *	Codemirror (http://codemirror.net/)
- * 	...
- * 
- *	LICENCE 
- * 
- *  DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
- *  Version 1, February 2015
- *	Copyright (C) 2015 Christian Becher | phaziz.com <christian@phaziz.com>
- *  Everyone is permitted to copy and distribute verbatim or modified
- *  copies of this license document, and changing it is allowed as long
- *  as the name is changed.
- *
- *  DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
- *  TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
- *  0. YOU JUST DO WHAT THE FUCK YOU WANT TO!
- *
- *  Visit http://constructr-cms.org
- * 	Visit http://blog.phaziz.com/category/constructr-cms/
- *  Visit http://phaziz.com
- * 
- * 
- * @author Christian Becher | phaziz.com <phaziz@gmail.com>
- * @copyright 2015 Christian Becher | phaziz.com
- * @license DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
- * @version 1.04.3
- * @link http://constructr-cms.org/
- * @package ConstructrCMS
- * 
- */
+	/**
+	 * Constructr CMS - a Slim-PHP-Framework based full-stack Content-Management-System (CMS).
+	 * 
+	 * Built with:
+	 * Slim-PHP-Framework (http://www.slimframework.com/)
+	 * Bootstrap Frontend Framework (http://getbootstrap.com/)
+	 * PHP PDO (http://php.net/manual/de/book.pdo.php)
+	 * jQuery (http://jquery.com/)
+	 * ckEditor (http://ckeditor.com/)
+	 * Codemirror (http://codemirror.net/)
+	 * ...
+	 * 
+	 * LICENCE 
+	 * 
+	 * DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+	 * Version 1, February 2015
+	 * Copyright (C) 2015 Christian Becher | phaziz.com <christian@phaziz.com>
+	 * Everyone is permitted to copy and distribute verbatim or modified
+	 * copies of this license document, and changing it is allowed as long
+	 * as the name is changed.
+	 *
+	 * DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+	 * TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+	 * 0. YOU JUST DO WHAT THE FUCK YOU WANT TO!
+	 *
+	 * Visit http://constructr-cms.org
+	 * Visit http://blog.phaziz.com/category/constructr-cms/
+	 * Visit http://phaziz.com 
+	 *
+	 * @author Christian Becher | phaziz.com <phaziz@gmail.com>
+	 * @copyright 2015 Christian Becher | phaziz.com
+	 * @license DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+	 * @link http://constructr-cms.org/
+	 * @link http://blog.phaziz.com/category/constructr-cms/
+	 * @link http://phaziz.com/
+	 * @package ConstructrCMS
+	 * @version 1.04.4 / 17.02.2015  
+	 *
+	 */
 
+  	/**
+	 * Several Helper-Functions... 
+	 */	 
 	function create_guid(){return mt_rand();}
     function mysql_escape_mimic($INPUT){if(!empty($INPUT) && is_string($INPUT)){return str_replace(array('\\', "\0", "\n", "\r", "'", '"', "\x1a"),array('\\\\', '\\0', '\\n', '\\r', "\\'", '\\"', '\\Z'),$INPUT);}return $INPUT;}
     function constructr_sanitization($VAR,$TRIM=true,$STRICT=false){if($TRIM == true){$VAR = trim($VAR);}if($STRICT == true){$VAR = mysql_escape_mimic(strip_tags($VAR));}return $VAR;}
@@ -67,6 +71,9 @@
         return array_pop($args);
     }
 
+ 	/**
+	 * Main not found Route ... 
+	 */
     $constructr -> notFound(function () use ($constructr,$_CONSTRUCTR_CONF) 
         {
             $constructr -> getLog() -> error('404 - Not found: ' . $_SERVER['HTTP_REFERER'] . ' :: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
@@ -75,6 +82,9 @@
         }
     );
 
+ 	/**
+	 * Main Error-Route... 
+	 */
     $constructr -> error(function (\Exception $e) use ($constructr) 
         {
             $constructr -> getLog() -> error('Exception: ' . $e . ' / ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
@@ -83,6 +93,9 @@
         }
     );
 
+ 	/**
+	 * Central Admin-Check Funktion... 
+	 */
     $ADMIN_CHECK = function() use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
     {
         if(!isset($_SESSION['backend-user-username']) || !isset($_SESSION['backend-user-password']) || $_SESSION['backend-user-username'] == '' || $_SESSION['backend-user-password'] == '')

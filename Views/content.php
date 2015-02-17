@@ -1,44 +1,48 @@
 <?php
 
-/**
- * 	Constructr CMS - a Slim-PHP-Framework based Content Management System
- * 
- * 	Built with:
- * 	Slim-PHP-Framework (http://www.slimframework.com/)
- * 	Bootstrap Frontend Framework (http://getbootstrap.com/)
- * 	PHP PDO (http://php.net/manual/de/book.pdo.php)
- *  jQuery (http://jquery.com/)
- *  ckEditor (http://ckeditor.com/)
- *	Codemirror (http://codemirror.net/)
- * 	...
- * 
- *	LICENCE 
- * 
- *  DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
- *  Version 1, February 2015
- *	Copyright (C) 2015 Christian Becher | phaziz.com <christian@phaziz.com>
- *  Everyone is permitted to copy and distribute verbatim or modified
- *  copies of this license document, and changing it is allowed as long
- *  as the name is changed.
- *
- *  DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
- *  TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
- *  0. YOU JUST DO WHAT THE FUCK YOU WANT TO!
- *
- *  Visit http://constructr-cms.org
- * 	Visit http://blog.phaziz.com/category/constructr-cms/
- *  Visit http://phaziz.com
- * 
- * 
- * @author Christian Becher | phaziz.com <phaziz@gmail.com>
- * @copyright 2015 Christian Becher | phaziz.com
- * @license DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
- * @version 1.04.3
- * @link http://constructr-cms.org/
- * @package ConstructrCMS
- * 
- */
+	/**
+	 * Constructr CMS - a Slim-PHP-Framework based full-stack Content-Management-System (CMS).
+	 * 
+	 * Built with:
+	 * Slim-PHP-Framework (http://www.slimframework.com/)
+	 * Bootstrap Frontend Framework (http://getbootstrap.com/)
+	 * PHP PDO (http://php.net/manual/de/book.pdo.php)
+	 * jQuery (http://jquery.com/)
+	 * ckEditor (http://ckeditor.com/)
+	 * Codemirror (http://codemirror.net/)
+	 * ...
+	 * 
+	 * LICENCE 
+	 * 
+	 * DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+	 * Version 1, February 2015
+	 * Copyright (C) 2015 Christian Becher | phaziz.com <christian@phaziz.com>
+	 * Everyone is permitted to copy and distribute verbatim or modified
+	 * copies of this license document, and changing it is allowed as long
+	 * as the name is changed.
+	 *
+	 * DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+	 * TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+	 * 0. YOU JUST DO WHAT THE FUCK YOU WANT TO!
+	 *
+	 * Visit http://constructr-cms.org
+	 * Visit http://blog.phaziz.com/category/constructr-cms/
+	 * Visit http://phaziz.com 
+	 *
+	 * @author Christian Becher | phaziz.com <phaziz@gmail.com>
+	 * @copyright 2015 Christian Becher | phaziz.com
+	 * @license DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+	 * @link http://constructr-cms.org/
+	 * @link http://blog.phaziz.com/category/constructr-cms/
+	 * @link http://phaziz.com/
+	 * @package ConstructrCMS
+	 * @version 1.04.4 / 17.02.2015  
+	 *
+	 */
 
+ 	/**
+	 * Main Administrator View to list all Content-Elements of a specific Page. 
+	 */	 
     $constructr -> get('/constructr/content/:PAGE_ID/', $ADMIN_CHECK, function ($PAGE_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
             $PAGE_ID = constructr_sanitization($PAGE_ID,true,true);
@@ -76,7 +80,7 @@
                 }
                 catch(PDOException $e) 
                 {
-                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
+                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
                     die();
                 }
             }
@@ -89,7 +93,7 @@
 
             if($_CONSTRUCTR_CONF['_LOGGING'] == true)
             {
-                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
+                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
             }
 
             try 
@@ -140,11 +144,14 @@
         }
     );
 
+ 	/**
+	 * Main Administrator View to retrieve a Uploads-Image List within the Content-Editor. 
+	 */	 
     $constructr -> get('/constructr/get-image-list/', $ADMIN_CHECK, function () use ($constructr,$_CONSTRUCTR_CONF)
         {
             if($_CONSTRUCTR_CONF['_LOGGING'] == true)
             {
-                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
+                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
             }
 
             $IMAGE_LIST .= '[';
@@ -169,6 +176,9 @@
         }
     );
 
+ 	/**
+	 * Creating a new Content Element Form-View. 
+	 */
     $constructr -> get('/constructr/content/:PAGE_ID/:NEW_CONTENT_ORDER/new/', $ADMIN_CHECK, function ($PAGE_ID,$NEW_CONTENT_ORDER) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
             $PAGE_ID = constructr_sanitization($PAGE_ID,true,true);
@@ -205,7 +215,7 @@
                 }
                 catch(PDOException $e) 
                 {
-                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
+                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
                     die();
                 }
             }
@@ -218,7 +228,7 @@
 
             if($_CONSTRUCTR_CONF['_LOGGING'] == true)
             {
-                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
+                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
             }
 
             try
@@ -229,7 +239,7 @@
             }
             catch(PDOException $e)
             {
-                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
+                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
                 die();
             }
 
@@ -253,6 +263,9 @@
         }
     );
 
+ 	/**
+	 * Creating a new Content Element Post-Form-View. 
+	 */
     $constructr -> post('/constructr/content/:PAGE_ID/new/:GUID/', $ADMIN_CHECK, function ($PAGE_ID,$GUID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
 			$PAGE_ID = constructr_sanitization($PAGE_ID,true,true);
@@ -297,7 +310,7 @@
                 }
                 catch(PDOException $e) 
                 {
-                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
+                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
                     die();
                 }
             }
@@ -366,6 +379,9 @@
         }
     );
 
+ 	/**
+	 * Editing a Content Element. 
+	 */
     $constructr -> get('/constructr/content/:PAGE_ID/:CONTENT_ID/edit/', $ADMIN_CHECK, function ($PAGE_ID,$CONTENT_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
             $PAGE_ID = constructr_sanitization($PAGE_ID,true,true);
@@ -415,7 +431,7 @@
 
             if($_CONSTRUCTR_CONF['_LOGGING'] == true)
             {
-                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
+                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
             }
 
             try
@@ -485,6 +501,9 @@
         }
     );
 
+ 	/**
+	 * Post-View of editing a Content Element. 
+	 */
     $constructr -> post('/constructr/content/:PAGE_ID/:CONTENT_ID/edit/:GUID/', $ADMIN_CHECK, function ($PAGE_ID,$CONTENT_ID,$GUID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
             $PAGE_ID = constructr_sanitization($PAGE_ID,true,true);
@@ -530,7 +549,7 @@
                 }
                 catch(PDOException $e) 
                 {
-                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
+                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
                     die();
                 }
             }
@@ -610,6 +629,9 @@
         }
     );
 
+ 	/**
+	 * Reordering of Content Elements in List-View. 
+	 */
     $constructr -> get('/constructr/content/:PAGE_ID/:CONTENT_ID/:ACT_ORDER/up/', $ADMIN_CHECK, function ($PAGE_ID,$CONTENT_ID,$ACT_ORDER) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
             $PAGE_ID = constructr_sanitization($PAGE_ID,true,true);
@@ -647,7 +669,7 @@
                 }
                 catch(PDOException $e) 
                 {
-                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
+                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
                     die();
                 }
             }
@@ -662,7 +684,7 @@
 
             if($_CONSTRUCTR_CONF['_LOGGING'] == true)
             {
-                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
+                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
             }
 
             if($PAGE_ID != '' && $CONTENT_ID != '' && $ACT_ORDER != '')
@@ -698,7 +720,7 @@
 
                 if($_CONSTRUCTR_CONF['_LOGGING'] == true)
                 {
-                    $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
+                    $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                 }
 
                 $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/content/' . $PAGE_ID . '/?res=reorder-content-true');
@@ -712,6 +734,9 @@
         }
     );
 
+ 	/**
+	 * Reordering of Content Elements in List-View. 
+	 */
     $constructr -> get('/constructr/content/:PAGE_ID/:CONTENT_ID/:ACT_ORDER/down/', $ADMIN_CHECK, function ($PAGE_ID,$CONTENT_ID,$ACT_ORDER) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
             $PAGE_ID = constructr_sanitization($PAGE_ID,true,true);
@@ -749,7 +774,7 @@
                 }
                 catch(PDOException $e) 
                 {
-                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
+                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
                     die();
                 }
             }
@@ -764,7 +789,7 @@
 
             if($_CONSTRUCTR_CONF['_LOGGING'] == true)
             {
-                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
+                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
             }
 
             if($PAGE_ID != '' && $CONTENT_ID != '' && $ACT_ORDER != '')
@@ -800,7 +825,7 @@
 
                 if($_CONSTRUCTR_CONF['_LOGGING'] == true)
                 {
-                    $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
+                    $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                 }
 
                 $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/content/' . $PAGE_ID . '/?res=reorder-content-true');
@@ -850,7 +875,7 @@
                 }
                 catch(PDOException $e) 
                 {
-                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
+                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
                     die();
                 }
             }
@@ -863,7 +888,7 @@
 
             if($_CONSTRUCTR_CONF['_LOGGING'] == true)
             {
-                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
+                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
             }
 
             if($PAGE_ID != '' && $CONTENT_ID != '')
@@ -889,7 +914,7 @@
 
                 if($_CONSTRUCTR_CONF['_LOGGING'] == true)
                 {
-                    $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
+                    $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                 }
 
                 $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/content/' . $PAGE_ID . '/?res=activate-content-true');
@@ -903,6 +928,9 @@
         }
     );
 
+ 	/**
+	 * Deactivation of Content Elements in List-View. 
+	 */
     $constructr -> get('/constructr/content/:PAGE_ID/:CONTENT_ID/deactivate/', $ADMIN_CHECK, function ($PAGE_ID,$CONTENT_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
             $PAGE_ID = constructr_sanitization($PAGE_ID,true,true);
@@ -939,7 +967,7 @@
                 }
                 catch(PDOException $e) 
                 {
-                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
+                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
                     die();
                 }
             }
@@ -952,7 +980,7 @@
 
             if($_CONSTRUCTR_CONF['_LOGGING'] == true)
             {
-                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
+                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
             }
 
             if($PAGE_ID != '' && $CONTENT_ID != '')
@@ -978,7 +1006,7 @@
 
                 if($_CONSTRUCTR_CONF['_LOGGING'] == true)
                 {
-                    $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
+                    $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
                 }
 
                 $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/content/' . $PAGE_ID . '/?res=deactivate-content-true');
@@ -992,6 +1020,9 @@
         }
     );
 
+ 	/**
+	 * Deleting a Content Element in List-View. 
+	 */
     $constructr -> get('/constructr/content/:PAGE_ID/:CONTENT_ID/:ACT_ORDER/delete/', $ADMIN_CHECK, function ($PAGE_ID,$CONTENT_ID,$ACT_ORDER) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
             $PAGE_ID = constructr_sanitization($PAGE_ID,true,true);
@@ -1029,7 +1060,7 @@
                 }
                 catch(PDOException $e) 
                 {
-                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
+                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
                     die();
                 }
             }
@@ -1042,7 +1073,7 @@
 
             if($_CONSTRUCTR_CONF['_LOGGING'] == true)
             {
-                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
+                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
             }
 
             if($PAGE_ID != '' && $CONTENT_ID != '')
@@ -1079,6 +1110,9 @@
         }
     );
 
+ 	/**
+	 * Delete all Content-Elements of a specific Page. 
+	 */
     $constructr -> get('/constructr/content/:PAGE_ID/:CONTENT_ID/delete-complete/', $ADMIN_CHECK, function ($PAGE_ID,$CONTENT_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
             $PAGE_ID = constructr_sanitization($PAGE_ID,true,true);
@@ -1115,7 +1149,7 @@
                 }
                 catch(PDOException $e) 
                 {
-                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
+                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
                     die();
                 }
             }
@@ -1128,7 +1162,7 @@
 
             if($_CONSTRUCTR_CONF['_LOGGING'] == true)
             {
-                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
+                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
             }
 
             if($PAGE_ID != '' && $CONTENT_ID != '')
@@ -1171,6 +1205,9 @@
         }
     );
 
+ 	/**
+	 * Delete the History-Content-Elements of a specific Page. 
+	 */
     $constructr -> get('/constructr/content/:PAGE_ID/:CONTENT_HISTORY_ID/:CONTENT_ID/delete-history-complete/', $ADMIN_CHECK, function ($PAGE_ID,$CONTENT_HISTORY_ID,$CONTENT_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
             $PAGE_ID = constructr_sanitization($PAGE_ID,true,true);
@@ -1208,7 +1245,7 @@
                 }
                 catch(PDOException $e) 
                 {
-                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
+                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
                     die();
                 }
             }
@@ -1221,7 +1258,7 @@
 
             if($_CONSTRUCTR_CONF['_LOGGING'] == true)
             {
-                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
+                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
             }
 
             if($PAGE_ID != '' && $CONTENT_ID != '')
@@ -1256,6 +1293,9 @@
         }
     );
 
+ 	/**
+	 * Recover a deleted Content-Element. 
+	 */
     $constructr -> get('/constructr/content/:PAGE_ID/:CONTENT_ID/:NEW_ORDER/re-create/', $ADMIN_CHECK, function ($PAGE_ID,$CONTENT_ID,$NEW_ORDER) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
             $PAGE_ID = constructr_sanitization($PAGE_ID,true,true);
@@ -1293,7 +1333,7 @@
                 }
                 catch(PDOException $e) 
                 {
-                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
+                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
                     die();
                 }
             }
@@ -1306,7 +1346,7 @@
 
             if($_CONSTRUCTR_CONF['_LOGGING'] == true)
             {
-                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
+                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
             }
 
             if($PAGE_ID != '' && $CONTENT_ID != '')
@@ -1342,114 +1382,3 @@
             }
         }
     );
-	
-	
-	
-	
-	
-	
-	
-	
-    $constructr -> get('/constructr/content/new/predefined/:PAGE_ID/:NEW_CONTENT_ORDER/', $ADMIN_CHECK, function ($PAGE_ID,$NEW_CONTENT_ORDER) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
-        {
-            $PAGE_ID = constructr_sanitization($PAGE_ID,true,true);
-            $NEW_CONTENT_ORDER = constructr_sanitization($NEW_CONTENT_ORDER,true,true);
-
-            $constructr -> view -> setData('BackendUserRight',21);
-
-            if(isset($_SESSION['backend-user-id']) && $_SESSION['backend-user-id'] != '')
-            {
-                try
-                {
-                    $RIGHT_CHECKER = $DBCON -> prepare('SELECT * FROM constructr_backenduser_rights WHERE cbr_right = :RIGHT_ID AND cbr_user_id = :USER_ID AND cbr_value = :CBR_VALUE LIMIT 1;');
-                    $RIGHT_CHECKER -> execute(
-                        array
-                        (
-                            ':USER_ID' => $_SESSION['backend-user-id'],
-                            ':RIGHT_ID' => $constructr -> view -> getData('BackendUserRight'),
-                            ':CBR_VALUE' => 1
-                        )
-                    );
-
-                    $RIGHTS_COUNTR = $RIGHT_CHECKER -> rowCount();
-
-                    if($RIGHTS_COUNTR != 1)
-                    {
-                        $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Error ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                        $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/?no-rights=true');
-                        die();
-                    }
-                    else
-                    {
-                        $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                    }
-                }
-                catch(PDOException $e) 
-                {
-                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
-                    die();
-                }
-            }
-            else
-            {
-                $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': Error User-Rights-Check: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/logout/');
-                die();
-            }
-
-            if($_CONSTRUCTR_CONF['_LOGGING'] == true)
-            {
-                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
-            }
-
-            try
-            {
-                $PAGE_NAME = $DBCON -> prepare('SELECT pages_name,pages_url FROM constructr_pages WHERE pages_id = :PAGE_ID LIMIT 1;');
-                $PAGE_NAME -> execute(array(':PAGE_ID' => $PAGE_ID));
-                $PAGE_NAME = $PAGE_NAME -> fetch();
-            }
-            catch(PDOException $e)
-            {
-                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
-                die();
-            }
-
-            $GUID = create_guid();
-
-			$ALL_PREDEFINED_ELEMENTS = array
-			(
-				'phaziz-gallery' => array('http://constructr.phaziz.com/Plugins/predefined-content-elements/phaziz-gallery/index.php')
-			);
-
-            $constructr -> render('content_predefined.php',
-                array
-                (
-                    'USERNAME' => $_SESSION['backend-user-username'],
-                    'PAGE_NAME' => $PAGE_NAME,
-                    'GUID' => $GUID,
-                    'PAGE_ID' => $PAGE_ID,
-                    'ALL_PREDEFINED_ELEMENTS' => $ALL_PREDEFINED_ELEMENTS,
-                    '_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,
-                    'NEW_CONTENT_ORDER' => $NEW_CONTENT_ORDER,
-                    'FORM_ACTION' => $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/content/' . $PAGE_ID . '/new/' . $GUID .'/',
-                    'FORM_METHOD' => 'post',
-                    'FORM_ENCTYPE' => 'application/x-www-form-urlencoded',
-                    'SUBTITLE' => 'Neuer Inhalt'
-                )
-            );
-        }
-    );
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	

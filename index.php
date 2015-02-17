@@ -1,63 +1,61 @@
 <?php
 
-/**
- * 	Constructr CMS - a Slim-PHP-Framework based Content Management System
- * 
- * 	Built with:
- * 	Slim-PHP-Framework (http://www.slimframework.com/)
- * 	Bootstrap Frontend Framework (http://getbootstrap.com/)
- * 	PHP PDO (http://php.net/manual/de/book.pdo.php)
- *  jQuery (http://jquery.com/)
- *  ckEditor (http://ckeditor.com/)
- *	Codemirror (http://codemirror.net/)
- * 	...
- * 
- *	LICENCE 
- * 
- *  DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
- *  Version 1, February 2015
- *	Copyright (C) 2015 Christian Becher | phaziz.com <christian@phaziz.com>
- *  Everyone is permitted to copy and distribute verbatim or modified
- *  copies of this license document, and changing it is allowed as long
- *  as the name is changed.
- *
- *  DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
- *  TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
- *  0. YOU JUST DO WHAT THE FUCK YOU WANT TO!
- *
- *  Visit http://constructr-cms.org
- * 	Visit http://blog.phaziz.com/category/constructr-cms/
- *  Visit http://phaziz.com
- * 
- * 
- * @author Christian Becher | phaziz.com <phaziz@gmail.com>
- * @copyright 2015 Christian Becher | phaziz.com
- * @license DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
- * @version 1.04.3
- * @link http://constructr-cms.org/
- * @package ConstructrCMS
- * 
- */
+	/**
+	 * Constructr CMS - a Slim-PHP-Framework based full-stack Content-Management-System (CMS).
+	 * 
+	 * Built with:
+	 * Slim-PHP-Framework (http://www.slimframework.com/)
+	 * Bootstrap Frontend Framework (http://getbootstrap.com/)
+	 * PHP PDO (http://php.net/manual/de/book.pdo.php)
+	 * jQuery (http://jquery.com/)
+	 * ckEditor (http://ckeditor.com/)
+	 * Codemirror (http://codemirror.net/)
+	 * ...
+	 * 
+	 * LICENCE 
+	 * 
+	 * DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+	 * Version 1, February 2015
+	 * Copyright (C) 2015 Christian Becher | phaziz.com <christian@phaziz.com>
+	 * Everyone is permitted to copy and distribute verbatim or modified
+	 * copies of this license document, and changing it is allowed as long
+	 * as the name is changed.
+	 *
+	 * DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+	 * TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+	 * 0. YOU JUST DO WHAT THE FUCK YOU WANT TO!
+	 *
+	 * Visit http://constructr-cms.org
+	 * Visit http://blog.phaziz.com/category/constructr-cms/
+	 * Visit http://phaziz.com 
+	 *
+	 * @author Christian Becher | phaziz.com <phaziz@gmail.com>
+	 * @copyright 2015 Christian Becher | phaziz.com
+	 * @license DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+	 * @link http://constructr-cms.org/
+	 * @link http://blog.phaziz.com/category/constructr-cms/
+	 * @link http://phaziz.com/
+	 * @package ConstructrCMS
+	 * @version 1.04.4 / 17.02.2015  
+	 *
+	 */
 
-    require_once './Config/constructr.conf.php';
+ 	require_once './Config/constructr.conf.php';
     require_once './Config/constructr_user_rights.conf.php';
 
-    $_CONSTRUCTR_CONF['_VERSION_DATE'] = '20150211';
-    $_CONSTRUCTR_CONF['_VERSION'] = '1.04.3';
+    $_CONSTRUCTR_CONF['_VERSION_DATE'] = '2015-02-17';
+    $_CONSTRUCTR_CONF['_VERSION'] = '1.04.4';
+
 	$_CONSTRUCTR_PLUGINS = array
 	(
 		'_CONSTRUCTR_PLUGINS_CSS' => array
 		(
-			'<!--CONSTRUCTR CMS PLUGIN START--><link href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/Plugins/constructr-backstretch-gallery/css/constructr-backstretch-plugin.css" rel="stylesheet"><!--CONSTRUCTR CMS PLUGIN ENDE-->'
 		),
 		'_CONSTRUCTR_PLUGINS_CONTENT' => array
 		(
-			'<!--CONSTRUCTR CMS PLUGIN START--><div id="constructr-backstretch-plugin"></div><!--CONSTRUCTR CMS PLUGIN ENDE-->',
 		),
 		'_CONSTRUCTR_PLUGINS_JS' => array
 		(
-			'<!--CONSTRUCTR CMS PLUGIN START--><script src="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/Plugins/constructr-backstretch-gallery/js/backstretch.min.js"></script><!--CONSTRUCTR CMS PLUGIN ENDE-->',
-			'<!--CONSTRUCTR CMS PLUGIN START--><script> $("#constructr-backstretch-plugin").backstretch(["http://constructr.phaziz.com/Uploads/tumblr_ncjsefbCKP1tq93fro1_1280.jpg","http://constructr.phaziz.com/Uploads/tumblr_n3tw3oIgx21tq93fro1_1280.jpg","http://constructr.phaziz.com/Uploads/tumblr_n3tw2xMEbO1tq93fro1_1280.jpg"],{duration: 3000, fade: 750});</script><!--CONSTRUCTR CMS PLUGIN ENDE-->'
 		)
 	);
 

@@ -1,45 +1,49 @@
 <?php
 
-/**
- * 	Constructr CMS - a Slim-PHP-Framework based Content Management System
- * 
- * 	Built with:
- * 	Slim-PHP-Framework (http://www.slimframework.com/)
- * 	Bootstrap Frontend Framework (http://getbootstrap.com/)
- * 	PHP PDO (http://php.net/manual/de/book.pdo.php)
- *  jQuery (http://jquery.com/)
- *  ckEditor (http://ckeditor.com/)
- *	Codemirror (http://codemirror.net/)
- * 	...
- * 
- *	LICENCE 
- * 
- *  DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
- *  Version 1, February 2015
- *	Copyright (C) 2015 Christian Becher | phaziz.com <christian@phaziz.com>
- *  Everyone is permitted to copy and distribute verbatim or modified
- *  copies of this license document, and changing it is allowed as long
- *  as the name is changed.
- *
- *  DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
- *  TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
- *  0. YOU JUST DO WHAT THE FUCK YOU WANT TO!
- *
- *  Visit http://constructr-cms.org
- * 	Visit http://blog.phaziz.com/category/constructr-cms/
- *  Visit http://phaziz.com
- * 
- * 
- * @author Christian Becher | phaziz.com <phaziz@gmail.com>
- * @copyright 2015 Christian Becher | phaziz.com
- * @license DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
- * @version 1.04.3
- * @link http://constructr-cms.org/
- * @package ConstructrCMS
- * 
- */
+	/**
+	 * Constructr CMS - a Slim-PHP-Framework based full-stack Content-Management-System (CMS).
+	 * 
+	 * Built with:
+	 * Slim-PHP-Framework (http://www.slimframework.com/)
+	 * Bootstrap Frontend Framework (http://getbootstrap.com/)
+	 * PHP PDO (http://php.net/manual/de/book.pdo.php)
+	 * jQuery (http://jquery.com/)
+	 * ckEditor (http://ckeditor.com/)
+	 * Codemirror (http://codemirror.net/)
+	 * ...
+	 * 
+	 * LICENCE 
+	 * 
+	 * DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+	 * Version 1, February 2015
+	 * Copyright (C) 2015 Christian Becher | phaziz.com <christian@phaziz.com>
+	 * Everyone is permitted to copy and distribute verbatim or modified
+	 * copies of this license document, and changing it is allowed as long
+	 * as the name is changed.
+	 *
+	 * DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+	 * TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+	 * 0. YOU JUST DO WHAT THE FUCK YOU WANT TO!
+	 *
+	 * Visit http://constructr-cms.org
+	 * Visit http://blog.phaziz.com/category/constructr-cms/
+	 * Visit http://phaziz.com 
+	 *
+	 * @author Christian Becher | phaziz.com <phaziz@gmail.com>
+	 * @copyright 2015 Christian Becher | phaziz.com
+	 * @license DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+	 * @link http://constructr-cms.org/
+	 * @link http://blog.phaziz.com/category/constructr-cms/
+	 * @link http://phaziz.com/
+	 * @package ConstructrCMS
+	 * @version 1.04.4 / 17.02.2015  
+	 *
+	 */
 
-      $constructr -> get('/constructr/user/', $ADMIN_CHECK, function () use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
+ 	/**
+	 * Administrator View of your Backend User-Accounts 
+	 */	 
+    $constructr -> get('/constructr/user/', $ADMIN_CHECK, function () use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
             $COUNTR = 0;
 
@@ -114,6 +118,9 @@
         }
     );
 
+ 	/**
+	 * Form-View to create a new User-Account. 
+	 */	 
     $constructr -> get('/constructr/user/new/', $ADMIN_CHECK, function () use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
             $constructr -> view -> setData('BackendUserRight',67);
@@ -160,7 +167,7 @@
 
             if($_CONSTRUCTR_CONF['_LOGGING'] == true)
             {
-                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
+                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
             }
 
             $GUID = create_guid();
@@ -180,11 +187,14 @@
         }
     );
 
+ 	/**
+	 * Hidden view to check if the username is unique 
+	 */	 
     $constructr -> get('/constructr/user/new/check-username/', $ADMIN_CHECK, function () use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
             if($_CONSTRUCTR_CONF['_LOGGING'] == true)
             {
-                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
+                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
             }
 
             $constructr -> view -> setData('BackendUserRight',67);
@@ -277,7 +287,7 @@
             {
                 if($_CONSTRUCTR_CONF['_LOGGING'] == true)
                 {
-                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . '/' . $USERNAME . '/FALSE/');                
+                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . '/' . $USERNAME . '/FALSE/');
                 }
 
                 echo 'nep';
@@ -286,11 +296,14 @@
         }
     );
 
+ 	/**
+	 * Hidden Edit-View to check if the username is unique.  
+	 */	 
     $constructr -> get('/constructr/user/edit/:user_id/check-single-username/', $ADMIN_CHECK, function () use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
             if($_CONSTRUCTR_CONF['_LOGGING'] == true)
             {
-                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
+                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
             }
 
             $constructr -> view -> setData('BackendUserRight',68);
@@ -355,7 +368,7 @@
                     {
                         if($_CONSTRUCTR_CONF['_LOGGING'] == true)
                         {
-                            $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . '/' . $USERNAME . '/TRUE/');                
+                            $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . '/' . $USERNAME . '/TRUE/');
                         }
 
                         echo 'jep';
@@ -365,7 +378,7 @@
                     {
                         if($_CONSTRUCTR_CONF['_LOGGING'] == true)
                         {
-                            $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . '/' . $USERNAME . '/FALSE/');                
+                            $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . '/' . $USERNAME . '/FALSE/');
                         }
 
                         echo 'nep';
@@ -383,7 +396,7 @@
             {
                 if($_CONSTRUCTR_CONF['_LOGGING'] == true)
                 {
-                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . '/' . $USERNAME . '/FALSE/');                
+                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . '/' . $USERNAME . '/FALSE/');
                 }
 
                 echo 'nep';
@@ -392,6 +405,9 @@
         }
     );
 
+ 	/**
+	 * Post View to create a new Backend User-Account. 
+	 */	 
     $constructr -> post('/constructr/user/new/:GUID/', $ADMIN_CHECK, function ($GUID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF,$_CONSTRUCTR_USER_RIGHTS_CONF)
         {
             $GUID = constructr_sanitization($GUID,true,true);
@@ -432,7 +448,7 @@
                 }
                 catch(PDOException $e) 
                 {
-                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
+                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
                     die();
                 }
             }
@@ -516,7 +532,7 @@
 
                 if($_CONSTRUCTR_CONF['_LOGGING'] == true)
                 {
-                    $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . '/' . $USERNAME . '/create/success/');                
+                    $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . '/' . $USERNAME . '/create/success/');
                 }
 
                 $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/user/?create=success');
@@ -526,7 +542,7 @@
             {
                 if($_CONSTRUCTR_CONF['_LOGGING'] == true)
                 {
-                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . $USERNAME . '/create/error/');                
+                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . $USERNAME . '/create/error/');
                 }
 
                 $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/user/?create=error');
@@ -535,6 +551,9 @@
         }
     );
 
+ 	/**
+	 * Form-View to edit a Backend User Account. 
+	 */	 
     $constructr -> get('/constructr/user/edit/:USER_ID/', $ADMIN_CHECK, function ($USER_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
             $USER_ID = constructr_sanitization($USER_ID,true,true);
@@ -638,6 +657,9 @@
         }
     );
 
+ 	/**
+	 * Post-View to edit a Backend User Account. 
+	 */	 
     $constructr -> post('/constructr/user/edit/:USER_ID/:GUID/', $ADMIN_CHECK, function ($USER_ID,$GUID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
             $GUID = constructr_sanitization($GUID,true,true);
@@ -645,7 +667,7 @@
 
             if($_CONSTRUCTR_CONF['_LOGGING'] == true)
             {
-                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);                
+                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
             }
 
             $constructr -> view -> setData('BackendUserRight',68);
@@ -679,7 +701,7 @@
                 }
                 catch(PDOException $e) 
                 {
-                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
+                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
                     die();
                 }
             }
@@ -734,7 +756,7 @@
 
                 if($_CONSTRUCTR_CONF['_LOGGING'] == true)
                 {
-                    $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . '/' . $USERNAME . '/create/success/');                
+                    $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . '/' . $USERNAME . '/create/success/');
                 }
 
                 $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/user/?edit=success');
@@ -743,7 +765,7 @@
             {
                 if($_CONSTRUCTR_CONF['_LOGGING'] == true)
                 {
-                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . '/' . $USERNAME . '/create/error/');                
+                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . '/' . $USERNAME . '/create/error/');
                 }
 
                 $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/user/?edit=error');
@@ -752,6 +774,9 @@
         }
     );
 
+ 	/**
+	 * Hidden View to deactivate a user account. 
+	 */	 
     $constructr -> get('/constructr/user/set-inactive/:USER_ID/', function ($USER_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
             $USER_ID = constructr_sanitization($USER_ID,true,true);
@@ -786,7 +811,7 @@
                 }
                 catch(PDOException $e) 
                 {
-                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
+                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
                     die();
                 }
             }
@@ -838,6 +863,9 @@
         }
     );
 
+ 	/**
+	 * Hidden View to activate a Backend User-Account. 
+	 */	 
     $constructr -> get('/constructr/user/set-active/:USER_ID/', function ($USER_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
             $USER_ID = constructr_sanitization($USER_ID,true,true);
@@ -872,7 +900,7 @@
                 }
                 catch(PDOException $e) 
                 {
-                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
+                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
                     die();
                 }
             }
@@ -924,6 +952,9 @@
         }
     );
 
+ 	/**
+	 * Backend View to delete a User-Account. 
+	 */	 
     $constructr -> get('/constructr/user/delete/:USER_ID/', function ($USER_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
             $USER_ID = constructr_sanitization($USER_ID,true,true);
@@ -958,7 +989,7 @@
                 }
                 catch(PDOException $e) 
                 {
-                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());                
+                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
                     die();
                 }
             }

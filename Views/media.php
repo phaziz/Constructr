@@ -1,44 +1,48 @@
 <?php
 
-/**
- * 	Constructr CMS - a Slim-PHP-Framework based Content Management System
- * 
- * 	Built with:
- * 	Slim-PHP-Framework (http://www.slimframework.com/)
- * 	Bootstrap Frontend Framework (http://getbootstrap.com/)
- * 	PHP PDO (http://php.net/manual/de/book.pdo.php)
- *  jQuery (http://jquery.com/)
- *  ckEditor (http://ckeditor.com/)
- *	Codemirror (http://codemirror.net/)
- * 	...
- * 
- *	LICENCE 
- * 
- *  DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
- *  Version 1, February 2015
- *	Copyright (C) 2015 Christian Becher | phaziz.com <christian@phaziz.com>
- *  Everyone is permitted to copy and distribute verbatim or modified
- *  copies of this license document, and changing it is allowed as long
- *  as the name is changed.
- *
- *  DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
- *  TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
- *  0. YOU JUST DO WHAT THE FUCK YOU WANT TO!
- *
- *  Visit http://constructr-cms.org
- * 	Visit http://blog.phaziz.com/category/constructr-cms/
- *  Visit http://phaziz.com
- * 
- * 
- * @author Christian Becher | phaziz.com <phaziz@gmail.com>
- * @copyright 2015 Christian Becher | phaziz.com
- * @license DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
- * @version 1.04.3
- * @link http://constructr-cms.org/
- * @package ConstructrCMS
- * 
- */
+	/**
+	 * Constructr CMS - a Slim-PHP-Framework based full-stack Content-Management-System (CMS).
+	 * 
+	 * Built with:
+	 * Slim-PHP-Framework (http://www.slimframework.com/)
+	 * Bootstrap Frontend Framework (http://getbootstrap.com/)
+	 * PHP PDO (http://php.net/manual/de/book.pdo.php)
+	 * jQuery (http://jquery.com/)
+	 * ckEditor (http://ckeditor.com/)
+	 * Codemirror (http://codemirror.net/)
+	 * ...
+	 * 
+	 * LICENCE 
+	 * 
+	 * DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+	 * Version 1, February 2015
+	 * Copyright (C) 2015 Christian Becher | phaziz.com <christian@phaziz.com>
+	 * Everyone is permitted to copy and distribute verbatim or modified
+	 * copies of this license document, and changing it is allowed as long
+	 * as the name is changed.
+	 *
+	 * DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+	 * TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+	 * 0. YOU JUST DO WHAT THE FUCK YOU WANT TO!
+	 *
+	 * Visit http://constructr-cms.org
+	 * Visit http://blog.phaziz.com/category/constructr-cms/
+	 * Visit http://phaziz.com 
+	 *
+	 * @author Christian Becher | phaziz.com <phaziz@gmail.com>
+	 * @copyright 2015 Christian Becher | phaziz.com
+	 * @license DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+	 * @link http://constructr-cms.org/
+	 * @link http://blog.phaziz.com/category/constructr-cms/
+	 * @link http://phaziz.com/
+	 * @package ConstructrCMS
+	 * @version 1.04.4 / 17.02.2015  
+	 *
+	 */
 
+  	/**
+	 * AssetCenter (Uploads) View in your Backend. 
+	 */	 
     $constructr -> get('/constructr/media/', $ADMIN_CHECK, function () use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
             $MEDIA_COUNTER = 0;
@@ -118,6 +122,9 @@
         }
     );
 
+ 	/**
+	 * New Uplaod-Form. 
+	 */
     $constructr -> get('/constructr/media/new/', $ADMIN_CHECK, function () use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
             $constructr -> view -> setData('BackendUserRight',41);
@@ -184,6 +191,9 @@
         }
     );
 
+ 	/**
+	 * New Media Post-Processing View. 
+	 */
     $constructr -> post('/constructr/media/new/:GUID/', $ADMIN_CHECK, function ($GUID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
             $GUID = constructr_sanitization($GUID,true,true);
@@ -308,6 +318,9 @@
         }
     );
 
+ 	/**
+	 * Media Trashcan recovery View. 
+	 */
     $constructr -> get('/constructr/media/re-create/:FILE/', $ADMIN_CHECK, function ($FILE) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
             if($_CONSTRUCTR_CONF['_LOGGING'] == true)
@@ -346,6 +359,9 @@
         }
     );
 
+ 	/**
+	 * Delete a Upload. 
+	 */
     $constructr -> get('/constructr/media/delete/:MEDIA_ID/', $ADMIN_CHECK, function ($MEDIA_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
             $MEDIA_ID = constructr_sanitization($MEDIA_ID,true,true);
@@ -436,6 +452,9 @@
         }
     );
 
+ 	/**
+	 * Uploads-Details View. 
+	 */
     $constructr -> get('/constructr/media/details/:MEDIA_ID/', $ADMIN_CHECK, function ($MEDIA_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
             $MEDIA_ID = constructr_sanitization($MEDIA_ID,true,true);
@@ -534,6 +553,9 @@
         }
     );
 
+ 	/**
+	 * Post-Processing new Media-Details. 
+	 */
     $constructr -> post('/constructr/media/details/:MEDIA_ID/', $ADMIN_CHECK, function ($MEDIA_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
             $MEDIA_ID = constructr_sanitization($MEDIA_ID,true,true);
@@ -623,6 +645,9 @@
         }
     );
 
+ 	/**
+	 * Trashcan View. 
+	 */
     $constructr -> get('/constructr/media/trash/', $ADMIN_CHECK, function () use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
             $constructr -> view -> setData('BackendUserRight',44);
@@ -732,6 +757,9 @@
         }
     );
 
+ 	/**
+	 * Delete a Media-Upload. 
+	 */
     $constructr -> get('/constructr/media/trash/delete/:MEDIA_FILE/', $ADMIN_CHECK, function ($MEDIA_FILE) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
             $constructr -> view -> setData('BackendUserRight',45);

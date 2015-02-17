@@ -204,7 +204,6 @@
                                         </div>
                                     </form>
                                     <br><br>
-                                    <br><br>
                                     <?php
 
                                         if($_CONSTRUCTR_CONF['_TRANSFER_STATIC'] == true)

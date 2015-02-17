@@ -131,13 +131,3 @@
 
         '_ENABLE_USER_TRACKING' => false, // depreciated - will be removed soon
     );
-
-    if(!defined('CRYPT_BLOWFISH') && CRYPT_BLOWFISH)
-    {
-        die('Fehler CRYPT_BLOWFISH ist nicht verf&uuml;gbar!');
-    }
-
-    if (version_compare(phpversion(),'5.3.0','<='))
-    {
-        die('PHP ist kleiner als Version 5.3.0');
-    }

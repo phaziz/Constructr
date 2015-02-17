@@ -134,6 +134,9 @@
                     'PAGE_NAME' => $PAGE_NAME,
                     'CONTENT' => $CONTENT,
                     'GUID' => $GUID,
+                    'FORM_ACTION' => $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/content/' . $PAGE_ID . '/update-page-data/' . $GUID .'/',
+                    'FORM_METHOD' => 'post',
+                    'FORM_ENCTYPE' => 'application/x-www-form-urlencoded',
                     'CONTENT_COUNTER' => $CONTENT_COUNTER,
                     'DELETED_CONTENT' => $DELETED_CONTENT,
                     'DELETED_CONTENT_COUNTER' => $DELETED_CONTENT_COUNTER,
@@ -260,6 +263,98 @@
                     'SUBTITLE' => 'Neuer Inhalt'
                 )
             );
+        }
+    );
+
+	/**
+	 * Update the Page JS and CSS
+	 */
+    $constructr -> post('/constructr/content/:PAGE_ID/update-page-data/:GUID/', $ADMIN_CHECK, function ($PAGE_ID,$GUID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
+        {
+			$PAGE_ID = constructr_sanitization($PAGE_ID,true,true);
+            $GUID = constructr_sanitization($GUID,true,true);
+			$USER_FORM_GUID = constructr_sanitization($constructr -> request() -> post('user_form_guid'),true,true);
+
+            if($GUID != $USER_FORM_GUID)
+            {
+                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ' - USER_FORM_GUID ERROR (' . $USER_FORM_GUID . '|' . $GUID . '): ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/logout/');
+                die();
+            }
+
+            $constructr -> view -> setData('BackendUserRight',13);
+
+            if(isset($_SESSION['backend-user-id']) && $_SESSION['backend-user-id'] != '')
+            {
+                try
+                {
+                    $RIGHT_CHECKER = $DBCON -> prepare('SELECT * FROM constructr_backenduser_rights WHERE cbr_right = :RIGHT_ID AND cbr_user_id = :USER_ID AND cbr_value = :CBR_VALUE LIMIT 1;');
+                    $RIGHT_CHECKER -> execute(
+                        array
+                        (
+                            ':USER_ID' => $_SESSION['backend-user-id'],
+                            ':RIGHT_ID' => $constructr -> view -> getData('BackendUserRight'),
+                            ':CBR_VALUE' => 1
+                        )
+                    );
+
+                    $RIGHTS_COUNTR = $RIGHT_CHECKER -> rowCount();
+
+                    if($RIGHTS_COUNTR != 1)
+                    {
+                        $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Error ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                        $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/?no-rights=true');
+                        die();
+                    }
+                    else
+                    {
+                        $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                    }
+                }
+                catch(PDOException $e) 
+                {
+                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
+                    die();
+                }
+            }
+            else
+            {
+                $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': Error User-Rights-Check: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/logout/');
+                die();
+            }
+
+            if($_CONSTRUCTR_CONF['_LOGGING'] == true)
+            {
+                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+            }
+
+            $PAGE_CSS = $constructr -> request() -> post('page_css');
+            $PAGE_JS = $constructr -> request() -> post('page_js');
+
+            try
+            {
+                $QUERY = 'UPDATE constructr_pages SET pages_css = :PAGE_CSS, pages_js = :PAGE_JS WHERE pages_id >= :PAGE_ID LIMIT 1;';
+                $STMT = $DBCON -> prepare($QUERY);
+                $STMT -> bindParam(':PAGE_ID',$PAGE_ID,PDO::PARAM_INT);
+				$STMT -> bindParam(':PAGE_CSS',$PAGE_CSS,PDO::PARAM_STR);
+				$STMT -> bindParam(':PAGE_JS',$PAGE_JS,PDO::PARAM_STR);
+                $STMT -> execute();
+
+                if($_CONSTRUCTR_CONF['_LOGGING'] == true)
+                {
+                    $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                }
+
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/content/' . $PAGE_ID . '/?res=update-page-data-true');
+                die();
+            }
+            catch(PDOException $e)
+            {
+                $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/content/' . $PAGE_ID . '/?res=create-content-false');
+                die();
+            }
         }
     );
 

@@ -38,6 +38,7 @@ That's it for now (Version 1.04.4 / 2015-02-17):
 	- Updated robots.txt-File
 	- Updated Assets
 	- Doxygen Support
+	- Edit Page JS and CSS in Content-Administration
 
 	- 2015-02-11
 	- New Feature: Page specific CSS/JS-Content

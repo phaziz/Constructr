@@ -101,6 +101,10 @@
                                     <div class="row response">
                                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                                 <?php
+                                                    if($_GET['res'] == 'update-page-data-true')
+                                                    {
+                                                        echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Erfolg!</strong> Seiten CSS und Javascript wurde erfolgreich aktualisiert.</div>';
+                                                    }
                                                     if($_GET['res'] == 'create-content-true')
                                                     {
                                                         echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Erfolg!</strong> Inhalt wurde ohne Fehler erstellt.</div>';
@@ -240,6 +244,42 @@
                                         </tbody>
                                     </table>
                                     </div><!-- EOF TABLE RESPONSIVE-->
+
+									<?php
+									
+										if($PAGE_NAME)
+										{
+											?>
+												<h1>Seitenspezifische CSS- und Javascript-Eigenschaften:</h1>
+												<form role="form" name="new_page_form" id="new_page_form" action="<?php echo $FORM_ACTION; ?>" method="<?php echo $FORM_METHOD; ?>" enctype="<?php echo $FORM_ENCTYPE; ?>" class="form-horizontal">
+                                                    <input type="hidden" name="user_form_guid" value="<?php echo $GUID; ?>">
+                                                    <input type="hidden" name="page_id" id="page_id" value="<?php echo $PAGE_NAME['pages_id']; ?>" maxlength="100">
+			                                        <div class="form-group">
+			                                            <label for="page_css" class="col-sm-2 control-label">Seitenspezifisches CSS:</label>
+			                                            <div class="col-sm-10">
+			                                                <textarea rows="5" cols="50" class="form-control input-sm" name="page_css" id="page_css" placeholder="Seitenspezifisches CSS f&uuml;r diese Seite"><?php echo $PAGE_NAME['pages_css']; ?></textarea>
+			                                            </div>
+			                                        </div>
+			                                        <div class="form-group">
+			                                            <label for="page_js" class="col-sm-2 control-label">Seitenspezifisches Javascript:</label>
+			                                            <div class="col-sm-10">
+			                                                <textarea rows="5" cols="50" class="form-control input-sm" name="page_js" id="page_js" placeholder="Seitenspezifisches Javascript f&uuml;r diese Seite"><?php echo $PAGE_NAME['pages_js']; ?></textarea>
+			                                            </div>
+			                                        </div>
+                                                    <div class="form-group">
+                                                        <label for="submitter" class="col-sm-2 control-label">&#160;</label>
+                                                        <div class="col-sm-10">
+                                                            <button type="submit" name="submitter" id="submitter" class="btn btn-info btn-sm">&Auml;nderungen speichern &#8250;&#8250;</button>
+                                                            <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/'; ?>"><button type="button" class="btn btn-danger btn-sm">Abbrechen</button></a>
+                                                        </div>
+                                                    </div>
+                                                </form>
+
+											<?php
+										}
+									
+									?>
+
                                 </div><!-- // EOF JUMBOTRON -->
                             </div><!-- // EOF COL-... -->
                         </div><!-- // EOF ROW -->

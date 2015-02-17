@@ -41,16 +41,62 @@
 	 */
 
   	/**
-	 * Several Helper-Functions... 
-	 */	 
+	 * Function to create a CSRF Token
+	 * @return int $TOKEN
+	 */
 	function create_guid(){return mt_rand();}
+
+  	/**
+	 * Function to escape MYSQL variables
+	 * @param mixed $Input
+	 * @return mixed cleaned $INPUT
+	 */
     function mysql_escape_mimic($INPUT){if(!empty($INPUT) && is_string($INPUT)){return str_replace(array('\\', "\0", "\n", "\r", "'", '"', "\x1a"),array('\\\\', '\\0', '\\n', '\\r', "\\'", '\\"', '\\Z'),$INPUT);}return $INPUT;}
+
+  	/**
+	 * Function to sanitize Variables
+	 * @param mixed $Var - the variable to clean
+	 * @param bool $TRIM - should the variable be trimmed
+	 * @param bool $STRICT - should it be strict or lazy
+	 * @return mixed cleaned $INPUT
+	 */
     function constructr_sanitization($VAR,$TRIM=true,$STRICT=false){if($TRIM == true){$VAR = trim($VAR);}if($STRICT == true){$VAR = mysql_escape_mimic(strip_tags($VAR));}return $VAR;}
+
+  	/**
+	 * Function to compare Array values
+	 * @param mixed $a - variable $a to compare with $b
+	 * @param mixed $b - variable $b to compare with $a
+	 * @return bool
+	 */
     function cmpUp($a,$b){if ($a == $b){return 0;}return ($a < $b) ? -1 : 1;}
+
+  	/**
+	 * Function to compare Array values
+	 * @param mixed $a - variable $a to compare with $b
+	 * @param mixed $b - variable $b to compare with $a
+	 * @return bool
+	 */
     function cmpDown($a,$b){if ($a == $b){return 0;}return ($a > $b) ? -1 : 1;}
+
+  	/**
+	 * Function to retrieve all Files from a start directory
+	 * @param string $dir - start directory
+	 * @return array $FILESTRUCTURE
+	 */
     function getFilesFromDir($dir){$files = array();if ($handle = opendir($dir)){while (false !== ($file = readdir($handle))){if ($file != "." && $file != ".."){if(is_dir($dir.'/'.$file)){$dir2 = $dir.'/'.$file;$files[] = getFilesFromDir($dir2);} else {$files[] = $dir.'/'.$file;}}}closedir($handle);}return flatten_array($files);}
+
+  	/**
+	 * Function to flatten a multidimensional array
+	 * @param array $array - a multideimensional array
+	 * @return array $flat_array - the flattened array structure
+	 */
     function flatten_array($array){$flat_array=array();$size=sizeof($array);$keys=array_keys($array);for($x = 0; $x < $size; $x++){$element = $array[$keys[$x]];if(is_array($element)) {$results = flatten_array($element);$sr = sizeof($results);$sk=array_keys($results);for($y = 0; $y < $sr; $y++) {$flat_array[$sk[$y]] = $results[$sk[$y]];}} else {$flat_array[$keys[$x]] = $element;}}return $flat_array;}
 
+  	/**
+	 * Function order an array by (deep) value
+	 * @param 
+	 * @return array $array - the reordered array entries
+	 */
     function array_orderby()
     {
         $args = func_get_args();
@@ -95,6 +141,10 @@
 
  	/**
 	 * Central Admin-Check Funktion... 
+	 * @param object $constructr - $CONSTRUCTR_CMS instance
+	 * @param object $DBCON - global PDO instance
+	 * @param array $_CONSTRUCTR_CONF - Constructr CMS global configuration array
+	 * @return bool true | false
 	 */
     $ADMIN_CHECK = function() use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
     {

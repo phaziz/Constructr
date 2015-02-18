@@ -1,5 +1,9 @@
 <?php
 
+	 /**
+	  * Constructr CMS TemplateFile Login verification Process. 
+	  */
+
 	/**
 	 * Constructr CMS - a Slim-PHP-Framework based full-stack Content-Management-System (CMS).
 	 * 

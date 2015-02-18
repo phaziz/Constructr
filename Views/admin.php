@@ -41,7 +41,11 @@
 	 */
 
 	/**
-	 * Main Backend-Route @ your-domain.tld/constructr - Your Admin Dashboard. 
+	 * Main Backend-Route @ your-domain.tld/constructr - Your Admin Dashboard.
+	 * @param $ADMIN_CHECK - User Rights Function
+	 * @param $constructr - Constructr CMS application
+	 * @param $DB_CON - main database connection via PDO
+	 * @param $_CONSTRUCTR_CONF - main Constructr CMS configuration array
 	 */
     $constructr -> get('/constructr/', $ADMIN_CHECK, function () use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
@@ -116,7 +120,12 @@
     );
 
 	/**
-	 * Backend Searchengine POST-Route. 
+	 * Backend Searchengine POST-Route.
+	 * @param $ADMIN_CHECK - User Rights Function
+	 * @param $constructr - Constructr CMS application
+	 * @param $DB_CON - main database connection via PDO
+	 * @param $_CONSTRUCTR_CONF - main Constructr CMS configuration array
+	 * @param $GUID - Constructr CMS CSRF-Guard
 	 */
     $constructr -> post('/constructr/searchr/:GUID/', $ADMIN_CHECK, function ($GUID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
@@ -405,7 +414,12 @@
     );
 
 	/**
-	 * Administrator Dashboard optimize Database Route. 
+	 * Administrator Dashboard optimize Database Route.
+	 * @param $ADMIN_CHECK - User Rights Function
+	 * @param $constructr - Constructr CMS application
+	 * @param $DB_CON - main database connection via PDO
+	 * @param $_CONSTRUCTR_CONF - main Constructr CMS configuration array
+	 * @param $GUID - Constructr CMS CSRF-Guard
 	 */
     $constructr -> get('/constructr/optimization/:GUID/', $ADMIN_CHECK, function ($GUID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
@@ -475,7 +489,12 @@
     );
 
 	/**
-	 * Dashboard Content-History-Route to clear all History Entries. 
+	 * Dashboard Content-History-Route to clear all History Entries.
+	 * @param $ADMIN_CHECK - User Rights Function
+	 * @param $constructr - Constructr CMS application
+	 * @param $DB_CON - main database connection via PDO
+	 * @param $_CONSTRUCTR_CONF - main Constructr CMS configuration array
+	 * @param $GUID - Constructr CMS CSRF-Guard
 	 */
     $constructr -> get('/constructr/content-history/:GUID/', $ADMIN_CHECK, function ($GUID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
@@ -546,6 +565,11 @@
 
 	/**
 	 * FTP-Transfer of your static Website Route. 
+	 * @param $ADMIN_CHECK - User Rights Function
+	 * @param $constructr - Constructr CMS application
+	 * @param $DB_CON - main database connection via PDO
+	 * @param $_CONSTRUCTR_CONF - main Constructr CMS configuration array
+	 * @param $GUID - Constructr CMS CSRF-Guard
 	 */
     $constructr -> get('/constructr/transfer-static/:GUID/', $ADMIN_CHECK, function ($GUID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
@@ -792,6 +816,11 @@
 
 	/**
 	 * Administrator Dashboard clear your Website Cache-Route. 
+	 * @param $ADMIN_CHECK - User Rights Function
+	 * @param $constructr - Constructr CMS application
+	 * @param $DB_CON - main database connection via PDO
+	 * @param $_CONSTRUCTR_CONF - main Constructr CMS configuration array
+	 * @param $GUID - Constructr CMS CSRF-Guard
 	 */
     $constructr -> get('/constructr/clear-cache/:GUID/', $ADMIN_CHECK, function ($GUID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
@@ -864,7 +893,13 @@
     );
 
 	/**
-	 * Administrator Dashboard clear your Website Cache-Route for a specific Page. 
+	 * Administrator Dashboard clear your Website Cache-Route for a specific Page.
+	 * @param $ADMIN_CHECK - User Rights Function
+	 * @param $constructr - Constructr CMS application
+	 * @param $DB_CON - main database connection via PDO
+	 * @param $_CONSTRUCTR_CONF - main Constructr CMS configuration array
+	 * @param $GUID - Constructr CMS CSRF-Guard
+	 * @param $PAGE_ID - to clear the cache of a specific page
 	 */
     $constructr -> get('/constructr/clear-cache-page/:GUID/:PAGE_ID/', $ADMIN_CHECK, function ($GUID,$PAGE_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {

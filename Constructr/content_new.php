@@ -1,5 +1,9 @@
 <?php
 
+	 /**
+	  * Constructr CMS TemplateFile Creating a new Content Element. 
+	  */
+
 	/**
 	 * Constructr CMS - a Slim-PHP-Framework based full-stack Content-Management-System (CMS).
 	 * 

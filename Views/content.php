@@ -41,7 +41,12 @@
 	 */
 
  	/**
-	 * Main Administrator View to list all Content-Elements of a specific Page. 
+	 * Main Administrator View to list all Content-Elements of a specific Page.
+	 * @param $ADMIN_CHECK - User Rights Function
+	 * @param $constructr - Constructr CMS application
+	 * @param $DB_CON - main database connection via PDO
+	 * @param $_CONSTRUCTR_CONF - main Constructr CMS configuration array
+	 * @param $PAGE_ID - Constructr CMS Frontend PageID
 	 */	 
     $constructr -> get('/constructr/content/:PAGE_ID/', $ADMIN_CHECK, function ($PAGE_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
@@ -148,7 +153,12 @@
     );
 
  	/**
-	 * Main Administrator View to retrieve a Uploads-Image List within the Content-Editor. 
+	 * Main Administrator View to retrieve a Uploads-Image List within the Content-Editor.
+	 * @param $ADMIN_CHECK - User Rights Function
+	 * @param $constructr - Constructr CMS application
+	 * @param $DB_CON - main database connection via PDO
+	 * @param $_CONSTRUCTR_CONF - main Constructr CMS configuration array
+	 * @return JSON structure with all Image Files
 	 */	 
     $constructr -> get('/constructr/get-image-list/', $ADMIN_CHECK, function () use ($constructr,$_CONSTRUCTR_CONF)
         {
@@ -180,7 +190,13 @@
     );
 
  	/**
-	 * Creating a new Content Element Form-View. 
+	 * Creating a new Content Element Form-View.
+	 * @param $ADMIN_CHECK - User Rights Function
+	 * @param $constructr - Constructr CMS application
+	 * @param $DB_CON - main database connection via PDO
+	 * @param $_CONSTRUCTR_CONF - main Constructr CMS configuration array
+	 * @param $PAGE_ID - Constructr CMS Frontend PageID
+	 * @param $NEW_CONTENT_ORDER - Sorting value of the new Content
 	 */
     $constructr -> get('/constructr/content/:PAGE_ID/:NEW_CONTENT_ORDER/new/', $ADMIN_CHECK, function ($PAGE_ID,$NEW_CONTENT_ORDER) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
@@ -268,6 +284,12 @@
 
 	/**
 	 * Update the Page JS and CSS
+	 * @param $ADMIN_CHECK - User Rights Function
+	 * @param $constructr - Constructr CMS application
+	 * @param $DB_CON - main database connection via PDO
+	 * @param $_CONSTRUCTR_CONF - main Constructr CMS configuration array
+	 * @param $GUID - Constructr CMS CSRF-Guard
+	 * @param $PAGE_ID - Constructr CMS Frontend PageID
 	 */
     $constructr -> post('/constructr/content/:PAGE_ID/update-page-data/:GUID/', $ADMIN_CHECK, function ($PAGE_ID,$GUID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
@@ -359,7 +381,13 @@
     );
 
  	/**
-	 * Creating a new Content Element Post-Form-View. 
+	 * Creating a new Content Element Post-Form-View.
+	 * @param $ADMIN_CHECK - User Rights Function
+	 * @param $constructr - Constructr CMS application
+	 * @param $DB_CON - main database connection via PDO
+	 * @param $_CONSTRUCTR_CONF - main Constructr CMS configuration array
+	 * @param $PAGE_ID - Constructr CMS Frontend PageID
+	 * @param $GUID - Constructr CMS CSRF-Guard 
 	 */
     $constructr -> post('/constructr/content/:PAGE_ID/new/:GUID/', $ADMIN_CHECK, function ($PAGE_ID,$GUID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
@@ -475,7 +503,13 @@
     );
 
  	/**
-	 * Editing a Content Element. 
+	 * Editing a Content Element.
+	 * @param $ADMIN_CHECK - User Rights Function
+	 * @param $constructr - Constructr CMS application
+	 * @param $DB_CON - main database connection via PDO
+	 * @param $_CONSTRUCTR_CONF - main Constructr CMS configuration array
+	 * @param $PAGE_ID - Constructr CMS Frontend PageID
+	 * @param $CONTENT_ID - Constructr CMS ContentID
 	 */
     $constructr -> get('/constructr/content/:PAGE_ID/:CONTENT_ID/edit/', $ADMIN_CHECK, function ($PAGE_ID,$CONTENT_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
@@ -597,7 +631,14 @@
     );
 
  	/**
-	 * Post-View of editing a Content Element. 
+	 * Post-View of editing a Content Element.
+	 * @param $ADMIN_CHECK - User Rights Function
+	 * @param $constructr - Constructr CMS application
+	 * @param $DB_CON - main database connection via PDO
+	 * @param $_CONSTRUCTR_CONF - main Constructr CMS configuration array
+	 * @param $PAGE_ID - Constructr CMS Frontend PageID
+	 * @param $CONTENT_ID - Constructr CMS ContentID
+	 * @param $GUID - Constructr CMS CSRF-Guard
 	 */
     $constructr -> post('/constructr/content/:PAGE_ID/:CONTENT_ID/edit/:GUID/', $ADMIN_CHECK, function ($PAGE_ID,$CONTENT_ID,$GUID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
@@ -725,7 +766,14 @@
     );
 
  	/**
-	 * Reordering of Content Elements in List-View. 
+	 * Reordering of Content Elements in List-View.
+	 * @param $ADMIN_CHECK - User Rights Function
+	 * @param $constructr - Constructr CMS application
+	 * @param $DB_CON - main database connection via PDO
+	 * @param $_CONSTRUCTR_CONF - main Constructr CMS configuration array
+	 * @param $PAGE_ID - Constructr CMS Frontend PageID
+	 * @param $CONTENT_ID - Constructr CMS ContentID
+	 * @param $ACT_ORDER - Constructr CMS actual content sorting value 
 	 */
     $constructr -> get('/constructr/content/:PAGE_ID/:CONTENT_ID/:ACT_ORDER/up/', $ADMIN_CHECK, function ($PAGE_ID,$CONTENT_ID,$ACT_ORDER) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
@@ -830,7 +878,14 @@
     );
 
  	/**
-	 * Reordering of Content Elements in List-View. 
+	 * Reordering of Content Elements in List-View.
+	 * @param $ADMIN_CHECK - User Rights Function
+	 * @param $constructr - Constructr CMS application
+	 * @param $DB_CON - main database connection via PDO
+	 * @param $_CONSTRUCTR_CONF - main Constructr CMS configuration array
+	 * @param $PAGE_ID - Constructr CMS Frontend PageID
+	 * @param $CONTENT_ID - Constructr CMS ContentID
+	 * @param $ACT_ORDER - Constructr CMS content element sorting value
 	 */
     $constructr -> get('/constructr/content/:PAGE_ID/:CONTENT_ID/:ACT_ORDER/down/', $ADMIN_CHECK, function ($PAGE_ID,$CONTENT_ID,$ACT_ORDER) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
@@ -934,6 +989,15 @@
         }
     );
 
+ 	/**
+	 * Activate an Content Element
+	 * @param $ADMIN_CHECK - User Rights Function
+	 * @param $constructr - Constructr CMS application
+	 * @param $DB_CON - main database connection via PDO
+	 * @param $_CONSTRUCTR_CONF - main Constructr CMS configuration array
+	 * @param $PAGE_ID - Constructr CMS Frontend PageID
+	 * @param $CONTENT_ID - Constructr CMS ContentID
+	 */
     $constructr -> get('/constructr/content/:PAGE_ID/:CONTENT_ID/activate/', $ADMIN_CHECK, function ($PAGE_ID,$CONTENT_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
             $PAGE_ID = constructr_sanitization($PAGE_ID,true,true);
@@ -1024,7 +1088,13 @@
     );
 
  	/**
-	 * Deactivation of Content Elements in List-View. 
+	 * Deactivation of Content Elements in List-View.
+	 * @param $ADMIN_CHECK - User Rights Function
+	 * @param $constructr - Constructr CMS application
+	 * @param $DB_CON - main database connection via PDO
+	 * @param $_CONSTRUCTR_CONF - main Constructr CMS configuration array
+	 * @param $PAGE_ID - Constructr CMS Frontend PageID
+	 * @param $CONTENT_ID - Constructr CMS ContentID
 	 */
     $constructr -> get('/constructr/content/:PAGE_ID/:CONTENT_ID/deactivate/', $ADMIN_CHECK, function ($PAGE_ID,$CONTENT_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
@@ -1116,7 +1186,14 @@
     );
 
  	/**
-	 * Deleting a Content Element in List-View. 
+	 * Deleting a Content Element in List-View.
+	 * @param $ADMIN_CHECK - User Rights Function
+	 * @param $constructr - Constructr CMS application
+	 * @param $DB_CON - main database connection via PDO
+	 * @param $_CONSTRUCTR_CONF - main Constructr CMS configuration array
+	 * @param $PAGE_ID - Constructr CMS Frontend PageID
+	 * @param $CONTENT_ID - Constructr CMS ContentID
+	 * @param $ACT_ORDER - Constructr CMS content element sorting value
 	 */
     $constructr -> get('/constructr/content/:PAGE_ID/:CONTENT_ID/:ACT_ORDER/delete/', $ADMIN_CHECK, function ($PAGE_ID,$CONTENT_ID,$ACT_ORDER) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
@@ -1206,7 +1283,13 @@
     );
 
  	/**
-	 * Delete all Content-Elements of a specific Page. 
+	 * Delete all Content-Elements of a specific Page.
+	 * @param $ADMIN_CHECK - User Rights Function
+	 * @param $constructr - Constructr CMS application
+	 * @param $DB_CON - main database connection via PDO
+	 * @param $_CONSTRUCTR_CONF - main Constructr CMS configuration array
+	 * @param $PAGE_ID - Constructr CMS Frontend PageID
+	 * @param $CONTENT_ID - Constructr CMS ContentID
 	 */
     $constructr -> get('/constructr/content/:PAGE_ID/:CONTENT_ID/delete-complete/', $ADMIN_CHECK, function ($PAGE_ID,$CONTENT_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
@@ -1301,7 +1384,14 @@
     );
 
  	/**
-	 * Delete the History-Content-Elements of a specific Page. 
+	 * Delete the History-Content-Elements of a specific Page.
+	 * @param $ADMIN_CHECK - User Rights Function
+	 * @param $constructr - Constructr CMS application
+	 * @param $DB_CON - main database connection via PDO
+	 * @param $_CONSTRUCTR_CONF - main Constructr CMS configuration array
+	 * @param $PAGE_ID - Constructr CMS Frontend PageID
+	 * @param $CONTENT_ID - Constructr CMS ContentID
+	 * @param $CONTENT_HISTORY_ID - Constructr CMS content element history id
 	 */
     $constructr -> get('/constructr/content/:PAGE_ID/:CONTENT_HISTORY_ID/:CONTENT_ID/delete-history-complete/', $ADMIN_CHECK, function ($PAGE_ID,$CONTENT_HISTORY_ID,$CONTENT_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
@@ -1389,7 +1479,14 @@
     );
 
  	/**
-	 * Recover a deleted Content-Element. 
+	 * Recover a deleted Content-Element.
+	 * @param $ADMIN_CHECK - User Rights Function
+	 * @param $constructr - Constructr CMS application
+	 * @param $DB_CON - main database connection via PDO
+	 * @param $_CONSTRUCTR_CONF - main Constructr CMS configuration array
+	 * @param $PAGE_ID - Constructr CMS Frontend PageID
+	 * @param $CONTENT_ID - Constructr CMS ContentID
+	 * @param $NEW_ORDER - Constructr CMS content element recover sorting value
 	 */
     $constructr -> get('/constructr/content/:PAGE_ID/:CONTENT_ID/:NEW_ORDER/re-create/', $ADMIN_CHECK, function ($PAGE_ID,$CONTENT_ID,$NEW_ORDER) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {

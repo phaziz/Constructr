@@ -41,7 +41,11 @@
 	 */
 
  	/**
-	 * Main Templates View. 
+	 * Main Templates View.
+	 * @param $ADMIN_CHECK - Constructr CMS Admin chekker function
+	 * @param $constructr - Constructr CMS application
+	 * @param $DB_CON - main database connection via PDO
+	 * @param $_CONSTRUCTR_CONF - main Constructr CMS configuration array
 	 */
 	$constructr -> get('/constructr/templates/', $ADMIN_CHECK, function () use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
@@ -123,7 +127,12 @@
     );
 
  	/**
-	 * Edit a Template File in Your Backend. 
+	 * Edit a Template File in Your Backend.
+	 * @param $ADMIN_CHECK - Constructr CMS Admin chekker function
+	 * @param $constructr - Constructr CMS application
+	 * @param $DB_CON - main database connection via PDO
+	 * @param $_CONSTRUCTR_CONF - main Constructr CMS configuration array
+	 * @param $TEMPLATE - Constructr CMS TemplateFileID
 	 */
     $constructr -> get('/constructr/templates/edit/:TEMPLATE/', $ADMIN_CHECK, function ($TEMPLATE) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
@@ -200,7 +209,13 @@
     );
 
  	/**
-	 * PostProcessing a edited Template-File. 
+	 * PostProcessing a edited Template-File.
+	 * @param $ADMIN_CHECK - Constructr CMS Admin chekker function
+	 * @param $constructr - Constructr CMS application
+	 * @param $DB_CON - main database connection via PDO
+	 * @param $_CONSTRUCTR_CONF - main Constructr CMS configuration array
+	 * @param $TEMPLATE - Constructr CMS TemplateFileID
+	 * @param $GUID - Constructr CMS CSRF-Guard
 	 */
     $constructr -> post('/constructr/templates/edit/:TEMPLATE/:GUID/', $ADMIN_CHECK, function ($TEMPLATE,$GUID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
@@ -286,7 +301,12 @@
     );
 
  	/**
-	 * Delete a Template-File. 
+	 * Delete a Template-File.
+	 * @param $ADMIN_CHECK - Constructr CMS Admin chekker function
+	 * @param $constructr - Constructr CMS application
+	 * @param $DB_CON - main database connection via PDO
+	 * @param $_CONSTRUCTR_CONF - main Constructr CMS configuration array
+	 * @param $TEMPLATE - Constructr CMS TemplateFileID
 	 */
     $constructr -> get('/constructr/templates/delete/:TEMPLATE/', $ADMIN_CHECK, function ($TEMPLATE) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
@@ -358,7 +378,12 @@
     );
 
  	/**
-	 * Create a new Template. 
+	 * Create a new Template.
+	 * @param $ADMIN_CHECK - Constructr CMS Admin chekker function
+	 * @param $constructr - Constructr CMS application
+	 * @param $DB_CON - main database connection via PDO
+	 * @param $_CONSTRUCTR_CONF - main Constructr CMS configuration array
+	 * @param $TEMPLATE - Constructr CMS TemplateFileID
 	 */
     $constructr -> get('/constructr/templates/new/', $ADMIN_CHECK, function () use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
@@ -427,7 +452,12 @@
     );
 
  	/**
-	 * POST-Processing a new Template-File. 
+	 * POST-Processing a new Template-File.
+	 * @param $ADMIN_CHECK - Constructr CMS Admin chekker function
+	 * @param $constructr - Constructr CMS application
+	 * @param $DB_CON - main database connection via PDO
+	 * @param $_CONSTRUCTR_CONF - main Constructr CMS configuration array
+	 * @param $GUID - Constructr CMS CSRF-Guard
 	 */
     $constructr -> post('/constructr/templates/new/:GUID/', $ADMIN_CHECK, function ($GUID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {

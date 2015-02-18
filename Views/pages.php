@@ -41,7 +41,11 @@
 	 */
 
  	/**
-	 * Page Management main view. 
+	 * Page Management main view.
+	 * @param $ADMIN_CHECK - Constructr CMS Admin chekker function
+	 * @param $constructr - Constructr CMS application
+	 * @param $DB_CON - main database connection via PDO
+	 * @param $_CONSTRUCTR_CONF - main Constructr CMS configuration array
 	 */
     $constructr -> get('/constructr/pages/', $ADMIN_CHECK, function () use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
@@ -120,7 +124,11 @@
     );
 
  	/**
-	 * Creating a new Page-Form. 
+	 * Creating a new Page-Form.
+	 * @param $ADMIN_CHECK - Constructr CMS Admin chekker function
+	 * @param $constructr - Constructr CMS application
+	 * @param $DB_CON - main database connection via PDO
+	 * @param $_CONSTRUCTR_CONF - main Constructr CMS configuration array
 	 */
     $constructr -> get('/constructr/pages/new/', $ADMIN_CHECK, function () use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
@@ -207,7 +215,12 @@
     );
 
  	/**
-	 * Post-Processing a new Page. 
+	 * Post-Processing a new Page.
+	 * @param $ADMIN_CHECK - Constructr CMS Admin chekker function
+	 * @param $constructr - Constructr CMS application
+	 * @param $DB_CON - main database connection via PDO
+	 * @param $_CONSTRUCTR_CONF - main Constructr CMS configuration array
+	 * @param $GUID - Constructr CMS CSRF-Guard
 	 */
     $constructr -> post('/constructr/pages/new/:GUID/', $ADMIN_CHECK, function ($GUID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
@@ -851,7 +864,12 @@
     );
 
  	/**
-	 * Edit a Page. 
+	 * Edit a Page.
+	 * @param $ADMIN_CHECK - Constructr CMS Admin chekker function
+	 * @param $constructr - Constructr CMS application
+	 * @param $DB_CON - main database connection via PDO
+	 * @param $_CONSTRUCTR_CONF - main Constructr CMS configuration array
+	 * @param $PAGE_ID - Constructr CMS page to edit in form
 	 */
     $constructr -> get('/constructr/pages/edit/:PAGE_ID/', $ADMIN_CHECK, function ($PAGE_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
@@ -943,7 +961,12 @@
     );
 
  	/**
-	 * Post-Processing edit a Page. 
+	 * Post-Processing edit a Page.
+	 * @param $ADMIN_CHECK - Constructr CMS Admin chekker function
+	 * @param $constructr - Constructr CMS application
+	 * @param $DB_CON - main database connection via PDO
+	 * @param $_CONSTRUCTR_CONF - main Constructr CMS configuration array
+	 * @param $GUID - Constructr CMS CSRF-Guard
 	 */
     $constructr -> post('/constructr/pages/edit/:GUID/', $ADMIN_CHECK, function ($GUID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
@@ -1141,7 +1164,12 @@
     );
 
  	/**
-	 * Acticvate a Page hidden View. 
+	 * Activate a Page hidden View.
+	 * @param $ADMIN_CHECK - Constructr CMS Admin chekker function
+	 * @param $constructr - Constructr CMS application
+	 * @param $DB_CON - main database connection via PDO
+	 * @param $_CONSTRUCTR_CONF - main Constructr CMS configuration array
+	 * @param $PAGE_ID - Constructr CMS page id to activate
 	 */
     $constructr -> get('/constructr/pages/activate/:PAGE_ID/', $ADMIN_CHECK, function ($PAGE_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
@@ -1229,7 +1257,12 @@
     );
 
  	/**
-	 * Deactivate a Page hidden View. 
+	 * Deactivate a Page hidden View.
+	 * @param $ADMIN_CHECK - Constructr CMS Admin chekker function
+	 * @param $constructr - Constructr CMS application
+	 * @param $DB_CON - main database connection via PDO
+	 * @param $_CONSTRUCTR_CONF - main Constructr CMS configuration array
+	 * @param $PAGE_ID - Constructr CMS page id 
 	 */
     $constructr -> get('/constructr/pages/deactivate/:PAGE_ID/', $ADMIN_CHECK, function ($PAGE_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
@@ -1318,7 +1351,13 @@
     );
 
  	/**
-	 * Delete a Single Page. 
+	 * Delete a Single Page.
+	 * @param $ADMIN_CHECK - Constructr CMS Admin chekker function
+	 * @param $constructr - Constructr CMS application
+	 * @param $DB_CON - main database connection via PDO
+	 * @param $_CONSTRUCTR_CONF - main Constructr CMS configuration array
+	 * @param $PAGE_ID - Constructr CMS page ID
+	 * @param $PAGE_ORDER - reordering the left pages
 	 */
     $constructr -> get('/constructr/pages/delete-single/:PAGE_ID/:PAGE_ORDER/', $ADMIN_CHECK, function ($PAGE_ID,$PAGE_ORDER) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
@@ -1468,7 +1507,13 @@
     );
 
  	/**
-	 * Reorder Your Pages. 
+	 * Reorder Your Pages.
+	 * @param $ADMIN_CHECK - Constructr CMS Admin chekker function
+	 * @param $constructr - Constructr CMS application
+	 * @param $DB_CON - main database connection via PDO
+	 * @param $_CONSTRUCTR_CONF - main Constructr CMS configuration array
+	 * @param $PAGE_ID - Constructr CMS page ID
+	 * @param $METHOD - up or down resorting
 	 */
     $constructr -> get('/constructr/pages/reorder/:METHOD/:PAGE_ID/', $ADMIN_CHECK, function ($METHOD,$PAGE_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {

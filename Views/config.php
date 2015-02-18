@@ -41,7 +41,11 @@
 	 */
 
   	/**
-	 * Administrator View to display the Configuration Array. 
+	 * Administrator View to display the Configuration Array.
+	 * @param $ADMIN_CHECK - User Rights Function
+	 * @param $constructr - Constructr CMS application
+	 * @param $DB_CON - main database connection via PDO
+	 * @param $_CONSTRUCTR_CONF - main Constructr CMS configuration array
 	 */	 	 
     $constructr -> get('/constructr/config/', $ADMIN_CHECK, function () use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {

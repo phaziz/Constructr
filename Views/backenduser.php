@@ -41,7 +41,11 @@
 	 */
 
  	/**
-	 * Administrator View of your Backend User-Accounts 
+	 * Administrator View of your Backend User-Accounts
+	 * @param $ADMIN_CHECK - User Rights Function
+	 * @param $constructr - Constructr CMS application
+	 * @param $DB_CON - main database connection via PDO
+	 * @param $_CONSTRUCTR_CONF - main Constructr CMS configuration array 
 	 */	 
     $constructr -> get('/constructr/user/', $ADMIN_CHECK, function () use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
@@ -120,6 +124,10 @@
 
  	/**
 	 * Form-View to create a new User-Account. 
+	 * @param $ADMIN_CHECK - User Rights Function
+	 * @param $constructr - Constructr CMS application
+	 * @param $DB_CON - main database connection via PDO
+	 * @param $_CONSTRUCTR_CONF - main Constructr CMS configuration array
 	 */	 
     $constructr -> get('/constructr/user/new/', $ADMIN_CHECK, function () use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
@@ -189,6 +197,10 @@
 
  	/**
 	 * Hidden view to check if the username is unique 
+	 * @param $ADMIN_CHECK - User Rights Function
+	 * @param $constructr - Constructr CMS application
+	 * @param $DB_CON - main database connection via PDO
+	 * @param $_CONSTRUCTR_CONF - main Constructr CMS configuration array
 	 */	 
     $constructr -> get('/constructr/user/new/check-username/', $ADMIN_CHECK, function () use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
@@ -297,8 +309,12 @@
     );
 
  	/**
-	 * Hidden Edit-View to check if the username is unique.  
-	 */	 
+	 * Hidden Edit-View to check if the username is unique.
+	 * @param $ADMIN_CHECK - User Rights Function
+	 * @param $constructr - Constructr CMS application
+	 * @param $DB_CON - main database connection via PDO
+	 * @param $_CONSTRUCTR_CONF - main Constructr CMS configuration array
+	 */
     $constructr -> get('/constructr/user/edit/:user_id/check-single-username/', $ADMIN_CHECK, function () use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
             if($_CONSTRUCTR_CONF['_LOGGING'] == true)
@@ -406,7 +422,13 @@
     );
 
  	/**
-	 * Post View to create a new Backend User-Account. 
+	 * Post View to create a new Backend User-Account.
+	 * @param $ADMIN_CHECK - User Rights Function
+	 * @param $constructr - Constructr CMS application
+	 * @param $DB_CON - main database connection via PDO
+	 * @param $_CONSTRUCTR_CONF - main Constructr CMS configuration array
+	 * @param $_CONSTRUCTR_USER_RIGHTS_CONF - main Constructr CMS user rights configuration array
+	 * @param $GUID - Constructr CMS CSRF-Guard 
 	 */	 
     $constructr -> post('/constructr/user/new/:GUID/', $ADMIN_CHECK, function ($GUID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF,$_CONSTRUCTR_USER_RIGHTS_CONF)
         {
@@ -552,7 +574,13 @@
     );
 
  	/**
-	 * Form-View to edit a Backend User Account. 
+	 * Form-View to edit a Backend User Account.
+	 * @param $ADMIN_CHECK - User Rights Function
+	 * @param $constructr - Constructr CMS application
+	 * @param $DB_CON - main database connection via PDO
+	 * @param $_CONSTRUCTR_CONF - main Constructr CMS configuration array
+	 * @param $USER_ID - Constructr CMS Backend UserID 
+ 
 	 */	 
     $constructr -> get('/constructr/user/edit/:USER_ID/', $ADMIN_CHECK, function ($USER_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
@@ -658,7 +686,13 @@
     );
 
  	/**
-	 * Post-View to edit a Backend User Account. 
+	 * Post-View to edit a Backend User Account.
+	 * @param $ADMIN_CHECK - User Rights Function
+	 * @param $constructr - Constructr CMS application
+	 * @param $DB_CON - main database connection via PDO
+	 * @param $_CONSTRUCTR_CONF - main Constructr CMS configuration array
+	 * @param $GUID - Constructr CMS CSRF-Guard 
+	 * @param $USER_ID - Constructr CMS Backend UserID 
 	 */	 
     $constructr -> post('/constructr/user/edit/:USER_ID/:GUID/', $ADMIN_CHECK, function ($USER_ID,$GUID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
@@ -775,7 +809,12 @@
     );
 
  	/**
-	 * Hidden View to deactivate a user account. 
+	 * Hidden View to deactivate a user account.
+	 * @param $ADMIN_CHECK - User Rights Function
+	 * @param $constructr - Constructr CMS application
+	 * @param $DB_CON - main database connection via PDO
+	 * @param $_CONSTRUCTR_CONF - main Constructr CMS configuration array
+	 * @param $USER_ID - Constructr CMS Backend UserID
 	 */	 
     $constructr -> get('/constructr/user/set-inactive/:USER_ID/', function ($USER_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
@@ -864,7 +903,12 @@
     );
 
  	/**
-	 * Hidden View to activate a Backend User-Account. 
+	 * Hidden View to activate a Backend User-Account.
+	 * @param $ADMIN_CHECK - User Rights Function
+	 * @param $constructr - Constructr CMS application
+	 * @param $DB_CON - main database connection via PDO
+	 * @param $_CONSTRUCTR_CONF - main Constructr CMS configuration array
+	 * @param $USER_ID - Constructr CMS Backend UserID
 	 */	 
     $constructr -> get('/constructr/user/set-active/:USER_ID/', function ($USER_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
@@ -953,7 +997,12 @@
     );
 
  	/**
-	 * Backend View to delete a User-Account. 
+	 * Backend View to delete a User-Account.
+	 * @param $ADMIN_CHECK - User Rights Function
+	 * @param $constructr - Constructr CMS application
+	 * @param $DB_CON - main database connection via PDO
+	 * @param $_CONSTRUCTR_CONF - main Constructr CMS configuration array
+	 * @param $USER_ID - Constructr CMS Backend UserID
 	 */	 
     $constructr -> get('/constructr/user/delete/:USER_ID/', function ($USER_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {

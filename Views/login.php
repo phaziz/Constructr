@@ -41,7 +41,10 @@
 	 */
 
   	/**
-	 * Main Login Form Backend. 
+	 * Main Login Form Backend.
+	 * @param $constructr - Constructr CMS application
+	 * @param $DB_CON - main database connection via PDO
+	 * @param $_CONSTRUCTR_CONF - main Constructr CMS configuration array
 	 */	 
     $constructr -> get('/constructr/login/', function () use ($constructr,$_CONSTRUCTR_CONF,$DBCON)
         {
@@ -116,6 +119,11 @@
         }
     );
 
+  	/**
+	 * Main Login Error view
+	 * @param $constructr - Constructr CMS application
+	 * @param $_CONSTRUCTR_CONF - main Constructr CMS configuration array
+	 */
     $constructr -> get('/constructr/login-error/', function () use ($constructr,$_CONSTRUCTR_CONF)
         {
             if(isset($_SESSION['constructr_login_blocked']) && $_SESSION['constructr_login_blocked'] != '')
@@ -147,7 +155,11 @@
     );
 
  	/**
-	 * Postprocessing the Login... 
+	 * Postprocessing the Login...
+	 * @param $constructr - Constructr CMS application
+	 * @param $DB_CON - main database connection via PDO
+	 * @param $_CONSTRUCTR_CONF - main Constructr CMS configuration array
+	 * @param $GUID - Constructr CMS CSRF-Guard
 	 */
     $constructr -> post('/constructr/login/:GUID/', function ($GUID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
@@ -285,7 +297,10 @@
     );
 
  	/**
-	 * 2FA Backend processing... 
+	 * 2FA Backend processing...
+	 * @param $constructr - Constructr CMS application
+	 * @param $DB_CON - main database connection via PDO
+	 * @param $_CONSTRUCTR_CONF - main Constructr CMS configuration array
 	 */
     $constructr -> get('/constructr/verify-login/', function () use ($constructr,$_CONSTRUCTR_CONF,$DBCON)
         {
@@ -311,7 +326,10 @@
     );
 
  	/**
-	 * 2Fa Error Handler View... 
+	 * 2Fa Error Handler View...
+	 * @param $constructr - Constructr CMS application
+	 * @param $DB_CON - main database connection via PDO
+	 * @param $_CONSTRUCTR_CONF - main Constructr CMS configuration array
 	 */
     $constructr -> get('/constructr/verify-login-error/', function () use ($constructr,$_CONSTRUCTR_CONF,$DBCON)
         {
@@ -337,7 +355,11 @@
     );
 
  	/**
-	 * Verifying 2FA-Login. 
+	 * Verifying 2FA-Login.
+	 * @param $constructr - Constructr CMS application
+	 * @param $DB_CON - main database connection via PDO
+	 * @param $_CONSTRUCTR_CONF - main Constructr CMS configuration array
+	 * @param $GUID - Constructr CMS CSRF-Guard
 	 */
     $constructr -> post('/constructr/verify-login/:GUID/', function ($GUID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {

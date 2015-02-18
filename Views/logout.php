@@ -41,7 +41,9 @@
 	 */
 
  	/**
-	 * Constructr CMS Backend Logout. 
+	 * Constructr CMS Backend Logout.
+	 * @param $constructr - Constructr CMS application
+	 * @param $_CONSTRUCTR_CONF - main Constructr CMS configuration array
 	 */
     $constructr -> get('/constructr/logout/', function () use ($constructr,$_CONSTRUCTR_CONF)
         {

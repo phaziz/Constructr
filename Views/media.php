@@ -41,7 +41,11 @@
 	 */
 
   	/**
-	 * AssetCenter (Uploads) View in your Backend. 
+	 * AssetCenter (Uploads) View in your Backend.
+	 * @param $ADMIN_CHECK - Constructr CMS Admin chekker function
+	 * @param $constructr - Constructr CMS application
+	 * @param $DB_CON - main database connection via PDO
+	 * @param $_CONSTRUCTR_CONF - main Constructr CMS configuration array
 	 */	 
     $constructr -> get('/constructr/media/', $ADMIN_CHECK, function () use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
@@ -123,7 +127,11 @@
     );
 
  	/**
-	 * New Uplaod-Form. 
+	 * New Uplaod-Form.
+	 * @param $ADMIN_CHECK - Constructr CMS Admin chekker function
+	 * @param $constructr - Constructr CMS application
+	 * @param $DB_CON - main database connection via PDO
+	 * @param $_CONSTRUCTR_CONF - main Constructr CMS configuration array
 	 */
     $constructr -> get('/constructr/media/new/', $ADMIN_CHECK, function () use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
@@ -192,7 +200,12 @@
     );
 
  	/**
-	 * New Media Post-Processing View. 
+	 * New Media Post-Processing View.
+	 * @param $ADMIN_CHECK - Constructr CMS Admin chekker function
+	 * @param $constructr - Constructr CMS application
+	 * @param $DB_CON - main database connection via PDO
+	 * @param $_CONSTRUCTR_CONF - main Constructr CMS configuration array
+	 * @param $GUID - Constructr CMS CSRF-Guard
 	 */
     $constructr -> post('/constructr/media/new/:GUID/', $ADMIN_CHECK, function ($GUID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
@@ -319,7 +332,12 @@
     );
 
  	/**
-	 * Media Trashcan recovery View. 
+	 * Media Trashcan recovery View.
+	 * @param $ADMIN_CHECK - Constructr CMS Admin chekker function
+	 * @param $constructr - Constructr CMS application
+	 * @param $DB_CON - main database connection via PDO
+	 * @param $_CONSTRUCTR_CONF - main Constructr CMS configuration array
+	 * @param $FILE - Media recovery from trashcan File
 	 */
     $constructr -> get('/constructr/media/re-create/:FILE/', $ADMIN_CHECK, function ($FILE) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
@@ -360,7 +378,12 @@
     );
 
  	/**
-	 * Delete a Upload. 
+	 * Delete a Upload.
+ 	 * @param $ADMIN_CHECK - Constructr CMS Admin chekker function
+	 * @param $constructr - Constructr CMS application
+	 * @param $DB_CON - main database connection via PDO
+	 * @param $_CONSTRUCTR_CONF - main Constructr CMS configuration array
+	 * @param $MEDIA_ID - Constructr CMS upload file id
 	 */
     $constructr -> get('/constructr/media/delete/:MEDIA_ID/', $ADMIN_CHECK, function ($MEDIA_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
@@ -453,7 +476,12 @@
     );
 
  	/**
-	 * Uploads-Details View. 
+	 * Uploads-Details View.
+	 * @param $ADMIN_CHECK - Constructr CMS Admin chekker function
+	 * @param $constructr - Constructr CMS application
+	 * @param $DB_CON - main database connection via PDO
+	 * @param $_CONSTRUCTR_CONF - main Constructr CMS configuration array
+	 * @param $MEDIA_ID - Constructr CMS upload media file ID
 	 */
     $constructr -> get('/constructr/media/details/:MEDIA_ID/', $ADMIN_CHECK, function ($MEDIA_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
@@ -554,7 +582,12 @@
     );
 
  	/**
-	 * Post-Processing new Media-Details. 
+	 * Post-Processing new Media-Details.
+	 * @param $ADMIN_CHECK - Constructr CMS Admin chekker function
+	 * @param $constructr - Constructr CMS application
+	 * @param $DB_CON - main database connection via PDO
+	 * @param $_CONSTRUCTR_CONF - main Constructr CMS configuration array
+	 * @param $MEDIA_ID - Constructr CMS upload media file ID
 	 */
     $constructr -> post('/constructr/media/details/:MEDIA_ID/', $ADMIN_CHECK, function ($MEDIA_ID) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
@@ -647,6 +680,10 @@
 
  	/**
 	 * Trashcan View. 
+	 * @param $ADMIN_CHECK - Constructr CMS Admin chekker function
+	 * @param $constructr - Constructr CMS application
+	 * @param $DB_CON - main database connection via PDO
+	 * @param $_CONSTRUCTR_CONF - main Constructr CMS configuration array
 	 */
     $constructr -> get('/constructr/media/trash/', $ADMIN_CHECK, function () use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
@@ -758,7 +795,12 @@
     );
 
  	/**
-	 * Delete a Media-Upload. 
+	 * Delete a Media-Upload.
+	 * @param $ADMIN_CHECK - Constructr CMS Admin chekker function
+	 * @param $constructr - Constructr CMS application
+	 * @param $DB_CON - main database connection via PDO
+	 * @param $_CONSTRUCTR_CONF - main Constructr CMS configuration array
+	 * @param $MEDIA_FILE - Constructr CMS upload media file ID
 	 */
     $constructr -> get('/constructr/media/trash/delete/:MEDIA_FILE/', $ADMIN_CHECK, function ($MEDIA_FILE) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {

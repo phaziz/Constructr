@@ -40,12 +40,32 @@
 	 *
 	 */
 
- 	require_once './Config/constructr.conf.php';
+	/**
+	 * Including the main Constructr CMS system configuration
+	 * @param array $_CONSTRUCTR_CONF - main system configuration array
+	 */
+	require_once './Config/constructr.conf.php';
+
+	/**
+	 * Including the main Constructr CMS user configuration
+	 * @param array $_CONSTRUCTR_USER_RIGHTS_CONF - main user rights configuration array
+	 */
     require_once './Config/constructr_user_rights.conf.php';
 
+	/**
+	 * Adding Version information to the main Constructr CMS configuration array
+	 * @param string $_CONSTRUCTR_CONF['_VERSION_DATE'] - Version release date of Constructr CMS
+	 * @param string $_CONSTRUCTR_CONF['_VERSION'] - Version number of Constructr CMS
+	 */
     $_CONSTRUCTR_CONF['_VERSION_DATE'] = '2015-02-17';
     $_CONSTRUCTR_CONF['_VERSION'] = '1.04.4';
 
+	/**
+	 * Constructr CMS plugin architecture (beta)
+	 * @param array $_CONSTRUCTR_PLUGINS['_CONSTRUCTR_PLUGINS_CSS'] - Additional CSS to load 
+	 * @param array $_CONSTRUCTR_PLUGINS['_CONSTRUCTR_PLUGINS_CONTENT'] - Additional content elements to load 
+	 * @param array $_CONSTRUCTR_PLUGINS['_CONSTRUCTR_PLUGINS_JS'] - Additional Javascript to load
+	 */
 	$_CONSTRUCTR_PLUGINS = array
 	(
 		'_CONSTRUCTR_PLUGINS_CSS' => array
@@ -59,11 +79,20 @@
 		)
 	);
 
+	/**
+	 * Including SLIM and additional Slim middleware
+	 */
     require_once './Slim/Slim.php';
     require_once './Slim/Log/DateTimeFileWriter.php';
 
+	/**
+	 * Registering the SLIM autoloader
+	 */
     \Slim\Slim::registerAutoloader();
 
+	/**
+	 * Instantiating SLIM
+	 */
     $constructr = new \Slim\Slim(
         array
         (
@@ -103,6 +132,9 @@
         )
     );
 
+	/**
+	 * Try to establish the main ORM instance (PDO)
+	 */
     try
     {
         $DBCON = new PDO('mysql:host=' . $_CONSTRUCTR_CONF['_CONSTRUCTR_DATABASE_HOST'] . ';dbname=' . $_CONSTRUCTR_CONF['_CONSTRUCTR_DATABASE_NAME'],$_CONSTRUCTR_CONF['_CONSTRUCTR_DATABASE_USER'],$_CONSTRUCTR_CONF['_CONSTRUCTR_DATABASE_PASSWORD'],array(PDO::ATTR_PERSISTENT => true));
@@ -113,13 +145,26 @@
         die('<p>Fehler bei der Datenbankverbindung!</p>');
     }
 
+	/**
+	 * Including some helpers
+	 */
     require_once './Views/helper.php';
 
+	/**
+	 * Getting the request parameters
+	 * @param string $REQUEST - the Browser request (URI)
+	 */
 	$REQUEST = $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 	$REQUEST = str_replace(str_replace('http://','',$_CONSTRUCTR_CONF['_BASE_URL']),'',$REQUEST);
 
+	/**
+	 * Frontend GET or POST request
+	 */
 	if(strpos($REQUEST,'constructr') === false)
 	{
+		/**
+		 * Selection of Constructr CMS pages
+		 */
         try
         {
             $URLS = $DBCON -> prepare('SELECT pages_url FROM constructr_pages WHERE pages_active = 1;');
@@ -132,6 +177,9 @@
             die();
         }
 
+		/**
+		 * Creating a temporary pages array
+		 */
         if($URLS)
         {
             $URLS_ARRAY = array();
@@ -149,6 +197,9 @@
             die('Keine angelegten Seiten gefunden!');
         }
 
+		/**
+		 * 404 not found handling and rerouting to Constructr CMS page 404
+		 */
         if(!in_array($REQUEST,$URLS_ARRAY) && $REQUEST != '/' && $REQUEST != '')
         {
             $constructr -> getLog() -> error('404 - URL NOT FOUND: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
@@ -157,13 +208,25 @@
             die();
         }
 
+		/**
+		 * Updating view information with the frontend templating directory
+		 */
         $view = $constructr -> view();
         $view -> setTemplatesDirectory($_CONSTRUCTR_CONF['_TEMPLATES_DIR']);
 
+		/**
+		 * POST or GET
+		 */
         $_METHOD = $constructr -> request -> getMethod();
 
+		/**
+		 * Including Constructr CMS Postmaster for mail forms
+		 */
         require_once './Postmaster/constructr_postmaster.php';
 
+		/**
+		 * Method GET Routing
+		 */
         switch ($_METHOD)
         {
             case 'GET':
@@ -278,7 +341,10 @@
                         }
 
                         $POSTMASTER_GUID = create_guid();
-						
+
+						/**
+						 * Rendering the requested GET page
+						 */
                         $constructr -> render($TEMPLATE,array('_CONSTRUCTR_PLUGINS' => $_CONSTRUCTR_PLUGINS, 'PAGES' => $PAGES,'PAGE_DATA' => $PAGE_DATA,'CONTENT' => $CONTENT,'_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,'POSTMASTER_GUID' => $POSTMASTER_GUID));
 
                         if($_CONSTRUCTR_CONF['_CONSTRUCTR_WEBSITE_CACHE'] == true)
@@ -294,6 +360,9 @@
 
                 break;
 
+			/**
+			 * Method POST Routing
+			 */
             case 'POST':
 
                 $constructr -> post('(:ROUTE+)', function ($ROUTE) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
@@ -391,6 +460,10 @@
                         }
 
                         $POSTMASTER_GUID = create_guid();
+
+						/**
+						 * Rendering the requested POST page
+						 */
                         $constructr -> render($TEMPLATE,array('PAGES' => $PAGES,'PAGE_DATA' => $PAGE_DATA,'CONTENT' => $CONTENT,'_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,'POSTMASTER_GUID' => $POSTMASTER_GUID));
                     }
                 );
@@ -400,6 +473,9 @@
 	}
 	else
 	{
+		/**
+		 * Constructr CMS administration includes
+		 */
         require_once './Views/backenduser.php';
         require_once './Views/backenduser-rights.php';
         require_once './Views/login.php';

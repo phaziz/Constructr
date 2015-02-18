@@ -41,7 +41,13 @@
 	 */
 
 	/**
-	 * Main View to edit the User-Rights of a specific User. 
+	 * Main View to edit the User-Rights of a specific User.
+	 * @param $ADMIN_CHECK - User Rights Function
+	 * @param $constructr - Constructr CMS application
+	 * @param $DB_CON - main database connection via PDO
+	 * @param $_CONSTRUCTR_CONF - main Constructr CMS configuration array
+	 * @param $USER_ID - Constructr CMS Backend User ID
+	 * @param $USER_NAME - Constructr CMS Backend User Name 
 	 */
      $constructr -> get('/constructr/user/edit-user-rights/:user_id/:user_name/', $ADMIN_CHECK, function ($USER_ID,$USER_NAME) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {
@@ -128,6 +134,14 @@
 
 	/**
 	 * Updateing the Rights of a specific User. 
+	 * @param $ADMIN_CHECK - User Rights Function
+	 * @param $constructr - Constructr CMS application
+	 * @param $DB_CON - main database connection via PDO
+	 * @param $_CONSTRUCTR_CONF - main Constructr CMS configuration array
+	 * @param $USER_ID - Constructr CMS Backend User ID
+	 * @param $USER_NAME - Constructr CMS Backend User Name
+	 * @param $NEW_VALUE - Constructr CMS User Right 1 = true / 0 = false
+	 * @param $RIGHT_ID - Constructr CMS Backend User Right ID
 	 */
     $constructr -> get('/constructr/user/set-user-right/:new_value/:right_id/:user_id/:user_name/', $ADMIN_CHECK, function ($NEW_VALUE,$RIGHT_ID,$USER_ID,$USER_NAME) use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {

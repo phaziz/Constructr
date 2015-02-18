@@ -41,7 +41,11 @@
 	 */
 
   	/**
-	 * Main PluginView. 
+	 * Main PluginView.
+	 * @param $ADMIN_CHECK - Constructr CMS Admin chekker function
+	 * @param $constructr - Constructr CMS application
+	 * @param $DB_CON - main database connection via PDO
+	 * @param $_CONSTRUCTR_CONF - main Constructr CMS configuration array
 	 */	 
     $constructr -> get('/constructr/plugins/', $ADMIN_CHECK, function () use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
         {

@@ -50,6 +50,13 @@
         die('Fehler CRYPT_BLOWFISH ist nicht verf&uuml;gbar!');
     }
 
+	function getCurrentUrl()
+	{
+		$ACT_URL = ((empty($_SERVER['HTTPS'])) ? 'http://' : 'https://') . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+		$ACT_URL = str_replace('/CONSTRUCTR-CMS-SETUP/index.php','',$ACT_URL);
+		return $ACT_URL;
+	}
+
 	require_once('../Config/constructr_user_rights.conf.php');
 
 	session_start();
@@ -76,31 +83,13 @@
 	    <meta charset="UTF-8">
 	    <meta name="description" content="Installation von Constructr CMS">
 	    <meta name="keywords" content="Constructr CMS, phaziz.com, Christian Becher">
+        <link href="../Assets/bootstrap-3.3.2-dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="../Assets/css/constructr.css" rel="stylesheet">
 	    <style>
 	    	#container
 	    	{
-	    		width: 70%;
+	    		width: 65%;
 	    		margin:5em auto;
-				font-family:'Helvetica Neue', Helvetica, Arial, Verdana, sans-serif;
-	    		font-size:12px;
-	    		color:#444;
-	    		font-weight:300;
-	    	}
-	    	table
-	    	{
-	    		margin: 0 auto;
-	    	}
-	    	table,
-	    	td,
-	    	th
-	    	{
-	    		border: 1px solid #666;
-	    		padding: 10px 10px 10px 10px;
-	    	}
-	    	th,
-	    	td
-	    	{
-	    		min-width: 200px;
 	    	}
 	    	a:link,
 	    	a:active,
@@ -114,22 +103,18 @@
 	    		text-decoration: none;
 	    		color:#ff0066;
 	    	}
+	    	h1{font-weight: 200;}
 	    </style>
 	</head>
 		<body>
 		
 			<div id="container">
 
-				<?php
+<?php
 
-					/*
-					 * POSTPROCESSING INSTALLATION CONSTRUCTR CMS START
-					 * */
-					 if(isset($_POST['setup']))
-					 {
-					 	$NL = "\n";
-
-						$_CONFIG_FILE_CONTENT = "<?php " . $NL . "
+if(isset($_POST['setup'])){
+$NL = "\n";
+$_CONFIG_FILE_CONTENT = "<?php " . $NL . "
 \$_CONSTRUCTR_CONF = array " . $NL . "
 ( " . $NL . "
 '_CONSTRUCTR_DATABASE_HOST' => '" . $_POST['db_host'] . "', " . $NL . "
@@ -171,25 +156,21 @@
 '_FTP_REMOTE_MODE' => FTP_BINARY, " . $NL . "
 '_FTP_REMOTE_USERNAME' => '', " . $NL . "
 '_FTP_REMOTE_PASSWORD' => '', " . $NL . "
-'_ENABLE_CONTENT_HISTORY' => false " . $NL . "
+'_ENABLE_CONTENT_HISTORY' => false, " . $NL . "
 '_CONSTRUCTR_WEBSITE_CACHE' => false, " . $NL . "
 '_CONSTRUCTR_WEBSITE_CACHE_DIR' => './Website-Cache/' " . $NL . "
 );";
+$FILE = '../Config/constructr.conf.php';
+$CREATE_CONFIG = fopen($FILE,'w+') or die ('ERROR');
+fwrite($CREATE_CONFIG,trim($_CONFIG_FILE_CONTENT)) or die ('ERROR 2');
+fclose($CREATE_CONFIG) or die ('ERROR 3');
 
-			                $FILE = '../Config/constructr.conf.php';
-			                $CREATE_CONFIG = fopen($FILE,'w+') or die ('ERROR');
-		                    fwrite($CREATE_CONFIG,trim($_CONFIG_FILE_CONTENT)) or die ('ERROR 2');
-		                    fclose($CREATE_CONFIG) or die ('ERROR 3');
+echo '<div class="alert alert-success" role="alert">Konfigurationsdatei wurde geschrieben...</div>';
 
-							echo '<p style="color:green;">Konfigurationsdatei wurde geschrieben...</p>';
-							
-							// EINRICHTUNG DER DATENBANK
-						    try
-						    {
-						        $DBCON = new PDO('mysql:host=' . $_POST['db_host'] . ';dbname=' . $_POST['db_database'],$_POST['db_user'],$_POST['db_password'],array(PDO::ATTR_PERSISTENT => true));
-						        $DBCON -> setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
-								
-			                    $QUERY = "
+try{
+$DBCON = new PDO('mysql:host=' . $_POST['db_host'] . ';dbname=' . $_POST['db_database'],$_POST['db_user'],$_POST['db_password'],array(PDO::ATTR_PERSISTENT => true));
+$DBCON -> setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+$QUERY = "
 CREATE TABLE IF NOT EXISTS `constructr_backenduser` (
   `beu_id` int(25) NOT NULL AUTO_INCREMENT,
   `beu_username` varchar(255) COLLATE latin1_german2_ci NOT NULL,
@@ -312,60 +293,110 @@ INSERT INTO `constructr_backenduser_rights` (`cbr_id`, `cbr_right`, `cbr_value`,
 (34,81,1,1 ,'Benutzerrechte bearbeiten'),
 (35,90,1,1 ,'Constructr Plugins anzeigen'),
 (36,100,1,1 ,'Statische Internetseiten generieren'),
-(37,1000,1,1 ,'Systemverwaltung anzeigen');
-			                    ";
+(37,1000,1,1 ,'Systemverwaltung anzeigen');";
 
-			                    $STMT = $DBCON -> prepare($QUERY);
-					            $USERNAME = trim($_POST['admin_username']);
-					            $PASSWORD = crypt(trim($_POST['admin_password']),$_POST['salt1']);
-					            $EMAIL = filter_var(trim($_POST['admin_email'],FILTER_VALIDATE_EMAIL));
-					            $ART = 0;
-					            $ACTIVE = 1;
-
-			                    $STMT -> execute( 
-			                        array
-			                        (
-			                            ':USERNAME' => $USERNAME,
-			                            ':PASSWORD' => $PASSWORD,
-			                            ':EMAIL' => $EMAIL,
-			                            ':ART' => $ART,
-			                            ':LAST_LOGIN' => '0000-00-00 00:00:00',
-			                            ':ACTIVE' => $ACTIVE
-			                        )
-			                    );
-
-						    }
-						    catch (PDOException $e)
-						    {
-								die('<p style="color:red">Fehler bei der Datenbankverbindung - Bitte Daten &uuml;berpr&uuml;fen (' . $e . ')!</p>');
-						    }
-							// EINRICHTUNG DER DATENBANK
-
-							echo '<p style="color:green;">Datenbank wurde eingerichtet - Sie k&ouml;nnen sich nun anmelden: <a href="' . 'http://' . $_SERVER['HTTP_HOST'] . '/constructr/login">Constructr CMS Login</a></p><br><br><br><br><br>';
-	                    }
-
-				?>
-
-				<h3>Constructr CMS Installation</h3>
+$STMT = $DBCON -> prepare($QUERY);
+$USERNAME = trim($_POST['admin_username']);
+$PASSWORD = crypt(trim($_POST['admin_password']),$_POST['salt1']);
+$EMAIL = filter_var(trim($_POST['admin_email'],FILTER_VALIDATE_EMAIL));
+$ART = 0;
+$ACTIVE = 1;
+$STMT -> execute(array(':USERNAME' => $USERNAME,':PASSWORD' => $PASSWORD,':EMAIL' => $EMAIL,':ART' => $ART,':LAST_LOGIN' => '0000-00-00 00:00:00',':ACTIVE' => $ACTIVE));
+}catch (PDOException $e){
+die('<div class="alert alert-danger" role="alert">Fehler bei der Datenbankverbindung - Bitte Daten &uuml;berpr&uuml;fen (' . $e . ')!</div>');
+}
+echo '<div class="alert alert-success" role="alert">Datenbank wurde eingerichtet - Sie k&ouml;nnen sich nun anmelden: <a href="' . $_POST['base_url'] . '/constructr/login">Constructr CMS Login</a></div>';
+}
+?>
+				<div class="row">
+					<div class="col-md-12" style="text-align:center;">
+				  		<h1>ConstructrCMS</h1>
+				  		<h3>Installation</h3>
+					</div>
+				</div>
 				<br><br>
-				<form action="index.php" method="post" enctype="application/x-www-form-urlencoded" autocomplete="off">
+				<form class="form-horizontal" action="index.php" method="post" enctype="application/x-www-form-urlencoded" autocomplete="off">
 				<input type="hidden" name="setup" value="try">
-				<strong>Datenbank-Informationen</strong><br><br>
-				Datenbank-Host:<br><input type="text" name="db_host" id="db_host" size="50" required="required" value="localhost" autofocus><br><br>
-				Datenbank:<br><input type="text" name="db_database" id="db_database" size="50" required="required"><br><br>
-				Datenbank-Benutzer:<br><input type="text" name="db_user" id="db_user" size="50" required="required"><br><br>
-				Datenbank-Passwort:<br><input type="text" name="db_password" id="db_password" size="50" required="required"><br><br>
-				<br><br><strong>System-Informationen</strong><br><br>
-				URL Constructr CMS:<br><input type="text" name="base_url" id="base_url" value="<?php echo 'http://' . $_SERVER['HTTP_HOST']; ?>" size="50" required="required"><br><br>
-				Sicherheits-Phrase 1:<br><input type="text" name="salt1" id="salt1" value="<?php echo $NEW_GUID1 . $NEW_GUID2 . $NEW_GUID3 . $NEW_GUID4; ?>" size="50" required="required"><br><br>
-				Sicherheits-Phrase 2:<br><input type="text" name="salt2" id="salt2" value="<?php echo $NEW_GUID5 . $NEW_GUID6 . $NEW_GUID7 . $NEW_GUID8; ?>" size="50" required="required"><br><br>
-				Sicherheits-Phrase 3:<br><input type="text" name="salt3" id="salt3" value="<?php echo $NEW_GUID9 . $NEW_GUID10 . $NEW_GUID11 . $NEW_GUID12; ?>" size="50" required="required"><br><br>
-				<br><br><strong>Benutzer-Informationen</strong><br><br>
-				Administrator Benutzername:<br><input type="text" name="admin_username" id="admin_username" value="" size="50" required="required"><br><br>
-				Administrator Passwort:<br><input type="text" name="admin_password" id="admin_password" value="" size="50" required="required"><br><br>
-				Administrator eMail:<br><input type="email" name="admin_email" id="admin_email" value="" size="50" required="required"><br><br>
-				<br><input type="submit" value="ConstructrCMS installieren">
+				<input type="hidden" name="salt1" id="salt1" value="<?php echo $NEW_GUID1 . $NEW_GUID2 . $NEW_GUID3 . $NEW_GUID4; ?>" required="required">
+				<input type="hidden" name="salt2" id="salt2" value="<?php echo $NEW_GUID5 . $NEW_GUID6 . $NEW_GUID7 . $NEW_GUID8; ?>" required="required">
+				<input type="hidden" name="salt3" id="salt3" value="<?php echo $NEW_GUID9 . $NEW_GUID10 . $NEW_GUID11 . $NEW_GUID12; ?>" required="required">
+				<div class="form-group">
+					<label for="db_host" class="col-sm-2 control-label">Datenbank-Host:</label>
+					<div class="col-sm-10">
+						<input class="form-control" type="text" name="db_host" id="db_host" size="50" required="required" value="localhost" autofocus placeholder="Host der Datenbank">
+						<small><span id="helpBlock" class="help-block">Zum Beispiel: <em><strong>localhost</strong></em></span></small>
+					</div>
+				</div>				
+				<div class="form-group">
+					<label for="db_database" class="col-sm-2 control-label">Datenbank-Name:</label>
+					<div class="col-sm-10">
+						<input class="form-control" type="text" name="db_database" id="db_database" size="50" required="required" placeholder="Name der Datenbank">
+						<small><span id="helpBlock" class="help-block">Der Name der vorhandenen Datenbank - zum Beispiel: <em><strong>constructrcms</strong></em></span></small>
+					</div>
+				</div>				
+				<div class="form-group">
+					<label for="db_user" class="col-sm-2 control-label">Datenbank-Benutzer:</label>
+					<div class="col-sm-10">
+						<input class="form-control" type="text" name="db_user" id="db_user" size="50" required="required" placeholder="Datenbank-Benutzername">
+						<small><span id="helpBlock" class="help-block">Der Name des vorhandenen Benutzers für die Datenbank.</span></small>
+					</div>
+				</div>				
+				<div class="form-group">
+					<label for="db_password" class="col-sm-2 control-label">Datenbank-Passwort:</label>
+					<div class="col-sm-10">
+						<input class="form-control" type="text" name="db_password" id="db_password" size="50" required="required" placeholder="Datenbank-Passwort">
+						<small><span id="helpBlock" class="help-block">Das Passwort des vorhandenen Benutzers für die Datenbank.</span></small>
+					</div>
+				</div>				
+				<div class="form-group">
+					<label for="base_url" class="col-sm-2 control-label">Basis-URL:</label>
+					<div class="col-sm-10">
+						<input class="form-control" type="text" name="base_url" id="base_url" value="<?php echo getCurrentUrl(); ?>" size="50" required="required" placeholder="Basis-URL der Installation">
+						<small><span id="helpBlock" class="help-block">Die Basis-URL für das künftige Frontend deiner ConstructrCMS-Installation.</span></small>
+					</div>
+				</div>				
+				<div class="form-group">
+					<label for="admin_username" class="col-sm-2 control-label">Administrator-Benutzername:</label>
+					<div class="col-sm-10">
+						<input class="form-control" type="text" name="admin_username" id="admin_username" value="" size="50" required="required" placeholder="Benutzername Administrator Account">
+						<small><span id="helpBlock" class="help-block">Der gewünschte Benutzername für das Backend von deinem ConstructrCMS.</span></small>
+					</div>
+				</div>				
+				<div class="form-group">
+					<label for="admin_password" class="col-sm-2 control-label">Administrator-Passwort:</label>
+					<div class="col-sm-10">
+						<input class="form-control" type="text" name="admin_password" id="admin_password" value="" size="50" required="required" placeholder="Passwort Administrator Account">
+						<small><span id="helpBlock" class="help-block">Das gewünschte Passwort für das Backend von deinem ConstructrCMS.</span></small>
+					</div>
+				</div>				
+				<div class="form-group">
+					<label for="admin_email" class="col-sm-2 control-label">Administrator-eMail:</label>
+					<div class="col-sm-10">
+						<input class="form-control" type="email" name="admin_email" id="admin_email" value="" size="50" required="required" placeholder="eMail Administrator Account">
+						<small><span id="helpBlock" class="help-block">Die gewünschte eMail-Adresse für das Administrator-Account.</span></small>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12" style="text-align:center;">
+					  	<input class="btn btn-primary btn-lg" type="submit" value="ConstructrCMS installieren">
+					</div>
+				</div>
 				</form>
+				<br><br><br><br>
+				<div class="row">
+					<div class="col-md-12" style="text-align:center;">
+				  		<p><small>ConstructrCMS von <a href="http://phaziz.com">phaziz.com</a></small></p>
+					</div>
+				</div>
 			</div>
+            <script src="../Assets/jquery-1.11.2.min.js"></script>
+            <script src="../Assets/bootstrap-3.3.2-dist/js/bootstrap.min.js"></script>
+            <script>
+            	$(function(){
+					var ACT_URL = window.location.href;
+					ACT_URL = ACT_URL.replace('/CONSTRUCTR-CMS-SETUP/index.php','');
+					$('#base_url').val(ACT_URL);
+            	});
+            </script>
 		</body>
 	</html>

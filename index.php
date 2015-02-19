@@ -47,6 +47,15 @@
 	require_once './Config/constructr.conf.php';
 
 	/**
+	 * Make shure to display all errors during development
+	 */
+	if($_CONSTRUCTR_CONF['_CONSTRUCTR_MODE'] == 'development')
+	{
+		ini_set('display_errors', 1);
+		error_reporting(-1);
+	}
+
+	/**
 	 * Including the main Constructr CMS user configuration
 	 * @param array $_CONSTRUCTR_USER_RIGHTS_CONF - main user rights configuration array
 	 */

@@ -218,17 +218,10 @@
                	}
 
             ?>
-            <script type="text/javascript">
-                var _paq=_paq||[];_paq.push(["setDocumentTitle",document.domain+"/"+document.title]);_paq.push(["setCookieDomain","*.constructr.phaziz.com"]);_paq.push(["trackPageView"]);_paq.push(["enableLinkTracking"]);
-                (function(){var c=("https:"==document.location.protocol?"https":"http")+"://piwik.phaziz.com/";_paq.push(["setTrackerUrl",c+"piwik.php"]);_paq.push(["setSiteId","3"]);var a=document,b=a.createElement("script"),a=a.getElementsByTagName("script")[0];b.type="text/javascript";b.defer=!0;b.async=!0;b.src=c+"piwik.js";a.parentNode.insertBefore(b,a)})();
-            </script>
             <?php
 
 				echo $PAGE_DATA['pages_js'];
 
             ?>
-            <noscript>
-                <img src="http://piwik.phaziz.com/piwik.php?idsite=3&rec=1" style="border:0" alt="piwik" />
-            </noscript>
         </body>
     </html>

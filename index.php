@@ -354,7 +354,17 @@
 						/**
 						 * Rendering the requested GET page
 						 */
-                        $constructr -> render($TEMPLATE,array('_CONSTRUCTR_PLUGINS' => $_CONSTRUCTR_PLUGINS, 'PAGES' => $PAGES,'PAGE_DATA' => $PAGE_DATA,'CONTENT' => $CONTENT,'_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,'POSTMASTER_GUID' => $POSTMASTER_GUID));
+                        $constructr -> render($TEMPLATE,array
+                        	(
+                        		'_CONSTRUCTR_PLUGINS' => $_CONSTRUCTR_PLUGINS,
+                        		'PAGES' => $PAGES,
+                        		'PAGE_DATA' => $PAGE_DATA,
+                        		'CONTENT' => $CONTENT,
+                        		'_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,
+                        		'POSTMASTER_GUID' => $POSTMASTER_GUID,
+                        		'DBCON' => $DBCON
+							)
+						);
 
                         if($_CONSTRUCTR_CONF['_CONSTRUCTR_WEBSITE_CACHE'] == true)
                         {
@@ -473,7 +483,17 @@
 						/**
 						 * Rendering the requested POST page
 						 */
-                        $constructr -> render($TEMPLATE,array('PAGES' => $PAGES,'PAGE_DATA' => $PAGE_DATA,'CONTENT' => $CONTENT,'_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,'POSTMASTER_GUID' => $POSTMASTER_GUID));
+                        $constructr -> render($TEMPLATE,array
+	                        (
+                        		'_CONSTRUCTR_PLUGINS' => $_CONSTRUCTR_PLUGINS,
+                        		'PAGES' => $PAGES,
+                        		'PAGE_DATA' => $PAGE_DATA,
+                        		'CONTENT' => $CONTENT,
+                        		'_CONSTRUCTR_CONF' => $_CONSTRUCTR_CONF,
+                        		'POSTMASTER_GUID' => $POSTMASTER_GUID,
+                        		'DBCON' => $DBCON
+							)
+						);
                     }
                 );
 

@@ -40,7 +40,7 @@
 	 *
 	 */
 
-    if(isset($_GET['key']) && $_GET['key'] == $_CONSTRUCTR_CONF['_MAGIC_GENERATION_KEY'])
+    if($_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'] && $_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'] != '')
     {
         $_BASE_ROUTE = $_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'];
     }
@@ -127,65 +127,70 @@
 					/**
 					 * NAVIGATION BEISPIEL: Alle Seiten als ungeordnete (<UL></UL>) Liste mit entsprechender Hierarchie ausgeben. START
 					 */
-		            try
-		            {
-						echo '<p>Alle sichtbaren Seiten nach der angelegten Sortierung mit entsprechender Hierarchie:</p>';
-						echo '<ul>';
-
-						$PAGES = $DBCON -> query('SELECT * FROM constructr_pages WHERE pages_mother = 0 ORDER BY pages_order ASC;');
-						$PARENT_PAGES = $PAGES -> fetchAll();
-
-						foreach($PARENT_PAGES as $PAGE)
-						{
-							echo '<li><a href="' . $_BASE_ROUTE . '/' . $PAGE['pages_url'] . '">' . $PAGE['pages_name'] . '</a>';
-
-							$CHILDS = $DBCON -> query('SELECT * FROM constructr_pages WHERE pages_mother = ' . $PAGE['pages_id'] . ' ORDER BY pages_order ASC;');
-							$CHILD_PAGES = $CHILDS -> fetchAll();
-
-							if(count($CHILD_PAGES)>0)
-							{
-								echo '<ul>';
-							}
-
-							foreach($CHILD_PAGES as $CHILD)
-							{
-								echo '<li><a href="' . $_BASE_ROUTE . '/' . $CHILD['pages_url'] . '">' . $CHILD['pages_name'] . '</a>';
-
-								$CHILDS2 = $DBCON -> query('SELECT * FROM constructr_pages WHERE pages_mother = ' . $CHILD['pages_id'] . ' ORDER BY pages_order ASC;');
-								$CHILD_PAGES2 = $CHILDS2 -> fetchAll();
-
-								if(count($CHILD_PAGES2)>0)
-								{
-									echo '<ul>';
-								}
+					if($PAGES)
+					{
+			            try
+			            {
+							echo '<ul>';
 	
-								foreach($CHILD_PAGES2 as $CHILD2)
-								{
-									echo '<li><a href="' . $_BASE_ROUTE . '/' . $CHILD2['pages_url'] . '">' . $CHILD2['pages_name'] . '</a>';
-								}
+							$PAGES = $DBCON -> query('SELECT * FROM constructr_pages WHERE pages_mother = 0 ORDER BY pages_order ASC;');
+							$PARENT_PAGES = $PAGES -> fetchAll();
 	
-								if(count($CHILD_PAGES2)>0)
-								{
-									echo '</ul>';
-								}
-	
-								echo '</li>';
-							}
-
-							if(count($CHILD_PAGES)>0)
+							foreach($PARENT_PAGES as $PAGE)
 							{
-								echo '</ul>';
+								if($PAGE['pages_nav_visible'] == 1)
+								{
+									echo '<li><a href="' . $_BASE_ROUTE . '/' . $PAGE['pages_url'] . '">' . $PAGE['pages_name'] . '</a>';
+		
+									$CHILDS = $DBCON -> query('SELECT * FROM constructr_pages WHERE pages_mother = ' . $PAGE['pages_id'] . ' ORDER BY pages_order ASC;');
+									$CHILD_PAGES = $CHILDS -> fetchAll();
+		
+									if(count($CHILD_PAGES)>0)
+									{
+										echo '<ul>';
+									}
+		
+									foreach($CHILD_PAGES as $CHILD)
+									{
+										echo '<li><a href="' . $_BASE_ROUTE . '/' . $CHILD['pages_url'] . '">' . $CHILD['pages_name'] . '</a>';
+		
+										$CHILDS2 = $DBCON -> query('SELECT * FROM constructr_pages WHERE pages_mother = ' . $CHILD['pages_id'] . ' ORDER BY pages_order ASC;');
+										$CHILD_PAGES2 = $CHILDS2 -> fetchAll();
+		
+										if(count($CHILD_PAGES2)>0)
+										{
+											echo '<ul>';
+										}
+			
+										foreach($CHILD_PAGES2 as $CHILD2)
+										{
+											echo '<li><a href="' . $_BASE_ROUTE . '/' . $CHILD2['pages_url'] . '">' . $CHILD2['pages_name'] . '</a>';
+										}
+			
+										if(count($CHILD_PAGES2)>0)
+										{
+											echo '</ul>';
+										}
+			
+										echo '</li>';
+									}
+		
+									if(count($CHILD_PAGES)>0)
+									{
+										echo '</ul>';
+									}
+		
+									echo '</li>';								
+								}
 							}
-
-							echo '</li>';
-						}
-		            }
-		            catch(PDOException $e)
-		            {
-		                die();
-		            }
-
-					echo '</ul>';
+			            }
+			            catch(PDOException $e)
+			            {
+			                die();
+			            }
+	
+						echo '</ul>';
+					}
 					/**
 					 * NAVIGATION BEISPIEL: Alle Seiten als ungeordnete Liste (<UL></UL>) mit entsprechender Hierarchie ausgeben. ENDE
 					 */					 

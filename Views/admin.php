@@ -672,11 +672,11 @@
 
                         if($PAGE_CONTENT['pages_order'] == 1)
                         {
-                            $_HTML_CONTENT = file_get_contents($_CONSTRUCTR_CONF['_BASE_URL']) or die ('FTP-DATA ERROR1');
+                            $_HTML_CONTENT = file_get_contents($_CONSTRUCTR_CONF['_BASE_URL']);
                         }
                         else
                         {
-                            $_HTML_CONTENT = file_get_contents($_CONSTRUCTR_CONF['_BASE_URL'] . '/' . $PAGE_CONTENT['pages_url']) or die ('FTP-DATA ERROR2');
+                            $_HTML_CONTENT = file_get_contents($_CONSTRUCTR_CONF['_BASE_URL'] . '/' . $PAGE_CONTENT['pages_url']);
                         }
 
                         $_HTML_CONTENT = $_HTML_CONTENT . "\n\n<!-- ConstructrCMS (http://phaziz.com) generated " . date('d.m.Y, H:i:s') . " -->\n\n";
@@ -685,14 +685,14 @@
                         {
                             if($PAGE_CONTENT['pages_order'] == 1)
                             {
-                                $PHYSICAL_FILE = @fopen($BASE_DIR . '/' . 'index' . $_CONSTRUCTR_CONF['_STATIC_FILETYPE'],"w+") or die ('FTP-DATA ERROR3');
+                                $PHYSICAL_FILE = @fopen($BASE_DIR . '/' . 'index' . $_CONSTRUCTR_CONF['_STATIC_FILETYPE'],"w+");
                                 @fwrite($PHYSICAL_FILE, $_HTML_CONTENT);
                                 @fclose($PHYSICAL_FILE);
                                 @chmod($PHYSICAL_FILE,0777);
                             }
                             else
                             {
-                                $PHYSICAL_FILE = @fopen($ACT_DIR . '/' . 'index' . $_CONSTRUCTR_CONF['_STATIC_FILETYPE'],"w+") or die ('FTP-DATA ERROR4');
+                                $PHYSICAL_FILE = @fopen($ACT_DIR . '/' . 'index' . $_CONSTRUCTR_CONF['_STATIC_FILETYPE'],"w+");
                                 @fwrite($PHYSICAL_FILE, $_HTML_CONTENT);
                                 @fclose($PHYSICAL_FILE);
                                 @chmod($PHYSICAL_FILE,0777);
@@ -712,8 +712,15 @@
                         {
                             if($PAGE_CONTENT['pages_order'] != 1)
                             {
-                                $FTP_CON = @ftp_connect($_CONSTRUCTR_CONF['_FTP_REMOTE_HOST'],$_CONSTRUCTR_CONF['_FTP_REMOTE_PORT']) or die ('FTP-DATA ERROR5');
-                                @ftp_login($FTP_CON, $_CONSTRUCTR_CONF['_FTP_REMOTE_USERNAME'], $_CONSTRUCTR_CONF['_FTP_REMOTE_PASSWORD']) or die ('FTP-DATA ERROR6');
+                                $FTP_CON = @ftp_connect($_CONSTRUCTR_CONF['_FTP_REMOTE_HOST'],$_CONSTRUCTR_CONF['_FTP_REMOTE_PORT']);
+                                $FTP_LOGIN = @ftp_login($FTP_CON, $_CONSTRUCTR_CONF['_FTP_REMOTE_USERNAME'], $_CONSTRUCTR_CONF['_FTP_REMOTE_PASSWORD']);
+
+								if((!$FTP_CON) || (!$FTP_LOGIN))
+								{ 
+			                        $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': FTP-ERROR 1 - ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+			                        $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/?transfered-static=false');
+			                        die();
+								}
 
                                 $PARTS = array();
                                 $PARTS = explode('/',$PAGE_CONTENT['pages_url']);
@@ -739,8 +746,16 @@
                             {
                                 if(is_file($_CONSTRUCTR_CONF['_STATIC_DIR'] . '/index' . $_CONSTRUCTR_CONF['_STATIC_FILETYPE']))
                                 {
-                                    $FTP_CON = @ftp_connect($_CONSTRUCTR_CONF['_FTP_REMOTE_HOST'],$_CONSTRUCTR_CONF['_FTP_REMOTE_PORT']) or die ('FTP-DATA ERROR7');
-                                    @ftp_login($FTP_CON, $_CONSTRUCTR_CONF['_FTP_REMOTE_USERNAME'], $_CONSTRUCTR_CONF['_FTP_REMOTE_PASSWORD']) or die ('FTP-DATA ERROR8');
+                                    $FTP_CON = @ftp_connect($_CONSTRUCTR_CONF['_FTP_REMOTE_HOST'],$_CONSTRUCTR_CONF['_FTP_REMOTE_PORT']);
+                                    $FTP_LOGIN = @ftp_login($FTP_CON, $_CONSTRUCTR_CONF['_FTP_REMOTE_USERNAME'], $_CONSTRUCTR_CONF['_FTP_REMOTE_PASSWORD']);
+
+									if((!$FTP_CON) || (!$FTP_LOGIN))
+									{ 
+				                        $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': FTP-ERROR 2 - ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+				                        $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/?transfered-static=false');
+				                        die();
+									}
+
                                     @ftp_chmod($FTP_CON, 0777,'index' . $_CONSTRUCTR_CONF['_STATIC_FILETYPE']);
                                     @ftp_delete($FTP_CON,'./index' . $_CONSTRUCTR_CONF['_STATIC_FILETYPE']);
                                     @ftp_put($FTP_CON,'index' . $_CONSTRUCTR_CONF['_STATIC_FILETYPE'],$_CONSTRUCTR_CONF['_STATIC_DIR'] . '/index' . $_CONSTRUCTR_CONF['_STATIC_FILETYPE'], $_CONSTRUCTR_CONF['_FTP_REMOTE_MODE']) or die ('FTP-DATA ERROR11');
@@ -753,7 +768,15 @@
                                 if(is_file($_CONSTRUCTR_CONF['_STATIC_DIR'] . '/'. $PAGE_CONTENT['pages_url'] . '/index' . $_CONSTRUCTR_CONF['_STATIC_FILETYPE']))
                                 {
                                     $FTP_CON = @ftp_connect($_CONSTRUCTR_CONF['_FTP_REMOTE_HOST'],$_CONSTRUCTR_CONF['_FTP_REMOTE_PORT']);
-                                    @ftp_login($FTP_CON, $_CONSTRUCTR_CONF['_FTP_REMOTE_USERNAME'], $_CONSTRUCTR_CONF['_FTP_REMOTE_PASSWORD']);
+                                    $FTP_LOGIN = @ftp_login($FTP_CON, $_CONSTRUCTR_CONF['_FTP_REMOTE_USERNAME'], $_CONSTRUCTR_CONF['_FTP_REMOTE_PASSWORD']);
+									
+									if((!$FTP_CON) || (!$FTP_LOGIN))
+									{ 
+				                        $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': FTP-ERROR 3 - ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+				                        $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/?transfered-static=false');
+				                        die();
+									}
+
                                     @ftp_chdir($FTP_CON,$PAGE_CONTENT['pages_url']);
                                     @ftp_chmod($FTP_CON, 0777,'index' . $_CONSTRUCTR_CONF['_STATIC_FILETYPE']);
                                     @ftp_delete($FTP_CON,'./index' . $_CONSTRUCTR_CONF['_STATIC_FILETYPE']);
@@ -765,7 +788,14 @@
                         }
 
                         $FTP_CON = @ftp_connect($_CONSTRUCTR_CONF['_FTP_REMOTE_HOST'],$_CONSTRUCTR_CONF['_FTP_REMOTE_PORT']);
-                        @ftp_login($FTP_CON, $_CONSTRUCTR_CONF['_FTP_REMOTE_USERNAME'], $_CONSTRUCTR_CONF['_FTP_REMOTE_PASSWORD']);
+                        $FTP_LOGIN = @ftp_login($FTP_CON, $_CONSTRUCTR_CONF['_FTP_REMOTE_USERNAME'], $_CONSTRUCTR_CONF['_FTP_REMOTE_PASSWORD']);
+
+						if((!$FTP_CON) || (!$FTP_LOGIN))
+						{ 
+	                        $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': FTP-ERROR 4 - ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+	                        $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/?transfered-static=false');
+	                        die();
+						}
 
                         @ftp_chmod($FTP_CON, 0777,'sitemap.xml');
                         @ftp_delete($FTP_CON,'sitemap.xml');

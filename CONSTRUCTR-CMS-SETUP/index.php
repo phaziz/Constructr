@@ -61,19 +61,16 @@
 
 	session_start();
 	error_reporting(-1);
-	function create_guid() {static $guid = '';$uid = uniqid("", true);$data = $_SERVER['REQUEST_TIME'];$data .= $_SERVER['HTTP_USER_AGENT'];$data .= $_SERVER['PHP_SELF'];$data .= $_SERVER['SCRIPT_NAME'];$data .= $_SERVER['REMOTE_ADDR'];$data .= $_SERVER['REMOTE_PORT'];$hash = strtoupper(hash('ripemd128', $uid . $guid . md5($data)));$guid = substr($hash,0,2) . substr($hash,2,2) . substr($hash,4,2) . substr($hash,8,2);return $guid;}
+	function create_guid(){return mt_rand();}
 	$NEW_GUID1 = create_guid();
 	$NEW_GUID2 = create_guid();
 	$NEW_GUID3 = create_guid();
-	$NEW_GUID4 = create_guid();
 	$NEW_GUID5 = create_guid();
 	$NEW_GUID6 = create_guid();
 	$NEW_GUID7 = create_guid();
-	$NEW_GUID8 = create_guid();
 	$NEW_GUID9 = create_guid();
 	$NEW_GUID10 = create_guid();
 	$NEW_GUID11 = create_guid();
-	$NEW_GUID12 = create_guid();
 
 ?>
 <!DOCTYPE html>
@@ -317,9 +314,9 @@ echo '<div class="alert alert-success" role="alert">Datenbank wurde eingerichtet
 				<br><br>
 				<form class="form-horizontal" action="index.php" method="post" enctype="application/x-www-form-urlencoded" autocomplete="off">
 				<input type="hidden" name="setup" value="try">
-				<input type="hidden" name="salt1" id="salt1" value="<?php echo $NEW_GUID1 . $NEW_GUID2 . $NEW_GUID3 . $NEW_GUID4; ?>" required="required">
-				<input type="hidden" name="salt2" id="salt2" value="<?php echo $NEW_GUID5 . $NEW_GUID6 . $NEW_GUID7 . $NEW_GUID8; ?>" required="required">
-				<input type="hidden" name="salt3" id="salt3" value="<?php echo $NEW_GUID9 . $NEW_GUID10 . $NEW_GUID11 . $NEW_GUID12; ?>" required="required">
+				<input type="hidden" name="salt1" id="salt1" value="<?php echo $NEW_GUID1 . $NEW_GUID2 . $NEW_GUID3; ?>" required="required">
+				<input type="hidden" name="salt2" id="salt2" value="<?php echo $NEW_GUID5 . $NEW_GUID6 . $NEW_GUID7; ?>" required="required">
+				<input type="hidden" name="salt3" id="salt3" value="<?php echo $NEW_GUID9 . $NEW_GUID10 . $NEW_GUID11; ?>" required="required">
 				<div class="form-group">
 					<label for="db_host" class="col-sm-2 control-label">Datenbank-Host:</label>
 					<div class="col-sm-10">

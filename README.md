@@ -6,23 +6,23 @@ ConstructrCMS (<a href="http://constructr-cms.org">http://constructr-cms.org</a>
 That's it for now (Version 1.04.5 / 2015-02-24):
 	- Easy and guided Setup (Web-Installer)
 	- Page-Management
-		- Create, edit, re-order/order, delete Pages
-		- Page specific CSS- and JS-Content
+	- Create, edit, re-order/order, delete Pages
+	- Page specific CSS- and JS-Content
 	- Automatic sitemap.xml generation
 	- Content-Management
-		- Create, edit, re-order/order, delete, recover Content-Elements
-		- Content-Element History
+	- Create, edit, re-order/order, delete, recover Content-Elements
+	- Content-Element History
 	- Template-Management
-		- EASY PHP-Templates
-		- Create, edit, delete a Template-File
+	- EASY PHP-Templates
+	- Create, edit, delete a Template-File
 	- Asset-Management (Uploads)
-		- Upload, edit, delete, recover Uploads
-		- Media information (Title, Copyright, Description, Keywords)
+	- Upload, edit, delete, recover Uploads
+	- Media information (Title, Copyright, Description, Keywords)
 	- 2 Factor Authentication-Login (2FA)
 	- User Management
-		- Create, edit, delete, active/de-activate User-Accounts
-		- User Rights-Management
-		- User Password resetting via CONSTRUCTR_CONF-Option for all User-Accounts
+	- Create, edit, delete, active/de-activate User-Accounts
+	- User Rights-Management
+	- User Password resetting via CONSTRUCTR_CONF-Option for all User-Accounts
 	- Generate a dynamic Website
 	- Generating Domain specific static Websites
 	- Included FTP-Transfer of your Website to your Domain

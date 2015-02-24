@@ -50,6 +50,9 @@
         die('Fehler CRYPT_BLOWFISH ist nicht verf&uuml;gbar!');
     }
 
+	$TEST_CONFIG_FILE = '../Config/constructr.conf.php';
+	fopen($TEST_CONFIG_FILE,'w+') or die ('FILE NOT FOUND ERROR: Please create file: ROOT/Config/constructr.conf.php');
+
 	function getCurrentUrl()
 	{
 		$ACT_URL = ((empty($_SERVER['HTTPS'])) ? 'http://' : 'https://') . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
@@ -158,7 +161,7 @@ $_CONFIG_FILE_CONTENT = "<?php " . $NL . "
 '_CONSTRUCTR_WEBSITE_CACHE_DIR' => './Website-Cache/' " . $NL . "
 );";
 $FILE = '../Config/constructr.conf.php';
-$CREATE_CONFIG = fopen($FILE,'w+') or die ('ERROR');
+$CREATE_CONFIG = fopen($FILE,'w+') or die ('FILE NOT FOUND ERROR: Please create file: ROOT/Config/constructr.conf.php');
 fwrite($CREATE_CONFIG,trim($_CONFIG_FILE_CONTENT)) or die ('ERROR 2');
 fclose($CREATE_CONFIG) or die ('ERROR 3');
 

@@ -1,8 +1,5 @@
-#AddHandler php56-cgi .php
-
 AddType 'text/html; charset=UTF-8' html
 
-# compress text, html, javascript, css, xml:
 AddOutputFilterByType DEFLATE text/plain
 AddOutputFilterByType DEFLATE text/html
 AddOutputFilterByType DEFLATE text/xml

@@ -36,7 +36,7 @@
 	 * @link http://blog.phaziz.com/category/constructr-cms/
 	 * @link http://phaziz.com/
 	 * @package ConstructrCMS
-	 * @version 1.04.4 / 17.02.2015  
+	 * @version 1.04.5 / 24.02.2015
 	 *
 	 */
 
@@ -293,7 +293,8 @@ INSERT INTO `constructr_backenduser_rights` (`cbr_id`, `cbr_right`, `cbr_value`,
 (34,81,1,1 ,'Benutzerrechte bearbeiten'),
 (35,90,1,1 ,'Constructr Plugins anzeigen'),
 (36,100,1,1 ,'Statische Internetseiten generieren'),
-(37,1000,1,1 ,'Systemverwaltung anzeigen');";
+(37,110,1,1 ,'ConstructrCMS Konfiguration herunterladen und sichern'),
+(38,1000,1,1 ,'Systemverwaltung anzeigen');";
 
 $STMT = $DBCON -> prepare($QUERY);
 $USERNAME = trim($_POST['admin_username']);

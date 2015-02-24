@@ -1024,3 +1024,73 @@
             }
         }
     );
+
+	/**
+	 * Administrator Dashboard backup the ConstructrCMS configuration file.
+	 * @param $ADMIN_CHECK - User Rights Function
+	 * @param $constructr - Constructr CMS application
+	 * @param $DB_CON - main database connection via PDO
+	 * @param $_CONSTRUCTR_CONF - main Constructr CMS configuration array
+	 */
+    $constructr -> get('/constructr/config-backup/', $ADMIN_CHECK, function () use ($constructr,$DBCON,$_CONSTRUCTR_CONF)
+        {
+            $constructr -> view -> setData('BackendUserRight',110);
+
+            if(isset($_SESSION['backend-user-id']) && $_SESSION['backend-user-id'] != '')
+            {
+                try
+                {
+                    $RIGHT_CHECKER = $DBCON -> prepare('SELECT * FROM constructr_backenduser_rights WHERE cbr_right = :RIGHT_ID AND cbr_user_id = :USER_ID AND cbr_value = :CBR_VALUE LIMIT 1;');
+                    $RIGHT_CHECKER -> execute(
+                        array
+                        (
+                            ':USER_ID' => $_SESSION['backend-user-id'],
+                            ':RIGHT_ID' => $constructr -> view -> getData('BackendUserRight'),
+                            ':CBR_VALUE' => 1
+                        )
+                    );
+
+                    $RIGHTS_COUNTR = $RIGHT_CHECKER -> rowCount();
+
+                    if($RIGHTS_COUNTR != 1)
+                    {
+                        $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Error ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                        $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/?no-rights=true');
+                        die();
+                    }
+                    else
+                    {
+                        $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ' User-Rights-Success ' . $constructr -> view -> getData('BackendUserRight') . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                    }
+                }
+                catch(PDOException $e)
+                {
+                    $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e -> getMessage());
+                    die();
+                }
+            }
+            else
+            {
+                $constructr -> getLog() -> error($_SESSION['backend-user-username'] . ': Error User-Rights-Check: ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/logout/');
+                die();
+            }
+
+			try
+			{
+				$CONFIG_FILE_CONTENT = file_get_contents(__DIR__.'/../Config/constructr.conf.php', FILE_USE_INCLUDE_PATH);
+				$BACKUP_CONFIG_FILE = __DIR__.'/../Config/Backups/'.date('Y-m-d-h-i-s').'-constructr.conf.backup.txt';
+				file_put_contents($BACKUP_CONFIG_FILE, $CONFIG_FILE_CONTENT, FILE_APPEND | LOCK_EX);
+			}
+			catch (Exception $e)
+			{
+	            $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . ': ' . $e->getMessage());
+	            $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/?backup-config=false');
+	            die();
+			}
+
+            $constructr -> getLog() -> debug($_SESSION['backend-user-username'] . ': ' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+            $constructr -> redirect($_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/?backup-config=true');
+            die();
+        }
+    );

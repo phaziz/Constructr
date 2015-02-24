@@ -36,7 +36,7 @@
 	 * @link http://blog.phaziz.com/category/constructr-cms/
 	 * @link http://phaziz.com/
 	 * @package ConstructrCMS
-	 * @version 1.04.4 / 17.02.2015  
+	 * @version 1.04.5 / 24.02.2015
 	 *
 	 */
 
@@ -402,19 +402,18 @@
 	                {
 	                    $SITEMAP_PAGES = $DBCON -> query('SELECT * FROM constructr_pages WHERE pages_active = 1 ORDER BY pages_order ASC;');
 	                    $SITEMAP_PAGES = $SITEMAP_PAGES -> fetchAll();
-
 	                    $START_PRIORITY = 0.8;
 	                    $MIN_PRIORITY = 0.3;
 
 	                    if($SITEMAP_PAGES)
 	                    {
-	                        if($_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'] == '')
+	                        if($_CONSTRUCTR_CONF['_TRANSFER_STATIC'] == true)
 	                        {
-	                            $_SITEMAP_BASE_URL = $_CONSTRUCTR_CONF['_CREATE_DYNAMIC_DOMAIN'];
+	                            $_SITEMAP_BASE_URL = $_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'];
 	                        }
 	                        else
 	                        {
-	                            $_SITEMAP_BASE_URL = $_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'];
+	                            $_SITEMAP_BASE_URL = $_CONSTRUCTR_CONF['_CREATE_DYNAMIC_DOMAIN'];
 	                        }
 	
 	                        $OLD_PRIORITY = ($START_PRIORITY + 0.1);
@@ -511,13 +510,13 @@
 
 	                    if($SITEMAP_PAGES)
 	                    {
-	                        if($_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'] == '')
+	                        if($_CONSTRUCTR_CONF['_TRANSFER_STATIC'] == true)
 	                        {
-	                            $_SITEMAP_BASE_URL = $_CONSTRUCTR_CONF['_CREATE_DYNAMIC_DOMAIN'];
+	                            $_SITEMAP_BASE_URL = $_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'];
 	                        }
 	                        else
 	                        {
-	                            $_SITEMAP_BASE_URL = $_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'];
+	                            $_SITEMAP_BASE_URL = $_CONSTRUCTR_CONF['_CREATE_DYNAMIC_DOMAIN'];
 	                        }
 	
 	                        $OLD_PRIORITY = ($START_PRIORITY + 0.1);
@@ -614,13 +613,13 @@
 
 	                    if($SITEMAP_PAGES)
 	                    {
-	                        if($_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'] == '')
+   	                        if($_CONSTRUCTR_CONF['_TRANSFER_STATIC'] == true)
 	                        {
-	                            $_SITEMAP_BASE_URL = $_CONSTRUCTR_CONF['_CREATE_DYNAMIC_DOMAIN'];
+	                            $_SITEMAP_BASE_URL = $_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'];
 	                        }
 	                        else
 	                        {
-	                            $_SITEMAP_BASE_URL = $_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'];
+	                            $_SITEMAP_BASE_URL = $_CONSTRUCTR_CONF['_CREATE_DYNAMIC_DOMAIN'];
 	                        }
 	
 	                        $OLD_PRIORITY = ($START_PRIORITY + 0.1);
@@ -717,13 +716,13 @@
 
 	                    if($SITEMAP_PAGES)
 	                    {
-	                        if($_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'] == '')
+	                        if($_CONSTRUCTR_CONF['_TRANSFER_STATIC'] == true)
 	                        {
-	                            $_SITEMAP_BASE_URL = $_CONSTRUCTR_CONF['_CREATE_DYNAMIC_DOMAIN'];
+	                            $_SITEMAP_BASE_URL = $_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'];
 	                        }
 	                        else
 	                        {
-	                            $_SITEMAP_BASE_URL = $_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'];
+	                            $_SITEMAP_BASE_URL = $_CONSTRUCTR_CONF['_CREATE_DYNAMIC_DOMAIN'];
 	                        }
 	
 	                        $OLD_PRIORITY = ($START_PRIORITY + 0.1);
@@ -809,13 +808,13 @@
 
 	                    if($SITEMAP_PAGES)
 	                    {
-	                        if($_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'] == '')
+	                        if($_CONSTRUCTR_CONF['_TRANSFER_STATIC'] == true)
 	                        {
-	                            $_SITEMAP_BASE_URL = $_CONSTRUCTR_CONF['_CREATE_DYNAMIC_DOMAIN'];
+	                            $_SITEMAP_BASE_URL = $_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'];
 	                        }
 	                        else
 	                        {
-	                            $_SITEMAP_BASE_URL = $_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'];
+	                            $_SITEMAP_BASE_URL = $_CONSTRUCTR_CONF['_CREATE_DYNAMIC_DOMAIN'];
 	                        }
 	
 	                        $OLD_PRIORITY = ($START_PRIORITY + 0.1);
@@ -1088,20 +1087,19 @@
                     {
                         $SITEMAP_PAGES = $DBCON -> query('SELECT * FROM constructr_pages WHERE pages_active = 1 ORDER BY PAGES_ORDER ASC;');
                         $SITEMAP_PAGES = $SITEMAP_PAGES -> fetchAll();
-
                         $START_PRIORITY = 0.8;
                         $MIN_PRIORITY = 0.3;
 
                         if($SITEMAP_PAGES)
                         {
-                            if($_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'] == '')
-                            {
-                                $_SITEMAP_BASE_URL = $_CONSTRUCTR_CONF['_CREATE_DYNAMIC_DOMAIN'];
-                            }
-                            else
-                            {
-                                $_SITEMAP_BASE_URL = $_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'];
-                            }
+	                        if($_CONSTRUCTR_CONF['_TRANSFER_STATIC'] == true)
+	                        {
+	                            $_SITEMAP_BASE_URL = $_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'];
+	                        }
+	                        else
+	                        {
+	                            $_SITEMAP_BASE_URL = $_CONSTRUCTR_CONF['_CREATE_DYNAMIC_DOMAIN'];
+	                        }
 
                             $OLD_PRIORITY = ($START_PRIORITY + 0.1);
 

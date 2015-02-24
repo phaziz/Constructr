@@ -36,7 +36,7 @@
 	 * @link http://blog.phaziz.com/category/constructr-cms/
 	 * @link http://phaziz.com/
 	 * @package ConstructrCMS
-	 * @version 1.04.4 / 17.02.2015  
+	 * @version 1.04.5 / 24.02.2015  
 	 *
 	 */
 
@@ -82,5 +82,6 @@
         81 => 'Benutzerrechte bearbeiten',
         90 => 'Constructr Analytics anzeigen',
         100 => 'Statische Internetseiten generieren',
+        110 => 'ConstructrCMS Konfiguration herunterladen und sichern',
         1000 => 'Systemverwaltung anzeigen',
     );

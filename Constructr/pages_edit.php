@@ -40,7 +40,7 @@
 	 * @link http://blog.phaziz.com/category/constructr-cms/
 	 * @link http://phaziz.com/
 	 * @package ConstructrCMS
-	 * @version 1.04.4 / 17.02.2015  
+	 * @version 1.04.5 / 24.02.2015
 	 *
 	 */
 
@@ -59,10 +59,14 @@
             <link href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/css/constructr.css" rel="stylesheet">
             <link href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/vex/css/vex.css" rel="stylesheet">
             <link href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/vex/css/vex-theme-flat-attack.css" rel="stylesheet">
+            <link href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/codemirror/lib/codemirror.css" rel="stylesheet">
             <!--[if lt IE 9]>
                 <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
                 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
             <![endif]-->
+            <style>
+            	.CodeMirror{border:1px solid #666;}
+            </style>
         </head>
         <body>
             <div id="wrapper" class="active">
@@ -261,10 +265,32 @@
             <script src="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/jquery-1.11.2.min.js"></script>
             <script src="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/bootstrap-3.3.2-dist/js/bootstrap.min.js"></script>
             <script src="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/vex/js/vex.combined.min.js"></script>
+            <script src="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/codemirror/lib/codemirror.js"></script>
+            <script src="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/codemirror/mode/php.js"></script>
             <script>
                 $(function()
                     {
                         $('.tt').tooltip();
+
+                        var editor_css = CodeMirror.fromTextArea(document.getElementById("page_css"),
+                            {
+                                lineNumbers: true,
+                                matchBrackets: true,
+                                indentUnit: 4,
+                                autofocus: false,
+                                mode: 'php'
+                            }
+                        );
+
+                        var editor_js = CodeMirror.fromTextArea(document.getElementById("page_js"),
+                            {
+                                lineNumbers: true,
+                                matchBrackets: true,
+                                indentUnit: 4,
+                                autofocus: false,
+                                mode: 'php'
+                            }
+                        );
 
                         if(localStorage && localStorage.removeItem && localStorage.getItem && localStorage.setItem)
                         {

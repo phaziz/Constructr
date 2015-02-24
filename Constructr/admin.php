@@ -99,6 +99,31 @@
                             </div><!-- // EOF COL-... -->
                         </div><!-- // EOF ROW -->
                         <?php
+
+                            if(isset($_GET['backup-config']) && $_GET['backup-config'] == 'true')
+                            {
+                                ?>
+                                    <div class="row response">
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                            <?php
+                                                echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Erfolg!</strong> Konfiguration wurde auf dem Server gesichert!</div>';
+                                            ?>
+                                        </div><!-- // EOF COL-... -->
+                                    </div><!-- // EOF ROW -->
+                                <?php
+                            }
+                            if(isset($_GET['backup-config']) && $_GET['backup-config'] == 'false')
+                            {
+                                ?>
+                                    <div class="row response">
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                            <?php
+                                                echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Fehler!</strong> Es ist ein Fehler beim sichern der Konfiguration aufgetreten!</div>';
+                                            ?>
+                                        </div><!-- // EOF COL-... -->
+                                    </div><!-- // EOF ROW -->
+                                <?php
+                            }
                             if(isset($_GET['transfered-static']) && $_GET['transfered-static'] == 'true')
                             {
                                 ?>
@@ -294,6 +319,9 @@
                                         ?>
                                         <li class="list-group-item">
                                             <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL']; ?>/sitemap.xml" title="Sitemap anzeigen" onclick="window.open(this.href);return false;">Generierte sitemap.xml anzeigen</a>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL']; ?>/constructr/config-backup/" title="Konfiguration sichern">ConstructrCMS Konfiguration auf dem Server sichern</a>
                                         </li>
                                     </ul>
                                 </div><!-- // EOF JUMBOTRON -->

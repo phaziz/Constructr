@@ -1,126 +1,107 @@
 <?php
 
-	/**
-	 * Constructr CMS - a Slim-PHP-Framework based full-stack Content-Management-System (CMS).
-	 * 
-	 * Built with:
-	 * Slim-PHP-Framework (http://www.slimframework.com/)
-	 * Bootstrap Frontend Framework (http://getbootstrap.com/)
-	 * PHP PDO (http://php.net/manual/de/book.pdo.php)
-	 * jQuery (http://jquery.com/)
-	 * ckEditor (http://ckeditor.com/)
-	 * Codemirror (http://codemirror.net/)
-	 * ...
-	 * 
-	 * LICENCE 
-	 * 
-	 * DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
-	 * Version 1, February 2015
-	 * Copyright (C) 2015 Christian Becher | phaziz.com <christian@phaziz.com>
-	 * Everyone is permitted to copy and distribute verbatim or modified
-	 * copies of this license document, and changing it is allowed as long
-	 * as the name is changed.
-	 *
-	 * DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
-	 * TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
-	 * 0. YOU JUST DO WHAT THE FUCK YOU WANT TO!
-	 *
-	 * Visit http://constructr-cms.org
-	 * Visit http://blog.phaziz.com/category/constructr-cms/
-	 * Visit http://phaziz.com 
-	 *
-	 * @author Christian Becher | phaziz.com <phaziz@gmail.com>
-	 * @copyright 2015 Christian Becher | phaziz.com
-	 * @license DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
-	 * @link http://constructr-cms.org/
-	 * @link http://blog.phaziz.com/category/constructr-cms/
-	 * @link http://phaziz.com/
-	 * @package ConstructrCMS
-	 * @version 1.04.4 / 17.02.2015  
-	 *
-	 */
+/**
+ * Constructr CMS - a Slim-PHP-Framework based full-stack Content-Management-System (CMS).
+ *
+ * Built with:
+ * Slim-PHP-Framework (http://www.slimframework.com/)
+ * Bootstrap Frontend Framework (http://getbootstrap.com/)
+ * PHP PDO (http://php.net/manual/de/book.pdo.php)
+ * jQuery (http://jquery.com/)
+ * ckEditor (http://ckeditor.com/)
+ * Codemirror (http://codemirror.net/)
+ * ...
+ *
+ * LICENCE
+ *
+ * DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+ * Version 1, February 2015
+ * Copyright (C) 2015 Christian Becher | phaziz.com <christian@phaziz.com>
+ * Everyone is permitted to copy and distribute verbatim or modified
+ * copies of this license document, and changing it is allowed as long
+ * as the name is changed.
+ *
+ * DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+ * TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+ * 0. YOU JUST DO WHAT THE FUCK YOU WANT TO!
+ *
+ * Visit http://constructr-cms.org
+ * Visit http://blog.phaziz.com/category/constructr-cms/
+ * Visit http://phaziz.com
+ *
+ * @author Christian Becher | phaziz.com <phaziz@gmail.com>
+ * @copyright 2015 Christian Becher | phaziz.com
+ * @license DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+ *
+ * @link http://constructr-cms.org/
+ * @link http://blog.phaziz.com/category/constructr-cms/
+ * @link http://phaziz.com/
+ *
+ * @version 1.04.5 / 25.02.2015
+ */
 
-    if(isset($_GET['constructr_postmaster']) && $_GET['constructr_postmaster'] != '')
-    {
+    if (isset($_GET['constructr_postmaster']) && $_GET['constructr_postmaster'] != '') {
         $SPAM = false;
 
-        if(preg_match( "/bcc:|cc:|multipart|\[url|Content-Type:/i", implode($_GET)))
-        {
+        if (preg_match("/bcc:|cc:|multipart|\[url|Content-Type:/i", implode($_GET))) {
             $SPAM = true;
         }
 
-        if(preg_match_all("/<a|http:/i", implode($_GET), $out) > 3)
-        {
+        if (preg_match_all("/<a|http:/i", implode($_GET), $out) > 3) {
             $SPAM = true;
         }
 
-        if($SPAM == false)
-        {
-            if(isset($_GET['postmaster_datetime']) && is_numeric($_GET['postmaster_datetime']))
-            {
+        if ($SPAM == false) {
+            if (isset($_GET['postmaster_datetime']) && is_numeric($_GET['postmaster_datetime'])) {
                 $SENDED = intval($_GET['postmaster_datetime']);
                 $DIF = (time() - $SENDED);
 
-                if ($DIF > 10 || $DIF < 36000)
-                {
-                    if($_GET['postmaster_guid'] != '')
-                    {
-                        $_MAILTEXT = date('d.m.Y, H:i:s') . " Uhr\n\n";
+                if ($DIF > 10 || $DIF < 36000) {
+                    if ($_GET['postmaster_guid'] != '') {
+                        $_MAILTEXT = date('d.m.Y, H:i:s')." Uhr\n\n";
 
-                        foreach($_GET AS $_GETTER_KEY => $_GETTER_VALUE)
-                        {
-                            if(stristr($_GETTER_VALUE,"[link=") || stristr($_GETTER_VALUE,"[url="))
-                            {
-                                 die();
+                        foreach ($_GET as $_GETTER_KEY => $_GETTER_VALUE) {
+                            if (stristr($_GETTER_VALUE, "[link=") || stristr($_GETTER_VALUE, "[url=")) {
+                                die();
                             }
 
-                            $_MAILTEXT .= $_GETTER_KEY . ': ' . $_GETTER_VALUE . "\n";
+                            $_MAILTEXT .= $_GETTER_KEY.': '.$_GETTER_VALUE."\n";
                         }
 
-                        @mail($_CONSTRUCTR_CONF['_CONSTRUCTR_CONTACT_MAIL'],'eMail ' . $_CONSTRUCTR_CONF['_BASE_URL'],$_MAILTEXT);
+                        @mail($_CONSTRUCTR_CONF['_CONSTRUCTR_CONTACT_MAIL'], 'eMail '.$_CONSTRUCTR_CONF['_BASE_URL'], $_MAILTEXT);
                     }
                 }
             }
         }
-    }
-    else if(isset($_POST['constructr_postmaster']) && $_POST['constructr_postmaster'] != '')
-    {
+    } elseif (isset($_POST['constructr_postmaster']) && $_POST['constructr_postmaster'] != '') {
         $SPAM = false;
 
-        if(preg_match( "/bcc:|cc:|multipart|\[url|Content-Type:/i", implode($_POST)))
-        {
+        if (preg_match("/bcc:|cc:|multipart|\[url|Content-Type:/i", implode($_POST))) {
             $SPAM = true;
         }
 
-        if(preg_match_all("/<a|http:/i", implode($_POST), $out) > 3)
-        {
+        if (preg_match_all("/<a|http:/i", implode($_POST), $out) > 3) {
             $SPAM = true;
         }
 
-        if($SPAM == false)
-        {
-            if(isset($_POST['postmaster_datetime']) && is_numeric($_POST['postmaster_datetime']))
-            {
+        if ($SPAM == false) {
+            if (isset($_POST['postmaster_datetime']) && is_numeric($_POST['postmaster_datetime'])) {
                 $SENDED = intval($_POST['postmaster_datetime']);
                 $DIF = (time() - $SENDED);
 
-                if ($DIF > 10 || $DIF < 36000)
-                {
-                    if($_POST['postmaster_guid'] != '')
-                    {
-                        $_MAILTEXT = date('d.m.Y, H:i:s') . " Uhr\n\n";
+                if ($DIF > 10 || $DIF < 36000) {
+                    if ($_POST['postmaster_guid'] != '') {
+                        $_MAILTEXT = date('d.m.Y, H:i:s')." Uhr\n\n";
 
-                        foreach($_POST AS $_POSTER_KEY => $_POSTER_VALUE)
-                        {
-                            if(stristr($_POSTER_VALUE,"[link=") || stristr($_POSTER_VALUE,"[url="))
-                            {
-                                 die();
+                        foreach ($_POST as $_POSTER_KEY => $_POSTER_VALUE) {
+                            if (stristr($_POSTER_VALUE, "[link=") || stristr($_POSTER_VALUE, "[url=")) {
+                                die();
                             }
 
-                            $_MAILTEXT .= $_POSTER_KEY . ': ' . $_POSTER_VALUE . "\n";
+                            $_MAILTEXT .= $_POSTER_KEY.': '.$_POSTER_VALUE."\n";
                         }
 
-                        @mail($_CONSTRUCTR_CONF['_CONSTRUCTR_CONTACT_MAIL'],'eMail ' . $_CONSTRUCTR_CONF['_BASE_URL'],$_MAILTEXT);
+                        @mail($_CONSTRUCTR_CONF['_CONSTRUCTR_CONTACT_MAIL'], 'eMail '.$_CONSTRUCTR_CONF['_BASE_URL'], $_MAILTEXT);
                     }
                 }
             }

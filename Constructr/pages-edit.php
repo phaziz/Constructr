@@ -1,48 +1,48 @@
 <?php
 
-	 /**
-	  * Constructr CMS TemplateFile edit a Page Form. 
-	  */
+/**
+ * Constructr CMS TemplateFile edit a Page Form.
+ */
 
-	/**
-	 * Constructr CMS - a Slim-PHP-Framework based full-stack Content-Management-System (CMS).
-	 * 
-	 * Built with:
-	 * Slim-PHP-Framework (http://www.slimframework.com/)
-	 * Bootstrap Frontend Framework (http://getbootstrap.com/)
-	 * PHP PDO (http://php.net/manual/de/book.pdo.php)
-	 * jQuery (http://jquery.com/)
-	 * ckEditor (http://ckeditor.com/)
-	 * Codemirror (http://codemirror.net/)
-	 * ...
-	 * 
-	 * LICENCE 
-	 * 
-	 * DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
-	 * Version 1, February 2015
-	 * Copyright (C) 2015 Christian Becher | phaziz.com <christian@phaziz.com>
-	 * Everyone is permitted to copy and distribute verbatim or modified
-	 * copies of this license document, and changing it is allowed as long
-	 * as the name is changed.
-	 *
-	 * DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
-	 * TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
-	 * 0. YOU JUST DO WHAT THE FUCK YOU WANT TO!
-	 *
-	 * Visit http://constructr-cms.org
-	 * Visit http://blog.phaziz.com/category/constructr-cms/
-	 * Visit http://phaziz.com 
-	 *
-	 * @author Christian Becher | phaziz.com <phaziz@gmail.com>
-	 * @copyright 2015 Christian Becher | phaziz.com
-	 * @license DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
-	 * @link http://constructr-cms.org/
-	 * @link http://blog.phaziz.com/category/constructr-cms/
-	 * @link http://phaziz.com/
-	 * @package ConstructrCMS
-	 * @version 1.04.5 / 24.02.2015
-	 *
-	 */
+/**
+ * Constructr CMS - a Slim-PHP-Framework based full-stack Content-Management-System (CMS).
+ *
+ * Built with:
+ * Slim-PHP-Framework (http://www.slimframework.com/)
+ * Bootstrap Frontend Framework (http://getbootstrap.com/)
+ * PHP PDO (http://php.net/manual/de/book.pdo.php)
+ * jQuery (http://jquery.com/)
+ * ckEditor (http://ckeditor.com/)
+ * Codemirror (http://codemirror.net/)
+ * ...
+ *
+ * LICENCE
+ *
+ * DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+ * Version 1, February 2015
+ * Copyright (C) 2015 Christian Becher | phaziz.com <christian@phaziz.com>
+ * Everyone is permitted to copy and distribute verbatim or modified
+ * copies of this license document, and changing it is allowed as long
+ * as the name is changed.
+ *
+ * DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+ * TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+ * 0. YOU JUST DO WHAT THE FUCK YOU WANT TO!
+ *
+ * Visit http://constructr-cms.org
+ * Visit http://blog.phaziz.com/category/constructr-cms/
+ * Visit http://phaziz.com
+ *
+ * @author Christian Becher | phaziz.com <phaziz@gmail.com>
+ * @copyright 2015 Christian Becher | phaziz.com
+ * @license DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+ *
+ * @link http://constructr-cms.org/
+ * @link http://blog.phaziz.com/category/constructr-cms/
+ * @link http://phaziz.com/
+ *
+ * @version 1.04.5 / 25.02.2015
+ */
 
 ?>
 <!DOCTYPE html>
@@ -54,7 +54,7 @@
             <meta charset="utf-8">
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
             <meta name="viewport" content="width=device-width, initial-scale=1">
-            <title><?php echo $_CONSTRUCTR_CONF['_TITLE'] . ' - ' . $SUBTITLE; ?></title>
+            <title><?php echo $_CONSTRUCTR_CONF['_TITLE'].' - '.$SUBTITLE; ?></title>
             <link href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/bootstrap-3.3.2-dist/css/bootstrap.min.css" rel="stylesheet">
             <link href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/css/constructr.css" rel="stylesheet">
             <link href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/vex/css/vex.css" rel="stylesheet">
@@ -75,16 +75,20 @@
                         <li class="sidebar-brand"><a id="menu-toggle" href="#"><div class="pull-right"><span title="&#8249;&#160;Hauptmen&uuml;&#160;&#160;" data-toggle="tooltip" data-placement="right" class="tt glyphicon glyphicon-align-justify"></span>&#160;&#160;</div></a></li>
                     </ul>
                     <ul class="sidebar-nav" id="sidebar">
+
                         <?php
 
-                            if($_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'] != '')
-                            {
-                                ?>
-                                    <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'] ?>" onclick="window.open(this.href);return false;" title="Statische Internetseiten anzeigen" data-toggle="tooltip" data-placement="right">FTP-Seiten</a></li>
-                                <?php
+                            if ($_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'] != '') {
+
+                        ?>
+                            <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'] ?>" onclick="window.open(this.href);return false;" title="Statische Internetseiten anzeigen" data-toggle="tooltip" data-placement="right">FTP-Seiten</a></li>
+
+                        <?php
+
                             }
 
                         ?>
+
                         <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_CREATE_DYNAMIC_DOMAIN'] ?>" onclick="window.open(this.href);return false;" title="Vorschau dynamische Internetseiten" data-toggle="tooltip" data-placement="right">Vorschau</a></li>
                         <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/constructr/" title="Dashboard anzeigen" data-toggle="tooltip" data-placement="right">Dashboard</a></li>
                         <li class="active"><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/constructr/pages/" title="Seitenverwaltung anzeigen" data-toggle="tooltip" data-placement="right">Seiten</a></li>
@@ -110,144 +114,155 @@
                                     <h1><?php echo $SUBTITLE; ?></h1>
                                     <h2>Seite bearbeiten</h2>
                                     <br><br>
+
                                     <?php
-                                        if($PAGE)
-                                        {
-                                            ?>
-                                                <form role="form" name="new_page_form" id="new_page_form" action="<?php echo $FORM_ACTION; ?>" method="<?php echo $FORM_METHOD; ?>" enctype="<?php echo $FORM_ENCTYPE; ?>" class="form-horizontal">
-                                                    <input type="hidden" name="user_form_guid" value="<?php echo $GUID; ?>">
-                                                    <input type="hidden" name="pages_order" value="<?php echo $PAGE['pages_order']; ?>">
-                                                    <input type="hidden" name="page_id" id="page_id" value="<?php echo $PAGE['pages_id']; ?>" maxlength="100">
-                                                    <div class="form-group">
-                                                        <label for="page_name" class="col-sm-2 control-label">Name der Seite:</label>
-                                                        <div class="col-sm-10">
-                                                            <input type="text" class="form-control input-sm" name="page_name" id="page_name" value="<?php echo $PAGE['pages_name']; ?>" placeholder="Name der neuen Seite" maxlength="100">
-                                                            <small><span class="help-block" id="status-page_name">Bitte vergeben Sie einen eindeutigen Seitennamen</span></small>
-                                                        </div>
-                                                    </div>
+
+	                                    if ($PAGE) {
+
+                                    ?>
+
+                                    <form role="form" name="new_page_form" id="new_page_form" action="<?php echo $FORM_ACTION; ?>" method="<?php echo $FORM_METHOD; ?>" enctype="<?php echo $FORM_ENCTYPE; ?>" class="form-horizontal">
+                                        <input type="hidden" name="user_form_guid" value="<?php echo $GUID; ?>">
+                                        <input type="hidden" name="pages_order" value="<?php echo $PAGE['pages_order']; ?>">
+                                        <input type="hidden" name="page_id" id="page_id" value="<?php echo $PAGE['pages_id']; ?>" maxlength="100">
+                                        <div class="form-group">
+                                            <label for="page_name" class="col-sm-2 control-label">Name der Seite:</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control input-sm" name="page_name" id="page_name" value="<?php echo $PAGE['pages_name']; ?>" placeholder="Name der neuen Seite" maxlength="100">
+                                                <small><span class="help-block" id="status-page_name">Bitte vergeben Sie einen eindeutigen Seitennamen</span></small>
+                                            </div>
+                                        </div>
+
+                                        <?php
+
+                                            if ($PAGE['pages_order'] == 1) {
+
+                                        ?>
+                                            <div class="form-group">
+                                                <label for="page_url" class="col-sm-2 control-label">URL der neuen Seite:</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control input-sm" name="page_url" id="page_url" value="" placeholder="Startseite ohne URL" maxlength="100" readonly="readonly">
+                                                    <small><span class="help-block" id="status-page_url">Bitte vergeben Sie eine eindeutige URL</span></small>
+                                                </div>
+                                            </div>
+
+                                        <?php
+
+                                            } else {
+
+                                        ?>
+                                            <div class="form-group">
+                                                <label for="page_url" class="col-sm-2 control-label">URL der neuen Seite:</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control input-sm" name="page_url" id="page_url" value="<?php echo $PAGE['pages_url']; ?>" placeholder="URL der neuen Seite" maxlength="100">
+                                                    <small><span class="help-block" id="status-page_url">Bitte vergeben Sie eine eindeutige URL</span></small>
+                                                </div>
+                                            </div>
+
+                                        <?php
+
+                                            }
+
+                                		?>
+
+                                        <div class="form-group">
+                                            <label for="page_template" class="col-sm-2 control-label">Template der neuen Seite:</label>
+                                            <div class="col-sm-10">
+                                                <select class="form-control input-sm" name="page_template" id="page_template">
+                                                    <option value="">Bitte w&auml;hlen</option>
+                                                    <option value="">- - -</option>
+
                                                     <?php
-                                                        if($PAGE['pages_order'] == 1)
-                                                        {
-                                                            ?>
-                                                                <div class="form-group">
-                                                                    <label for="page_url" class="col-sm-2 control-label">URL der neuen Seite:</label>
-                                                                    <div class="col-sm-10">
-                                                                        <input type="text" class="form-control input-sm" name="page_url" id="page_url" value="" placeholder="Startseite ohne URL" maxlength="100" readonly="readonly">
-                                                                        <small><span class="help-block" id="status-page_url">Bitte vergeben Sie eine eindeutige URL</span></small>
-                                                                    </div>
-                                                                </div>
-                                                            <?php
-                                                        }
-                                                        else
-                                                        {
-                                                            ?>
-                                                                <div class="form-group">
-                                                                    <label for="page_url" class="col-sm-2 control-label">URL der neuen Seite:</label>
-                                                                    <div class="col-sm-10">
-                                                                        <input type="text" class="form-control input-sm" name="page_url" id="page_url" value="<?php echo $PAGE['pages_url']; ?>" placeholder="URL der neuen Seite" maxlength="100">
-                                                                        <small><span class="help-block" id="status-page_url">Bitte vergeben Sie eine eindeutige URL</span></small>
-                                                                    </div>
-                                                                </div>
-                                                            <?php
-                                                        }
-                                                    ?>
-                                                    <div class="form-group">
-                                                        <label for="page_template" class="col-sm-2 control-label">Template der neuen Seite:</label>
-                                                        <div class="col-sm-10">
-                                                            <select class="form-control input-sm" name="page_template" id="page_template">
-                                                                <option value="">Bitte w&auml;hlen</option>
-                                                                <option value="">- - -</option>
-                                                                <?php
 
-                                                                    foreach($TEMPLATES AS $TEMPLATE)
-                                                                    {
-                                                                        if($TEMPLATE != '' && $TEMPLATE != '.' && $TEMPLATE != '..')
-                                                                        {
-                                                                            if($PAGE['pages_template'] == $TEMPLATE)
-                                                                            {
-                                                                                echo '<option selected="selected" value="' . $TEMPLATE . '">' . $TEMPLATE . '</option>';
-                                                                            }
-                                                                            else
-                                                                            {
-                                                                                echo '<option value="' . $TEMPLATE . '">' . $TEMPLATE . '</option>';
-                                                                            }
-                                                                        }
-                                                                    }
+                                                        foreach ($TEMPLATES as $TEMPLATE) {
+                                                            if ($TEMPLATE != '' && $TEMPLATE != '.' && $TEMPLATE != '..') {
+                                                                if ($PAGE['pages_template'] == $TEMPLATE) {
+                                                                    echo '<option selected="selected" value="'.$TEMPLATE.'">'.$TEMPLATE.'</option>';
+                                                                } else {
+                                                                    echo '<option value="'.$TEMPLATE.'">'.$TEMPLATE.'</option>';
+                                                                }
+                                                            }
+                                                        }
 
-                                                                ?>
-                                                            </select>
-                                                            <small><span class="help-block" id="status-page_template">Bitte geben Sie dieser Seite ein Template</span></small>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="page_nav_visible" class="col-sm-2 control-label">Sichtbar in Navigation:</label>
-                                                        <div class="col-sm-10">
-                                                            <select class="form-control input-sm" name="page_nav_visible" id="page_nav_visible">
-                                                                <option value="0">Bitte w&auml;hlen</option>
-                                                                <option value="0">- - -</option>
-                                                                <?php
-                                                                    if($PAGE['pages_nav_visible'] == 1)
-                                                                    {
-                                                                        echo '<option value="1" selected="selected">Sichtbar</option>';
-                                                                        echo '<option value="0">Unsichtbar</option>';
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        echo '<option value="1">Sichtbar</option>';
-                                                                        echo '<option value="0" selected="selected">Unsichtbar</option>';
-                                                                    }
-                                                                ?>
-                                                            </select>
-                                                            <small><span class="help-block">Soll die Seite in der Navigation sichtbar sein?</span></small>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="page_title" class="col-sm-2 control-label">Seitentitel:</label>
-                                                        <div class="col-sm-10">
-                                                            <input type="text" class="form-control input-sm" name="page_title" id="page_title" value="<?php echo $PAGE['pages_title']; ?>" placeholder="Seitentitel in Metadaten">
-                                                            <small><span class="help-block" id="status-page_title">Diese Information wird f&uuml;r die Metadaten ben&ouml;tigt</span></small>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="page_description" class="col-sm-2 control-label">Beschreibung:</label>
-                                                        <div class="col-sm-10">
-                                                            <input type="text" class="form-control input-sm" name="page_description" id="page_description" value="<?php echo $PAGE['pages_description']; ?>" placeholder="Beschreibung in Metadaten">
-                                                            <small><span class="help-block" id="status-page_description">Diese Information wird f&uuml;r die Metadaten ben&ouml;tigt</span></small>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="page_keywords" class="col-sm-2 control-label">Schlagworte:</label>
-                                                        <div class="col-sm-10">
-                                                            <input type="text" class="form-control input-sm" name="page_keywords" id="page_keywords" value="<?php echo $PAGE['pages_keywords']; ?>" placeholder="Schlagworte in Metadaten">
-                                                            <small><span class="help-block" id="status-page_keywords">Diese Information wird f&uuml;r die Metadaten ben&ouml;tigt</span></small>
-                                                        </div>
-                                                    </div>
-			                                        <div class="form-group">
-			                                            <label for="page_css" class="col-sm-2 control-label">Seitenspezifisches CSS:</label>
-			                                            <div class="col-sm-10">
-			                                                <textarea rows="5" cols="50" class="form-control input-sm" name="page_css" id="page_css" placeholder="Seitenspezifisches CSS f&uuml;r diese Seite"><?php echo $PAGE['pages_css']; ?></textarea>
-			                                                <small><span class="help-block" id="status-page_description">Spezielle CSS-Angaben nur f&uuml;r diese Seite</span></small>
-			                                            </div>
-			                                        </div>
-			                                        <div class="form-group">
-			                                            <label for="page_js" class="col-sm-2 control-label">Seitenspezifisches Javascript:</label>
-			                                            <div class="col-sm-10">
-			                                                <textarea rows="5" cols="50" class="form-control input-sm" name="page_js" id="page_js" placeholder="Seitenspezifisches Javascript f&uuml;r diese Seite"><?php echo $PAGE['pages_js']; ?></textarea>
-			                                                <small><span class="help-block" id="status-page_description">Spezielle Javascript-Angaben nur f&uuml;r diese Seite</span></small>
-			                                            </div>
-			                                        </div>
-                                                    <div class="form-group">
-                                                        <label for="submitter" class="col-sm-2 control-label">&#160;</label>
-                                                        <div class="col-sm-10">
-                                                            <button type="submit" name="submitter" id="submitter" class="btn btn-info btn-sm">&Auml;nderungen speichern &#8250;&#8250;</button>
-                                                            <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/pages/'; ?>"><button type="button" class="btn btn-danger btn-sm">Abbrechen</button></a>
-                                                        </div>
-                                                    </div>
-                                                </form>
-                                            <?php
+		                                            ?>
+
+                                                </select>
+                                                <small><span class="help-block" id="status-page_template">Bitte geben Sie dieser Seite ein Template</span></small>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="page_nav_visible" class="col-sm-2 control-label">Sichtbar in Navigation:</label>
+                                            <div class="col-sm-10">
+                                                <select class="form-control input-sm" name="page_nav_visible" id="page_nav_visible">
+                                                    <option value="0">Bitte w&auml;hlen</option>
+                                                    <option value="0">- - -</option>
+
+                                                    <?php
+
+                                                        if ($PAGE['pages_nav_visible'] == 1) {
+                                                            echo '<option value="1" selected="selected">Sichtbar</option>';
+                                                            echo '<option value="0">Unsichtbar</option>';
+                                                        } else {
+                                                            echo '<option value="1">Sichtbar</option>';
+                                                            echo '<option value="0" selected="selected">Unsichtbar</option>';
+                                                        }
+
+		                                            ?>
+
+                                                </select>
+                                                <small><span class="help-block">Soll die Seite in der Navigation sichtbar sein?</span></small>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="page_title" class="col-sm-2 control-label">Seitentitel:</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control input-sm" name="page_title" id="page_title" value="<?php echo $PAGE['pages_title']; ?>" placeholder="Seitentitel in Metadaten">
+                                                <small><span class="help-block" id="status-page_title">Diese Information wird f&uuml;r die Metadaten ben&ouml;tigt</span></small>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="page_description" class="col-sm-2 control-label">Beschreibung:</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control input-sm" name="page_description" id="page_description" value="<?php echo $PAGE['pages_description']; ?>" placeholder="Beschreibung in Metadaten">
+                                                <small><span class="help-block" id="status-page_description">Diese Information wird f&uuml;r die Metadaten ben&ouml;tigt</span></small>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="page_keywords" class="col-sm-2 control-label">Schlagworte:</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control input-sm" name="page_keywords" id="page_keywords" value="<?php echo $PAGE['pages_keywords']; ?>" placeholder="Schlagworte in Metadaten">
+                                                <small><span class="help-block" id="status-page_keywords">Diese Information wird f&uuml;r die Metadaten ben&ouml;tigt</span></small>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="page_css" class="col-sm-2 control-label">Seitenspezifisches CSS:</label>
+                                            <div class="col-sm-10">
+                                                <textarea rows="5" cols="50" class="form-control input-sm" name="page_css" id="page_css" placeholder="Seitenspezifisches CSS f&uuml;r diese Seite"><?php echo $PAGE['pages_css']; ?></textarea>
+                                                <small><span class="help-block" id="status-page_description">Spezielle CSS-Angaben nur f&uuml;r diese Seite</span></small>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="page_js" class="col-sm-2 control-label">Seitenspezifisches Javascript:</label>
+                                            <div class="col-sm-10">
+                                                <textarea rows="5" cols="50" class="form-control input-sm" name="page_js" id="page_js" placeholder="Seitenspezifisches Javascript f&uuml;r diese Seite"><?php echo $PAGE['pages_js']; ?></textarea>
+                                                <small><span class="help-block" id="status-page_description">Spezielle Javascript-Angaben nur f&uuml;r diese Seite</span></small>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="submitter" class="col-sm-2 control-label">&#160;</label>
+                                            <div class="col-sm-10">
+                                                <button type="submit" name="submitter" id="submitter" class="btn btn-info btn-sm">&Auml;nderungen speichern &#8250;&#8250;</button>
+                                                <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/pages/'; ?>"><button type="button" class="btn btn-danger btn-sm">Abbrechen</button></a>
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                    <?php
+
                                         } else {
                                             echo '<p>Fehler bei der Daten&uuml;bergabe!</p>';
                                         }
+
                                     ?>
                                 </div><!-- // EOF JUMBOTRON -->
                             </div><!-- // EOF COL-... -->
@@ -266,8 +281,9 @@
             <script src="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/bootstrap-3.3.2-dist/js/bootstrap.min.js"></script>
             <script src="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/vex/js/vex.combined.min.js"></script>
             <script src="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/codemirror/lib/codemirror.js"></script>
-            <script src="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/codemirror/mode/php.js"></script>
+            <script src="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/codemirror/mode/php/php.js"></script>
             <script>
+
                 $(function()
                     {
                         $('.tt').tooltip();
@@ -333,8 +349,7 @@
                                 var T = $('#page_template').val();
 
                                 <?php
-                                    if($PAGE['pages_order'] == 1)
-                                    {
+                                    if ($PAGE['pages_order'] == 1) {
                                         ?>
                                             if(U == '' || P == 'constructr' || T == '')
                                             {
@@ -388,9 +403,8 @@
                                                 return true;
                                             }
                                         <?php
-                                    }
-                                    else
-                                    {
+
+                                    } else {
                                         ?>
                                             if(U == '' || P == '' || P == 'constructr' || T == '')
                                             {
@@ -444,6 +458,7 @@
                                                 return true;
                                             }
                                         <?php
+
                                     }
                                 ?>
 
@@ -451,6 +466,7 @@
                         );
                     }
                 );
+
             </script>
         </body>
     </html>

@@ -1,48 +1,48 @@
 <?php
 
-	 /**
-	  * Constructr CMS TemplateFile Login-Process. 
-	  */
+/**
+ * Constructr CMS TemplateFile when an Error occures during Login-Process.
+ */
 
-	/**
-	 * Constructr CMS - a Slim-PHP-Framework based full-stack Content-Management-System (CMS).
-	 * 
-	 * Built with:
-	 * Slim-PHP-Framework (http://www.slimframework.com/)
-	 * Bootstrap Frontend Framework (http://getbootstrap.com/)
-	 * PHP PDO (http://php.net/manual/de/book.pdo.php)
-	 * jQuery (http://jquery.com/)
-	 * ckEditor (http://ckeditor.com/)
-	 * Codemirror (http://codemirror.net/)
-	 * ...
-	 * 
-	 * LICENCE 
-	 * 
-	 * DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
-	 * Version 1, February 2015
-	 * Copyright (C) 2015 Christian Becher | phaziz.com <christian@phaziz.com>
-	 * Everyone is permitted to copy and distribute verbatim or modified
-	 * copies of this license document, and changing it is allowed as long
-	 * as the name is changed.
-	 *
-	 * DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
-	 * TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
-	 * 0. YOU JUST DO WHAT THE FUCK YOU WANT TO!
-	 *
-	 * Visit http://constructr-cms.org
-	 * Visit http://blog.phaziz.com/category/constructr-cms/
-	 * Visit http://phaziz.com 
-	 *
-	 * @author Christian Becher | phaziz.com <phaziz@gmail.com>
-	 * @copyright 2015 Christian Becher | phaziz.com
-	 * @license DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
-	 * @link http://constructr-cms.org/
-	 * @link http://blog.phaziz.com/category/constructr-cms/
-	 * @link http://phaziz.com/
-	 * @package ConstructrCMS
-	 * @version 1.04.4 / 17.02.2015  
-	 *
-	 */
+/**
+ * Constructr CMS - a Slim-PHP-Framework based full-stack Content-Management-System (CMS).
+ *
+ * Built with:
+ * Slim-PHP-Framework (http://www.slimframework.com/)
+ * Bootstrap Frontend Framework (http://getbootstrap.com/)
+ * PHP PDO (http://php.net/manual/de/book.pdo.php)
+ * jQuery (http://jquery.com/)
+ * ckEditor (http://ckeditor.com/)
+ * Codemirror (http://codemirror.net/)
+ * ...
+ *
+ * LICENCE
+ *
+ * DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+ * Version 1, February 2015
+ * Copyright (C) 2015 Christian Becher | phaziz.com <christian@phaziz.com>
+ * Everyone is permitted to copy and distribute verbatim or modified
+ * copies of this license document, and changing it is allowed as long
+ * as the name is changed.
+ *
+ * DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+ * TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+ * 0. YOU JUST DO WHAT THE FUCK YOU WANT TO!
+ *
+ * Visit http://constructr-cms.org
+ * Visit http://blog.phaziz.com/category/constructr-cms/
+ * Visit http://phaziz.com
+ *
+ * @author Christian Becher | phaziz.com <phaziz@gmail.com>
+ * @copyright 2015 Christian Becher | phaziz.com
+ * @license DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+ *
+ * @link http://constructr-cms.org/
+ * @link http://blog.phaziz.com/category/constructr-cms/
+ * @link http://phaziz.com/
+ *
+ * @version 1.04.5 / 25.02.2015
+ */
 
 ?>
 <!DOCTYPE html>
@@ -54,7 +54,7 @@
             <meta charset="utf-8">
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
             <meta name="viewport" content="width=device-width, initial-scale=1">
-            <title><?php echo $_CONSTRUCTR_CONF['_TITLE'] . ' - ' . $SUBTITLE; ?></title>
+            <title><?php echo $_CONSTRUCTR_CONF['_TITLE'].' - '.$SUBTITLE; ?></title>
             <link href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/bootstrap-3.3.2-dist/css/bootstrap.min.css" rel="stylesheet">
             <link href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/css/constructr.css" rel="stylesheet">
             <!--[if lt IE 9]>
@@ -66,34 +66,40 @@
             <div class="container" style="max-width: 600px;">
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Login Fehler!!!</strong></div>
+                    </div><!-- // EOF COL-... -->
+                </div><!-- // EOF ROW -->
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                         <div class="jumbotron" style="background:#000;color:#fff;">
                             <h1>ConstructrCMS</h1>
                             <br><br>
+
                             <?php
 
-                                if(isset($_SESSION['constructr_login_blocked']) && $_SESSION['constructr_login_blocked'] != '')
-                                {
+                                if (isset($_SESSION['constructr_login_blocked']) && $_SESSION['constructr_login_blocked'] != '') {
                                     $ACT_TIME = time();
                                     $BLOCKING_TIME = $_SESSION['constructr_login_blocked'];
 
-                                    if($ACT_TIME < ($BLOCKING_TIME + $_CONSTRUCTR_CONF['_LOGIN_BLOCKED_FOR']))
-                                    {
+                                    if ($ACT_TIME < ($BLOCKING_TIME + $_CONSTRUCTR_CONF['_LOGIN_BLOCKED_FOR'])) {
+
                                         ?>
+
                                             <div class="alert alert-danger"><strong>Zu viele Anmeldeversuche!</strong> Sie wurden f&uuml;r 10 Minuten gesperrt! Bitte versuchen Sie es danach erneut!</div>
+
                                         <?php
-                                    }
-                                    else
-                                    {
+
+                                    } else {
                                         $_SESSION['constructr_login_blocked'] = '';
                                         $_SESSION['constructr_login_attempt'] = '';
 
                                         ?>
 
                                             <form role="form" name="login_form" id="login_form" action="<?php echo $_ACTION ?>" method="<?php echo $_METHOD ?>" enctype="<?php echo $_ENCTYPE ?>">
-                                                <input type="hidden" name="_admin_guid" value="<?php if($GUID){echo $GUID;}?>"  id="_admin_guid">
+                                                <input type="hidden" name="_admin_guid" value="<?php if ($GUID) { echo $GUID; } ?>"  id="_admin_guid">
                                                 <div class="form-group">
                                                     <label for="_admin_username">Benutzername:</label>
-                                                    <input type="text" name="_admin_username" value="<?php if(isset($_SESSION['TMP_LOGIN_NAME'])){ echo $_SESSION['TMP_LOGIN_NAME']; }; ?>" class="form-control" id="_admin_username" placeholder="Benutzername">
+                                                    <input type="text" value="<?php if (isset($_SESSION['TMP_LOGIN_NAME'])) { echo $_SESSION['TMP_LOGIN_NAME']; } ?>" name="_admin_username" class="form-control" id="_admin_username" placeholder="Benutzername">
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="_admin_password">Passwort:</label>
@@ -104,17 +110,17 @@
                                             </form>
 
                                         <?php
+
                                     }
-                                }
-                                else
-                                {
+                                } else {
+
                                     ?>
 
                                         <form role="form" name="login_form" id="login_form" action="<?php echo $_ACTION ?>" method="<?php echo $_METHOD ?>" enctype="<?php echo $_ENCTYPE ?>">
-                                            <input type="hidden" name="_admin_guid" value="<?php if($GUID){echo $GUID;}?>"  id="_admin_guid">
+                                            <input type="hidden" name="_admin_guid" value="<?php if ($GUID) { echo $GUID; } ?>"  id="_admin_guid">
                                             <div class="form-group">
                                                 <label for="_admin_username">Benutzername:</label>
-                                                <input type="text" value="<?php if(isset($_SESSION['TMP_LOGIN_NAME'])){ echo $_SESSION['TMP_LOGIN_NAME']; }; ?>" name="_admin_username" class="form-control" id="_admin_username" placeholder="Benutzername">
+                                                <input type="text" value="<?php if (isset($_SESSION['TMP_LOGIN_NAME'])) { echo $_SESSION['TMP_LOGIN_NAME']; } ?>" name="_admin_username" class="form-control" id="_admin_username" placeholder="Benutzername">
                                             </div>
                                             <div class="form-group">
                                                 <label for="_admin_password">Passwort:</label>
@@ -125,9 +131,11 @@
                                         </form>
 
                                     <?php
+
                                 }
 
                             ?>
+
                         </div><!-- // EOF JUMBOTRON -->
                     </div><!-- // EOF COL-... -->
                 </div><!-- // EOF ROW -->
@@ -135,11 +143,13 @@
             <script src="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/jquery-1.11.2.min.js"></script>
             <script src="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/bootstrap-3.3.2-dist/js/bootstrap.min.js"></script>
             <script>
-                $(function(){if(localStorage && localStorage.removeItem && localStorage.getItem && localStorage.setItem){localStorage.setItem('MENU_VISIBLE','true');}$('#login_form').bind('submit', function(){var A = $('#_admin_username').val();var P = $('#_admin_password').val();if(typeof A === 'undefined' || A == '' || typeof P === 'undefined' ||  P == ''){return false;}});$("#_admin_username").focus()});var _paq=_paq||[];_paq.push(["setDocumentTitle",document.domain+"/"+document.title]);_paq.push(["setCookieDomain","*.constructr.phaziz.com"]);_paq.push(["trackPageView"]);_paq.push(["enableLinkTracking"]);
-                (function(){var c=("https:"==document.location.protocol?"https":"http")+"://piwik.phaziz.com/";_paq.push(["setTrackerUrl",c+"piwik.php"]);_paq.push(["setSiteId","3"]);var a=document,b=a.createElement("script"),a=a.getElementsByTagName("script")[0];b.type="text/javascript";b.defer=!0;b.async=!0;b.src=c+"piwik.js";a.parentNode.insertBefore(b,a)})();
-			</script>
-			<noscript>
-				<img src="http://piwik.phaziz.com/piwik.php?idsite=3&amp;rec=1" style="border:0" alt="" />
-			</noscript>
+
+                $(function()
+                    {
+                        if(localStorage && localStorage.removeItem && localStorage.getItem && localStorage.setItem){localStorage.setItem('MENU_VISIBLE','true');}$('#_admin_username').focus();$('#login_form').bind('submit', function(){var A = $('#_admin_username').val();var P = $('#_admin_password').val();if(typeof A === 'undefined' || A == '' || typeof P === 'undefined' ||  P == ''){return false;}});
+                    }
+				);
+
+            </script>
         </body>
     </html>

@@ -1,48 +1,48 @@
 <?php
 
-	 /**
-	  * Constructr CMS TemplateFile edit a Template File Form. 
-	  */
+/**
+ * Constructr CMS TemplateFile edit a Template File Form.
+ */
 
-	/**
-	 * Constructr CMS - a Slim-PHP-Framework based full-stack Content-Management-System (CMS).
-	 * 
-	 * Built with:
-	 * Slim-PHP-Framework (http://www.slimframework.com/)
-	 * Bootstrap Frontend Framework (http://getbootstrap.com/)
-	 * PHP PDO (http://php.net/manual/de/book.pdo.php)
-	 * jQuery (http://jquery.com/)
-	 * ckEditor (http://ckeditor.com/)
-	 * Codemirror (http://codemirror.net/)
-	 * ...
-	 * 
-	 * LICENCE 
-	 * 
-	 * DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
-	 * Version 1, February 2015
-	 * Copyright (C) 2015 Christian Becher | phaziz.com <christian@phaziz.com>
-	 * Everyone is permitted to copy and distribute verbatim or modified
-	 * copies of this license document, and changing it is allowed as long
-	 * as the name is changed.
-	 *
-	 * DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
-	 * TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
-	 * 0. YOU JUST DO WHAT THE FUCK YOU WANT TO!
-	 *
-	 * Visit http://constructr-cms.org
-	 * Visit http://blog.phaziz.com/category/constructr-cms/
-	 * Visit http://phaziz.com 
-	 *
-	 * @author Christian Becher | phaziz.com <phaziz@gmail.com>
-	 * @copyright 2015 Christian Becher | phaziz.com
-	 * @license DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
-	 * @link http://constructr-cms.org/
-	 * @link http://blog.phaziz.com/category/constructr-cms/
-	 * @link http://phaziz.com/
-	 * @package ConstructrCMS
-	 * @version 1.04.4 / 17.02.2015  
-	 *
-	 */
+/**
+ * Constructr CMS - a Slim-PHP-Framework based full-stack Content-Management-System (CMS).
+ *
+ * Built with:
+ * Slim-PHP-Framework (http://www.slimframework.com/)
+ * Bootstrap Frontend Framework (http://getbootstrap.com/)
+ * PHP PDO (http://php.net/manual/de/book.pdo.php)
+ * jQuery (http://jquery.com/)
+ * ckEditor (http://ckeditor.com/)
+ * Codemirror (http://codemirror.net/)
+ * ...
+ *
+ * LICENCE
+ *
+ * DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+ * Version 1, February 2015
+ * Copyright (C) 2015 Christian Becher | phaziz.com <christian@phaziz.com>
+ * Everyone is permitted to copy and distribute verbatim or modified
+ * copies of this license document, and changing it is allowed as long
+ * as the name is changed.
+ *
+ * DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+ * TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+ * 0. YOU JUST DO WHAT THE FUCK YOU WANT TO!
+ *
+ * Visit http://constructr-cms.org
+ * Visit http://blog.phaziz.com/category/constructr-cms/
+ * Visit http://phaziz.com
+ *
+ * @author Christian Becher | phaziz.com <phaziz@gmail.com>
+ * @copyright 2015 Christian Becher | phaziz.com
+ * @license DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+ *
+ * @link http://constructr-cms.org/
+ * @link http://blog.phaziz.com/category/constructr-cms/
+ * @link http://phaziz.com/
+ *
+ * @version 1.04.5 / 25.02.2015
+ */
 
 ?>
 <!DOCTYPE html>
@@ -54,7 +54,7 @@
             <meta charset="utf-8">
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
             <meta name="viewport" content="width=device-width, initial-scale=1">
-            <title><?php echo $_CONSTRUCTR_CONF['_TITLE'] . ' - ' . $SUBTITLE; ?></title>
+            <title><?php echo $_CONSTRUCTR_CONF['_TITLE'].' - '.$SUBTITLE; ?></title>
             <link href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/bootstrap-3.3.2-dist/css/bootstrap.min.css" rel="stylesheet">
             <link href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/css/constructr.css" rel="stylesheet">
             <link href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/vex/css/vex.css" rel="stylesheet">
@@ -77,16 +77,21 @@
                         <li class="sidebar-brand"><a id="menu-toggle" href="#"><div class="pull-right"><span title="&#8249;&#160;Hauptmen&uuml;&#160;&#160;" data-toggle="tooltip" data-placement="right" class="tt glyphicon glyphicon-align-justify"></span>&#160;&#160;</div></a></li>
                     </ul>
                     <ul class="sidebar-nav" id="sidebar">
+
                         <?php
 
-                            if($_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'] != '')
-                            {
-                                ?>
-                                    <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'] ?>" onclick="window.open(this.href);return false;" title="Statische Internetseiten anzeigen" data-toggle="tooltip" data-placement="right">FTP-Seiten</a></li>
-                                <?php
+                            if ($_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'] != '') {
+
+                        ?>
+
+                            <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'] ?>" onclick="window.open(this.href);return false;" title="Statische Internetseiten anzeigen" data-toggle="tooltip" data-placement="right">FTP-Seiten</a></li>
+
+                        <?php
+
                             }
 
                         ?>
+
                         <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_CREATE_DYNAMIC_DOMAIN'] ?>" onclick="window.open(this.href);return false;" title="Vorschau dynamische Internetseiten" data-toggle="tooltip" data-placement="right">Vorschau</a></li>
                         <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/constructr/" title="Dashboard anzeigen" data-toggle="tooltip" data-placement="right">Dashboard</a></li>
                         <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/constructr/pages/" title="Seitenverwaltung anzeigen" data-toggle="tooltip" data-placement="right">Seiten</a></li>
@@ -106,62 +111,70 @@
                                 <p><small><a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/constructr/">Dashboard</a> <span class="glyphicon glyphicon-chevron-right"></span> <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/constructr/templates/">Templates</a> <span class="glyphicon glyphicon-chevron-right"></span>  <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/constructr/templates/edit/<?php echo $ORIGIN_TEMPLATE; ?>/">Template bearbeiten</a> <span class="glyphicon glyphicon-chevron-right"></span></small></p>
                             </div><!-- // EOF COL-... -->
                         </div><!-- // EOF ROW -->
+
                         <?php
-                            if(isset($_GET['res']) && $_GET['res'] != ''){
-                                ?>
-                                    <div class="row response">
-                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                            <?php
 
-                                                if($_GET['res'] == 'del-media-true')
-                                                {
-                                                    echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Erfolg!</strong> Die Datei wurde endg&uuml;ltig gel&ouml;scht.</div>';
-                                                }
-                                                else if($_GET['res'] == 'del-media-false')
-                                                {
-                                                    echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Fehler!</strong> Es ist ein Fehler beim l&ouml;schen der Datei aufgetreten.</div>';
-                                                }
+                            if (isset($_GET['res']) && $_GET['res'] != '') {
 
-                                            ?>
-                                        </div><!-- // EOF COL-... -->
-                                    </div><!-- // EOF ROW -->
-                                <?php
-                            }
                         ?>
+                            <div class="row response">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <?php
+
+                                if ($_GET['res'] == 'del-media-true') {
+                                    echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Erfolg!</strong> Die Datei wurde endg&uuml;ltig gel&ouml;scht.</div>';
+                                } elseif ($_GET['res'] == 'del-media-false') {
+                                    echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Fehler!</strong> Es ist ein Fehler beim l&ouml;schen der Datei aufgetreten.</div>';
+                                }
+
+                        ?>
+
+                                </div><!-- // EOF COL-... -->
+                            </div><!-- // EOF ROW -->
+
+                        <?php
+
+                            }
+
+                        ?>
+
                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <div class="jumbotron">
                                     <h1><?php echo $SUBTITLE; ?></h1>
                                     <h2>Templates <strong><?php echo base64_decode($ORIGIN_TEMPLATE); ?></strong> bearbeiten</h2>
                                     <br><br>
+
                                     <?php
 
-                                        if($TEMPLATE)
-                                        {
-                                            ?>
+                                        if ($TEMPLATE) {
 
-                                                <form role="form" name="template_form" id="template_form" action="<?php echo $FORM_ACTION; ?>" method="<?php echo $FORM_METHOD; ?>" enctype="<?php echo $FORM_ENCTYPE; ?>" class="form-horizontal">
-                                                    <input type="hidden" name="user_form_guid" value="<?php echo $GUID; ?>">
-                                                    <input type="hidden" name="template_file" value="<?php echo $ORIGIN_TEMPLATE; ?>">
-                                                    <div class="form-group">
-                                                        <label for="page_name" class="col-sm-2 control-label">Template:</label>
-                                                        <div class="col-sm-10">
-                                                            <textarea class="form-control" name="template" id="template" rows="40" cols="100"><?php echo $TEMPLATE; ?></textarea>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="submitter" class="col-sm-2 control-label">&#160;</label>
-                                                        <div class="col-sm-10">
-                                                            <button type="submit" name="submitter" id="submitter" class="btn btn-info btn-sm">Template speichern &#8250;&#8250;</button>
-                                                            <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/templates/'; ?>"><button type="button" class="btn btn-danger btn-sm">Abbrechen</button></a>
-                                                        </div>
-                                                    </div>
-                                                </form>
+                                    ?>
 
-                                            <?php
+	                                    <form role="form" name="template_form" id="template_form" action="<?php echo $FORM_ACTION; ?>" method="<?php echo $FORM_METHOD; ?>" enctype="<?php echo $FORM_ENCTYPE; ?>" class="form-horizontal">
+	                                        <input type="hidden" name="user_form_guid" value="<?php echo $GUID; ?>">
+	                                        <input type="hidden" name="template_file" value="<?php echo $ORIGIN_TEMPLATE; ?>">
+	                                        <div class="form-group">
+	                                            <label for="page_name" class="col-sm-2 control-label">Template:</label>
+	                                            <div class="col-sm-10">
+	                                                <textarea class="form-control" name="template" id="template" rows="40" cols="100"><?php echo $TEMPLATE; ?></textarea>
+	                                            </div>
+	                                        </div>
+	                                        <div class="form-group">
+	                                            <label for="submitter" class="col-sm-2 control-label">&#160;</label>
+	                                            <div class="col-sm-10">
+	                                                <button type="submit" name="submitter" id="submitter" class="btn btn-info btn-sm">Template speichern &#8250;&#8250;</button>
+	                                                <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/templates/'; ?>"><button type="button" class="btn btn-danger btn-sm">Abbrechen</button></a>
+	                                            </div>
+	                                        </div>
+	                                    </form>
+
+                                    <?php
+
                                         }
 
                                     ?>
+
                                 </div><!-- // EOF JUMBOTRON -->
                             </div><!-- // EOF COL-... -->
                         </div><!-- // EOF ROW -->
@@ -179,8 +192,9 @@
             <script src="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/bootstrap-3.3.2-dist/js/bootstrap.min.js"></script>
             <script src="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/vex/js/vex.combined.min.js"></script>
             <script src="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/codemirror/lib/codemirror.js"></script>
-            <script src="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/codemirror/mode/php.js"></script>
+            <script src="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/codemirror/mode/php/php.js"></script>
             <script>
+
                 $(function()
                     {
                         var editor = CodeMirror.fromTextArea(document.getElementById("template"),
@@ -260,6 +274,7 @@
                         );
                     }
                 );
+
             </script>
         </body>
     </html>

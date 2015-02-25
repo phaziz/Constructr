@@ -1,48 +1,48 @@
 <?php
 
-	 /**
-	  * Constructr CMS TemplateFile Administration Dashboard. 
-	  */
+/**
+ * Constructr CMS TemplateFile Administration Dashboard.
+ */
 
-	/**
-	 * Constructr CMS - a Slim-PHP-Framework based full-stack Content-Management-System (CMS).
-	 * 
-	 * Built with:
-	 * Slim-PHP-Framework (http://www.slimframework.com/)
-	 * Bootstrap Frontend Framework (http://getbootstrap.com/)
-	 * PHP PDO (http://php.net/manual/de/book.pdo.php)
-	 * jQuery (http://jquery.com/)
-	 * ckEditor (http://ckeditor.com/)
-	 * Codemirror (http://codemirror.net/)
-	 * ...
-	 * 
-	 * LICENCE 
-	 * 
-	 * DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
-	 * Version 1, February 2015
-	 * Copyright (C) 2015 Christian Becher | phaziz.com <christian@phaziz.com>
-	 * Everyone is permitted to copy and distribute verbatim or modified
-	 * copies of this license document, and changing it is allowed as long
-	 * as the name is changed.
-	 *
-	 * DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
-	 * TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
-	 * 0. YOU JUST DO WHAT THE FUCK YOU WANT TO!
-	 *
-	 * Visit http://constructr-cms.org
-	 * Visit http://blog.phaziz.com/category/constructr-cms/
-	 * Visit http://phaziz.com 
-	 *
-	 * @author Christian Becher | phaziz.com <phaziz@gmail.com>
-	 * @copyright 2015 Christian Becher | phaziz.com
-	 * @license DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
-	 * @link http://constructr-cms.org/
-	 * @link http://blog.phaziz.com/category/constructr-cms/
-	 * @link http://phaziz.com/
-	 * @package ConstructrCMS
-	 * @version 1.04.4 / 17.02.2015  
-	 *
-	 */
+/**
+ * Constructr CMS - a Slim-PHP-Framework based full-stack Content-Management-System (CMS).
+ *
+ * Built with:
+ * Slim-PHP-Framework (http://www.slimframework.com/)
+ * Bootstrap Frontend Framework (http://getbootstrap.com/)
+ * PHP PDO (http://php.net/manual/de/book.pdo.php)
+ * jQuery (http://jquery.com/)
+ * ckEditor (http://ckeditor.com/)
+ * Codemirror (http://codemirror.net/)
+ * ...
+ *
+ * LICENCE
+ *
+ * DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+ * Version 1, February 2015
+ * Copyright (C) 2015 Christian Becher | phaziz.com <christian@phaziz.com>
+ * Everyone is permitted to copy and distribute verbatim or modified
+ * copies of this license document, and changing it is allowed as long
+ * as the name is changed.
+ *
+ * DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+ * TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+ * 0. YOU JUST DO WHAT THE FUCK YOU WANT TO!
+ *
+ * Visit http://constructr-cms.org
+ * Visit http://blog.phaziz.com/category/constructr-cms/
+ * Visit http://phaziz.com
+ *
+ * @author Christian Becher | phaziz.com <phaziz@gmail.com>
+ * @copyright 2015 Christian Becher | phaziz.com
+ * @license DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+ *
+ * @link http://constructr-cms.org/
+ * @link http://blog.phaziz.com/category/constructr-cms/
+ * @link http://phaziz.com/
+ *
+ * @version 1.04.5 / 25.02.2015
+ */
 
 ?>
 <!DOCTYPE html>
@@ -54,7 +54,7 @@
             <meta charset="utf-8">
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
             <meta name="viewport" content="width=device-width, initial-scale=1">
-            <title><?php echo $_CONSTRUCTR_CONF['_TITLE'] . ' - ' . $SUBTITLE; ?></title>
+            <title><?php echo $_CONSTRUCTR_CONF['_TITLE'].' - '.$SUBTITLE; ?></title>
             <link href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/bootstrap-3.3.2-dist/css/bootstrap.min.css" rel="stylesheet">
             <link href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/css/constructr.css" rel="stylesheet">
             <!--[if lt IE 9]>
@@ -69,16 +69,21 @@
                         <li class="sidebar-brand"><a id="menu-toggle" href="#"><div class="pull-right"><span title="&#8249;&#160;Hauptmen&uuml;&#160;&#160;" data-toggle="tooltip" data-placement="right" class="tt glyphicon glyphicon-align-justify"></span>&#160;&#160;</div></a></li>
                     </ul>
                     <ul class="sidebar-nav" id="sidebar">
+
                         <?php
 
-                            if($_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'] != '')
-                            {
-                                ?>
-                                    <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'] ?>" onclick="window.open(this.href);return false;" title="Statische Internetseiten anzeigen" data-toggle="tooltip" data-placement="right">FTP-Seiten</a></li>
-                                <?php
+                            if ($_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'] != '') {
+
+                        ?>
+
+                            <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'] ?>" onclick="window.open(this.href);return false;" title="Statische Internetseiten anzeigen" data-toggle="tooltip" data-placement="right">FTP-Seiten</a></li>
+
+                        <?php
+
                             }
 
                         ?>
+
                         <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_CREATE_DYNAMIC_DOMAIN'] ?>" onclick="window.open(this.href);return false;" title="Vorschau dynamische Internetseiten" data-toggle="tooltip" data-placement="right">Vorschau</a></li>
                         <li class="active"><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/constructr/" title="Dashboard anzeigen" data-toggle="tooltip" data-placement="right">Dashboard</a></li>
                         <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/constructr/pages/" title="Seitenverwaltung anzeigen" data-toggle="tooltip" data-placement="right">Seiten</a></li>
@@ -100,104 +105,102 @@
                         </div><!-- // EOF ROW -->
                         <?php
 
-                            if(isset($_GET['backup-config']) && $_GET['backup-config'] == 'true')
-                            {
+                            if (isset($_GET['backup-config']) && $_GET['backup-config'] == 'true') {
                                 ?>
                                     <div class="row response">
                                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                             <?php
                                                 echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Erfolg!</strong> Konfiguration wurde auf dem Server gesichert!</div>';
-                                            ?>
+                            				?>
                                         </div><!-- // EOF COL-... -->
                                     </div><!-- // EOF ROW -->
-                                <?php
+                            	<?php
+
                             }
-                            if(isset($_GET['backup-config']) && $_GET['backup-config'] == 'false')
-                            {
+                            if (isset($_GET['backup-config']) && $_GET['backup-config'] == 'false') {
                                 ?>
                                     <div class="row response">
                                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                             <?php
                                                 echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Fehler!</strong> Es ist ein Fehler beim sichern der Konfiguration aufgetreten!</div>';
-                                            ?>
+                                			?>
                                         </div><!-- // EOF COL-... -->
                                     </div><!-- // EOF ROW -->
                                 <?php
+
                             }
-                            if(isset($_GET['transfered-static']) && $_GET['transfered-static'] == 'true')
-                            {
+                            if (isset($_GET['transfered-static']) && $_GET['transfered-static'] == 'true') {
                                 ?>
                                     <div class="row response">
                                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                             <?php
                                                 echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Erfolg!</strong> Die statischen Internetseiten wurden &uuml;bertragen!</div>';
-                                            ?>
+                                			?>
                                         </div><!-- // EOF COL-... -->
                                     </div><!-- // EOF ROW -->
                                 <?php
+
                             }
-                            if(isset($_GET['transfered-static']) && $_GET['transfered-static'] == 'false')
-                            {
+                            if (isset($_GET['transfered-static']) && $_GET['transfered-static'] == 'false') {
                                 ?>
                                     <div class="row response">
                                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                             <?php
                                                 echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Fehler!</strong> Es ist ein Fehler beim &uuml;bertragen der statischen Seiten aufgetreten.</div>';
-                                            ?>
+                                ?>
                                         </div><!-- // EOF COL-... -->
                                     </div><!-- // EOF ROW -->
                                 <?php
+
                             }
-                            if(isset($_GET['content-history']) && $_GET['content-history'] == 'true')
-                            {
+                            if (isset($_GET['content-history']) && $_GET['content-history'] == 'true') {
                                 ?>
                                     <div class="row response">
                                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                             <?php
                                                 echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Erfolg!</strong> Die gesamte Content-Historie wurde entfernt.</div>';
-                                            ?>
+                                			?>
                                         </div><!-- // EOF COL-... -->
                                     </div><!-- // EOF ROW -->
                                 <?php
+
                             }
-                            if(isset($_GET['optimized']) && $_GET['optimized'] == 'true')
-                            {
+                            if (isset($_GET['optimized']) && $_GET['optimized'] == 'true') {
                                 ?>
                                     <div class="row response">
                                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                             <?php
                                                 echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Erfolg!</strong> Die einzelnen Datenbanktabellen wurden optimiert.</div>';
-                                            ?>
+                                			?>
                                         </div><!-- // EOF COL-... -->
                                     </div><!-- // EOF ROW -->
                                 <?php
-                            }
-                            else if(isset($_GET['no-rights']) && $_GET['no-rights'] == 'true')
-                            {
+
+                            } elseif (isset($_GET['no-rights']) && $_GET['no-rights'] == 'true') {
                                 ?>
                                     <div class="row response">
                                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                             <?php
                                                 echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Fehler!</strong> Es fehlen die Zugriffsrechte f&uuml;r dieses Modul.</div>';
-                                            ?>
+                                			?>
                                         </div><!-- // EOF COL-... -->
                                     </div><!-- // EOF ROW -->
                                 <?php
+
                             }
-                            if(isset($_GET['cleared-cache']) && $_GET['cleared-cache'] == 'true')
-                            {
+                            if (isset($_GET['cleared-cache']) && $_GET['cleared-cache'] == 'true') {
                                 ?>
                                     <div class="row response">
                                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                             <?php
                                                 echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Erfolg!</strong> Die gecachten Dateien wurden entfernt.</div>';
-                                            ?>
+                            				?>
                                         </div><!-- // EOF COL-... -->
                                     </div><!-- // EOF ROW -->
                                 <?php
+
                             }
-                            if(isset($SEARCHR))
-                            {
+                            if (isset($SEARCHR)) {
                                 ?>
                                     <div class="row">
                                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -206,15 +209,15 @@
                                                 <h2><?php echo $SEARCHR_COUNTR; ?> Suchergebniss(e) wurden gefunden:</h2>
                                                 <br>
                                                 <?php
-                                                    foreach($SEARCHR AS $SEARCHR_KEY => $SEARCHR_VALUE)
-                                                    {
-                                                        echo '<a href="' . $SEARCHR_VALUE['result_link'] . '">' . $SEARCHR_VALUE['name'] . '</a><br><br>';
+                                                    foreach ($SEARCHR as $SEARCHR_KEY => $SEARCHR_VALUE) {
+                                                        echo '<a href="'.$SEARCHR_VALUE['result_link'].'">'.$SEARCHR_VALUE['name'].'</a><br><br>';
                                                     }
-                                                ?>
+                                				?>
                                             </div><!-- // EOF JUMBOTRON... -->
                                         </div><!-- // EOF COL-... -->
                                     </div><!-- // EOF ROW -->
                                 <?php
+
                             }
                         ?>
                         <div class="row">
@@ -229,23 +232,25 @@
                                             <input type="text" style="width:100%;" class="form-control input-sm" id="needles" name="needles" placeholder="Suchbegriffe durch Leerstellen getrennt eingeben">
                                         </div>
                                         <div class="col-lg-2">
-                                            <button type="submit" id="search-submittr" style="width:100%;" class="btn btn-info btn-sm">Suche starten</button>
+                                            <button type="submit" id="search-submittr" style="width:100%;" class="btn btn-info btn-sm">Suche starten <span class="glyphicon glyphicon-chevron-right"></span></button>
                                         </div>
                                     </form>
                                     <br><br>
                                     <?php
 
-                                        if($_CONSTRUCTR_CONF['_TRANSFER_STATIC'] == true)
-                                        {
-                                                echo '<h2>Statische Seiten per FTP &uuml;bertragen</h2><br><ul class="list-group">';
+                                        if ($_CONSTRUCTR_CONF['_TRANSFER_STATIC'] == true) {
+                                            echo '<h2>Statische Seiten per FTP &uuml;bertragen</h2><br><ul class="list-group">';
 
-                                            ?>
-                                                      <li class="list-group-item">
-                                                            <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL']; ?>/constructr/transfer-static/<?php echo $GUID ?>/" title="Statische Internetseiten jetzt &uuml;bertragen">Statische Internetseiten jetzt &uuml;bertragen</a>
-                                                      </li>
-                                                </ul>
-                                                <br>
-                                            <?php
+                            		?>
+
+											<li class="list-group-item">
+												<a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/constructr/transfer-static/<?php echo $GUID ?>/" title="Statische Internetseiten jetzt &uuml;bertragen">Statische Internetseiten jetzt &uuml;bertragen</a>
+											</li>
+										</ul>
+                                        <br>
+
+                                    <?php
+
                                         }
                                     ?>
                                     <h2>Seiten, Uploads &amp; Benutzer:</h2>
@@ -253,7 +258,7 @@
                                     <ul class="list-group">
                                           <li class="list-group-item">
                                                 <span class="badge"><?php echo $PAGES_COUNTR; ?></span>
-                                                <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL']; ?>/constructr/pages/" title="Seiten anzeigen">Seiten</a>:
+                                                <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL']; ?>/constructr/pages/" title="Seiten anzeigen" class="tt">Seiten</a>:
                                           </li>
                                           <li class="list-group-item">
                                                 <span class="badge"><?php echo $CONTENT_COUNTR; ?></span>
@@ -261,15 +266,15 @@
                                           </li>
                                           <li class="list-group-item">
                                                 <span class="badge"><?php echo $UPLOADS_COUNTR; ?></span>
-                                                <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL']; ?>/constructr/media/" title="Uploads anzeigen">Uploads</a>:
+                                                <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL']; ?>/constructr/media/" title="Uploads anzeigen" class="tt">Uploads</a>:
                                           </li>
                                           <li class="list-group-item">
                                                 <span class="badge"><?php echo $BACKEND_USER_COUNTR; ?></span>
-                                                <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL']; ?>/constructr/user/" title="Benutzer anzeigen">Benutzer</a>:
+                                                <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL']; ?>/constructr/user/" title="Benutzer anzeigen" class="tt">Benutzer</a>:
                                           </li>
                                           <li class="list-group-item">
                                                 <span class="badge"><?php echo $TEMPLATES_COUNTR; ?></span>
-                                                <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL']; ?>/constructr/templates/" title="Templates anzeigen">Templates</a>:
+                                                <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL']; ?>/constructr/templates/" title="Templates anzeigen" class="tt">Templates</a>:
                                           </li>
                                     </ul>
                                     <br>
@@ -277,51 +282,57 @@
                                     <br>
                                     <ul class="list-group">
                                         <li class="list-group-item">
-                                            <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL']; ?>/constructr/optimization/<?php echo $GUID ?>/" title="Datenbank optimieren">Datenbank optimieren</a>
+                                            <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL']; ?>/constructr/optimization/<?php echo $GUID ?>/" title="Datenbank optimieren" class="tt">Datenbank optimieren</a>
                                         </li>
                                         <?php
 
-                                        	if(isset($_CONSTRUCTR_CONF['_ENABLE_CONTENT_HISTORY']) && $_CONSTRUCTR_CONF['_ENABLE_CONTENT_HISTORY'] == true)
-                                        	{
-                                        		?>
-			                                        <li class="list-group-item">
-			                                            <span class="badge"><?php echo $CONTENT_HISTORY_COUNTR; ?></span>
-			                                            <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL']; ?>/constructr/content-history/<?php echo $GUID ?>/" title="Content Historie entfernen">Content Historie entfernen</a>
-			                                        </li>
-                                        		<?php
-                                        	}
+                                            if (isset($_CONSTRUCTR_CONF['_ENABLE_CONTENT_HISTORY']) && $_CONSTRUCTR_CONF['_ENABLE_CONTENT_HISTORY'] == true) {
+                                        ?>
+
+	                                        <li class="list-group-item">
+	                                            <span class="badge"><?php echo $CONTENT_HISTORY_COUNTR; ?></span>
+	                                            <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL']; ?>/constructr/content-history/<?php echo $GUID ?>/" title="Content Historie entfernen" class="tt">Content Historie entfernen</a>
+	                                        </li>
+
+                                		<?php
+
+                                            }
 
                                         ?>
                                         <?php
 
-                                        	if(isset($_CONSTRUCTR_CONF['_CONSTRUCTR_WEBSITE_CACHE']) && $_CONSTRUCTR_CONF['_CONSTRUCTR_WEBSITE_CACHE'] == true)
-                                        	{
-                                        		?>
-			                                        <li class="list-group-item">
-			                                            <span class="badge"><?php echo $C_FILE_COUNTR; ?></span>
-			                                            <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL']; ?>/constructr/clear-cache/<?php echo $GUID ?>/" title="Website Cache entfernen">Website Cache entfernen</a>
-			                                        </li>
-                                        		<?php
-                                        	}
+                                            if (isset($_CONSTRUCTR_CONF['_CONSTRUCTR_WEBSITE_CACHE']) && $_CONSTRUCTR_CONF['_CONSTRUCTR_WEBSITE_CACHE'] == true) {
+
+                                        ?>
+
+	                                        <li class="list-group-item"><span class="badge"><?php echo $C_FILE_COUNTR; ?></span>
+	                                            <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL']; ?>/constructr/clear-cache/<?php echo $GUID ?>/" title="Website Cache entfernen" class="tt">Website Cache entfernen</a>
+	                                        </li>
+
+                                		<?php
+
+                                            }
 
                                         ?>
                                         <?php
 
-                                        	if(isset($_CONSTRUCTR_CONF['_CONSTRUCTR_LOG_ENABLED']) && $_CONSTRUCTR_CONF['_CONSTRUCTR_LOG_ENABLED'] == true)
-                                        	{
-                                        		?>
-			                                        <li class="list-group-item">
-			                                            <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL']; ?>/Logfiles/<?php echo date('Ymd'); ?>.txt" title="Logfile anzeigen" onclick="window.open(this.href);return false;">Aktuelles Logfile anzeigen</a>
-			                                        </li>
-                                        		<?php
-                                        	}
+                                            if (isset($_CONSTRUCTR_CONF['_CONSTRUCTR_LOG_ENABLED']) && $_CONSTRUCTR_CONF['_CONSTRUCTR_LOG_ENABLED'] == true) {
+
+                                        ?>
+	                                        <li class="list-group-item">
+	                                        	<a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL']; ?>/Logfiles/<?php echo date('Ymd'); ?>.txt" class="tt" title="Logfile anzeigen" onclick="window.open(this.href);return false;">Aktuelles Logfile anzeigen</a>
+                                        	</li>
+
+                                		<?php
+
+                                            }
 
                                         ?>
                                         <li class="list-group-item">
-                                            <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL']; ?>/sitemap.xml" title="Sitemap anzeigen" onclick="window.open(this.href);return false;">Generierte sitemap.xml anzeigen</a>
+                                            <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL']; ?>/sitemap.xml" title="Sitemap anzeigen" class="tt" onclick="window.open(this.href);return false;">Generierte sitemap.xml anzeigen</a>
                                         </li>
                                         <li class="list-group-item">
-                                            <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL']; ?>/constructr/config-backup/" title="Konfiguration sichern">ConstructrCMS Konfiguration auf dem Server sichern</a>
+                                            <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL']; ?>/constructr/config-backup/" class="tt" title="Konfiguration sichern">ConstructrCMS Konfiguration auf dem Server sichern</a>
                                         </li>
                                     </ul>
                                 </div><!-- // EOF JUMBOTRON -->
@@ -340,6 +351,7 @@
             <script src="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/jquery-1.11.2.min.js"></script>
             <script src="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/bootstrap-3.3.2-dist/js/bootstrap.min.js"></script>
             <script>
+
                 $(function()
                     {
                         $('.tt').tooltip();
@@ -392,7 +404,8 @@
 
                         setInterval(autoBlinder,4500);
                     }
-                )
+               );
+
             </script>
         </body>
     </html>

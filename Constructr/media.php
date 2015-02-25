@@ -1,48 +1,48 @@
 <?php
 
-	 /**
-	  * Constructr CMS TemplateFile Media - Assets Center Overview. 
-	  */
+/**
+ * Constructr CMS TemplateFile Media - Assets Center Overview.
+ */
 
-	/**
-	 * Constructr CMS - a Slim-PHP-Framework based full-stack Content-Management-System (CMS).
-	 * 
-	 * Built with:
-	 * Slim-PHP-Framework (http://www.slimframework.com/)
-	 * Bootstrap Frontend Framework (http://getbootstrap.com/)
-	 * PHP PDO (http://php.net/manual/de/book.pdo.php)
-	 * jQuery (http://jquery.com/)
-	 * ckEditor (http://ckeditor.com/)
-	 * Codemirror (http://codemirror.net/)
-	 * ...
-	 * 
-	 * LICENCE 
-	 * 
-	 * DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
-	 * Version 1, February 2015
-	 * Copyright (C) 2015 Christian Becher | phaziz.com <christian@phaziz.com>
-	 * Everyone is permitted to copy and distribute verbatim or modified
-	 * copies of this license document, and changing it is allowed as long
-	 * as the name is changed.
-	 *
-	 * DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
-	 * TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
-	 * 0. YOU JUST DO WHAT THE FUCK YOU WANT TO!
-	 *
-	 * Visit http://constructr-cms.org
-	 * Visit http://blog.phaziz.com/category/constructr-cms/
-	 * Visit http://phaziz.com 
-	 *
-	 * @author Christian Becher | phaziz.com <phaziz@gmail.com>
-	 * @copyright 2015 Christian Becher | phaziz.com
-	 * @license DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
-	 * @link http://constructr-cms.org/
-	 * @link http://blog.phaziz.com/category/constructr-cms/
-	 * @link http://phaziz.com/
-	 * @package ConstructrCMS
-	 * @version 1.04.4 / 17.02.2015  
-	 *
-	 */
+/**
+ * Constructr CMS - a Slim-PHP-Framework based full-stack Content-Management-System (CMS).
+ *
+ * Built with:
+ * Slim-PHP-Framework (http://www.slimframework.com/)
+ * Bootstrap Frontend Framework (http://getbootstrap.com/)
+ * PHP PDO (http://php.net/manual/de/book.pdo.php)
+ * jQuery (http://jquery.com/)
+ * ckEditor (http://ckeditor.com/)
+ * Codemirror (http://codemirror.net/)
+ * ...
+ *
+ * LICENCE
+ *
+ * DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+ * Version 1, February 2015
+ * Copyright (C) 2015 Christian Becher | phaziz.com <christian@phaziz.com>
+ * Everyone is permitted to copy and distribute verbatim or modified
+ * copies of this license document, and changing it is allowed as long
+ * as the name is changed.
+ *
+ * DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+ * TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+ * 0. YOU JUST DO WHAT THE FUCK YOU WANT TO!
+ *
+ * Visit http://constructr-cms.org
+ * Visit http://blog.phaziz.com/category/constructr-cms/
+ * Visit http://phaziz.com
+ *
+ * @author Christian Becher | phaziz.com <phaziz@gmail.com>
+ * @copyright 2015 Christian Becher | phaziz.com
+ * @license DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+ *
+ * @link http://constructr-cms.org/
+ * @link http://blog.phaziz.com/category/constructr-cms/
+ * @link http://phaziz.com/
+ *
+ * @version 1.04.5 / 25.02.2015
+ */
 
 ?>
 <!DOCTYPE html>
@@ -54,7 +54,7 @@
             <meta charset="utf-8">
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
             <meta name="viewport" content="width=device-width, initial-scale=1">
-            <title><?php echo $_CONSTRUCTR_CONF['_TITLE'] . ' - ' . $SUBTITLE; ?></title>
+            <title><?php echo $_CONSTRUCTR_CONF['_TITLE'].' - '.$SUBTITLE; ?></title>
             <link href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/bootstrap-3.3.2-dist/css/bootstrap.min.css" rel="stylesheet">
             <link href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/css/constructr.css" rel="stylesheet">
             <link href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/datatables-bootstrap3/assets/css/datatables.css" rel="stylesheet">
@@ -74,16 +74,21 @@
                         <li class="sidebar-brand"><a id="menu-toggle" href="#"><div class="pull-right"><span title="&#8249;&#160;Hauptmen&uuml;&#160;&#160;" data-toggle="tooltip" data-placement="right" class="tt glyphicon glyphicon-align-justify"></span>&#160;&#160;</div></a></li>
                     </ul>
                     <ul class="sidebar-nav" id="sidebar">
+
                         <?php
 
-                            if($_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'] != '')
-                            {
-                                ?>
-                                    <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'] ?>" onclick="window.open(this.href);return false;" title="Statische Internetseiten anzeigen" data-toggle="tooltip" data-placement="right">FTP-Seiten</a></li>
-                                <?php
+                            if ($_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'] != '') {
+
+                        ?>
+
+                            <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'] ?>" onclick="window.open(this.href);return false;" title="Statische Internetseiten anzeigen" data-toggle="tooltip" data-placement="right">FTP-Seiten</a></li>
+
+                        <?php
+
                             }
 
                         ?>
+
                         <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_CREATE_DYNAMIC_DOMAIN'] ?>" onclick="window.open(this.href);return false;" title="Vorschau dynamische Internetseiten" data-toggle="tooltip" data-placement="right">Vorschau</a></li>
                         <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/constructr/" title="Dashboard anzeigen" data-toggle="tooltip" data-placement="right">Dashboard</a></li>
                         <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/constructr/pages/" title="Seitenverwaltung anzeigen" data-toggle="tooltip" data-placement="right">Seiten</a></li>
@@ -103,51 +108,54 @@
                                 <p><small><a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/constructr/">Dashboard</a> <span class="glyphicon glyphicon-chevron-right"></span> <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/constructr/media/">Medienverwaltung - &Uuml;bersicht</a> <span class="glyphicon glyphicon-chevron-right"></span></small></p>
                             </div><!-- // EOF COL-... -->
                         </div><!-- // EOF ROW -->
+
                         <?php
-                            if(isset($_GET['res']) && $_GET['res'] != ''){
-                                ?>
-                                    <div class="row response">
-                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                            <?php
-                                                if($_GET['res'] == 'create-media-true')
-                                                {
-                                                    echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Erfolg!</strong> Die Datei wurde ohne Fehler gespeichert.</div>';
-                                                }
-                                                if($_GET['res'] == 'create-media-false')
-                                                {
-                                                    echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Fehler!</strong> Es ist ein Fehler beim speichern der Datei aufgetreten.</div>';
-                                                }
-                                                if($_GET['res'] == 'del-media-true')
-                                                {
-                                                    echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Erfolg!</strong> Der Upload wurde in den Papierkorb verschoben.</div>';
-                                                }
-                                                if($_GET['res'] == 'del-media-false')
-                                                {
-                                                    echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Fehler!</strong> Es ist ein Fehler beim l&ouml;schen des Uploads aufgetreten.</div>';
-                                                }
-                                                if($_GET['res'] == 'details-media-false')
-                                                {
-                                                    echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Fehler!</strong> Es ist ein Fehler aufgetreten.</div>';
-                                                }
-                                                if($_GET['res'] == 'returned-to-media')
-                                                {
-                                                    echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Erfolg!</strong> Datei wurde zur&uuml;ck in die Medienverwaltung gelegt.</div>';
-                                                }
-                                                if($_GET['res'] == 'returned-to-media-false')
-                                                {
-                                                    echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Fehler!</strong> Es ist ein Fehler bei der Wiederherstellung der Datei aufgetreten.</div>';
-                                                }
-                                            ?>
-                                        </div><!-- // EOF COL-... -->
-                                    </div><!-- // EOF ROW -->
-                                <?php
+
+                            if (isset($_GET['res']) && $_GET['res'] != '') {
+
+                        ?>
+
+                            <div class="row response">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+                        <?php
+
+                                if ($_GET['res'] == 'create-media-true') {
+                                    echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Erfolg!</strong> Die Datei wurde ohne Fehler gespeichert.</div>';
+                                }
+                                if ($_GET['res'] == 'create-media-false') {
+                                    echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Fehler!</strong> Es ist ein Fehler beim speichern der Datei aufgetreten.</div>';
+                                }
+                                if ($_GET['res'] == 'del-media-true') {
+                                    echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Erfolg!</strong> Der Upload wurde in den Papierkorb verschoben.</div>';
+                                }
+                                if ($_GET['res'] == 'del-media-false') {
+                                    echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Fehler!</strong> Es ist ein Fehler beim l&ouml;schen des Uploads aufgetreten.</div>';
+                                }
+                                if ($_GET['res'] == 'details-media-false') {
+                                    echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Fehler!</strong> Es ist ein Fehler aufgetreten.</div>';
+                                }
+                                if ($_GET['res'] == 'returned-to-media') {
+                                    echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Erfolg!</strong> Datei wurde zur&uuml;ck in die Medienverwaltung gelegt.</div>';
+                                }
+                                if ($_GET['res'] == 'returned-to-media-false') {
+                                    echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Fehler!</strong> Es ist ein Fehler bei der Wiederherstellung der Datei aufgetreten.</div>';
+                                }
+                        ?>
+
+	                            </div><!-- // EOF COL-... -->
+	                        </div><!-- // EOF ROW -->
+
+                        <?php
+
                             }
+
                         ?>
                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <div class="jumbotron">
                                     <h1><?php echo $SUBTITLE; ?></h1>
-                                    <h2><?php echo $MEDIA_COUNTER; ?> Vorhandene Medien <a data-toggle="tooltip" data-placement="top" title="Neuer Uplaod" class="tt" href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/media/new/' ?>"><button type="button" class="btn btn-info btn-sm" title="Neuer Upload"><span class="glyphicon glyphicon-plus"></span></button></a></h2>
+                                    <h2><?php echo $MEDIA_COUNTER; ?> Vorhandene Medien <a data-toggle="tooltip" data-placement="top" title="Neuer Uplaod" class="tt" href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/media/new/' ?>"><button type="button" class="btn btn-info btn-sm" title="Neuer Upload"><span class="glyphicon glyphicon-plus"></span> Neue Datei hochladen</button></a></h2>
                                     <br><br>
                                     <div class="table-responsive">
                                     <table class="datatable table table-bordered table-condensed table-striped table-hover">
@@ -160,48 +168,41 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+
                                             <?php
-                                                if($MEDIA)
-                                                {
-                                                    foreach ($MEDIA as $MEDIA)
-                                                    {
+
+                                                if ($MEDIA) {
+                                                    foreach ($MEDIA as $MEDIA) {
                                                         echo '<tr>';
-                                                        $FILE_TYPE = strrchr($MEDIA['media_file'],'.');
-                                                        if($FILE_TYPE == '.jpg' || $FILE_TYPE == '.JPG' || $FILE_TYPE == '.jpeg' || $FILE_TYPE == '.JPEG' || $FILE_TYPE == '.gif' || $FILE_TYPE == '.GIF' || $FILE_TYPE == '.png' || $FILE_TYPE == '.PNG')
-                                                        {
-                                                            echo '<td class="center"><a href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/' . $MEDIA['media_file'] . '" data-toggle="lightbox" data-title="' . $MEDIA['media_originalname'] . '" data-footer="' . $MEDIA['media_originalname'] . '"><img src="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/' . $MEDIA['media_file'] . '" alt="' . $MEDIA['media_originalname'] . '" height="50px" width="*"></a></td>';
-                                                        }
-                                                        else
-                                                        {
+                                                        $FILE_TYPE = strrchr($MEDIA['media_file'], '.');
+                                                        if ($FILE_TYPE == '.jpg' || $FILE_TYPE == '.JPG' || $FILE_TYPE == '.jpeg' || $FILE_TYPE == '.JPEG' || $FILE_TYPE == '.gif' || $FILE_TYPE == '.GIF' || $FILE_TYPE == '.png' || $FILE_TYPE == '.PNG') {
+                                                            echo '<td class="center"><a href="'.$_CONSTRUCTR_CONF['_BASE_URL'].'/'.$MEDIA['media_file'].'" data-toggle="lightbox" data-title="'.$MEDIA['media_originalname'].'" data-footer="'.$MEDIA['media_originalname'].'"><img src="'.$_CONSTRUCTR_CONF['_BASE_URL'].'/'.$MEDIA['media_file'].'" alt="'.$MEDIA['media_originalname'].'" height="50px" width="*"></a></td>';
+                                                        } else {
                                                             echo '<td class="center">./</td>';
                                                         }
-                                                        echo '<td><small>' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/' . $MEDIA['media_file'] . '<br><small>' . $MEDIA['media_originalname'] . '</small></td>';
-                                                        if($FILE_TYPE == '.jpg' || $FILE_TYPE == '.JPG' || $FILE_TYPE == '.jpeg' || $FILE_TYPE == '.JPEG' || $FILE_TYPE == '.gif' || $FILE_TYPE == '.GIF' || $FILE_TYPE == '.png' || $FILE_TYPE == '.PNG')
-                                                        {
-                                                            echo '<td><small>' . $MEDIA['media_title'] . ' ' . $MEDIA['media_description'] . ' ' . $MEDIA['media_copyright'] . ' ' . $MEDIA['media_keywords'] . '</small></td>';
-                                                        }
-                                                        else
-                                                        {
+                                                        echo '<td><small>'.$_CONSTRUCTR_CONF['_BASE_URL'].'/'.$MEDIA['media_file'].'<br><small>'.$MEDIA['media_originalname'].'</small></td>';
+                                                        if ($FILE_TYPE == '.jpg' || $FILE_TYPE == '.JPG' || $FILE_TYPE == '.jpeg' || $FILE_TYPE == '.JPEG' || $FILE_TYPE == '.gif' || $FILE_TYPE == '.GIF' || $FILE_TYPE == '.png' || $FILE_TYPE == '.PNG') {
+                                                            echo '<td><small>'.$MEDIA['media_title'].' '.$MEDIA['media_description'].' '.$MEDIA['media_copyright'].' '.$MEDIA['media_keywords'].'</small></td>';
+                                                        } else {
                                                             echo '<td class="center">./</td>';
                                                         }
                                                         echo '<td class="center"><nobr>';
-                                                        echo '<a href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/' . $MEDIA['media_file'] . '" data-toggle="lightbox" data-title="' . $MEDIA['media_originalname'] . '" data-footer="' . $MEDIA['media_originalname'] . '" <button type="button" class="btn btn-warning btn-xs" title="Einfache Vorschau"><span class="glyphicon glyphicon-eye-close"></span></button></a>';
+                                                        echo '<a href="'.$_CONSTRUCTR_CONF['_BASE_URL'].'/'.$MEDIA['media_file'].'" data-toggle="lightbox" data-title="'.$MEDIA['media_originalname'].'" data-footer="'.$MEDIA['media_originalname'].'" <button type="button" class="btn btn-warning btn-xs" title="Einfache Vorschau"><span class="glyphicon glyphicon-eye-close"></span></button></a>';
                                                         echo '&#160;';
-                                                        if(in_array($FILE_TYPE,$IMAGES))
-                                                        {
-                                                            echo '<a data-toggle="tooltip" data-placement="top" title="Detail-Informationen" class="preview tt" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/media/details/' . $MEDIA['media_id'] . '/"><button type="button" class="btn btn-info btn-xs" title="Detail-Informationen"><span class="glyphicon glyphicon-pencil"></span></button></a>';
+                                                        if (in_array($FILE_TYPE, $IMAGES)) {
+                                                            echo '<a data-toggle="tooltip" data-placement="top" title="Detail-Informationen" class="preview tt" href="'.$_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/media/details/'.$MEDIA['media_id'].'/"><button type="button" class="btn btn-info btn-xs" title="Detail-Informationen"><span class="glyphicon glyphicon-pencil"></span></button></a>';
                                                             echo '&#160;';
                                                         }
-                                                        echo '<a data-toggle="tooltip" data-placement="top" title="Upload l&ouml;schen" class="deleter tt" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/media/delete/' . $MEDIA['media_id'] . '/" title="Upload l&ouml;schen"><button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span></button></a>';
+                                                        echo '<a data-toggle="tooltip" data-placement="top" title="Upload l&ouml;schen" class="deleter tt" href="'.$_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/media/delete/'.$MEDIA['media_id'].'/" title="Upload l&ouml;schen"><button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span></button></a>';
                                                         echo '</nobr></td>';
                                                         echo '</tr>';
                                                     }
-                                                }
-                                                else
-                                                {
+                                                } else {
                                                     echo '<tr><td colspan="7">Keine Uploads gefunden!</td></tr>';
                                                 };
+
                                             ?>
+
                                         </tbody>
                                     </table>
                                     </div><!-- EOF TABLE RESPONSIVE-->
@@ -225,6 +226,7 @@
             <script src="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/vex/js/vex.combined.min.js"></script>
             <script src="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/ekko-lightbox/ekko-lightbox.min.js"></script>
             <script>
+
                 $(function()
                     {
                         if(localStorage && localStorage.removeItem && localStorage.getItem && localStorage.setItem)
@@ -340,6 +342,7 @@
                         );
                     }
                 );
+
             </script>
         </body>
     </html>

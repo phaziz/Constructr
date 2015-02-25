@@ -1,48 +1,48 @@
 <?php
 
-	 /**
-	  * Constructr CMS TemplateFile Backend User Overview. 
-	  */
+/**
+ * Constructr CMS TemplateFile Backend User Overview.
+ */
 
-	/**
-	 * Constructr CMS - a Slim-PHP-Framework based full-stack Content-Management-System (CMS).
-	 * 
-	 * Built with:
-	 * Slim-PHP-Framework (http://www.slimframework.com/)
-	 * Bootstrap Frontend Framework (http://getbootstrap.com/)
-	 * PHP PDO (http://php.net/manual/de/book.pdo.php)
-	 * jQuery (http://jquery.com/)
-	 * ckEditor (http://ckeditor.com/)
-	 * Codemirror (http://codemirror.net/)
-	 * ...
-	 * 
-	 * LICENCE 
-	 * 
-	 * DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
-	 * Version 1, February 2015
-	 * Copyright (C) 2015 Christian Becher | phaziz.com <christian@phaziz.com>
-	 * Everyone is permitted to copy and distribute verbatim or modified
-	 * copies of this license document, and changing it is allowed as long
-	 * as the name is changed.
-	 *
-	 * DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
-	 * TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
-	 * 0. YOU JUST DO WHAT THE FUCK YOU WANT TO!
-	 *
-	 * Visit http://constructr-cms.org
-	 * Visit http://blog.phaziz.com/category/constructr-cms/
-	 * Visit http://phaziz.com 
-	 *
-	 * @author Christian Becher | phaziz.com <phaziz@gmail.com>
-	 * @copyright 2015 Christian Becher | phaziz.com
-	 * @license DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
-	 * @link http://constructr-cms.org/
-	 * @link http://blog.phaziz.com/category/constructr-cms/
-	 * @link http://phaziz.com/
-	 * @package ConstructrCMS
-	 * @version 1.04.4 / 17.02.2015  
-	 *
-	 */
+/**
+ * Constructr CMS - a Slim-PHP-Framework based full-stack Content-Management-System (CMS).
+ *
+ * Built with:
+ * Slim-PHP-Framework (http://www.slimframework.com/)
+ * Bootstrap Frontend Framework (http://getbootstrap.com/)
+ * PHP PDO (http://php.net/manual/de/book.pdo.php)
+ * jQuery (http://jquery.com/)
+ * ckEditor (http://ckeditor.com/)
+ * Codemirror (http://codemirror.net/)
+ * ...
+ *
+ * LICENCE
+ *
+ * DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+ * Version 1, February 2015
+ * Copyright (C) 2015 Christian Becher | phaziz.com <christian@phaziz.com>
+ * Everyone is permitted to copy and distribute verbatim or modified
+ * copies of this license document, and changing it is allowed as long
+ * as the name is changed.
+ *
+ * DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+ * TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+ * 0. YOU JUST DO WHAT THE FUCK YOU WANT TO!
+ *
+ * Visit http://constructr-cms.org
+ * Visit http://blog.phaziz.com/category/constructr-cms/
+ * Visit http://phaziz.com
+ *
+ * @author Christian Becher | phaziz.com <phaziz@gmail.com>
+ * @copyright 2015 Christian Becher | phaziz.com
+ * @license DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+ *
+ * @link http://constructr-cms.org/
+ * @link http://blog.phaziz.com/category/constructr-cms/
+ * @link http://phaziz.com/
+ *
+ * @version 1.04.5 / 25.02.2015
+ */
 
 ?>
 <!DOCTYPE html>
@@ -54,7 +54,7 @@
             <meta charset="utf-8">
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
             <meta name="viewport" content="width=device-width, initial-scale=1">
-            <title><?php echo $_CONSTRUCTR_CONF['_TITLE'] . ' - ' . $SUBTITLE; ?></title>
+            <title><?php echo $_CONSTRUCTR_CONF['_TITLE'].' - '.$SUBTITLE; ?></title>
             <link href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/bootstrap-3.3.2-dist/css/bootstrap.min.css" rel="stylesheet">
             <link href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/css/constructr.css" rel="stylesheet">
             <link href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/datatables-bootstrap3/assets/css/datatables.css" rel="stylesheet">
@@ -72,16 +72,21 @@
                         <li class="sidebar-brand"><a id="menu-toggle" href="#"><div class="pull-right"><span title="&#8249;&#160;Hauptmen&uuml;&#160;&#160;" data-toggle="tooltip" data-placement="right" class="tt glyphicon glyphicon-align-justify"></span>&#160;&#160;</div></a></li>
                     </ul>
                     <ul class="sidebar-nav" id="sidebar">
+
                         <?php
 
-                            if($_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'] != '')
-                            {
-                                ?>
-                                    <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'] ?>" onclick="window.open(this.href);return false;" title="Statische Internetseiten anzeigen" data-toggle="tooltip" data-placement="right">FTP-Seiten</a></li>
-                                <?php
+                            if ($_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'] != '') {
+
+                        ?>
+
+                            <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'] ?>" onclick="window.open(this.href);return false;" title="Statische Internetseiten anzeigen" data-toggle="tooltip" data-placement="right">FTP-Seiten</a></li>
+
+                        <?php
+
                             }
 
                         ?>
+
                         <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_CREATE_DYNAMIC_DOMAIN'] ?>" onclick="window.open(this.href);return false;" title="Vorschau dynamische Internetseiten" data-toggle="tooltip" data-placement="right">Vorschau</a></li>
                         <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/constructr/" title="Dashboard anzeigen" data-toggle="tooltip" data-placement="right">Dashboard</a></li>
                         <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/constructr/pages/" title="Seitenverwaltung anzeigen" data-toggle="tooltip" data-placement="right">Seiten</a></li>
@@ -101,47 +106,49 @@
                                 <p><small><a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/constructr/">Dashboard</a> <span class="glyphicon glyphicon-chevron-right"></span> <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/constructr/user/">Benutzerverwaltung - &Uuml;bersicht</a> <span class="glyphicon glyphicon-chevron-right"></span></small></p>
                             </div><!-- // EOF COL-... -->
                         </div><!-- // EOF ROW -->
+
                         <?php
-                            if(isset($_GET['create']) || isset($_GET['edit']) || isset($_GET['delete'])){
-                                ?>
-                                    <div class="row response">
-                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                                <?php
-                                                    if(isset($_GET['create']) && $_GET['create'] == 'success')
-                                                    {
-                                                        echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Erfolg!</strong> Neuer Benutzer wurde ohne Fehler erstellt.</div>';
-                                                    }
-                                                    else if(isset($_GET['create']) && $_GET['create'] == 'error')
-                                                    {
-                                                        echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Fehler!</strong> Es ist ein Fehler beim anlegen des Benutzers aufgetreten.</div>';
-                                                    }
-                                                    if(isset($_GET['edit']) && $_GET['edit'] == 'success')
-                                                    {
-                                                        echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Erfolg!</strong> Benutzer wurde erfolgreich bearbeitet.</div>';
-                                                    }
-                                                    else if(isset($_GET['edit']) && $_GET['edit'] == 'error')
-                                                    {
-                                                        echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Fehler!</strong> Es ist ein Fehler beim Bearbeiten des Benutzers aufgetreten.</div>';
-                                                    }
-                                                    if(isset($_GET['delete']) && $_GET['delete'] == 'success')
-                                                    {
-                                                        echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Erfolg!</strong> Benutzer wurde entfernt.</div>';
-                                                    }
-                                                    else if(isset($_GET['delete']) && $_GET['delete'] == 'error')
-                                                    {
-                                                        echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Fehler!</strong> Benutzer wurde nicht entfernt - es ist ein Fehler aufgetreten..</div>';
-                                                    }
-                                                ?>
-                                        </div><!-- // EOF COL-... -->
-                                    </div><!-- // EOF ROW -->
-                                <?php
-                            }
+
+                            if (isset($_GET['create']) || isset($_GET['edit']) || isset($_GET['delete'])) {
+
                         ?>
+			                <div class="row response">
+			                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+                        <?php
+
+                                if (isset($_GET['create']) && $_GET['create'] == 'success') {
+                                    echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Erfolg!</strong> Neuer Benutzer wurde ohne Fehler erstellt.</div>';
+                                } elseif (isset($_GET['create']) && $_GET['create'] == 'error') {
+                                    echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Fehler!</strong> Es ist ein Fehler beim anlegen des Benutzers aufgetreten.</div>';
+                                }
+                                if (isset($_GET['edit']) && $_GET['edit'] == 'success') {
+                                    echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Erfolg!</strong> Benutzer wurde erfolgreich bearbeitet.</div>';
+                                } elseif (isset($_GET['edit']) && $_GET['edit'] == 'error') {
+                                    echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Fehler!</strong> Es ist ein Fehler beim Bearbeiten des Benutzers aufgetreten.</div>';
+                                }
+                                if (isset($_GET['delete']) && $_GET['delete'] == 'success') {
+                                    echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Erfolg!</strong> Benutzer wurde entfernt.</div>';
+                                } elseif (isset($_GET['delete']) && $_GET['delete'] == 'error') {
+                                    echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Fehler!</strong> Benutzer wurde nicht entfernt - es ist ein Fehler aufgetreten..</div>';
+                                }
+
+                        ?>
+
+	                            </div><!-- // EOF COL-... -->
+	                        </div><!-- // EOF ROW -->
+
+                        <?php
+
+                            }
+
+                        ?>
+
                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <div class="jumbotron">
                                     <h1><?php echo $SUBTITLE; ?></h1>
-                                    <h2><?php echo $COUNTR; ?> Angelegte Benutzer <a data-toggle="tooltip" data-placement="top" title="Neuen Benutzer anlegen" class="tt" href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/user/new/'; ?>"><button type="button" class="btn btn-info btn-sm" title="Neuer Benutzer"><span class="glyphicon glyphicon-plus"></span></button></a></h2>
+                                    <h2><?php echo $COUNTR; ?> Angelegte Benutzer <a data-toggle="tooltip" data-placement="top" title="Neuen Benutzer anlegen" class="tt" href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/user/new/'; ?>"><button type="button" class="btn btn-info btn-sm" title="Neuer Benutzer"><span class="glyphicon glyphicon-plus"></span> Neuen Benutzer anlegen</button></a></h2>
                                     <br><br>
                                     <div class="table-responsive">
                                     <table class="datatable table table-bordered table-condensed table-striped table-hover">
@@ -154,39 +161,35 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+
                                             <?php
-                                                if($BACKENDUSER)
-                                                {
-                                                    foreach ($BACKENDUSER as $USER)
-                                                    {
+
+                                                if ($BACKENDUSER) {
+                                                    foreach ($BACKENDUSER as $USER) {
                                                         echo '<tr>';
-                                                        echo '<td>' . $USER['beu_username'] . '</td>';
-                                                        echo '<td>' . $USER['beu_email'] . '</td>';
-                                                        if($USER['beu_last_login'] != '0000-00-00 00:00:00')
-                                                        {
-                                                            echo '<td class="center">' . date("d.m.Y, H:i", strtotime(substr($USER['beu_last_login'], 0, 18))) . ' Uhr</td>';
-                                                        }
-                                                        else
-                                                        {
+                                                        echo '<td>'.$USER['beu_username'].'</td>';
+                                                        echo '<td>'.$USER['beu_email'].'</td>';
+                                                        if ($USER['beu_last_login'] != '0000-00-00 00:00:00') {
+                                                            echo '<td class="center">'.date("d.m.Y, H:i", strtotime(substr($USER['beu_last_login'], 0, 18))).' Uhr</td>';
+                                                        } else {
                                                             echo '<td class="center">./.</td>';
                                                         }
                                                         echo '<td class="right"><nobr>';
-                                                        echo '<a data-toggle="tooltip" data-placement="top" title="Benutzer bearbeiten" class="tt user-editer" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/user/edit/' . $USER['beu_id'] . '/"><button type="button" class="btn btn-primary btn-xs" title="Editieren"><span class="glyphicon glyphicon-pencil"></span></button></a>';
-                                                        echo '&#160;&#160;<a data-toggle="tooltip" data-placement="top" title="Benutzerrechte bearbeiten" class="tt user-rights-editer" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/user/edit-user-rights/' . ($USER['beu_id']) . '/' . ($USER['beu_username']) . '/"><button type="button" class="btn btn-info btn-xs" title="Benutzerrechte Editieren"><span class="glyphicon glyphicon-edit"></span></button></a>';
-                                                        if($USER['beu_active'] == 1)
-                                                        {
-                                                            echo '&#160;&#160;<a data-toggle="tooltip" data-placement="top" title="Benutzer deaktivieren" class="tt status-updater" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/user/set-inactive/' . $USER['beu_id'] . '/"><button type="button" class="btn btn-warning btn-xs" title="Deaktivieren"><span class="glyphicon glyphicon-star-empty"></span></button></a>';
+                                                        echo '<a data-toggle="tooltip" data-placement="top" title="Benutzer bearbeiten" class="tt user-editer" href="'.$_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/user/edit/'.$USER['beu_id'].'/"><button type="button" class="btn btn-primary btn-xs" title="Editieren"><span class="glyphicon glyphicon-pencil"></span></button></a>';
+                                                        echo '&#160;&#160;<a data-toggle="tooltip" data-placement="top" title="Benutzerrechte bearbeiten" class="tt user-rights-editer" href="'.$_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/user/edit-user-rights/'.($USER['beu_id']).'/'.($USER['beu_username']).'/"><button type="button" class="btn btn-info btn-xs" title="Benutzerrechte Editieren"><span class="glyphicon glyphicon-edit"></span></button></a>';
+                                                        if ($USER['beu_active'] == 1) {
+                                                            echo '&#160;&#160;<a data-toggle="tooltip" data-placement="top" title="Benutzer deaktivieren" class="tt status-updater" href="'.$_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/user/set-inactive/'.$USER['beu_id'].'/"><button type="button" class="btn btn-warning btn-xs" title="Deaktivieren"><span class="glyphicon glyphicon-star-empty"></span></button></a>';
+                                                        } else {
+                                                            echo '&#160;&#160;<a data-toggle="tooltip" data-placement="top" title="Benutzer aktivieren" class="tt status-updater" href="'.$_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/user/set-active/'.$USER['beu_id'].'/"><button type="button" class="btn btn-success btn-xs" title="Aktivieren"><span class="glyphicon glyphicon-star"></span></button></a>';
                                                         }
-                                                        else
-                                                        {
-                                                            echo '&#160;&#160;<a data-toggle="tooltip" data-placement="top" title="Benutzer aktivieren" class="tt status-updater" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/user/set-active/' . $USER['beu_id'] . '/"><button type="button" class="btn btn-success btn-xs" title="Aktivieren"><span class="glyphicon glyphicon-star"></span></button></a>';
-                                                        }
-                                                        echo '&#160;&#160;<a data-toggle="tooltip" data-placement="top" title="Benutzer l&ouml;schen" class="user-deleter tt" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/user/delete/' . $USER['beu_id'] . '/"><button type="button" class="btn btn-danger btn-xs" title="Entfernen"><span class="glyphicon glyphicon-remove-circle"></span></button></a>';
+                                                        echo '&#160;&#160;<a data-toggle="tooltip" data-placement="top" title="Benutzer l&ouml;schen" class="user-deleter tt" href="'.$_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/user/delete/'.$USER['beu_id'].'/"><button type="button" class="btn btn-danger btn-xs" title="Entfernen"><span class="glyphicon glyphicon-remove-circle"></span></button></a>';
                                                         echo '</nobr></td>';
                                                         echo '</tr>';
                                                     }
                                                 }
+
                                             ?>
+
                                         </tbody>
                                     </table>
                                     </div><!-- EOF TABLE RESPONSIVE-->
@@ -210,6 +213,7 @@
             <script src="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/datatables-bootstrap3/assets/js/datatables.js"></script>
             <script src="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/vex/js/vex.combined.min.js"></script>
             <script>
+
                 $(function()
                     {
                         $('.tt').tooltip();
@@ -305,7 +309,8 @@
                             }
                         );
                     }
-                )
+                );
+
             </script>
         </body>
     </html>

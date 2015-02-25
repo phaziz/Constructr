@@ -1,48 +1,48 @@
 <?php
 
-	 /**
-	  * Constructr CMS TemplateFile Configuration Table. 
-	  */
+/**
+ * Constructr CMS TemplateFile Configuration Table.
+ */
 
-	/**
-	 * Constructr CMS - a Slim-PHP-Framework based full-stack Content-Management-System (CMS).
-	 * 
-	 * Built with:
-	 * Slim-PHP-Framework (http://www.slimframework.com/)
-	 * Bootstrap Frontend Framework (http://getbootstrap.com/)
-	 * PHP PDO (http://php.net/manual/de/book.pdo.php)
-	 * jQuery (http://jquery.com/)
-	 * ckEditor (http://ckeditor.com/)
-	 * Codemirror (http://codemirror.net/)
-	 * ...
-	 * 
-	 * LICENCE 
-	 * 
-	 * DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
-	 * Version 1, February 2015
-	 * Copyright (C) 2015 Christian Becher | phaziz.com <christian@phaziz.com>
-	 * Everyone is permitted to copy and distribute verbatim or modified
-	 * copies of this license document, and changing it is allowed as long
-	 * as the name is changed.
-	 *
-	 * DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
-	 * TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
-	 * 0. YOU JUST DO WHAT THE FUCK YOU WANT TO!
-	 *
-	 * Visit http://constructr-cms.org
-	 * Visit http://blog.phaziz.com/category/constructr-cms/
-	 * Visit http://phaziz.com 
-	 *
-	 * @author Christian Becher | phaziz.com <phaziz@gmail.com>
-	 * @copyright 2015 Christian Becher | phaziz.com
-	 * @license DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
-	 * @link http://constructr-cms.org/
-	 * @link http://blog.phaziz.com/category/constructr-cms/
-	 * @link http://phaziz.com/
-	 * @package ConstructrCMS
-	 * @version 1.04.4 / 17.02.2015  
-	 *
-	 */
+/**
+ * Constructr CMS - a Slim-PHP-Framework based full-stack Content-Management-System (CMS).
+ *
+ * Built with:
+ * Slim-PHP-Framework (http://www.slimframework.com/)
+ * Bootstrap Frontend Framework (http://getbootstrap.com/)
+ * PHP PDO (http://php.net/manual/de/book.pdo.php)
+ * jQuery (http://jquery.com/)
+ * ckEditor (http://ckeditor.com/)
+ * Codemirror (http://codemirror.net/)
+ * ...
+ *
+ * LICENCE
+ *
+ * DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+ * Version 1, February 2015
+ * Copyright (C) 2015 Christian Becher | phaziz.com <christian@phaziz.com>
+ * Everyone is permitted to copy and distribute verbatim or modified
+ * copies of this license document, and changing it is allowed as long
+ * as the name is changed.
+ *
+ * DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+ * TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+ * 0. YOU JUST DO WHAT THE FUCK YOU WANT TO!
+ *
+ * Visit http://constructr-cms.org
+ * Visit http://blog.phaziz.com/category/constructr-cms/
+ * Visit http://phaziz.com
+ *
+ * @author Christian Becher | phaziz.com <phaziz@gmail.com>
+ * @copyright 2015 Christian Becher | phaziz.com
+ * @license DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+ *
+ * @link http://constructr-cms.org/
+ * @link http://blog.phaziz.com/category/constructr-cms/
+ * @link http://phaziz.com/
+ *
+ * @version 1.04.5 / 25.02.2015
+ */
 
 ?>
 <!DOCTYPE html>
@@ -54,7 +54,7 @@
             <meta charset="utf-8">
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
             <meta name="viewport" content="width=device-width, initial-scale=1">
-            <title><?php echo $_CONSTRUCTR_CONF['_TITLE'] . ' - ' . $SUBTITLE; ?></title>
+            <title><?php echo $_CONSTRUCTR_CONF['_TITLE'].' - '.$SUBTITLE; ?></title>
             <link href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/bootstrap-3.3.2-dist/css/bootstrap.min.css" rel="stylesheet">
             <link href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/css/constructr.css" rel="stylesheet">
             <link href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/vex/css/vex.css" rel="stylesheet">
@@ -73,11 +73,12 @@
                     <ul class="sidebar-nav" id="sidebar">
                         <?php
 
-                            if($_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'] != '')
-                            {
-                                ?>
-                                    <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'] ?>" onclick="window.open(this.href);return false;" title="Statische Internetseiten anzeigen" data-toggle="tooltip" data-placement="right">FTP-Seiten</a></li>
-                                <?php
+                            if ($_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'] != '') {
+                        
+                        ?>
+                            <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'] ?>" onclick="window.open(this.href);return false;" title="Statische Internetseiten anzeigen" data-toggle="tooltip" data-placement="right">FTP-Seiten</a></li>
+                        <?php
+
                             }
 
                         ?>
@@ -106,46 +107,53 @@
                                     <h1><?php echo $SUBTITLE; ?></h1>
                                     <h2>Aktuelle Systemkonfiguration</h2>
                                     <br><br>
+
                                     <?php
-                                        if($_CONSTRUCTR_CONF)
-                                        {
-                                            ?>
-                                                <form role="form" name="config_form" id="config_form" class="form-horizontal">
-                                                    <?php
-                                                        foreach($_CONSTRUCTR_CONF as $KEY => $VALUE)
-                                                        {
-                                                            if($VALUE == '1')
-                                                            {
-                                                                $VALUE = 'true';
-                                                            }
 
-                                                            if($VALUE == '0')
-                                                            {
-                                                                $VALUE = 'false';
-                                                            }
+                                        if ($_CONSTRUCTR_CONF) {
 
-                                                            if($VALUE == '')
-                                                            {
-                                                                $VALUE = 'Wert ist leer, oder nicht vorhanden!';
-                                                            }
+                                    ?>
 
-                                                            ?>
-                                                                <div class="form-group">
-                                                                    <label for="<?php echo $KEY; ?>" class="col-sm-3 control-label"><small><?php echo $KEY; ?></small>:</label>
-                                                                    <div class="col-sm-9">
-                                                                        <input readonly="readonly" type="text" class="form-control input-sm" name="<?php echo $KEY; ?>" id="<?php echo $KEY; ?>" value="<?php echo $VALUE; ?>" maxlength="100">
-                                                                    </div>
-                                                                </div>
-                                                            <?php
-                                                        }
-                                                    ?>
-                                                </form>
-                                            <?php
-                                        }
-                                        else
-                                        {
+									<form role="form" name="config_form" id="config_form" class="form-horizontal">
+
+                                    <?php
+
+                                        foreach ($_CONSTRUCTR_CONF as $KEY => $VALUE) {
+                                            if ($VALUE == '1') {
+                                                $VALUE = 'true';
+                                            }
+
+                                            if ($VALUE == '0') {
+                                                $VALUE = 'false';
+                                            }
+
+                                            if ($VALUE == '') {
+                                                $VALUE = 'Wert ist leer, oder nicht vorhanden!';
+                                            }
+
+									?>
+
+                                    <div class="form-group">
+                                        <label for="<?php echo $KEY; ?>" class="col-sm-3 control-label"><small><?php echo $KEY; ?></small>:</label>
+                                        <div class="col-sm-9">
+                                            <input readonly="readonly" type="text" class="form-control input-sm" name="<?php echo $KEY; ?>" id="<?php echo $KEY; ?>" value="<?php echo $VALUE; ?>" maxlength="100">
+                                        </div>
+                                    </div>
+
+                                    <?php
+
+                                    	}
+
+                                    ?>
+
+                                    </form>
+
+	                                <?php
+
+                                        } else {
                                             echo '<p>Fehler bei der Daten&uuml;bergabe!</p>';
                                         }
+
                                     ?>
                                 </div><!-- // EOF JUMBOTRON -->
                             </div><!-- // EOF COL-... -->
@@ -164,6 +172,7 @@
             <script src="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/bootstrap-3.3.2-dist/js/bootstrap.min.js"></script>
             <script src="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/vex/js/vex.combined.min.js"></script>
             <script>
+
                 $(function()
                     {
                         $('.tt').tooltip();
@@ -199,6 +208,7 @@
                         );
                     }
                 );
+
             </script>
         </body>
     </html>

@@ -1,48 +1,48 @@
 <?php
 
-	 /**
-	  * Constructr CMS TemplateFile edit a Content Element Form. 
-	  */
+/**
+ * Constructr CMS TemplateFile edit a Content Element Form.
+ */
 
-	/**
-	 * Constructr CMS - a Slim-PHP-Framework based full-stack Content-Management-System (CMS).
-	 * 
-	 * Built with:
-	 * Slim-PHP-Framework (http://www.slimframework.com/)
-	 * Bootstrap Frontend Framework (http://getbootstrap.com/)
-	 * PHP PDO (http://php.net/manual/de/book.pdo.php)
-	 * jQuery (http://jquery.com/)
-	 * ckEditor (http://ckeditor.com/)
-	 * Codemirror (http://codemirror.net/)
-	 * ...
-	 * 
-	 * LICENCE 
-	 * 
-	 * DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
-	 * Version 1, February 2015
-	 * Copyright (C) 2015 Christian Becher | phaziz.com <christian@phaziz.com>
-	 * Everyone is permitted to copy and distribute verbatim or modified
-	 * copies of this license document, and changing it is allowed as long
-	 * as the name is changed.
-	 *
-	 * DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
-	 * TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
-	 * 0. YOU JUST DO WHAT THE FUCK YOU WANT TO!
-	 *
-	 * Visit http://constructr-cms.org
-	 * Visit http://blog.phaziz.com/category/constructr-cms/
-	 * Visit http://phaziz.com 
-	 *
-	 * @author Christian Becher | phaziz.com <phaziz@gmail.com>
-	 * @copyright 2015 Christian Becher | phaziz.com
-	 * @license DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
-	 * @link http://constructr-cms.org/
-	 * @link http://blog.phaziz.com/category/constructr-cms/
-	 * @link http://phaziz.com/
-	 * @package ConstructrCMS
-	 * @version 1.04.4 / 17.02.2015  
-	 *
-	 */
+/**
+ * Constructr CMS - a Slim-PHP-Framework based full-stack Content-Management-System (CMS).
+ *
+ * Built with:
+ * Slim-PHP-Framework (http://www.slimframework.com/)
+ * Bootstrap Frontend Framework (http://getbootstrap.com/)
+ * PHP PDO (http://php.net/manual/de/book.pdo.php)
+ * jQuery (http://jquery.com/)
+ * ckEditor (http://ckeditor.com/)
+ * Codemirror (http://codemirror.net/)
+ * ...
+ *
+ * LICENCE
+ *
+ * DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+ * Version 1, February 2015
+ * Copyright (C) 2015 Christian Becher | phaziz.com <christian@phaziz.com>
+ * Everyone is permitted to copy and distribute verbatim or modified
+ * copies of this license document, and changing it is allowed as long
+ * as the name is changed.
+ *
+ * DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+ * TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+ * 0. YOU JUST DO WHAT THE FUCK YOU WANT TO!
+ *
+ * Visit http://constructr-cms.org
+ * Visit http://blog.phaziz.com/category/constructr-cms/
+ * Visit http://phaziz.com
+ *
+ * @author Christian Becher | phaziz.com <phaziz@gmail.com>
+ * @copyright 2015 Christian Becher | phaziz.com
+ * @license DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+ *
+ * @link http://constructr-cms.org/
+ * @link http://blog.phaziz.com/category/constructr-cms/
+ * @link http://phaziz.com/
+ *
+ * @version 1.04.5 / 25.02.2015
+ */
 
 ?>
 <!DOCTYPE html>
@@ -54,7 +54,7 @@
             <meta charset="utf-8">
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
             <meta name="viewport" content="width=device-width, initial-scale=1">
-            <title><?php echo $_CONSTRUCTR_CONF['_TITLE'] . ' - ' . $SUBTITLE; ?></title>
+            <title><?php echo $_CONSTRUCTR_CONF['_TITLE'].' - '.$SUBTITLE; ?></title>
             <link href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/bootstrap-3.3.2-dist/css/bootstrap.min.css" rel="stylesheet">
             <link href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/css/constructr.css" rel="stylesheet">
             <link href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/vex/css/vex.css" rel="stylesheet">
@@ -73,11 +73,12 @@
                     <ul class="sidebar-nav" id="sidebar">
                         <?php
 
-                            if($_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'] != '')
-                            {
-                                ?>
-                                    <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'] ?>" onclick="window.open(this.href);return false;" title="Statische Internetseiten anzeigen" data-toggle="tooltip" data-placement="right">FTP-Seiten</a></li>
-                                <?php
+                            if ($_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'] != '') {
+
+                        ?>
+	                            <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'] ?>" onclick="window.open(this.href);return false;" title="Statische Internetseiten anzeigen" data-toggle="tooltip" data-placement="right">FTP-Seiten</a></li>
+                        <?php
+
                             }
 
                         ?>
@@ -101,36 +102,40 @@
                             </div><!-- // EOF COL-... -->
                         </div><!-- // EOF ROW -->
                         <?php
-                            if(isset($_GET['history']) && $_GET['history'] != ''){
-                                ?>
-                                    <div class="row response">
-                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                                <?php
-                                                    if($_GET['history'] == 'deleted-false')
-                                                    {
-                                                        echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Fehler!</strong> Fehler bei L&ouml;schvorgang. Bitte diese Seite neu laden!</div>';
-                                                    }
-                                                    else if($_GET['history'] == 'deleted-true')
-                                                    {
-                                                        echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Erfolg!</strong> Datensatz wurde erfolgreich vollst&auml;ndig entfernt.</div>';
-                                                    }
-                                                ?>
-                                        </div><!-- // EOF COL-... -->
-                                    </div><!-- // EOF ROW -->
-                                <?php
+
+                            if (isset($_GET['history']) && $_GET['history'] != '') {
+
+                        ?>
+	                            <div class="row response">
+	                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	
+                        <?php
+
+                                if ($_GET['history'] == 'deleted-false') {
+                                    echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Fehler!</strong> Fehler bei L&ouml;schvorgang. Bitte diese Seite neu laden!</div>';
+                                } elseif ($_GET['history'] == 'deleted-true') {
+                                    echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Erfolg!</strong> Datensatz wurde erfolgreich vollst&auml;ndig entfernt.</div>';
+                                }
+
+                        ?>
+
+                                </div><!-- // EOF COL-... -->
+                            </div><!-- // EOF ROW -->
+
+                        <?php
+
                             }
                         ?>
                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <div class="jumbotron">
-                                    <h1><?php echo $SUBTITLE; ?>: <a data-toggle="tooltip" data-placement="top" title="Seite anzeigen" class="tt" onclick="window.open(this.href);return false;" href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] .'/'. $PAGE_NAME['pages_url']; ?>"><strong><?php echo $PAGE_NAME['pages_name']; ?></strong></a></h1>
-                                    <h2>Inhalt auf Seite <strong><?php echo $PAGE_NAME['pages_name']; ?></strong> bearbeiten</h2>
+                                    <h1><?php echo $SUBTITLE; ?>: <a data-toggle="tooltip" data-placement="top" title="Seite anzeigen" class="tt" onclick="window.open(this.href);return false;" href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'].'/'.$PAGE_NAME['pages_url']; ?>"><strong><?php echo $PAGE_NAME['pages_name']; ?></strong></a></h1>
+                                    <h2>Inhalt auf Seite <strong><?php echo $PAGE_NAME['pages_name']; ?></strong> bearbeiten:</h2>
                                     <br><br>
+
                                     <?php
 
-                                        if($CONTENT)
-                                        {
-
+                                        if ($CONTENT) {
                                             $PAGE_ID = $CONTENT['content_page_id'];
 
                                     ?>
@@ -148,65 +153,71 @@
                                                 <label for="submitter" class="col-sm-2 control-label">&#160;</label>
                                                 <div class="col-sm-10">
                                                     <button type="submit" name="submitter" id="submitter" class="btn btn-info btn-sm">Inhalt speichern &#8250;&#8250;</button>
-                                                    <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/content/' . $PAGE_ID . '/'; ?>"><button type="button" class="btn btn-danger btn-sm">Abbrechen</button></a>
+                                                    <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/content/'.$PAGE_ID.'/'; ?>"><button type="button" class="btn btn-danger btn-sm">Abbrechen</button></a>
                                                 </div>
                                             </div>
                                         </form>
+
                                     <?php
-                                        }
-                                        else
-                                        {
+
+                                        } else {
                                             echo 'Es ist ein Fehler aufgetreten...';
                                         }
 
                                     ?>
+
                                 </div><!-- // EOF JUMBOTRON -->
                             </div><!-- // EOF COL-... -->
                         </div><!-- // EOF ROW -->
                         <?php
-                            if($CONTENT_HISTORY)
-                            {
-                                ?>
-                                <div class="row">
-                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                        <div class="jumbotron">
-                                            <h2>Inhalts-Historie:</h2>
-                                            <br><br>
-                                            <div class="table-responsive">
-                                                <table class="datatable table table-bordered table-condensed table-striped table-hover">
-                                                    <thead>
-                                                        <tr>
-                                                            <th><small>Historien Eintrag</small></th>
-                                                            <th><small>Stand</small></th>
-                                                            <th class="center"><small>Aktionen</small></th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <?php
-                                                            foreach ($CONTENT_HISTORY as $CONTENT_HISTORY)
-                                                            {
-                                                                echo '<tr>';
-                                                                echo '<td style="max-width:300px;">';
-                                                                echo '<pre class="content_history" id="content_' . $CONTENT_HISTORY['content_id'] . '">' . ($CONTENT_HISTORY['content_content']);
-                                                                echo '</pre></td>';
-                                                                echo '<td><small>';
-                                                                echo date("d.m.Y, H:i", strtotime(substr($CONTENT_HISTORY['content_datetime'], 0, 18))) . ' Uhr';
-                                                                echo '</small></td>';
-                                                                echo '<td class="center"><nobr>';
-                                                                echo '<a data-toggle="tooltip" data-placement="top" title="Wiederherstellen" class="recreater tt" href="#" id="' . $CONTENT_HISTORY['content_id'] . '"><button type="button" class="btn btn-success btn-xs" title="Wiederherstellen"><span class="glyphicon glyphicon-import"></span></button></a>';
-                                                                echo '&#160;';
-                                                                echo '<a data-toggle="tooltip" data-placement="top" title="Diesen Inhalt endg&uuml;ltig l&ouml;schen" class="deleter tt" href="' . $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/content/' . $CONTENT_HISTORY['content_page_id'] . '/' . $CONTENT_HISTORY['content_id'] . '/' . $CONTENT_HISTORY['content_content_id'] . '/delete-history-complete/" title="Diese Historie endg&uuml;ltig l&ouml;schen"><button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span></button></a>';
-                                                                echo '</nobr></td>';
-                                                                echo '</tr>';
-                                                            }
-                                                        ?>
-                                                    </tbody>
-                                                </table>
-                                            </div><!-- EOF TABLE RESPONSIVE-->
-                                            </div><!-- // EOF JUMBOTRON -->
-                                        </div><!-- // EOF COL-... -->
-                                    </div><!-- // EOF ROW -->
-                                <?php
+
+                            if ($CONTENT_HISTORY) {
+
+                        ?>
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="jumbotron">
+                                        <h2>Inhalts-Historie:</h2>
+                                        <br><br>
+                                        <div class="table-responsive">
+                                            <table class="datatable table table-bordered table-condensed table-striped table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th><small>Historien Eintrag</small></th>
+                                                        <th><small>Stand</small></th>
+                                                        <th class="center"><small>Aktionen</small></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                    <?php
+
+                                                        foreach ($CONTENT_HISTORY as $CONTENT_HISTORY) {
+                                                            echo '<tr>';
+                                                            echo '<td style="max-width:300px;">';
+                                                            echo '<pre class="content_history" id="content_'.$CONTENT_HISTORY['content_id'].'">'.($CONTENT_HISTORY['content_content']);
+                                                            echo '</pre></td>';
+                                                            echo '<td><small>';
+                                                            echo date("d.m.Y, H:i", strtotime(substr($CONTENT_HISTORY['content_datetime'], 0, 18))).' Uhr';
+                                                            echo '</small></td>';
+                                                            echo '<td class="center"><nobr>';
+                                                            echo '<a data-toggle="tooltip" data-placement="top" title="Wiederherstellen" class="recreater tt" href="#" id="'.$CONTENT_HISTORY['content_id'].'"><button type="button" class="btn btn-success btn-xs" title="Wiederherstellen"><span class="glyphicon glyphicon-import"></span></button></a>';
+                                                            echo '&#160;';
+                                                            echo '<a data-toggle="tooltip" data-placement="top" title="Diesen Inhalt endg&uuml;ltig l&ouml;schen" class="deleter tt" href="'.$_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/content/'.$CONTENT_HISTORY['content_page_id'].'/'.$CONTENT_HISTORY['content_id'].'/'.$CONTENT_HISTORY['content_content_id'].'/delete-history-complete/" title="Diese Historie endg&uuml;ltig l&ouml;schen"><button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span></button></a>';
+                                                            echo '</nobr></td>';
+                                                            echo '</tr>';
+                                                        }
+
+					                                ?>
+
+                                                </tbody>
+                                            </table>
+                                        </div><!-- EOF TABLE RESPONSIVE-->
+                                        </div><!-- // EOF JUMBOTRON -->
+                                    </div><!-- // EOF COL-... -->
+                                </div><!-- // EOF ROW -->
+                        <?php
+
                             }
                         ?>
                         <div class="row">
@@ -227,6 +238,7 @@
             <script src="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/ckeditor/ckeditor.js"></script>
             <script src="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/Assets/ckeditor/adapters/jquery.js"></script>
             <script>
+
                 $(function()
                     {
                         $('.tt').tooltip();
@@ -236,7 +248,7 @@
                             {
                                 "customConfig":"",
                                 "extraPlugins":"imagebrowser",
-                                "imageBrowser_listUrl":"<?php echo $_CONSTRUCTR_CONF['_BASE_URL'] . '/constructr/get-image-list/'; ?>",
+                                "imageBrowser_listUrl":"<?php echo $_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/get-image-list/'; ?>",
                                 "allowedContent":true
                             }
                         );
@@ -385,6 +397,7 @@
                         );
                     }
                 );
+
             </script>
         </body>
     </html>

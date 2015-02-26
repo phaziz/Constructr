@@ -27,6 +27,5 @@
     },
     "autoload": {
         "files": ["index.php"]
-    }
-    
+    }   
 }

@@ -41,7 +41,7 @@
  * @link http://blog.phaziz.com/category/constructr-cms/
  * @link http://phaziz.com/
  *
- * @version 1.04.5 / 25.02.2015
+ * @version 1.04.5 / 02.03.2015
  */
 
 ?>
@@ -92,6 +92,7 @@
                         <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_CREATE_DYNAMIC_DOMAIN'] ?>" onclick="window.open(this.href);return false;" title="Vorschau dynamische Internetseiten" data-toggle="tooltip" data-placement="right">Vorschau</a></li>
                         <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/constructr/" title="Dashboard anzeigen" data-toggle="tooltip" data-placement="right">Dashboard</a></li>
                         <li class="active"><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/constructr/pages/" title="Seitenverwaltung anzeigen" data-toggle="tooltip" data-placement="right">Seiten</a></li>
+                        <li class="active"><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/constructr/pages/new/" title="Neue Seite anlegen" data-toggle="tooltip" data-placement="right"><small>Neue Seite</small></a></li>
                         <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/constructr/media/" title="Medienverwaltung anzeigen" data-toggle="tooltip" data-placement="right">Medien</a></li>
                         <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/constructr/media/trash/" title="M&uuml;lleimer anzeigen" data-toggle="tooltip" data-placement="right">M&uuml;lleimer</a></li>
                         <li><a class="tt" href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/constructr/user/" title="Benutzerverwaltung anzeigen" data-toggle="tooltip" data-placement="right">Benutzer</a></li>
@@ -248,30 +249,35 @@
 
                                     ?>
 
-										<h1>Seitenspezifische CSS- und Javascript-Eigenschaften:</h1>
-										<form role="form" name="new_page_form" id="new_page_form" action="<?php echo $FORM_ACTION; ?>" method="<?php echo $FORM_METHOD; ?>" enctype="<?php echo $FORM_ENCTYPE; ?>" class="form-horizontal">
-                                            <input type="hidden" name="user_form_guid" value="<?php echo $GUID; ?>">
-                                            <input type="hidden" name="page_id" id="page_id" value="<?php echo $PAGE_NAME['pages_id']; ?>" maxlength="100">
-	                                        <div class="form-group">
-	                                            <label for="page_css" class="col-sm-2 control-label">Seitenspezifisches CSS:</label>
-	                                            <div class="col-sm-10">
-	                                                <textarea rows="5" cols="50" class="form-control input-sm" name="page_css" id="page_css" placeholder="Seitenspezifisches CSS f&uuml;r diese Seite"><?php echo $PAGE_NAME['pages_css']; ?></textarea>
+										<h1><a href="#" id="toogle-extra-parts"><span id="extra-parts-icon" class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span></a> Seitenspezifische CSS- und Javascript-Eigenschaften:</h1>
+										
+										<div id="area-extra-parts">
+										
+											<form role="form" name="new_page_form" id="new_page_form" action="<?php echo $FORM_ACTION; ?>" method="<?php echo $FORM_METHOD; ?>" enctype="<?php echo $FORM_ENCTYPE; ?>" class="form-horizontal">
+	                                            <input type="hidden" name="user_form_guid" value="<?php echo $GUID; ?>">
+	                                            <input type="hidden" name="page_id" id="page_id" value="<?php echo $PAGE_NAME['pages_id']; ?>" maxlength="100">
+		                                        <div class="form-group">
+		                                            <label for="page_css" class="col-sm-2 control-label">Seitenspezifisches CSS:</label>
+		                                            <div class="col-sm-10">
+		                                                <textarea rows="5" cols="50" class="form-control input-sm" name="page_css" id="page_css" placeholder="Seitenspezifisches CSS f&uuml;r diese Seite"><?php echo $PAGE_NAME['pages_css']; ?></textarea>
+		                                            </div>
+		                                        </div>
+		                                        <div class="form-group">
+		                                            <label for="page_js" class="col-sm-2 control-label">Seitenspezifisches Javascript:</label>
+		                                            <div class="col-sm-10">
+		                                                <textarea rows="5" cols="50" class="form-control input-sm" name="page_js" id="page_js" placeholder="Seitenspezifisches Javascript f&uuml;r diese Seite"><?php echo $PAGE_NAME['pages_js']; ?></textarea>
+		                                            </div>
+		                                        </div>
+	                                            <div class="form-group">
+	                                                <label for="submitter" class="col-sm-2 control-label">&#160;</label>
+	                                                <div class="col-sm-10">
+	                                                    <button type="submit" name="submitter" id="submitter" class="btn btn-info btn-sm">&Auml;nderungen speichern &#8250;&#8250;</button>
+	                                                    <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/pages/'; ?>"><button type="button" class="btn btn-danger btn-sm">Abbrechen</button></a>
+	                                                </div>
 	                                            </div>
-	                                        </div>
-	                                        <div class="form-group">
-	                                            <label for="page_js" class="col-sm-2 control-label">Seitenspezifisches Javascript:</label>
-	                                            <div class="col-sm-10">
-	                                                <textarea rows="5" cols="50" class="form-control input-sm" name="page_js" id="page_js" placeholder="Seitenspezifisches Javascript f&uuml;r diese Seite"><?php echo $PAGE_NAME['pages_js']; ?></textarea>
-	                                            </div>
-	                                        </div>
-                                            <div class="form-group">
-                                                <label for="submitter" class="col-sm-2 control-label">&#160;</label>
-                                                <div class="col-sm-10">
-                                                    <button type="submit" name="submitter" id="submitter" class="btn btn-info btn-sm">&Auml;nderungen speichern &#8250;&#8250;</button>
-                                                    <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/pages/'; ?>"><button type="button" class="btn btn-danger btn-sm">Abbrechen</button></a>
-                                                </div>
-                                            </div>
-                                        </form>
+	                                        </form>
+
+										</div>
 
 									<?php
 
@@ -382,6 +388,17 @@
                                 $("#wrapper").removeClass('active');
                             }
                         }
+
+                        $("#toogle-extra-parts").click(function(e){
+                            e.preventDefault();
+						    $('#area-extra-parts').toggle();
+
+							if($("#area-extra-parts").is(":visible")){
+							    $('#toogle-extra-parts').html('<span id="extra-parts-icon" title="CSS + JS ausblenden" class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span>');
+							} else { 
+							     $('#toogle-extra-parts').html('<span id="extra-parts-icon" title="CSS + JS einblenden" class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>');
+							}
+                        });
 
                         $("#menu-toggle").click(function(e)
                             {

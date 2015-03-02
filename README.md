@@ -3,7 +3,7 @@ Constructr CMS
 
 ConstructrCMS (<a href="http://constructr-cms.org">http://constructr-cms.org</a>) based on Slim-PHP5-Framework, Twitter Bootstrap, MySQL/PDO, jQuery/Javascript and Passion!
 
-That's it for now (Version 1.04.5 / 2015-02-25):
+That's it for now (Version 1.04.5 / 2015-03-02):
 
 	- Easy and guided Setup (Web-Installer)
 	- Page-Management
@@ -34,6 +34,10 @@ That's it for now (Version 1.04.5 / 2015-02-25):
 	- Easy Plugin-System (beta feature)
 
 ### CHANGELOG
+
+	- 2015-03-02
+	- Bugfixing: Updated UI / Navigation
+	- UI Update: Pages/Content Section - Toggle site specific JS and CSS
 
 	- 2015-02-25
 	- Bugfixing: Sourcecode PSR's...

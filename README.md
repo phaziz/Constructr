@@ -35,6 +35,10 @@ That's it for now (Version 1.04.5 / 2015-03-02):
 
 ### CHANGELOG
 
+	- 2015-03-03
+	- Updated UI / Navigation
+	- UI Update: Integrated pushy.js (Off-Canvas Navigation)
+
 	- 2015-03-02
 	- Bugfixing: Updated UI / Navigation
 	- UI Update: Pages/Content Section - Toggle site specific JS and CSS

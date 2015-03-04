@@ -37,21 +37,15 @@
  * @link http://blog.phaziz.com/category/constructr-cms/
  * @link http://phaziz.com/
  *
- * @version 1.04.5 / 25.02.2015
+ * @version 1.04.5 / 04.03.2015
  */
 
-    if($_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'] && $_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'] != '')
-    {
+    if($_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'] && $_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'] != ''){
         $_BASE_ROUTE = $_CONSTRUCTR_CONF['_CREATE_STATIC_DOMAIN'];
-    }
-    else
-    {
-        if($_CONSTRUCTR_CONF['_CREATE_DYNAMIC_DOMAIN'] == '')
-        {
+    } else {
+        if($_CONSTRUCTR_CONF['_CREATE_DYNAMIC_DOMAIN'] == ''){
             $_BASE_ROUTE = $_CONSTRUCTR_CONF['_BASE_URL'];
-        }
-        else
-        {
+        } else {
             $_BASE_ROUTE = $_CONSTRUCTR_CONF['_CREATE_DYNAMIC_DOMAIN'];
         }
     }
@@ -65,8 +59,7 @@
             <meta name="viewport" content="width=device-width, initial-scale=1">
             <?php
 
-                if($PAGE_DATA)
-                {
+                if($PAGE_DATA){
                     echo '<title>' . $PAGE_DATA['pages_title'] . '</title>' . "\n";
                     echo '<meta name="description" content="' . $PAGE_DATA['pages_description'] . '">' . "\n";
                     echo '<meta name="keywords" content="' . $PAGE_DATA['pages_keywords'] . '">' . "\n";
@@ -79,8 +72,7 @@
             <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
             <?php
  
-               	foreach($_CONSTRUCTR_PLUGINS['_CONSTRUCTR_PLUGINS_CSS'] AS $CSS_PLUGIN)
-               	{
+               	foreach($_CONSTRUCTR_PLUGINS['_CONSTRUCTR_PLUGINS_CSS'] AS $CSS_PLUGIN){
                 	echo($CSS_PLUGIN);
                	}
                         
@@ -101,113 +93,60 @@
             <?php
 
             	/**
-				 * NAVIGATION BEISPIELE START
+				 * NAVIGATION BEISPIEL UL/LI START
 				 */
-				if($PAGES)
-				{
-					/**
-					 * NAVIGATION BEISPIEL: Alle Seiten als ungeordnete (<UL></UL>) Liste ausgeben. START
-					 */
-					echo '<p>Alle sichtbaren Seiten nach der angelegten Sortierung:</p>';
-					echo '<ul>';
+				if($PAGES){
+					$DOM = new domDocument();
+					$DOM->validateOnParse = true;
+					$DOM->loadHTML('<html>');
 
-					foreach($PAGES AS $PAGE)
-					{
-						if($PAGE['pages_nav_visible'] == 1)
-						{
-							echo '<li><a href="' . $_BASE_ROUTE . '/' .  $PAGE['pages_url'] . '">' . $PAGE['pages_name'] . '</a></li>';
-						}
+					$ROOT = $DOM->createElement('ul');
+					$ROOT->setAttribute('class','constructr-menu');
+
+					$DOM->appendChild($ROOT);
+
+					foreach($PAGES as $KEY => $VALUE){
+					    $PID = $VALUE['pages_mother'];
+					    $PARENT = $DOM->getElementById('constructr-li-'.$PID);
+
+					    if($PARENT != null){
+					        $UL = $DOM->getElementById('ul-'.$PID);
+
+					        if($UL == null){
+					            $UL = $DOM->createElement('ul');
+					            $UL->setAttribute('id','constructr-ul-'.$PID);
+					            $PARENT->appendChild($UL);
+					        }
+
+					        $TARGET=$UL;
+					    }
+					    else
+					    {
+					        $TARGET=$ROOT;
+					    }
+
+					    $LI = $DOM->createElement('li','<a href="' . $_BASE_ROUTE . '/' . $VALUE['pages_url'] . '">' . $VALUE['pages_name'] . '</a>');
+					    $LI->setAttribute('id','constructr-li-'.$VALUE['pages_id']);
+
+						$TARGET->appendChild($LI);
 					}
 
-					echo '</ul>';
-					/**
-					 * NAVIGATION BEISPIEL: Alle Seiten als ungeordnete (<UL></UL>) Liste ausgeben. ENDE
-					 */
+					$NAVIGATION = $DOM->saveHTML($ROOT);
+					$NAVIGATION = str_replace('&lt;','<',$NAVIGATION);
+					$NAVIGATION = str_replace('&gt;','>',$NAVIGATION);
 
-					/**
-					 * NAVIGATION BEISPIEL: Alle Seiten als ungeordnete (<UL></UL>) Liste mit entsprechender Hierarchie ausgeben. START
-					 */
-					if($PAGES)
-					{
-			            try
-			            {
-							echo '<ul>';
-	
-							$PAGES = $DBCON -> query('SELECT * FROM constructr_pages WHERE pages_mother = 0 ORDER BY pages_order ASC;');
-							$PARENT_PAGES = $PAGES -> fetchAll();
-	
-							foreach($PARENT_PAGES as $PAGE)
-							{
-								if($PAGE['pages_nav_visible'] == 1)
-								{
-									echo '<li><a href="' . $_BASE_ROUTE . '/' . $PAGE['pages_url'] . '">' . $PAGE['pages_name'] . '</a>';
-		
-									$CHILDS = $DBCON -> query('SELECT * FROM constructr_pages WHERE pages_mother = ' . $PAGE['pages_id'] . ' ORDER BY pages_order ASC;');
-									$CHILD_PAGES = $CHILDS -> fetchAll();
-		
-									if(count($CHILD_PAGES)>0)
-									{
-										echo '<ul>';
-									}
-		
-									foreach($CHILD_PAGES as $CHILD)
-									{
-										echo '<li><a href="' . $_BASE_ROUTE . '/' . $CHILD['pages_url'] . '">' . $CHILD['pages_name'] . '</a>';
-		
-										$CHILDS2 = $DBCON -> query('SELECT * FROM constructr_pages WHERE pages_mother = ' . $CHILD['pages_id'] . ' ORDER BY pages_order ASC;');
-										$CHILD_PAGES2 = $CHILDS2 -> fetchAll();
-		
-										if(count($CHILD_PAGES2)>0)
-										{
-											echo '<ul>';
-										}
-			
-										foreach($CHILD_PAGES2 as $CHILD2)
-										{
-											echo '<li><a href="' . $_BASE_ROUTE . '/' . $CHILD2['pages_url'] . '">' . $CHILD2['pages_name'] . '</a>';
-										}
-			
-										if(count($CHILD_PAGES2)>0)
-										{
-											echo '</ul>';
-										}
-			
-										echo '</li>';
-									}
-		
-									if(count($CHILD_PAGES)>0)
-									{
-										echo '</ul>';
-									}
-		
-									echo '</li>';								
-								}
-							}
-			            }
-			            catch(PDOException $e)
-			            {
-			                die();
-			            }
-	
-						echo '</ul>';
-					}
-					/**
-					 * NAVIGATION BEISPIEL: Alle Seiten als ungeordnete Liste (<UL></UL>) mit entsprechender Hierarchie ausgeben. ENDE
-					 */					 
+					echo $NAVIGATION;
 				}
             	/**
-				 * NAVIGATION BEISPIELE ENDE
+				 * NAVIGATION BEISPIEL UL/LI ENDE
 				 */
 
-               	foreach($_CONSTRUCTR_PLUGINS['_CONSTRUCTR_PLUGINS_CONTENT'] AS $CONTENT_PLUGIN)
-               	{
+               	foreach($_CONSTRUCTR_PLUGINS['_CONSTRUCTR_PLUGINS_CONTENT'] AS $CONTENT_PLUGIN){
                 	echo($CONTENT_PLUGIN);
                	}
 
-                if($CONTENT)
-                { 
-                    foreach($CONTENT as $CONTENT)
-                    {
+                if($CONTENT){
+                    foreach($CONTENT as $CONTENT){
                         echo $CONTENT['content_content'];
                     }
                 }
@@ -217,13 +156,9 @@
             <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
             <?php
 
-               	foreach($_CONSTRUCTR_PLUGINS['_CONSTRUCTR_PLUGINS_JS'] AS $JS_PLUGIN)
-               	{
+               	foreach($_CONSTRUCTR_PLUGINS['_CONSTRUCTR_PLUGINS_JS'] AS $JS_PLUGIN){
                 	echo($JS_PLUGIN);
                	}
-
-            ?>
-            <?php
 
 				echo $PAGE_DATA['pages_js'];
 

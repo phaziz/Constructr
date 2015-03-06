@@ -53,7 +53,7 @@
             $PAGES_COUNTR = 0;
 
             if ($_CONSTRUCTR_CONF['_LOGGING'] == true) {
-                $constructr->getLog()->debug($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+                $constructr->getLog()->debug($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
             }
 
             try {
@@ -82,7 +82,7 @@
                 $DIR_C_FILES = array_unique($DIR_C_FILES);
                 $C_FILE_COUNTR = count($DIR_C_FILES);
             } catch (PDOException $e) {
-                $constructr->getLog()->debug($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
+                $constructr->getLog()->debug($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
                 die();
             }
 
@@ -144,11 +144,11 @@
                         $constructr->getLog()->error($_SESSION['backend-user-username'].' User-Rights-Success '.$constructr->view->getData('BackendUserRight').': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
                     }
                 } catch (PDOException $e) {
-                    $constructr->getLog()->error($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
+                    $constructr->getLog()->error($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
                     die();
                 }
             } else {
-                $constructr->getLog()->error($_SESSION['backend-user-username'].': Error User-Rights-Check: '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+                $constructr->getLog()->error($_SESSION['backend-user-username'].' Error User-Rights-Check: '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
                 $constructr->redirect($_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/logout/');
                 die();
             }
@@ -157,7 +157,7 @@
             $PAGES_COUNTR = 0;
 
             if ($_CONSTRUCTR_CONF['_LOGGING'] == true) {
-                $constructr->getLog()->debug($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+                $constructr->getLog()->debug($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
             }
 
             try {
@@ -192,7 +192,7 @@
                 $DIR_C_FILES = array_unique($DIR_C_FILES);
                 $C_FILE_COUNTR = count($DIR_C_FILES);
             } catch (PDOException $e) {
-                $constructr->getLog()->debug($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
+                $constructr->getLog()->debug($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
                 die();
             }
 
@@ -202,7 +202,7 @@
 
             if ($NEEDLES && $NEEDLES != false) {
                 if ($GUID != $USER_FORM_GUID) {
-                    $constructr->getLog()->error('SearchForm GUID Error - '.$_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+                    $constructr->getLog()->error('SearchForm GUID Error - '.$_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
                     $constructr->redirect($_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/');
                     die();
                 }
@@ -230,7 +230,7 @@
                             }
                         }
                     } catch (PDOException $e) {
-                        $constructr->getLog()->error($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
+                        $constructr->getLog()->error($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
                         $constructr->redirect($_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/');
                         die();
                     }
@@ -252,7 +252,7 @@
                             }
                         }
                     } catch (PDOException $e) {
-                        $constructr->getLog()->error($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
+                        $constructr->getLog()->error($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
                         $constructr->redirect($_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/');
                         die();
                     }
@@ -274,7 +274,7 @@
                             }
                         }
                     } catch (PDOException $e) {
-                        $constructr->getLog()->error($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
+                        $constructr->getLog()->error($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
                         $constructr->redirect($_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/');
                         die();
                     }
@@ -296,7 +296,7 @@
                             }
                         }
                     } catch (PDOException $e) {
-                        $constructr->getLog()->error($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
+                        $constructr->getLog()->error($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
                         $constructr->redirect($_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/');
                         die();
                     }
@@ -318,7 +318,7 @@
                             }
                         }
                     } catch (PDOException $e) {
-                        $constructr->getLog()->error($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
+                        $constructr->getLog()->error($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
                         $constructr->redirect($_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/');
                         die();
                     }
@@ -385,11 +385,11 @@
                         $constructr->getLog()->error($_SESSION['backend-user-username'].' User-Rights-Success '.$constructr->view->getData('BackendUserRight').': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
                     }
                 } catch (PDOException $e) {
-                    $constructr->getLog()->error($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
+                    $constructr->getLog()->error($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
                     die();
                 }
             } else {
-                $constructr->getLog()->error($_SESSION['backend-user-username'].': Error User-Rights-Check: '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+                $constructr->getLog()->error($_SESSION['backend-user-username'].' Error User-Rights-Check: '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
                 $constructr->redirect($_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/logout/');
                 die();
             }
@@ -402,10 +402,10 @@
 
             try {
                 $OPTIMIZER = $DBCON->query('OPTIMIZE TABLE constructr_backenduser, constructr_backenduser_rights, constructr_content, constructr_content_history, constructr_media, constructr_pages;');
-                $constructr->getLog()->debug($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+                $constructr->getLog()->debug($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
                 $constructr->redirect($_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/?optimized=true');
             } catch (PDOException $e) {
-                $constructr->getLog()->debug($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
+                $constructr->getLog()->debug($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
                 die();
             }
         }
@@ -445,11 +445,11 @@
                         $constructr->getLog()->error($_SESSION['backend-user-username'].' User-Rights-Success '.$constructr->view->getData('BackendUserRight').': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
                     }
                 } catch (PDOException $e) {
-                    $constructr->getLog()->error($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
+                    $constructr->getLog()->error($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
                     die();
                 }
             } else {
-                $constructr->getLog()->error($_SESSION['backend-user-username'].': Error User-Rights-Check: '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+                $constructr->getLog()->error($_SESSION['backend-user-username'].' Error User-Rights-Check: '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
                 $constructr->redirect($_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/logout/');
                 die();
             }
@@ -462,10 +462,10 @@
 
             try {
                 $OPTIMIZER = $DBCON->query('TRUNCATE TABLE constructr_content_history;');
-                $constructr->getLog()->debug($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+                $constructr->getLog()->debug($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
                 $constructr->redirect($_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/?content-history=true');
             } catch (PDOException $e) {
-                $constructr->getLog()->debug($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
+                $constructr->getLog()->debug($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
                 die();
             }
         }
@@ -505,11 +505,11 @@
                         $constructr->getLog()->error($_SESSION['backend-user-username'].' User-Rights-Success '.$constructr->view->getData('BackendUserRight').': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
                     }
                 } catch (PDOException $e) {
-                    $constructr->getLog()->error($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
+                    $constructr->getLog()->error($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
                     die();
                 }
             } else {
-                $constructr->getLog()->error($_SESSION['backend-user-username'].': Error User-Rights-Check: '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+                $constructr->getLog()->error($_SESSION['backend-user-username'].' Error User-Rights-Check: '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
                 $constructr->redirect($_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/logout/');
                 die();
             }
@@ -591,7 +591,7 @@
                                 $FTP_LOGIN = @ftp_login($FTP_CON, $_CONSTRUCTR_CONF['_FTP_REMOTE_USERNAME'], $_CONSTRUCTR_CONF['_FTP_REMOTE_PASSWORD']);
 
                                 if ((!$FTP_CON) || (!$FTP_LOGIN)) {
-                                    $constructr->getLog()->debug($_SESSION['backend-user-username'].': FTP-ERROR 1 - '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+                                    $constructr->getLog()->debug($_SESSION['backend-user-username'].' FTP-ERROR 1 - '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
                                     $constructr->redirect($_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/?transfered-static=false');
                                     die();
                                 }
@@ -618,7 +618,7 @@
                                     $FTP_LOGIN = @ftp_login($FTP_CON, $_CONSTRUCTR_CONF['_FTP_REMOTE_USERNAME'], $_CONSTRUCTR_CONF['_FTP_REMOTE_PASSWORD']);
 
                                     if ((!$FTP_CON) || (!$FTP_LOGIN)) {
-                                        $constructr->getLog()->debug($_SESSION['backend-user-username'].': FTP-ERROR 2 - '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+                                        $constructr->getLog()->debug($_SESSION['backend-user-username'].' FTP-ERROR 2 - '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
                                         $constructr->redirect($_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/?transfered-static=false');
                                         die();
                                     }
@@ -635,7 +635,7 @@
                                     $FTP_LOGIN = @ftp_login($FTP_CON, $_CONSTRUCTR_CONF['_FTP_REMOTE_USERNAME'], $_CONSTRUCTR_CONF['_FTP_REMOTE_PASSWORD']);
 
                                     if ((!$FTP_CON) || (!$FTP_LOGIN)) {
-                                        $constructr->getLog()->debug($_SESSION['backend-user-username'].': FTP-ERROR 3 - '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+                                        $constructr->getLog()->debug($_SESSION['backend-user-username'].' FTP-ERROR 3 - '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
                                         $constructr->redirect($_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/?transfered-static=false');
                                         die();
                                     }
@@ -654,7 +654,7 @@
                         $FTP_LOGIN = @ftp_login($FTP_CON, $_CONSTRUCTR_CONF['_FTP_REMOTE_USERNAME'], $_CONSTRUCTR_CONF['_FTP_REMOTE_PASSWORD']);
 
                         if ((!$FTP_CON) || (!$FTP_LOGIN)) {
-                            $constructr->getLog()->debug($_SESSION['backend-user-username'].': FTP-ERROR 4 - '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+                            $constructr->getLog()->debug($_SESSION['backend-user-username'].' FTP-ERROR 4 - '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
                             $constructr->redirect($_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/?transfered-static=false');
                             die();
                         }
@@ -675,25 +675,25 @@
                         @ftp_chmod($FTP_CON, 0777, 'robots.txt');
                         @ftp_close($FTP_CON);
                     } catch (PDOException $e) {
-                        $constructr->getLog()->debug($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+                        $constructr->getLog()->debug($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
                         $constructr->redirect($_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/?transfered-static=false');
                         die();
                     }
 
-                    $constructr->getLog()->debug($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+                    $constructr->getLog()->debug($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
                     $constructr->redirect($_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/?transfered-static=true');
                     die();
                 } else {
-                    $constructr->getLog()->debug($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+                    $constructr->getLog()->debug($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
                     $constructr->redirect($_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/?transfered-static=false');
                     die();
                 }
 
-                $constructr->getLog()->debug($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+                $constructr->getLog()->debug($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
                 $constructr->redirect($_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/?transfered-static=true');
                 die();
             } catch (PDOException $e) {
-                $constructr->getLog()->error($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
+                $constructr->getLog()->error($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
                 $constructr->redirect($_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/?transfered-static=false');
                 die();
             }
@@ -734,11 +734,11 @@
                         $constructr->getLog()->error($_SESSION['backend-user-username'].' User-Rights-Success '.$constructr->view->getData('BackendUserRight').': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
                     }
                 } catch (PDOException $e) {
-                    $constructr->getLog()->error($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
+                    $constructr->getLog()->error($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
                     die();
                 }
             } else {
-                $constructr->getLog()->error($_SESSION['backend-user-username'].': Error User-Rights-Check: '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+                $constructr->getLog()->error($_SESSION['backend-user-username'].' Error User-Rights-Check: '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
                 $constructr->redirect($_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/logout/');
                 die();
             }
@@ -758,7 +758,7 @@
                 }
             }
 
-            $constructr->getLog()->debug($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+            $constructr->getLog()->debug($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
             $constructr->redirect($_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/?cleared-cache=true');
             die();
         }
@@ -800,11 +800,11 @@
                         $constructr->getLog()->error($_SESSION['backend-user-username'].' User-Rights-Success '.$constructr->view->getData('BackendUserRight').': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
                     }
                 } catch (PDOException $e) {
-                    $constructr->getLog()->error($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
+                    $constructr->getLog()->error($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
                     die();
                 }
             } else {
-                $constructr->getLog()->error($_SESSION['backend-user-username'].': Error User-Rights-Check: '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+                $constructr->getLog()->error($_SESSION['backend-user-username'].' Error User-Rights-Check: '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
                 $constructr->redirect($_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/logout/');
                 die();
             }
@@ -838,11 +838,11 @@
                     }
                 }
 
-                $constructr->getLog()->debug($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+                $constructr->getLog()->debug($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
                 $constructr->redirect($_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/content/'.$PAGE_ID.'/?res=cleared-page-cache-true');
                 die();
             } catch (PDOException $e) {
-                $constructr->getLog()->error($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
+                $constructr->getLog()->error($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
                 $constructr->redirect($_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/content/'.$PAGE_ID.'/?res=cleared-page-cache-false');
                 die();
             }
@@ -880,11 +880,11 @@
                         $constructr->getLog()->error($_SESSION['backend-user-username'].' User-Rights-Success '.$constructr->view->getData('BackendUserRight').': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
                     }
                 } catch (PDOException $e) {
-                    $constructr->getLog()->error($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
+                    $constructr->getLog()->error($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
                     die();
                 }
             } else {
-                $constructr->getLog()->error($_SESSION['backend-user-username'].': Error User-Rights-Check: '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+                $constructr->getLog()->error($_SESSION['backend-user-username'].' Error User-Rights-Check: '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
                 $constructr->redirect($_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/logout/');
                 die();
             }
@@ -894,12 +894,12 @@
                 $BACKUP_CONFIG_FILE = __DIR__.'/../Config/Backups/'.date('Y-m-d-h-i-s').'-constructr.conf.backup.txt';
                 file_put_contents($BACKUP_CONFIG_FILE, $CONFIG_FILE_CONTENT, FILE_APPEND | LOCK_EX);
             } catch (Exception $e) {
-                $constructr->getLog()->debug($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
+                $constructr->getLog()->debug($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
                 $constructr->redirect($_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/?backup-config=false');
                 die();
             }
 
-            $constructr->getLog()->debug($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+            $constructr->getLog()->debug($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
             $constructr->redirect($_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/?backup-config=true');
             die();
         }

@@ -48,7 +48,7 @@
      */
     $constructr->get('/constructr/logout/', function () use ($constructr, $_CONSTRUCTR_CONF) {
             if ($_CONSTRUCTR_CONF['_LOGGING'] == true) {
-                $constructr->getLog()->debug('Successful logout '.$_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+                $constructr->getLog()->debug('Successful logout '.$_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
             }
 
             $_SESSION['constructr_login_attempt'] = '';

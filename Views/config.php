@@ -50,7 +50,7 @@
      */
     $constructr->get('/constructr/config/', $ADMIN_CHECK, function () use ($constructr, $DBCON, $_CONSTRUCTR_CONF) {
             if ($_CONSTRUCTR_CONF['_LOGGING'] == true) {
-                $constructr->getLog()->debug($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+                $constructr->getLog()->debug($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
             }
 
             $constructr->render('config.php',

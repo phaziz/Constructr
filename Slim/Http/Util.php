@@ -60,9 +60,9 @@ class Util
         $strip = is_null($overrideStripSlashes) ? get_magic_quotes_gpc() : $overrideStripSlashes;
         if ($strip) {
             return self::stripSlashes($rawData);
-        } else {
-            return $rawData;
         }
+
+        return $rawData;
     }
 
     /**
@@ -401,7 +401,7 @@ class Util
         $header = rtrim($header, "\r\n");
         $headerPieces = preg_split('@\s*[;,]\s*@', $header);
         foreach ($headerPieces as $c) {
-            $cParts = explode('=', $c);
+            $cParts = explode('=', $c, 2);
             if (count($cParts) === 2) {
                 $key = urldecode($cParts[0]);
                 $value = urldecode($cParts[1]);

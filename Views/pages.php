@@ -74,24 +74,24 @@
                         $constructr->getLog()->error($_SESSION['backend-user-username'].' User-Rights-Success '.$constructr->view->getData('BackendUserRight').': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
                     }
                 } catch (PDOException $e) {
-                    $constructr->getLog()->error($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
+                    $constructr->getLog()->error($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
                     die();
                 }
             } else {
-                $constructr->getLog()->error($_SESSION['backend-user-username'].': Error User-Rights-Check: '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+                $constructr->getLog()->error($_SESSION['backend-user-username'].' Error User-Rights-Check: '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
                 $constructr->redirect($_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/logout/');
                 die();
             }
 
             if ($_CONSTRUCTR_CONF['_LOGGING'] == true) {
-                $constructr->getLog()->debug($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+                $constructr->getLog()->debug($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
             }
 
             try {
                 $PAGES = $DBCON->query('SELECT * FROM constructr_pages ORDER BY pages_order ASC;');
                 $PAGES_COUNTR = $PAGES->rowCount();
             } catch (PDOException $e) {
-                $constructr->getLog()->error($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
+                $constructr->getLog()->error($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
                 $constructr->redirect($_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/');
                 die();
             }
@@ -139,17 +139,17 @@
                         $constructr->getLog()->error($_SESSION['backend-user-username'].' User-Rights-Success '.$constructr->view->getData('BackendUserRight').': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
                     }
                 } catch (PDOException $e) {
-                    $constructr->getLog()->error($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
+                    $constructr->getLog()->error($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
                     die();
                 }
             } else {
-                $constructr->getLog()->error($_SESSION['backend-user-username'].': Error User-Rights-Check: '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+                $constructr->getLog()->error($_SESSION['backend-user-username'].' Error User-Rights-Check: '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
                 $constructr->redirect($_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/logout/');
                 die();
             }
 
             if ($_CONSTRUCTR_CONF['_LOGGING'] == true) {
-                $constructr->getLog()->debug($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+                $constructr->getLog()->debug($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
             }
 
             $PAGES_COUNTR = 0;
@@ -158,7 +158,7 @@
                 $PAGES = $DBCON->query('SELECT * FROM constructr_pages ORDER BY pages_order ASC;');
                 $PAGES_COUNTR = $PAGES->rowCount();
             } catch (PDOException $e) {
-                $constructr->getLog()->error($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
+                $constructr->getLog()->error($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
                 $constructr->redirect($_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/');
                 die();
             }
@@ -195,7 +195,7 @@
             $GUID = constructr_sanitization($GUID, true, true);
 
             if ($_CONSTRUCTR_CONF['_LOGGING'] == true) {
-                $constructr->getLog()->debug($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+                $constructr->getLog()->debug($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
             }
 
             $constructr->view->setData('BackendUserRight', 11);
@@ -221,11 +221,11 @@
                         $constructr->getLog()->error($_SESSION['backend-user-username'].' User-Rights-Success '.$constructr->view->getData('BackendUserRight').': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
                     }
                 } catch (PDOException $e) {
-                    $constructr->getLog()->error($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
+                    $constructr->getLog()->error($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
                     die();
                 }
             } else {
-                $constructr->getLog()->error($_SESSION['backend-user-username'].': Error User-Rights-Check: '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+                $constructr->getLog()->error($_SESSION['backend-user-username'].' Error User-Rights-Check: '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
                 $constructr->redirect($_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/logout/');
                 die();
             }
@@ -288,7 +288,7 @@
 
                 $URL_COUNTR = $URL->rowCount();
             } catch (PDOException $e) {
-                $constructr->getLog()->debug($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
+                $constructr->getLog()->debug($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
                 $constructr->redirect($_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/pages/?res=create-page-false');
                 die();
             }
@@ -325,13 +325,13 @@
                         $STMT->bindParam(':PAGE_ACTIVE', $PAGE_ACTIVE, PDO::PARAM_INT);
                         $STMT->execute();
                     } catch (PDOException $e) {
-                        $constructr->getLog()->debug($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
+                        $constructr->getLog()->debug($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
                         $constructr->redirect($_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/pages/?res=create-page-false');
                         die();
                     }
 
                     if ($_CONSTRUCTR_CONF['_LOGGING'] == true) {
-                        $constructr->getLog()->debug($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+                        $constructr->getLog()->debug($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
                     }
 
                     $NEW_LINE = "\n";
@@ -366,7 +366,7 @@
                             }
                         }
                     } catch (PDOException $e) {
-                        $constructr->getLog()->debug($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
+                        $constructr->getLog()->debug($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
                         $constructr->redirect($_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/pages/?res=create-page-false');
                         die();
                     }
@@ -413,13 +413,13 @@
                         $STMT->bindParam(':PAGE_ACTIVE', $PAGE_ACTIVE, PDO::PARAM_INT);
                         $STMT->execute();
                     } catch (PDOException $e) {
-                        $constructr->getLog()->debug($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
+                        $constructr->getLog()->debug($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
                         $constructr->redirect($_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/pages/?res=create-page-false');
                         die();
                     }
 
                     if ($_CONSTRUCTR_CONF['_LOGGING'] == true) {
-                        $constructr->getLog()->debug($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+                        $constructr->getLog()->debug($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
                     }
 
                     $NEW_LINE = "\n";
@@ -454,7 +454,7 @@
                             }
                         }
                     } catch (PDOException $e) {
-                        $constructr->getLog()->debug($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
+                        $constructr->getLog()->debug($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
                         $constructr->redirect($_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/pages/?res=create-page-false');
                         die();
                     }
@@ -501,13 +501,13 @@
                         $STMT->bindParam(':PAGE_ACTIVE', $PAGE_ACTIVE, PDO::PARAM_INT);
                         $STMT->execute();
                     } catch (PDOException $e) {
-                        $constructr->getLog()->debug($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
+                        $constructr->getLog()->debug($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
                         $constructr->redirect($_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/pages/?res=create-page-false');
                         die();
                     }
 
                     if ($_CONSTRUCTR_CONF['_LOGGING'] == true) {
-                        $constructr->getLog()->debug($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+                        $constructr->getLog()->debug($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
                     }
 
                     $NEW_LINE = "\n";
@@ -542,7 +542,7 @@
                             }
                         }
                     } catch (PDOException $e) {
-                        $constructr->getLog()->debug($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
+                        $constructr->getLog()->debug($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
                         $constructr->redirect($_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/pages/?res=create-page-false');
                         die();
                     }
@@ -589,13 +589,13 @@
                         $STMT->bindParam(':PAGE_ACTIVE', $PAGE_ACTIVE, PDO::PARAM_INT);
                         $STMT->execute();
                     } catch (PDOException $e) {
-                        $constructr->getLog()->debug($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
+                        $constructr->getLog()->debug($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
                         $constructr->redirect($_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/pages/?res=create-page-false');
                         die();
                     }
 
                     if ($_CONSTRUCTR_CONF['_LOGGING'] == true) {
-                        $constructr->getLog()->debug($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+                        $constructr->getLog()->debug($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
                     }
 
                     $NEW_LINE = "\n";
@@ -630,7 +630,7 @@
                             }
                         }
                     } catch (PDOException $e) {
-                        $constructr->getLog()->debug($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
+                        $constructr->getLog()->debug($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
                         $constructr->redirect($_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/pages/?res=create-page-false');
                         die();
                     }
@@ -666,13 +666,13 @@
                         $STMT->bindParam(':PAGE_ACTIVE', $PAGE_ACTIVE, PDO::PARAM_INT);
                         $STMT->execute();
                     } catch (PDOException $e) {
-                        $constructr->getLog()->debug($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
+                        $constructr->getLog()->debug($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
                         $constructr->redirect($_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/pages/?res=create-page-false');
                         die();
                     }
 
                     if ($_CONSTRUCTR_CONF['_LOGGING'] == true) {
-                        $constructr->getLog()->debug($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+                        $constructr->getLog()->debug($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
                     }
 
                     $NEW_LINE = "\n";
@@ -707,7 +707,7 @@
                             }
                         }
                     } catch (PDOException $e) {
-                        $constructr->getLog()->debug($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
+                        $constructr->getLog()->debug($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
                         $constructr->redirect($_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/pages/?res=create-page-false');
                         die();
                     }
@@ -722,7 +722,7 @@
                 }
             } else {
                 if ($_CONSTRUCTR_CONF['_LOGGING'] == true) {
-                    $constructr->getLog()->error($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+                    $constructr->getLog()->error($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
                 }
 
                 $constructr->redirect($_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/pages/?res=create-page-false');
@@ -764,17 +764,17 @@
                         $constructr->getLog()->error($_SESSION['backend-user-username'].' User-Rights-Success '.$constructr->view->getData('BackendUserRight').': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
                     }
                 } catch (PDOException $e) {
-                    $constructr->getLog()->error($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
+                    $constructr->getLog()->error($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
                     die();
                 }
             } else {
-                $constructr->getLog()->error($_SESSION['backend-user-username'].': Error User-Rights-Check: '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+                $constructr->getLog()->error($_SESSION['backend-user-username'].' Error User-Rights-Check: '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
                 $constructr->redirect($_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/logout/');
                 die();
             }
 
             if ($_CONSTRUCTR_CONF['_LOGGING'] == true) {
-                $constructr->getLog()->debug($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+                $constructr->getLog()->debug($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
             }
 
             try {
@@ -788,7 +788,7 @@
 
                 $PAGE = $PAGE->fetch();
             } catch (PDOException $e) {
-                $constructr->getLog()->error($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
+                $constructr->getLog()->error($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
                 $constructr->redirect($_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/pages/?res=edit-page-false');
                 die();
             }
@@ -845,17 +845,17 @@
                         $constructr->getLog()->error($_SESSION['backend-user-username'].' User-Rights-Success '.$constructr->view->getData('BackendUserRight').': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
                     }
                 } catch (PDOException $e) {
-                    $constructr->getLog()->error($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
+                    $constructr->getLog()->error($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
                     die();
                 }
             } else {
-                $constructr->getLog()->error($_SESSION['backend-user-username'].': Error User-Rights-Check: '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+                $constructr->getLog()->error($_SESSION['backend-user-username'].' Error User-Rights-Check: '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
                 $constructr->redirect($_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/logout/');
                 die();
             }
 
             if ($_CONSTRUCTR_CONF['_LOGGING'] == true) {
-                $constructr->getLog()->debug($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+                $constructr->getLog()->debug($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
             }
 
             $USER_FORM_GUID = $constructr->request()->post('user_form_guid');
@@ -909,7 +909,7 @@
                     $STMT->execute();
 
                     if ($_CONSTRUCTR_CONF['_LOGGING'] == true) {
-                        $constructr->getLog()->debug($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+                        $constructr->getLog()->debug($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
                     }
 
                     $NEW_LINE = "\n";
@@ -945,7 +945,7 @@
                             }
                         }
                     } catch (PDOException $e) {
-                        $constructr->getLog()->debug($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
+                        $constructr->getLog()->debug($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
                         $constructr->redirect($_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/pages/?res=create-page-false');
                         die();
                     }
@@ -960,10 +960,10 @@
 
                     die();
                 } catch (PDOException $e) {
-                    $constructr->getLog()->debug($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
+                    $constructr->getLog()->debug($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
 
                     if ($_CONSTRUCTR_CONF['_LOGGING'] == true) {
-                        $constructr->getLog()->error($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+                        $constructr->getLog()->error($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
                     }
 
                     $constructr->redirect($_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/pages/?res=edit-page-false');
@@ -971,7 +971,7 @@
                 }
             } else {
                 if ($_CONSTRUCTR_CONF['_LOGGING'] == true) {
-                    $constructr->getLog()->error($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+                    $constructr->getLog()->error($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
                 }
 
                 $constructr->redirect($_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/pages/?res=edit-page-false');
@@ -1013,17 +1013,17 @@
                         $constructr->getLog()->error($_SESSION['backend-user-username'].' User-Rights-Success '.$constructr->view->getData('BackendUserRight').': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
                     }
                 } catch (PDOException $e) {
-                    $constructr->getLog()->error($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
+                    $constructr->getLog()->error($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
                     die();
                 }
             } else {
-                $constructr->getLog()->error($_SESSION['backend-user-username'].': Error User-Rights-Check: '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+                $constructr->getLog()->error($_SESSION['backend-user-username'].' Error User-Rights-Check: '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
                 $constructr->redirect($_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/logout/');
                 die();
             }
 
             if ($_CONSTRUCTR_CONF['_LOGGING'] == true) {
-                $constructr->getLog()->debug($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+                $constructr->getLog()->debug($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
             }
 
             if ($PAGE_ID != '') {
@@ -1036,13 +1036,13 @@
                         )
                     );
                 } catch (PDOException $e) {
-                    $constructr->getLog()->debug($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
+                    $constructr->getLog()->debug($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
                     $constructr->redirect($_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/pages/?res=activate-page-false');
                     die();
                 }
 
                 if ($_CONSTRUCTR_CONF['_LOGGING'] == true) {
-                    $constructr->getLog()->debug($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+                    $constructr->getLog()->debug($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
                 }
 
                 $constructr->redirect($_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/pages/?res=activate-page-true');
@@ -1087,17 +1087,17 @@
                         $constructr->getLog()->error($_SESSION['backend-user-username'].' User-Rights-Success '.$constructr->view->getData('BackendUserRight').': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
                     }
                 } catch (PDOException $e) {
-                    $constructr->getLog()->error($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
+                    $constructr->getLog()->error($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
                     die();
                 }
             } else {
-                $constructr->getLog()->error($_SESSION['backend-user-username'].': Error User-Rights-Check: '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+                $constructr->getLog()->error($_SESSION['backend-user-username'].' Error User-Rights-Check: '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
                 $constructr->redirect($_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/logout/');
                 die();
             }
 
             if ($_CONSTRUCTR_CONF['_LOGGING'] == true) {
-                $constructr->getLog()->debug($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+                $constructr->getLog()->debug($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
             }
 
             if ($PAGE_ID != '') {
@@ -1110,13 +1110,13 @@
                         )
                     );
                 } catch (PDOException $e) {
-                    $constructr->getLog()->debug($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
+                    $constructr->getLog()->debug($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
                     $constructr->redirect($_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/pages/?res=activate-page-false');
                     die();
                 }
 
                 if ($_CONSTRUCTR_CONF['_LOGGING'] == true) {
-                    $constructr->getLog()->debug($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+                    $constructr->getLog()->debug($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
                 }
 
                 $constructr->redirect($_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/pages/?res=activate-page-true');
@@ -1164,17 +1164,17 @@
                         $constructr->getLog()->error($_SESSION['backend-user-username'].' User-Rights-Success '.$constructr->view->getData('BackendUserRight').': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
                     }
                 } catch (PDOException $e) {
-                    $constructr->getLog()->error($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
+                    $constructr->getLog()->error($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
                     die();
                 }
             } else {
-                $constructr->getLog()->error($_SESSION['backend-user-username'].': Error User-Rights-Check: '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+                $constructr->getLog()->error($_SESSION['backend-user-username'].' Error User-Rights-Check: '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
                 $constructr->redirect($_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/logout/');
                 die();
             }
 
             if ($_CONSTRUCTR_CONF['_LOGGING'] == true) {
-                $constructr->getLog()->debug($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+                $constructr->getLog()->debug($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
             }
 
             if ($PAGE_ID != '' && $PAGE_ORDER != '') {
@@ -1183,7 +1183,7 @@
                     $CONTENT->execute(array(':PAGE_ID' => $PAGE_ID));
                     $CONTENT_COUNTR = $CONTENT->rowCount();
                 } catch (PDOException $e) {
-                    $constructr->getLog()->debug($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
+                    $constructr->getLog()->debug($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
                     $constructr->redirect($_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/pages/?res=del-single-false');
                     die();
                 }
@@ -1193,7 +1193,7 @@
                     $SUB_PAGES->execute(array(':PAGE_ID' => $PAGE_ID));
                     $SUB_PAGES_COUNTR = $SUB_PAGES->rowCount();
                 } catch (PDOException $e) {
-                    $constructr->getLog()->debug($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
+                    $constructr->getLog()->debug($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
                     $constructr->redirect($_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/pages/?res=del-single-false');
                     die();
                 }
@@ -1209,7 +1209,7 @@
                         $CONTENT->execute(array(':PAGE_ID' => $PAGE_ID));
                         $CONTENT_COUNTR = $CONTENT->rowCount();
                     } catch (PDOException $e) {
-                        $constructr->getLog()->debug($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
+                        $constructr->getLog()->debug($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
                         $constructr->redirect($_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/pages/?res=del-single-false');
                         die();
                     }
@@ -1219,7 +1219,7 @@
                     $DELETER = $DBCON->prepare('DELETE FROM constructr_pages WHERE pages_id = :PAGE_ID LIMIT 1;');
                     $DELETER->execute(array(':PAGE_ID' => $PAGE_ID));
                 } catch (PDOException $e) {
-                    $constructr->getLog()->debug($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
+                    $constructr->getLog()->debug($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
                     $constructr->redirect($_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/pages/?res=del-single-false');
                     die();
                 }
@@ -1228,20 +1228,20 @@
                     $DELETER = $DBCON->prepare('UPDATE constructr_pages SET pages_order = (pages_order-1) WHERE pages_order >= :PAGE_ORDER;');
                     $DELETER->execute(array(':PAGE_ORDER' => $PAGE_ORDER));
                 } catch (PDOException $e) {
-                    $constructr->getLog()->debug($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
+                    $constructr->getLog()->debug($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
                     $constructr->redirect($_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/pages/?res=del-single-false');
                     die();
                 }
 
                 if ($_CONSTRUCTR_CONF['_LOGGING'] == true) {
-                    $constructr->getLog()->debug($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+                    $constructr->getLog()->debug($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
                 }
 
                 $constructr->redirect($_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/pages/?res=del-single-true');
                 die();
             } else {
                 if ($_CONSTRUCTR_CONF['_LOGGING'] == true) {
-                    $constructr->getLog()->error($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+                    $constructr->getLog()->error($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
                 }
 
                 $constructr->redirect($_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/pages/?res=del-single-false');
@@ -1286,17 +1286,17 @@
                         $constructr->getLog()->error($_SESSION['backend-user-username'].' User-Rights-Success '.$constructr->view->getData('BackendUserRight').': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
                     }
                 } catch (PDOException $e) {
-                    $constructr->getLog()->error($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
+                    $constructr->getLog()->error($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
                     die();
                 }
             } else {
-                $constructr->getLog()->error($_SESSION['backend-user-username'].': Error User-Rights-Check: '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+                $constructr->getLog()->error($_SESSION['backend-user-username'].' Error User-Rights-Check: '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
                 $constructr->redirect($_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/logout/');
                 die();
             }
 
             if ($_CONSTRUCTR_CONF['_LOGGING'] == true) {
-                $constructr->getLog()->debug($_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+                $constructr->getLog()->debug($_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
             }
 
             if ($METHOD != '' && $PAGE_ID != '') {
@@ -1305,7 +1305,7 @@
                     $SELEKTOR->execute(array(':PAGE_ID' => $PAGE_ID));
                     $SELEKTOR = $SELEKTOR->fetch();
                 } catch (PDOException $e) {
-                    $constructr->getLog()->debug('1) '.$_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
+                    $constructr->getLog()->debug('1) '.$_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
                     $constructr->redirect($_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/pages/?res=reorder-error');
                     die();
                 }
@@ -1326,7 +1326,7 @@
                         $TARGET_PAGE_LEVEL = $SELECT_TARGET_PAGE['pages_level'];
                         $TARGET_PAGE_MOTHER = $SELECT_TARGET_PAGE['pages_mother'];
                     } catch (PDOException $e) {
-                        $constructr->getLog()->debug('3) '.$_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
+                        $constructr->getLog()->debug('3) '.$_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
                         $constructr->redirect($_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/pages/?res=reorder-error');
                         die();
                     }
@@ -1341,7 +1341,7 @@
                         $TARGET_PAGE_LEVEL = $SELECT_TARGET_PAGE['pages_level'];
                         $TARGET_PAGE_MOTHER = $SELECT_TARGET_PAGE['pages_mother'];
                     } catch (PDOException $e) {
-                        $constructr->getLog()->debug('3) '.$_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
+                        $constructr->getLog()->debug('3) '.$_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
                         $constructr->redirect($_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/pages/?res=reorder-error');
                         die();
                     }
@@ -1366,7 +1366,7 @@
                         )
                     );
                 } catch (PDOException $e) {
-                    $constructr->getLog()->debug('5) '.$_SESSION['backend-user-username'].': '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
+                    $constructr->getLog()->debug('5) '.$_SESSION['backend-user-username'].' '.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].': '.$e->getMessage());
                     $constructr->redirect($_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/pages/?res=reorder-error');
                     die();
                 }

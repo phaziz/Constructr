@@ -79,6 +79,6 @@
         81 => 'Benutzerrechte bearbeiten',
         90 => 'Constructr Analytics anzeigen',
         100 => 'Statische Internetseiten generieren',
-        110 => 'ConstructrCMS Konfiguration herunterladen und sichern',
+        110 => 'ConstructrCMS Konfiguration sichern',
         1000 => 'Systemverwaltung anzeigen',
     );

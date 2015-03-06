@@ -41,7 +41,7 @@
  * @link http://blog.phaziz.com/category/constructr-cms/
  * @link http://phaziz.com/
  *
- * @version 1.04.5 / 02.03.2015
+ * @version 1.04.6 / 05.03.2015
  */
 
 ?>
@@ -86,7 +86,7 @@
 	                <li><a href="<?php echo $_CONSTRUCTR_CONF['_CREATE_DYNAMIC_DOMAIN'] ?>" onclick="window.open(this.href);return false;" title="Vorschau dynamische Internetseiten">Vorschau</a></li>
 	                <li><a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/constructr/" title="Dashboard anzeigen">Dashboard</a></li>
 	                <li><a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/constructr/pages/" title="Seitenverwaltung anzeigen">Seiten</a></li>
-	                <li><a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/constructr/media/" title="Medienverwaltung anzeigen">Medien</a></li>
+	                <li><a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/constructr/media/" title="Uploads anzeigen">Uploads</a></li>
 	                <li><a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/constructr/media/trash/" title="M&uuml;lleimer anzeigen">M&uuml;lleimer</a></li>
 	                <li><a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/constructr/user/" title="Benutzerverwaltung anzeigen">Benutzer</a></li>
 	                <li><a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/constructr/templates/" title="Templates anzeigen">Templates</a></li>
@@ -98,7 +98,11 @@
                 <div class="row">
                     <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
                     	<br>
-                        <p><small><a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/constructr/">Dashboard</a> <span class="glyphicon glyphicon-chevron-right"></span> <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/constructr/pages/">Seitenverwaltung - &Uuml;bersicht</a> <span class="glyphicon glyphicon-chevron-right"></span></small></p>
+						<ul class="nav nav-pills">
+							<li role="presentation"><a href="http://phaziz.com" target="_blank">ConstructrCMS</a></li>
+							<li role="presentation"><a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/constructr/">Dashboard</a></li>
+							<li role="presentation" class="active"><a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/constructr/pages/">Seitenverwaltung - &Uuml;bersicht</a></li>
+						</ul>
                     </div><!-- // EOF COL-... -->
                     <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
                     	<br>
@@ -172,6 +176,7 @@
                                     <tr>
                                         <th><small>Name</small></th>
                                         <th><small>Alias (URL)</small></th>
+                                        <th><small>Template</small></th>
                                         <th class="center"><small>Aktionen</small></th>
                                     </tr>
                                 </thead>
@@ -193,11 +198,22 @@
                                                 } else {
                                                     echo '<a class="tt" data-toggle="tooltip" data-placement="top" title="Inhalte von Seite '.$PAGE['pages_name'].' bearbeiten" href="'.$_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/content/'.$PAGE['pages_id'].'/" title="Inhalte von Seite '.$PAGE['pages_name'].' bearbeiten"><small>'.$PAGE['pages_name'].'</small></a></td>';
                                                 }
+
                                                 if ($PAGE['pages_url'] == '') {
-                                                    echo '<td><small><a class="tt" data-toggle="tooltip" data-placement="top" title="Seite im Browser anzeigen" href="'.$_CONSTRUCTR_CONF['_BASE_URL'].'" onclick="window.open(this.href);return false;">'.$_CONSTRUCTR_CONF['_BASE_URL'].'</a><br>Template: '.$PAGE['pages_template'].'<br>Sortierung: '.$PAGE['pages_order'].' | Ebene: '.$PAGE['pages_level'].' | Mutterseite: '.$PAGE['pages_mother'].'</small></td>';
+	                                                if ($PAGE['pages_nav_visible'] == 0) {
+	                                                	echo '<td><small><a style="color: #ff0066!important;" class="tt" data-toggle="tooltip" data-placement="top" title="Seite im Browser anzeigen" href="'.$_CONSTRUCTR_CONF['_BASE_URL'].'" onclick="window.open(this.href);return false;">'.$_CONSTRUCTR_CONF['_BASE_URL'].'</a></small></td>';    
+	                                                } else {
+	                                                    echo '<td><small><a class="tt" data-toggle="tooltip" data-placement="top" title="Seite im Browser anzeigen" href="'.$_CONSTRUCTR_CONF['_BASE_URL'].'" onclick="window.open(this.href);return false;">'.$_CONSTRUCTR_CONF['_BASE_URL'].'</a></small></td>';
+	                                                }
                                                 } else {
-                                                    echo '<td><small><a class="tt" data-toggle="tooltip" data-placement="top" title="Seite im Browser anzeigen" href="'.$_CONSTRUCTR_CONF['_BASE_URL'].'/'.$PAGE['pages_url'].'" onclick="window.open(this.href);return false;">'.$PAGE['pages_url'].'</a><br>Template: '.$PAGE['pages_template'].'<br>Sortierung: '.$PAGE['pages_order'].' | Ebene: '.$PAGE['pages_level'].' | Mutterseite: '.$PAGE['pages_mother'].'</small></td>';
+	                                                if ($PAGE['pages_nav_visible'] == 0) {
+	                                                	echo '<td><small><a style="color: #ff0066!important;" class="tt" data-toggle="tooltip" data-placement="top" title="Seite im Browser anzeigen" href="'.$_CONSTRUCTR_CONF['_BASE_URL'].'/'.$PAGE['pages_url'].'" onclick="window.open(this.href);return false;">'.$PAGE['pages_url'].'</a></small></td>';    
+	                                                } else {
+	                                                    echo '<td><small><a class="tt" data-toggle="tooltip" data-placement="top" title="Seite im Browser anzeigen" href="'.$_CONSTRUCTR_CONF['_BASE_URL'].'/'.$PAGE['pages_url'].'" onclick="window.open(this.href);return false;">'.$PAGE['pages_url'].'</a></small></td>';
+	                                                }
                                                 }
+                                                
+                                                echo '<td><small>'.$PAGE['pages_template'].'</small></td>';
                                                 echo '<td class="right"><nobr>';
 
                                                 if ($PAGE['pages_order'] > 1) {
@@ -239,8 +255,7 @@
                 </div><!-- // EOF ROW -->
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                        <p><small><a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/constructr/">Dashboard</a> <span class="glyphicon glyphicon-chevron-right"></span> <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/constructr/pages/">Seitenverwaltung - &Uuml;bersicht</a> <span class="glyphicon glyphicon-chevron-right"></span></small></p>
-                        <p><small>Version: <?php echo $_CONSTRUCTR_CONF['_VERSION_DATE']; ?> <?php echo $_CONSTRUCTR_CONF['_VERSION']; ?> / <a href="http://phaziz.com/" onclick="window.open(this.href);return false;">Constructr CMS von phaziz.com</a></small></p>
+                        <p class="center"><small><a href="http://phaziz.com/" onclick="window.open(this.href);return false;">Constructr CMS von phaziz.com</a>, Version <?php echo $_CONSTRUCTR_CONF['_VERSION']; ?> vom <?php echo $_CONSTRUCTR_CONF['_VERSION_DATE']; ?></small></p>
                     </div><!-- // EOF COL-... -->
                 </div><!-- // EOF ROW -->
             </div>

@@ -41,7 +41,7 @@
  * @link http://blog.phaziz.com/category/constructr-cms/
  * @link http://phaziz.com/
  *
- * @version 1.04.5 / 02.03.2015
+ * @version 1.04.6 / 05.03.2015
  */
 
 ?>
@@ -89,7 +89,7 @@
 	                <li><a href="<?php echo $_CONSTRUCTR_CONF['_CREATE_DYNAMIC_DOMAIN'] ?>" onclick="window.open(this.href);return false;" title="Vorschau dynamische Internetseiten">Vorschau</a></li>
 	                <li><a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/constructr/" title="Dashboard anzeigen">Dashboard</a></li>
 	                <li><a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/constructr/pages/" title="Seitenverwaltung anzeigen">Seiten</a></li>
-	                <li><a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/constructr/media/" title="Medienverwaltung anzeigen">Medien</a></li>
+	                <li><a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/constructr/media/" title="Uploads anzeigen">Uploads</a></li>
 	                <li><a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/constructr/media/trash/" title="M&uuml;lleimer anzeigen">M&uuml;lleimer</a></li>
 	                <li><a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/constructr/user/" title="Benutzerverwaltung anzeigen">Benutzer</a></li>
 	                <li><a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/constructr/templates/" title="Templates anzeigen">Templates</a></li>
@@ -101,7 +101,11 @@
                 <div class="row">
                     <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
                     	<br>
-                        <p><small><a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/constructr/">Dashboard</a> <span class="glyphicon glyphicon-chevron-right"></span> <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/constructr/media/">Medienverwaltung - &Uuml;bersicht</a> <span class="glyphicon glyphicon-chevron-right"></span></small></p>
+						<ul class="nav nav-pills">
+							<li role="presentation"><a href="http://phaziz.com" target="_blank">ConstructrCMS</a></li>
+							<li role="presentation"><a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/constructr/">Dashboard</a></li>
+							<li role="presentation" class="active"><a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/constructr/media/">Uploads - &Uuml;bersicht</a></li>
+						</ul>
                     </div><!-- // EOF COL-... -->
                     <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
                     	<br>
@@ -155,7 +159,7 @@
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                         <div class="jumbotron">
                             <h1><?php echo $SUBTITLE; ?></h1>
-                            <h2><?php echo $MEDIA_COUNTER; ?> Vorhandene Medien <a data-toggle="tooltip" data-placement="top" title="Neuer Uplaod" class="tt" href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/media/new/' ?>"><button type="button" class="btn btn-info btn-sm" title="Neuer Upload"><span class="glyphicon glyphicon-plus"></span> Neue Datei hochladen</button></a></h2>
+                            <h2><?php echo $MEDIA_COUNTER; ?> Vorhandene Medien <a data-toggle="tooltip" data-placement="top" title="Neuer Uplaod" class="tt" href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'].'/constructr/media/new/' ?>"><button type="button" class="btn btn-info btn-sm" title="Neuer Upload"><span class="glyphicon glyphicon-plus"></span> Neuer Upload</button></a></h2>
                             <br><br>
                             <div class="table-responsive">
                             <table class="datatable table table-bordered table-condensed table-striped table-hover">
@@ -211,8 +215,7 @@
                 </div><!-- // EOF ROW -->
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                        <p><small><a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/constructr/">Dashboard</a> <span class="glyphicon glyphicon-chevron-right"></span> <a href="<?php echo $_CONSTRUCTR_CONF['_BASE_URL'];?>/constructr/media/">Medienverwaltung - &Uuml;bersicht</a> <span class="glyphicon glyphicon-chevron-right"></span></small></p>
-                        <p><small>Version: <?php echo $_CONSTRUCTR_CONF['_VERSION_DATE']; ?> <?php echo $_CONSTRUCTR_CONF['_VERSION']; ?> / <a href="http://phaziz.com/" onclick="window.open(this.href);return false;">Constructr CMS von phaziz.com</a></small></p>
+                        <p class="center"><small><a href="http://phaziz.com/" onclick="window.open(this.href);return false;">Constructr CMS von phaziz.com</a>, Version <?php echo $_CONSTRUCTR_CONF['_VERSION']; ?> vom <?php echo $_CONSTRUCTR_CONF['_VERSION_DATE']; ?></small></p>
                     </div><!-- // EOF COL-... -->
                 </div><!-- // EOF ROW -->
             </div>

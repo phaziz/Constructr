@@ -37,7 +37,7 @@
  * @link http://blog.phaziz.com/category/constructr-cms/
  * @link http://phaziz.com/
  *
- * @version 1.04.5 / 04.03.2015
+ * @version 1.04.6 / 05.03.2015
  */
 
     /**
@@ -67,8 +67,8 @@
      * @param string $_CONSTRUCTR_CONF['_VERSION_DATE'] - Version release date of Constructr CMS
      * @param string $_CONSTRUCTR_CONF['_VERSION'] - Version number of Constructr CMS
      */
-    $_CONSTRUCTR_CONF['_VERSION_DATE'] = '2015-03-04';
-    $_CONSTRUCTR_CONF['_VERSION'] = '1.04.5';
+    $_CONSTRUCTR_CONF['_VERSION_DATE'] = '2015-03-05';
+    $_CONSTRUCTR_CONF['_VERSION'] = '1.04.6';
 
     /**
      * Constructr CMS plugin architecture (beta).

@@ -37,5 +37,5 @@
  * @link http://blog.phaziz.com/category/constructr-cms/
  * @link http://phaziz.com/
  *
- * @version 1.04.5 / 25.02.2015
+ * @version 1.04.6 / 05.03.2015
  */

@@ -1,4 +1,4 @@
-<?php
+z<?php
 
 /**
  * Constructr CMS TemplateFile Login-Process.
@@ -41,7 +41,7 @@
  * @link http://blog.phaziz.com/category/constructr-cms/
  * @link http://phaziz.com/
  *
- * @version 1.04.5 / 25.02.2015
+ * @version 1.04.6 / 05.03.2015
  */
 
 ?>
@@ -79,7 +79,7 @@
                                         
                                         ?>
 
-                                            <div class="alert alert-danger"><strong>Zu viele Anmeldeversuche!</strong> Sie wurden f&uuml;r 10 Minuten gesperrt! Bitte versuchen Sie es danach erneut!</div>
+                                            <div class="alert alert-danger"><strong>Zu viele Anmeldeversuche!</strong> Sie wurden f&uuml;r <?php echo ($_CONSTRUCTR_CONF['_LOGIN_BLOCKED_FOR'] / 60); ?> Minuten gesperrt! Bitte versuchen Sie es danach erneut!</div>
 
                                 		<?php
 

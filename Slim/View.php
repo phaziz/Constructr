@@ -108,7 +108,7 @@ class View
      * @param string $key
      * @param mixed $value
      */
-    public function keep($key, Closure $value)
+    public function keep($key, \Closure $value)
     {
         $this->data->keep($key, $value);
     }
@@ -152,9 +152,9 @@ class View
     {
         if (!is_null($key)) {
             return isset($this->data[$key]) ? $this->data[$key] : null;
-        } else {
-            return $this->data->all();
         }
+
+        return $this->data->all();
     }
 
     /**

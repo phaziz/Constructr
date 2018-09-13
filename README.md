@@ -1,7 +1,7 @@
 Constructr CMS
 ==============
 
-ConstructrCMS (<a href="http://constructr-cms.org">http://constructr-cms.org</a>) based on Slim-PHP5-Framework, Twitter Bootstrap, MySQL/PDO, jQuery/Javascript and Passion!
+ConstructrCMS based on Slim-PHP5-Framework, Twitter Bootstrap, MySQL/PDO, jQuery/Javascript and Passion!
 
 That's it for now (Version 1.04.6 / 2015-03-06):
 
